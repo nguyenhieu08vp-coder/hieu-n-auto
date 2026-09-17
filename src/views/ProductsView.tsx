@@ -10,7 +10,8 @@ import {
   SlidersHorizontal, 
   X, 
   Sparkles,
-  ChevronDown
+  ChevronDown,
+  ArrowLeft
 } from 'lucide-react';
 import { Product, FilterState } from '../types';
 import { PRODUCTS, CATEGORIES, FORMAT_CURRENCY } from '../data/mockData';
@@ -25,6 +26,7 @@ interface ProductsViewProps {
   onQuickView: (product: Product) => void;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
+  onGoBack?: () => void;
 }
 
 export const ProductsView: React.FC<ProductsViewProps> = ({
@@ -32,6 +34,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
   onQuickView,
   searchQuery,
   setSearchQuery,
+  onGoBack,
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [priceRange, setPriceRange] = useState<string>('all');
@@ -159,9 +162,22 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
       {/* Page Title & Breadcrumb */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-6">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold mb-2">
-            <Sparkles className="w-3.5 h-3.5" />
-            Danh Mục Đa Dạng
+          <div className="flex items-center gap-2 mb-2">
+            {onGoBack && (
+              <button
+                id="products-breadcrumb-back-btn"
+                onClick={onGoBack}
+                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 hover:border-slate-700 text-xs font-medium transition-colors cursor-pointer group"
+                title="Quay lại phần trước (Alt + ←)"
+              >
+                <ArrowLeft className="w-3 h-3 text-emerald-400 group-hover:-translate-x-0.5 transition-transform" />
+                <span>Quay lại</span>
+              </button>
+            )}
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold">
+              <Sparkles className="w-3.5 h-3.5" />
+              Danh Mục Đa Dạng
+            </div>
           </div>
           <h1 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
             Sản Phẩm &amp; Dịch Vụ Nội Thất Ô Tô

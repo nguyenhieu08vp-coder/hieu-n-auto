@@ -11,7 +11,8 @@ import {
   Compass, 
   Car,
   Phone,
-  Layers
+  Layers,
+  ArrowLeft
 } from 'lucide-react';
 import { TEAM_MEMBERS, COMPANY_INFO } from '../data/mockData';
 import { PageId } from '../types';
@@ -19,11 +20,13 @@ import { PageId } from '../types';
 interface AboutViewProps {
   setCurrentPage: (page: PageId) => void;
   openConsultation: () => void;
+  onGoBack?: () => void;
 }
 
 export const AboutView: React.FC<AboutViewProps> = ({
   setCurrentPage,
   openConsultation,
+  onGoBack,
 }) => {
   return (
     <div className="space-y-16 sm:space-y-24 pb-16">
@@ -39,9 +42,21 @@ export const AboutView: React.FC<AboutViewProps> = ({
         </div>
 
         <div className="relative z-10 max-w-4xl mx-auto px-4 text-center space-y-4">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold">
-            <Sparkles className="w-3.5 h-3.5" />
-            Câu Chuyện Thương Hiệu
+          <div className="flex items-center justify-center gap-2">
+            {onGoBack && (
+              <button
+                onClick={onGoBack}
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700 text-xs font-semibold transition-colors cursor-pointer group"
+                title="Quay lại phần trước (Alt + ←)"
+              >
+                <ArrowLeft className="w-3.5 h-3.5 text-emerald-400 group-hover:-translate-x-0.5 transition-transform" />
+                <span>Quay lại</span>
+              </button>
+            )}
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold">
+              <Sparkles className="w-3.5 h-3.5" />
+              Câu Chuyện Thương Hiệu
+            </div>
           </div>
           <h1 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight font-['Space_Grotesk']">
             Hành Trình <br />

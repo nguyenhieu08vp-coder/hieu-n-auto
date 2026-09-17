@@ -11,14 +11,19 @@ import {
   AlertCircle, 
   Navigation,
   MessageSquare,
-  Loader2
+  Loader2,
+  ArrowLeft
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { ContactFormData } from '../types';
 import { COMPANY_INFO } from '../data/mockData';
 import { submitLeadToGoogleSheets } from '../services/leadService';
 
-export const ContactView: React.FC = () => {
+interface ContactViewProps {
+  onGoBack?: () => void;
+}
+
+export const ContactView: React.FC<ContactViewProps> = ({ onGoBack }) => {
   const [formData, setFormData] = useState<ContactFormData>({
     fullName: '',
     phoneNumber: '',
@@ -153,9 +158,22 @@ export const ContactView: React.FC = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12 pb-16">
       {/* 1. Header Banner */}
       <div className="text-center max-w-3xl mx-auto space-y-3">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-bold">
-          <MessageSquare className="w-3.5 h-3.5" />
-          Hỗ Trợ &amp; Tư Vấn Trực Tiếp
+        <div className="flex items-center justify-center gap-2">
+          {onGoBack && (
+            <button
+              id="contact-breadcrumb-back-btn"
+              onClick={onGoBack}
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700 text-xs font-semibold transition-colors cursor-pointer group"
+              title="Quay lại phần trước (Alt + ←)"
+            >
+              <ArrowLeft className="w-3.5 h-3.5 text-emerald-400 group-hover:-translate-x-0.5 transition-transform" />
+              <span>Quay lại</span>
+            </button>
+          )}
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-bold">
+            <MessageSquare className="w-3.5 h-3.5" />
+            Hỗ Trợ &amp; Tư Vấn Trực Tiếp
+          </div>
         </div>
         <h1 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight font-['Space_Grotesk']">
           Liên Hệ Hệ Thống Hieu N Auto

@@ -13,7 +13,8 @@ import {
   Share2, 
   CheckCircle2,
   SlidersHorizontal,
-  Flame
+  Flame,
+  ArrowLeft
 } from 'lucide-react';
 import { BlogPost, PageId } from '../types';
 import { BLOG_POSTS } from '../data/mockData';
@@ -21,11 +22,13 @@ import { BLOG_POSTS } from '../data/mockData';
 interface BlogViewProps {
   setCurrentPage: (page: PageId) => void;
   openConsultation: (carModel?: string, service?: string) => void;
+  onGoBack?: () => void;
 }
 
 export const BlogView: React.FC<BlogViewProps> = ({
   setCurrentPage,
   openConsultation,
+  onGoBack,
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedTag, setSelectedTag] = useState<string>('all');
@@ -85,9 +88,22 @@ export const BlogView: React.FC<BlogViewProps> = ({
       {/* 1. Header Banner */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-6">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold mb-2">
-            <BookOpen className="w-3.5 h-3.5" />
-            Cẩm Nang Chuyên Sâu &amp; Tin Tức Kỹ Thuật
+          <div className="flex items-center gap-2 mb-2">
+            {onGoBack && (
+              <button
+                id="blog-breadcrumb-back-btn"
+                onClick={onGoBack}
+                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 hover:border-slate-700 text-xs font-medium transition-colors cursor-pointer group"
+                title="Quay lại phần trước (Alt + ←)"
+              >
+                <ArrowLeft className="w-3 h-3 text-emerald-400 group-hover:-translate-x-0.5 transition-transform" />
+                <span>Quay lại</span>
+              </button>
+            )}
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold">
+              <BookOpen className="w-3.5 h-3.5" />
+              Cẩm Nang Chuyên Sâu &amp; Tin Tức Kỹ Thuật
+            </div>
           </div>
           <h1 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
             Cẩm Nang Nâng Cấp Nội Thất &amp; Phụ Kiện Ô Tô
@@ -344,6 +360,14 @@ export const BlogView: React.FC<BlogViewProps> = ({
             </button>
 
             <div className="overflow-y-auto p-6 sm:p-10 space-y-6">
+              <button
+                onClick={() => setActivePost(null)}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-750 text-slate-300 hover:text-white border border-slate-700 text-xs font-semibold cursor-pointer transition-colors"
+              >
+                <ArrowLeft className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Quay lại danh sách bài viết</span>
+              </button>
+
               <div className="space-y-3">
                 <div className="inline-flex items-center gap-2">
                   <span className="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
