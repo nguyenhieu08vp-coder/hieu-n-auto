@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { PageId, PolicyTab, Product, CartItem } from './types';
 import { Header } from './components/Header';
@@ -15,11 +15,23 @@ import { ContactView } from './views/ContactView';
 import { PoliciesView } from './views/PoliciesView';
 
 import { COMPANY_INFO } from './data/mockData';
-import { Phone, MessageCircle, ArrowUp } from 'lucide-react';
+import { Phone, ArrowUp } from 'lucide-react';
+
+const PAGE_ORDER: Record<PageId, number> = {
+  home: 0,
+  about: 1,
+  products: 2,
+  blog: 3,
+  contact: 4,
+  policies: 5,
+};
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageId>('home');
   const [policyTab, setPolicyTab] = useState<PolicyTab>('privacy');
+  
+  // Direction: 1 for sliding right, -1 for sliding left
+  const [direction, setDirection] = useState<number>(1);
 
   // Shopping cart with localStorage persistence
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
@@ -38,6 +50,44 @@ export default function App() {
   const [consultationService, setConsultationService] = useState<string>('Bọc ghế da Nappa cao cấp');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [showScrollTop, setShowScrollTop] = useState(false);
+
+  // Navigate to target page with horizontal directional slide
+  const navigateTo = useCallback((nextPage: PageId) => {
+    if (nextPage === currentPage) return;
+
+    const currentOrder = PAGE_ORDER[currentPage] ?? 0;
+    const nextOrder = PAGE_ORDER[nextPage] ?? 0;
+    const slideDirection = nextOrder >= currentOrder ? 1 : -1;
+
+    setDirection(slideDirection);
+    setCurrentPage(nextPage);
+
+    if (window.scrollY > 100) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    try {
+      window.history.pushState({ page: nextPage }, '', `#${nextPage}`);
+    } catch {
+      // ignore
+    }
+  }, [currentPage]);
+
+  // Browser popstate listener for back/forward browser gestures
+  useEffect(() => {
+    const handlePopState = (e: PopStateEvent) => {
+      if (e.state && e.state.page) {
+        const targetPage = e.state.page as PageId;
+        const currentOrder = PAGE_ORDER[currentPage] ?? 0;
+        const targetOrder = PAGE_ORDER[targetPage] ?? 0;
+        setDirection(targetOrder >= currentOrder ? 1 : -1);
+        setCurrentPage(targetPage);
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [currentPage]);
 
   // Save cart to localStorage
   useEffect(() => {
@@ -60,11 +110,6 @@ export default function App() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  // Smoothly reset scroll position when changing views
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' });
-  }, [currentPage]);
 
   const totalCartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
   const totalCartPrice = cartItems.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
@@ -109,8 +154,7 @@ export default function App() {
 
   const openPolicyTabDirectly = (tab: PolicyTab) => {
     setPolicyTab(tab);
-    setCurrentPage('policies');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    navigateTo('policies');
   };
 
   const scrollToTop = () => {
@@ -119,10 +163,10 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-emerald-500 selection:text-white">
-      {/* 1. Header (Fixed navigation with Logo, Pages, Cart, Search, Hotline) */}
+      {/* 1. Header with Original Navigation Taskbar */}
       <Header
         currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
+        setCurrentPage={navigateTo}
         cartCount={totalCartCount}
         cartTotal={totalCartPrice}
         openCart={() => setIsCartOpen(true)}
@@ -131,29 +175,28 @@ export default function App() {
         setSearchQuery={setSearchQuery}
       />
 
-      {/* 2. Main Body View Rendering with Smooth Transition Effects */}
-      <main className="flex-1 overflow-x-hidden">
-        <AnimatePresence mode="wait">
+      {/* 2. Main Body View Rendering (Chỉ áp dụng hiệu ứng chuyển cảnh cho Trang Chủ, các mục khác chuyển tức thì) */}
+      <main className="flex-1 overflow-x-hidden relative min-h-[70vh]">
+        {currentPage === 'home' ? (
           <motion.div
-            key={currentPage}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full smooth-gpu"
+            key="home"
+            initial={{ opacity: 0, x: -80 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ type: 'spring', stiffness: 280, damping: 28, mass: 0.8 }}
+            className="w-full"
           >
-            {currentPage === 'home' && (
-              <HomeView
-                setCurrentPage={setCurrentPage}
-                onAddToCart={handleAddToCart}
-                onQuickView={(p) => setQuickViewProduct(p)}
-                openConsultation={openConsultationWithDetails}
-              />
-            )}
-
+            <HomeView
+              setCurrentPage={navigateTo}
+              onAddToCart={handleAddToCart}
+              onQuickView={(p) => setQuickViewProduct(p)}
+              openConsultation={openConsultationWithDetails}
+            />
+          </motion.div>
+        ) : (
+          <div className="w-full">
             {currentPage === 'about' && (
               <AboutView
-                setCurrentPage={setCurrentPage}
+                setCurrentPage={navigateTo}
                 openConsultation={() => openConsultationWithDetails()}
               />
             )}
@@ -169,27 +212,29 @@ export default function App() {
 
             {currentPage === 'blog' && (
               <BlogView
-                setCurrentPage={setCurrentPage}
+                setCurrentPage={navigateTo}
                 openConsultation={(car, srv) => openConsultationWithDetails(car, srv)}
               />
             )}
 
-            {currentPage === 'contact' && <ContactView />}
+            {currentPage === 'contact' && (
+              <ContactView />
+            )}
 
             {currentPage === 'policies' && (
               <PoliciesView
                 activeTab={policyTab}
                 setActiveTab={setPolicyTab}
-                setCurrentPage={setCurrentPage}
+                setCurrentPage={navigateTo}
               />
             )}
-          </motion.div>
-        </AnimatePresence>
+          </div>
+        )}
       </main>
 
       {/* 3. Footer (Legal information, Policies hyperlinks, Copyright) */}
       <Footer
-        setCurrentPage={setCurrentPage}
+        setCurrentPage={navigateTo}
         openPolicyTab={openPolicyTabDirectly}
       />
 
@@ -227,8 +272,8 @@ export default function App() {
         defaultService={consultationService}
       />
 
-      {/* 7. Floating Fast Action Widget (Hotline & Consultation Floating Action) */}
-      <div className="fixed bottom-6 right-6 z-30 flex flex-col items-end gap-3 pointer-events-auto">
+      {/* 7. Floating Fast Action Widget (Hotline & Scroll to top) */}
+      <div className="fixed bottom-6 right-4 sm:right-6 z-30 flex flex-col items-end gap-3 pointer-events-auto">
         {/* Floating Call Button */}
         <motion.a
           href={`tel:${COMPANY_INFO.hotline}`}
@@ -254,9 +299,9 @@ export default function App() {
             <motion.button
               onClick={scrollToTop}
               id="scroll-to-top-btn"
-              initial={{ opacity: 0, scale: 0.6, y: 10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.6, y: 10 }}
+              initial={{ opacity: 0, scale: 0.6 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.6 }}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               className="p-3 rounded-full bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700 shadow-lg backdrop-blur-md transition-colors cursor-pointer"

@@ -98,32 +98,34 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Brand Logo */}
-          <button
-            id="brand-logo-btn"
-            onClick={() => handleNavClick('home')}
-            className="flex items-center gap-3 text-left group cursor-pointer focus:outline-none"
-          >
-            <div className="relative w-11 h-11 rounded-xl bg-gradient-to-br from-emerald-500 via-sky-500 to-purple-600 p-[2px] shadow-lg shadow-emerald-500/20 group-hover:shadow-purple-500/30 transition-all duration-300">
-              <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
-                <Wrench className="w-6 h-6 text-emerald-400 group-hover:rotate-12 transition-transform duration-300" />
+          <div className="flex items-center gap-3">
+            <button
+              id="brand-logo-btn"
+              onClick={() => handleNavClick('home')}
+              className="flex items-center gap-3 text-left group cursor-pointer focus:outline-none"
+            >
+              <div className="relative w-11 h-11 rounded-xl bg-gradient-to-br from-emerald-500 via-sky-500 to-purple-600 p-[2px] shadow-lg shadow-emerald-500/20 group-hover:shadow-purple-500/30 transition-all duration-300">
+                <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
+                  <Wrench className="w-6 h-6 text-emerald-400 group-hover:rotate-12 transition-transform duration-300" />
+                </div>
               </div>
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="font-extrabold text-2xl tracking-tight text-white font-['Space_Grotesk']">
-                  HIEU N <span className="bg-gradient-to-r from-emerald-400 via-sky-400 to-orange-400 bg-clip-text text-transparent">AUTO</span>
-                </span>
-                <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30 hidden sm:inline-block">
-                  Luxury
-                </span>
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="font-extrabold text-2xl tracking-tight text-white font-['Space_Grotesk']">
+                    HIEU N <span className="bg-gradient-to-r from-emerald-400 via-sky-400 to-orange-400 bg-clip-text text-transparent">AUTO</span>
+                  </span>
+                  <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30 hidden sm:inline-block">
+                    Luxury
+                  </span>
+                </div>
+                <p className="text-[11px] text-slate-400 font-medium tracking-wide">
+                  Nội Thất &amp; Nâng Cấp Ô Tô Chuyên Nghiệp
+                </p>
               </div>
-              <p className="text-[11px] text-slate-400 font-medium tracking-wide">
-                Nội Thất &amp; Nâng Cấp Ô Tô Chuyên Nghiệp
-              </p>
-            </div>
-          </button>
+            </button>
+          </div>
 
-          {/* Desktop Menu Navigation with Smooth Layout Animation Glider */}
+          {/* Desktop Menu Navigation */}
           <nav className="hidden lg:flex items-center space-x-1 xl:space-x-1.5">
             {navItems.map((item) => {
               const isActive = currentPage === item.id;
