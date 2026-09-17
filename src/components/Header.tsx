@@ -10,8 +10,7 @@ import {
   ShieldCheck, 
   MapPin, 
   Wrench,
-  ChevronRight,
-  ArrowLeft
+  ChevronRight
 } from 'lucide-react';
 import { PageId } from '../types';
 import { COMPANY_INFO, FORMAT_CURRENCY } from '../data/mockData';
@@ -25,9 +24,6 @@ interface HeaderProps {
   openConsultation: () => void;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
-  canGoBack?: boolean;
-  previousPageTitle?: string;
-  onGoBack?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -39,9 +35,6 @@ export const Header: React.FC<HeaderProps> = ({
   openConsultation,
   searchQuery,
   setSearchQuery,
-  canGoBack = false,
-  previousPageTitle,
-  onGoBack,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showSearchModal, setShowSearchModal] = useState(false);
@@ -104,58 +97,31 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Main Navigation Bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          {/* Brand Logo & Back Button Group */}
-          <div className="flex items-center gap-3">
-            <button
-              id="brand-logo-btn"
-              onClick={() => handleNavClick('home')}
-              className="flex items-center gap-3 text-left group cursor-pointer focus:outline-none"
-            >
-              <div className="relative w-11 h-11 rounded-xl bg-gradient-to-br from-emerald-500 via-sky-500 to-purple-600 p-[2px] shadow-lg shadow-emerald-500/20 group-hover:shadow-purple-500/30 transition-all duration-300">
-                <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
-                  <Wrench className="w-6 h-6 text-emerald-400 group-hover:rotate-12 transition-transform duration-300" />
-                </div>
+          {/* Brand Logo */}
+          <button
+            id="brand-logo-btn"
+            onClick={() => handleNavClick('home')}
+            className="flex items-center gap-3 text-left group cursor-pointer focus:outline-none"
+          >
+            <div className="relative w-11 h-11 rounded-xl bg-gradient-to-br from-emerald-500 via-sky-500 to-purple-600 p-[2px] shadow-lg shadow-emerald-500/20 group-hover:shadow-purple-500/30 transition-all duration-300">
+              <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
+                <Wrench className="w-6 h-6 text-emerald-400 group-hover:rotate-12 transition-transform duration-300" />
               </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="font-extrabold text-2xl tracking-tight text-white font-['Space_Grotesk']">
-                    HIEU N <span className="bg-gradient-to-r from-emerald-400 via-sky-400 to-orange-400 bg-clip-text text-transparent">AUTO</span>
-                  </span>
-                  <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30 hidden sm:inline-block">
-                    Luxury
-                  </span>
-                </div>
-                <p className="text-[11px] text-slate-400 font-medium tracking-wide">
-                  Nội Thất &amp; Nâng Cấp Ô Tô Chuyên Nghiệp
-                </p>
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="font-extrabold text-2xl tracking-tight text-white font-['Space_Grotesk']">
+                  HIEU N <span className="bg-gradient-to-r from-emerald-400 via-sky-400 to-orange-400 bg-clip-text text-transparent">AUTO</span>
+                </span>
+                <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30 hidden sm:inline-block">
+                  Luxury
+                </span>
               </div>
-            </button>
-
-            {/* Header Animated Back to Previous Page / Section Button */}
-            <AnimatePresence>
-              {canGoBack && onGoBack && (
-                <motion.button
-                  id="header-back-btn"
-                  initial={{ opacity: 0, x: -10, scale: 0.9 }}
-                  animate={{ opacity: 1, x: 0, scale: 1 }}
-                  exit={{ opacity: 0, x: -10, scale: 0.9 }}
-                  whileHover={{ scale: 1.05, x: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={onGoBack}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700/80 hover:border-emerald-400/50 text-xs font-semibold cursor-pointer shadow-sm transition-all ml-1"
-                  title={`Quay lại: ${previousPageTitle || 'Phần trước'} (Phím tắt: Alt + ←)`}
-                >
-                  <ArrowLeft className="w-3.5 h-3.5 text-emerald-400" />
-                  <span className="hidden sm:inline font-bold">Quay lại</span>
-                  {previousPageTitle && (
-                    <span className="hidden xl:inline text-slate-400 font-normal truncate max-w-[130px]">
-                      ({previousPageTitle})
-                    </span>
-                  )}
-                </motion.button>
-              )}
-            </AnimatePresence>
-          </div>
+              <p className="text-[11px] text-slate-400 font-medium tracking-wide">
+                Nội Thất &amp; Nâng Cấp Ô Tô Chuyên Nghiệp
+              </p>
+            </div>
+          </button>
 
           {/* Desktop Menu Navigation with Smooth Layout Animation Glider */}
           <nav className="hidden lg:flex items-center space-x-1 xl:space-x-1.5">
@@ -287,23 +253,6 @@ export const Header: React.FC<HeaderProps> = ({
               />
               <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
             </form>
-
-            {canGoBack && onGoBack && (
-              <button
-                id="mobile-nav-back-btn"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onGoBack();
-                }}
-                className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl bg-slate-900 border border-emerald-500/30 text-emerald-400 font-bold text-sm"
-              >
-                <div className="flex items-center gap-2">
-                  <ArrowLeft className="w-4 h-4" />
-                  <span>Quay lại {previousPageTitle || 'phần trước'}</span>
-                </div>
-                <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-800 text-slate-400">Alt + ←</span>
-              </button>
-            )}
 
             <div className="space-y-1 pt-2">
               {navItems.map((item) => (

@@ -79,23 +79,6 @@ export interface ContactFormData {
   message: string;
 }
 
-export interface HistoryEntry {
-  page: PageId;
-  scrollY: number;
-  sectionId?: string;
-  title: string;
-  timestamp: number;
-}
-
-export const PAGE_TITLES: Record<PageId, string> = {
-  home: 'Trang Chủ',
-  about: 'Giới Thiệu',
-  products: 'Sản Phẩm & Dịch Vụ',
-  blog: 'Tin Tức & Cẩm Nang',
-  contact: 'Liên Hệ',
-  policies: 'Chính Sách',
-};
-
 export interface FilterState {
   category: string;
   priceRange: string;

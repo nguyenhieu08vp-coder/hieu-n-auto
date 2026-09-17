@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { PageId, PolicyTab, Product, CartItem, HistoryEntry, PAGE_TITLES } from './types';
+import { PageId, PolicyTab, Product, CartItem } from './types';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
-import { BackButton } from './components/BackButton';
 import { CartDrawer } from './components/CartDrawer';
 import { ProductDetailModal } from './components/ProductDetailModal';
 import { QuickConsultationModal } from './components/QuickConsultationModal';
@@ -18,41 +17,9 @@ import { PoliciesView } from './views/PoliciesView';
 import { COMPANY_INFO } from './data/mockData';
 import { Phone, MessageCircle, ArrowUp } from 'lucide-react';
 
-const pageTransitionVariants = {
-  enter: (dir: number) => ({
-    x: dir > 0 ? 45 : dir < 0 ? -45 : 0,
-    opacity: 0,
-    scale: 0.995,
-  }),
-  center: {
-    x: 0,
-    opacity: 1,
-    scale: 1,
-    transition: {
-      x: { type: 'spring', stiffness: 340, damping: 30 },
-      opacity: { duration: 0.22, ease: 'easeOut' },
-      scale: { duration: 0.2 },
-    },
-  },
-  exit: (dir: number) => ({
-    x: dir < 0 ? 45 : -45,
-    opacity: 0,
-    scale: 0.995,
-    transition: {
-      x: { type: 'spring', stiffness: 340, damping: 30 },
-      opacity: { duration: 0.18, ease: 'easeIn' },
-    },
-  }),
-};
-
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageId>('home');
   const [policyTab, setPolicyTab] = useState<PolicyTab>('privacy');
-  
-  // Navigation history stack for "Quay lại phần trước"
-  const [historyStack, setHistoryStack] = useState<HistoryEntry[]>([]);
-  // Direction: 1 for forward, -1 for backward, 0 for initial
-  const [direction, setDirection] = useState<number>(0);
 
   // Shopping cart with localStorage persistence
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
@@ -71,77 +38,6 @@ export default function App() {
   const [consultationService, setConsultationService] = useState<string>('Bọc ghế da Nappa cao cấp');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [showScrollTop, setShowScrollTop] = useState(false);
-
-  // Navigate to a new page while recording the previous section into history
-  const navigateTo = useCallback((nextPage: PageId) => {
-    if (nextPage === currentPage) return;
-
-    const currentEntry: HistoryEntry = {
-      page: currentPage,
-      scrollY: window.scrollY,
-      title: PAGE_TITLES[currentPage] || 'Trang Chủ',
-      timestamp: Date.now(),
-    };
-
-    setHistoryStack((prev) => [...prev, currentEntry]);
-    setDirection(1); // Moving forward
-    setCurrentPage(nextPage);
-
-    try {
-      window.history.pushState({ page: nextPage }, '', `#${nextPage}`);
-    } catch {
-      // ignore
-    }
-  }, [currentPage]);
-
-  // Smooth "Go Back to Previous Section / Page" with directional slide animation
-  const handleGoBack = useCallback(() => {
-    if (historyStack.length > 0) {
-      const previous = historyStack[historyStack.length - 1];
-      setDirection(-1); // Moving backward: smooth reverse spatial slide
-      setCurrentPage(previous.page);
-      setHistoryStack((prev) => prev.slice(0, -1));
-
-      try {
-        window.history.replaceState({ page: previous.page }, '', `#${previous.page}`);
-      } catch {
-        // ignore
-      }
-
-      // Smoothly restore previous scroll position or view section
-      setTimeout(() => {
-        if (previous.scrollY > 40) {
-          window.scrollTo({ top: previous.scrollY, behavior: 'smooth' });
-        } else {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-      }, 60);
-    } else if (currentPage !== 'home') {
-      setDirection(-1);
-      setCurrentPage('home');
-      try {
-        window.history.replaceState({ page: 'home' }, '', '#home');
-      } catch {
-        // ignore
-      }
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  }, [historyStack, currentPage]);
-
-  // Browser back button / gesture listener (popstate)
-  useEffect(() => {
-    const handlePopState = (e: PopStateEvent) => {
-      if (e.state && e.state.page) {
-        setDirection(-1);
-        setCurrentPage(e.state.page);
-      } else {
-        handleGoBack();
-      }
-    };
-
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
-  }, [handleGoBack]);
 
   // Save cart to localStorage
   useEffect(() => {
@@ -165,12 +61,10 @@ export default function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // When navigating forward, scroll to top
+  // Smoothly reset scroll position when changing views
   useEffect(() => {
-    if (direction >= 0) {
-      window.scrollTo({ top: 0, behavior: 'instant' });
-    }
-  }, [currentPage, direction]);
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [currentPage]);
 
   const totalCartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
   const totalCartPrice = cartItems.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
@@ -215,49 +109,42 @@ export default function App() {
 
   const openPolicyTabDirectly = (tab: PolicyTab) => {
     setPolicyTab(tab);
-    navigateTo('policies');
+    setCurrentPage('policies');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const previousEntry = historyStack.length > 0 ? historyStack[historyStack.length - 1] : null;
-  const canGoBack = historyStack.length > 0 || currentPage !== 'home';
-  const previousPageTitle = previousEntry?.title || (currentPage !== 'home' ? 'Trang Chủ' : undefined);
-
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-emerald-500 selection:text-white">
-      {/* 1. Header (Fixed navigation with Logo, Pages, Back Button, Cart, Search, Hotline) */}
+      {/* 1. Header (Fixed navigation with Logo, Pages, Cart, Search, Hotline) */}
       <Header
         currentPage={currentPage}
-        setCurrentPage={navigateTo}
+        setCurrentPage={setCurrentPage}
         cartCount={totalCartCount}
         cartTotal={totalCartPrice}
         openCart={() => setIsCartOpen(true)}
         openConsultation={() => openConsultationWithDetails()}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
-        canGoBack={canGoBack}
-        previousPageTitle={previousPageTitle}
-        onGoBack={handleGoBack}
       />
 
-      {/* 2. Main Body View Rendering with Direction-Aware Smooth Transition Effects */}
-      <main className="flex-1 overflow-x-hidden relative">
-        <AnimatePresence mode="wait" custom={direction}>
+      {/* 2. Main Body View Rendering with Smooth Transition Effects */}
+      <main className="flex-1 overflow-x-hidden">
+        <AnimatePresence mode="wait">
           <motion.div
             key={currentPage}
-            custom={direction}
-            variants={pageTransitionVariants}
-            initial="enter"
-            animate="center"
-            exit="exit"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="w-full smooth-gpu"
           >
             {currentPage === 'home' && (
               <HomeView
-                setCurrentPage={navigateTo}
+                setCurrentPage={setCurrentPage}
                 onAddToCart={handleAddToCart}
                 onQuickView={(p) => setQuickViewProduct(p)}
                 openConsultation={openConsultationWithDetails}
@@ -266,9 +153,8 @@ export default function App() {
 
             {currentPage === 'about' && (
               <AboutView
-                setCurrentPage={navigateTo}
+                setCurrentPage={setCurrentPage}
                 openConsultation={() => openConsultationWithDetails()}
-                onGoBack={handleGoBack}
               />
             )}
 
@@ -278,50 +164,36 @@ export default function App() {
                 onQuickView={(p) => setQuickViewProduct(p)}
                 searchQuery={searchQuery}
                 setSearchQuery={setSearchQuery}
-                onGoBack={handleGoBack}
               />
             )}
 
             {currentPage === 'blog' && (
               <BlogView
-                setCurrentPage={navigateTo}
+                setCurrentPage={setCurrentPage}
                 openConsultation={(car, srv) => openConsultationWithDetails(car, srv)}
-                onGoBack={handleGoBack}
               />
             )}
 
-            {currentPage === 'contact' && (
-              <ContactView onGoBack={handleGoBack} />
-            )}
+            {currentPage === 'contact' && <ContactView />}
 
             {currentPage === 'policies' && (
               <PoliciesView
                 activeTab={policyTab}
                 setActiveTab={setPolicyTab}
-                setCurrentPage={navigateTo}
-                onGoBack={handleGoBack}
+                setCurrentPage={setCurrentPage}
               />
             )}
           </motion.div>
         </AnimatePresence>
       </main>
 
-      {/* 3. Floating "Quay lại phần trước" Button with Trail & Shortcuts */}
-      <BackButton
-        canGoBack={canGoBack}
-        previousEntry={previousEntry}
-        historyList={historyStack}
-        onGoBack={handleGoBack}
-        currentPage={currentPage}
-      />
-
-      {/* 4. Footer (Legal information, Policies hyperlinks, Copyright) */}
+      {/* 3. Footer (Legal information, Policies hyperlinks, Copyright) */}
       <Footer
-        setCurrentPage={navigateTo}
+        setCurrentPage={setCurrentPage}
         openPolicyTab={openPolicyTabDirectly}
       />
 
-      {/* 5. Cart Drawer Flyout */}
+      {/* 4. Cart Drawer Flyout */}
       <CartDrawer
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
@@ -331,7 +203,7 @@ export default function App() {
         onClearCart={handleClearCart}
       />
 
-      {/* 6. Product Quick View Detail Modal with exit animation */}
+      {/* 5. Product Quick View Detail Modal with exit animation */}
       <AnimatePresence>
         {quickViewProduct && (
           <ProductDetailModal
@@ -347,7 +219,7 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* 7. Quick Consultation Popup Modal */}
+      {/* 6. Quick Consultation Popup Modal */}
       <QuickConsultationModal
         isOpen={isConsultationOpen}
         onClose={() => setIsConsultationOpen(false)}
@@ -355,7 +227,7 @@ export default function App() {
         defaultService={consultationService}
       />
 
-      {/* 8. Floating Fast Action Widget (Hotline & Consultation Floating Action) */}
+      {/* 7. Floating Fast Action Widget (Hotline & Consultation Floating Action) */}
       <div className="fixed bottom-6 right-6 z-30 flex flex-col items-end gap-3 pointer-events-auto">
         {/* Floating Call Button */}
         <motion.a
