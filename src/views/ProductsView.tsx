@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { 
   Filter, 
   Search, 
@@ -434,138 +435,185 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
           )}
 
           {/* Product Grid (3 or 4 Columns Responsive) as explicitly requested */}
-          {filteredProducts.length === 0 ? (
-            <div className="text-center py-20 rounded-3xl bg-slate-900/50 border border-slate-800 space-y-4">
-              <div className="w-16 h-16 rounded-2xl bg-slate-950 border border-slate-800 text-slate-500 mx-auto flex items-center justify-center">
-                <Search className="w-8 h-8" />
-              </div>
-              <h3 className="text-lg font-bold text-white">Không tìm thấy sản phẩm phù hợp</h3>
-              <p className="text-xs text-slate-400 max-w-md mx-auto">
-                Không có sản phẩm nào khớp với bộ lọc hoặc từ khóa hiện tại. Hãy thử thay đổi khoảng giá hoặc danh mục.
-              </p>
-              <button
-                onClick={handleResetFilters}
-                className="px-6 py-2.5 rounded-xl bg-emerald-500 text-slate-950 font-bold text-xs hover:bg-emerald-400 transition-colors cursor-pointer"
+          <AnimatePresence mode="wait">
+            {filteredProducts.length === 0 ? (
+              <motion.div 
+                key="empty"
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.96 }}
+                transition={{ duration: 0.2 }}
+                className="text-center py-20 rounded-3xl bg-slate-900/50 border border-slate-800 space-y-4"
               >
-                Xóa Bộ Lọc &amp; Xem Lại Tất Cả
-              </button>
-            </div>
-          ) : viewMode === 'table' ? (
-            <ProductTableView
-              products={filteredProducts}
-              onAddToCart={onAddToCart}
-              onQuickView={onQuickView}
-            />
-          ) : viewMode === 'list' ? (
-            <div className="space-y-4">
-              {filteredProducts.map((product) => (
-                <ProductListItem
-                  key={product.id}
-                  product={product}
+                <div className="w-16 h-16 rounded-2xl bg-slate-950 border border-slate-800 text-slate-500 mx-auto flex items-center justify-center">
+                  <Search className="w-8 h-8" />
+                </div>
+                <h3 className="text-lg font-bold text-white">Không tìm thấy sản phẩm phù hợp</h3>
+                <p className="text-xs text-slate-400 max-w-md mx-auto">
+                  Không có sản phẩm nào khớp với bộ lọc hoặc từ khóa hiện tại. Hãy thử thay đổi khoảng giá hoặc danh mục.
+                </p>
+                <button
+                  onClick={handleResetFilters}
+                  className="px-6 py-2.5 rounded-xl bg-emerald-500 text-slate-950 font-bold text-xs hover:bg-emerald-400 transition-colors cursor-pointer"
+                >
+                  Xóa Bộ Lọc &amp; Xem Lại Tất Cả
+                </button>
+              </motion.div>
+            ) : viewMode === 'table' ? (
+              <motion.div
+                key="table"
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.18 }}
+              >
+                <ProductTableView
+                  products={filteredProducts}
                   onAddToCart={onAddToCart}
                   onQuickView={onQuickView}
                 />
-              ))}
-            </div>
-          ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
-              {filteredProducts.map((product) => (
-                <ProductCompactCard
-                  key={product.id}
-                  product={product}
-                  onAddToCart={onAddToCart}
-                  onQuickView={onQuickView}
-                />
-              ))}
-            </div>
-          )}
+              </motion.div>
+            ) : viewMode === 'list' ? (
+              <motion.div 
+                key="list"
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.18 }}
+                className="space-y-4"
+              >
+                {filteredProducts.map((product) => (
+                  <ProductListItem
+                    key={product.id}
+                    product={product}
+                    onAddToCart={onAddToCart}
+                    onQuickView={onQuickView}
+                  />
+                ))}
+              </motion.div>
+            ) : (
+              <motion.div 
+                key="grid"
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.18 }}
+                className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4"
+              >
+                {filteredProducts.map((product) => (
+                  <ProductCompactCard
+                    key={product.id}
+                    product={product}
+                    onAddToCart={onAddToCart}
+                    onQuickView={onQuickView}
+                  />
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </main>
       </div>
 
       {/* Mobile Filters Slide-over Drawer */}
-      {showMobileFilterDrawer && (
-        <div className="fixed inset-0 z-50 overflow-hidden bg-black/70 backdrop-blur-sm lg:hidden animate-in fade-in">
-          <div className="absolute inset-y-0 right-0 max-w-full flex pl-10">
-            <div className="w-screen max-w-sm bg-slate-900 border-l border-slate-800 p-6 flex flex-col justify-between overflow-y-auto">
-              <div className="space-y-6">
-                <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-                  <div className="flex items-center gap-2 font-bold text-white text-base">
-                    <Filter className="w-5 h-5 text-emerald-400" />
-                    <span>Bộ Lọc Sản Phẩm</span>
+      <AnimatePresence>
+        {showMobileFilterDrawer && (
+          <div className="fixed inset-0 z-50 overflow-hidden lg:hidden">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 bg-black/75 backdrop-blur-sm cursor-pointer"
+              onClick={() => setShowMobileFilterDrawer(false)}
+            />
+            <div className="absolute inset-y-0 right-0 max-w-full flex pl-10 pointer-events-none">
+              <motion.div
+                initial={{ x: '100%' }}
+                animate={{ x: 0 }}
+                exit={{ x: '100%' }}
+                transition={{ type: 'spring', damping: 27, stiffness: 280 }}
+                className="w-screen max-w-sm bg-slate-900 border-l border-slate-800 p-6 flex flex-col justify-between overflow-y-auto pointer-events-auto shadow-2xl"
+              >
+                <div className="space-y-6">
+                  <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+                    <div className="flex items-center gap-2 font-bold text-white text-base">
+                      <Filter className="w-5 h-5 text-emerald-400" />
+                      <span>Bộ Lọc Sản Phẩm</span>
+                    </div>
+                    <button
+                      onClick={() => setShowMobileFilterDrawer(false)}
+                      className="p-2 rounded-xl text-slate-400 hover:text-white"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
                   </div>
+
+                  {/* Mobile Categories */}
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold uppercase tracking-wider text-slate-300">
+                      Danh Mục
+                    </label>
+                    <div className="space-y-1">
+                      {CATEGORIES.map((cat) => (
+                        <button
+                          key={cat.id}
+                          type="button"
+                          onClick={() => setSelectedCategory(cat.id)}
+                          className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-colors ${
+                            selectedCategory === cat.id
+                              ? 'bg-emerald-500 text-slate-950 font-bold'
+                              : 'text-slate-300 hover:bg-slate-800'
+                          }`}
+                        >
+                          <span>{cat.name}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Mobile Price */}
+                  <div className="space-y-2 pt-2 border-t border-slate-800">
+                    <label className="text-xs font-bold uppercase tracking-wider text-slate-300">
+                      Khoảng Giá
+                    </label>
+                    <div className="space-y-1">
+                      {priceRanges.map((pr) => (
+                        <label key={pr.id} className="flex items-center gap-2 text-xs text-slate-300 py-1 cursor-pointer">
+                          <input
+                            type="radio"
+                            name="mobile-price"
+                            checked={priceRange === pr.id}
+                            onChange={() => setPriceRange(pr.id)}
+                            className="accent-emerald-500"
+                          />
+                          <span>{pr.label}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-6 border-t border-slate-800 flex gap-2">
                   <button
-                    onClick={() => setShowMobileFilterDrawer(false)}
-                    className="p-2 rounded-xl text-slate-400 hover:text-white"
+                    type="button"
+                    onClick={handleResetFilters}
+                    className="w-1/3 py-3 rounded-xl bg-slate-800 text-slate-300 font-semibold text-xs hover:bg-slate-700 transition-colors"
                   >
-                    <X className="w-5 h-5" />
+                    Đặt Lại
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowMobileFilterDrawer(false)}
+                    className="w-2/3 py-3 rounded-xl bg-emerald-500 text-slate-950 font-bold text-xs hover:bg-emerald-400 transition-colors"
+                  >
+                    Xem {filteredProducts.length} Sản Phẩm
                   </button>
                 </div>
-
-                {/* Mobile Categories */}
-                <div className="space-y-2">
-                  <label className="text-xs font-bold uppercase tracking-wider text-slate-300">
-                    Danh Mục
-                  </label>
-                  <div className="space-y-1">
-                    {CATEGORIES.map((cat) => (
-                      <button
-                        key={cat.id}
-                        type="button"
-                        onClick={() => setSelectedCategory(cat.id)}
-                        className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium ${
-                          selectedCategory === cat.id
-                            ? 'bg-emerald-500 text-slate-950 font-bold'
-                            : 'text-slate-300 hover:bg-slate-800'
-                        }`}
-                      >
-                        <span>{cat.name}</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Mobile Price */}
-                <div className="space-y-2 pt-2 border-t border-slate-800">
-                  <label className="text-xs font-bold uppercase tracking-wider text-slate-300">
-                    Khoảng Giá
-                  </label>
-                  <div className="space-y-1">
-                    {priceRanges.map((pr) => (
-                      <label key={pr.id} className="flex items-center gap-2 text-xs text-slate-300 py-1">
-                        <input
-                          type="radio"
-                          name="mobile-price"
-                          checked={priceRange === pr.id}
-                          onChange={() => setPriceRange(pr.id)}
-                          className="accent-emerald-500"
-                        />
-                        <span>{pr.label}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              <div className="pt-6 border-t border-slate-800 flex gap-2">
-                <button
-                  type="button"
-                  onClick={handleResetFilters}
-                  className="w-1/3 py-3 rounded-xl bg-slate-800 text-slate-300 font-semibold text-xs"
-                >
-                  Đặt Lại
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setShowMobileFilterDrawer(false)}
-                  className="w-2/3 py-3 rounded-xl bg-emerald-500 text-slate-950 font-bold text-xs"
-                >
-                  Xem {filteredProducts.length} Sản Phẩm
-                </button>
-              </div>
+              </motion.div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
     </div>
   );
 };

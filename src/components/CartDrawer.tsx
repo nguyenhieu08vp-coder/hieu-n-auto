@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { 
   X, 
   Trash2, 
@@ -45,8 +46,6 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   const [appliedDiscount, setAppliedDiscount] = useState<number>(0);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  if (!isOpen) return null;
 
   const subtotal = cartItems.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
   const discountAmount = appliedDiscount > 0 ? (subtotal * appliedDiscount) / 100 : 0;
@@ -123,10 +122,28 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden bg-black/70 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="absolute inset-y-0 right-0 max-w-full flex pl-10">
-        <div className="w-screen max-w-md bg-slate-900 border-l border-slate-800 shadow-2xl flex flex-col justify-between">
-          {/* Drawer Header */}
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-50 overflow-hidden">
+          {/* Animated Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 bg-black/75 backdrop-blur-sm cursor-pointer"
+            onClick={onClose}
+          />
+
+          <div className="fixed inset-y-0 right-0 max-w-full flex pl-10 pointer-events-none">
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 28, stiffness: 280 }}
+              className="w-screen max-w-md bg-slate-900 border-l border-slate-800 shadow-2xl flex flex-col justify-between pointer-events-auto"
+            >
+              {/* Drawer Header */}
           <div className="p-5 sm:p-6 border-b border-slate-800 flex items-center justify-between bg-slate-950">
             <div className="flex items-center gap-2.5">
               <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center">
@@ -326,59 +343,66 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
               /* Cart Item List */
               <>
                 <div className="space-y-3">
-                  {cartItems.map((item) => (
-                    <div
-                      key={item.product.id}
-                      className="p-3.5 rounded-2xl bg-slate-950 border border-slate-800/80 flex gap-3 items-center"
-                    >
-                      <img
-                        src={item.product.primaryImage}
-                        alt={item.product.name}
-                        className="w-16 h-16 rounded-xl object-cover bg-slate-900 flex-shrink-0"
-                      />
-                      <div className="flex-1 min-w-0">
-                        <h4 className="text-xs font-bold text-white truncate leading-snug">
-                          {item.product.name}
-                        </h4>
-                        {item.selectedColor && (
-                          <p className="text-[11px] text-slate-400">
-                            Màu: <span className="text-emerald-400">{item.selectedColor}</span>
-                          </p>
-                        )}
-                        <div className="text-xs font-bold text-orange-400 mt-1">
-                          {FORMAT_CURRENCY(item.product.price)}
+                  <AnimatePresence initial={false}>
+                    {cartItems.map((item) => (
+                      <motion.div
+                        key={item.product.id}
+                        layout
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.9, height: 0, marginTop: 0, marginBottom: 0, overflow: 'hidden' }}
+                        transition={{ duration: 0.22 }}
+                        className="p-3.5 rounded-2xl bg-slate-950 border border-slate-800/80 flex gap-3 items-center"
+                      >
+                        <img
+                          src={item.product.primaryImage}
+                          alt={item.product.name}
+                          className="w-16 h-16 rounded-xl object-cover bg-slate-900 flex-shrink-0"
+                        />
+                        <div className="flex-1 min-w-0">
+                          <h4 className="text-xs font-bold text-white truncate leading-snug">
+                            {item.product.name}
+                          </h4>
+                          {item.selectedColor && (
+                            <p className="text-[11px] text-slate-400">
+                              Màu: <span className="text-emerald-400">{item.selectedColor}</span>
+                            </p>
+                          )}
+                          <div className="text-xs font-bold text-orange-400 mt-1">
+                            {FORMAT_CURRENCY(item.product.price)}
+                          </div>
                         </div>
-                      </div>
 
-                      {/* Quantity Modifier */}
-                      <div className="flex flex-col items-end gap-2">
-                        <button
-                          onClick={() => onRemoveItem(item.product.id)}
-                          className="text-slate-500 hover:text-rose-400 p-1 transition-colors"
-                          title="Xóa sản phẩm"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
-                        <div className="flex items-center border border-slate-800 rounded-lg bg-slate-900">
+                        {/* Quantity Modifier */}
+                        <div className="flex flex-col items-end gap-2">
                           <button
-                            onClick={() => onUpdateQuantity(item.product.id, item.quantity - 1)}
-                            className="w-6 h-6 text-slate-400 hover:text-white flex items-center justify-center font-bold"
+                            onClick={() => onRemoveItem(item.product.id)}
+                            className="text-slate-500 hover:text-rose-400 p-1 transition-colors cursor-pointer"
+                            title="Xóa sản phẩm"
                           >
-                            -
+                            <Trash2 className="w-3.5 h-3.5" />
                           </button>
-                          <span className="w-6 text-center text-xs font-bold text-white">
-                            {item.quantity}
-                          </span>
-                          <button
-                            onClick={() => onUpdateQuantity(item.product.id, item.quantity + 1)}
-                            className="w-6 h-6 text-slate-400 hover:text-white flex items-center justify-center font-bold"
-                          >
-                            +
-                          </button>
+                          <div className="flex items-center border border-slate-800 rounded-lg bg-slate-900">
+                            <button
+                              onClick={() => onUpdateQuantity(item.product.id, item.quantity - 1)}
+                              className="w-6 h-6 text-slate-400 hover:text-white flex items-center justify-center font-bold cursor-pointer"
+                            >
+                              -
+                            </button>
+                            <span className="w-6 text-center text-xs font-bold text-white">
+                              {item.quantity}
+                            </span>
+                            <button
+                              onClick={() => onUpdateQuantity(item.product.id, item.quantity + 1)}
+                              className="w-6 h-6 text-slate-400 hover:text-white flex items-center justify-center font-bold cursor-pointer"
+                            >
+                              +
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  ))}
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
                 </div>
 
                 {/* Coupon input */}
@@ -449,8 +473,10 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
               </div>
             </div>
           )}
+            </motion.div>
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </AnimatePresence>
   );
 };

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { 
   X, 
   ShoppingBag, 
@@ -151,9 +152,21 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
     : reviewsList.filter((r) => r.rating === selectedStarFilter);
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/80 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-200">
-      <div 
-        className="relative bg-slate-900 border border-slate-700/80 rounded-3xl w-full max-w-5xl overflow-hidden shadow-2xl my-8 max-h-[90vh] flex flex-col"
+    <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4 sm:p-6">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.2 }}
+        className="fixed inset-0 bg-black/80 backdrop-blur-md cursor-pointer"
+        onClick={onClose}
+      />
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.94, y: 16 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.94, y: 16 }}
+        transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+        className="relative bg-slate-900 border border-slate-700/80 rounded-3xl w-full max-w-5xl overflow-hidden shadow-2xl my-8 max-h-[90vh] flex flex-col z-10"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
@@ -689,7 +702,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

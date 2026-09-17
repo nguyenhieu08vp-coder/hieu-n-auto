@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { 
   Sparkles, 
   ArrowRight, 
@@ -153,39 +154,63 @@ export const HomeView: React.FC<HomeViewProps> = ({
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 w-full">
           <div className="max-w-3xl space-y-6">
             {/* Top Eyebrow Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-emerald-500/30 text-emerald-300 text-xs sm:text-sm font-bold backdrop-blur-md shadow-lg shadow-emerald-950/40">
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-emerald-500/30 text-emerald-300 text-xs sm:text-sm font-bold backdrop-blur-md shadow-lg shadow-emerald-950/40"
+            >
               <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-ping" />
               <span>Hệ Thống Nâng Cấp Nội Thất Xe Hơi Uy Tín Tại Việt Nam</span>
-            </div>
+            </motion.div>
 
             {/* Impressive Slogan */}
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.15] font-['Space_Grotesk']">
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.15] font-['Space_Grotesk']"
+            >
               Độ Zin Xế Cưng, <br />
               <span className="bg-gradient-to-r from-emerald-400 via-sky-300 to-orange-400 bg-clip-text text-transparent">
                 Nâng Tầm Trải Nghiệm
               </span>
-            </h1>
+            </motion.h1>
 
             {/* Subheading text */}
-            <p className="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl"
+            >
               Hieu N Auto thiết kế và thi công nội thất theo từng dòng xe và theo yêu cầu của khách hàng — từ camera hành trình, camera 360, LED nội thất, phim cách nhiệt,... đảm bảo thi công chuẩn zin, không cắt trích dây zin của xe.
-            </p>
+            </motion.p>
 
             {/* Prominent CTA Buttons explicitly requested: "Mua ngay" hoặc "Nhận tư vấn" */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2"
+            >
               {/* Primary CTA: "Nhận tư vấn" */}
-              <button
+              <motion.button
                 id="hero-cta-consult-btn"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
                 onClick={() => openConsultation()}
-                className="px-8 py-4 rounded-2xl font-extrabold text-base bg-gradient-to-r from-orange-500 via-orange-600 to-amber-500 text-white shadow-xl shadow-orange-500/30 hover:shadow-orange-500/50 hover:scale-[1.02] active:scale-95 transition-all duration-200 flex items-center justify-center gap-2.5 cursor-pointer"
+                className="px-8 py-4 rounded-2xl font-extrabold text-base bg-gradient-to-r from-orange-500 via-orange-600 to-amber-500 text-white shadow-xl shadow-orange-500/30 hover:shadow-orange-500/50 transition-all duration-200 flex items-center justify-center gap-2.5 cursor-pointer"
               >
                 <Phone className="w-5 h-5" />
                 <span>Nhận Tư Vấn &amp; Báo Giá Ngay</span>
-              </button>
+              </motion.button>
 
               {/* Secondary CTA: "Mua ngay" / Xem sản phẩm */}
-              <button
+              <motion.button
                 id="hero-cta-buy-btn"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
                 onClick={() => {
                   setCurrentPage('products');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -194,11 +219,16 @@ export const HomeView: React.FC<HomeViewProps> = ({
               >
                 <span>Mua Ngay / Xem Sản Phẩm</span>
                 <ArrowRight className="w-5 h-5 text-emerald-400" />
-              </button>
-            </div>
+              </motion.button>
+            </motion.div>
 
             {/* Social Proof & Metrics */}
-            <div className="pt-6 border-t border-slate-800/80 grid grid-cols-3 gap-4 max-w-lg text-slate-300">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="pt-6 border-t border-slate-800/80 grid grid-cols-3 gap-4 max-w-lg text-slate-300"
+            >
               <div>
                 <div className="text-xl sm:text-2xl font-extrabold text-white font-['Space_Grotesk']">
                   5.000+
@@ -217,7 +247,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 </div>
                 <div className="text-[11px] sm:text-xs text-slate-400">Kinh nghiệm xe sang</div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -517,26 +547,41 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 </div>
 
                 {/* Selected Add-ons List */}
-                {selectedAddons.length > 0 && (
-                  <div className="pt-3 border-t border-slate-800/80 space-y-2 text-xs">
-                    <span className="text-slate-400 font-semibold block flex items-center justify-between">
-                      <span>Phụ kiện chọn thêm ({selectedAddons.length}):</span>
-                      <span className="text-amber-400 font-bold">+{FORMAT_CURRENCY(addonsTotal)}</span>
-                    </span>
-                    <div className="space-y-1.5">
-                      {selectedAddons.map(addonId => {
-                        const addon = customAddonList.find(a => a.id === addonId);
-                        if (!addon) return null;
-                        return (
-                          <div key={addonId} className="flex items-center justify-between text-[11px] text-slate-300 bg-slate-900/70 px-2.5 py-1 rounded-lg border border-slate-800">
-                            <span className="line-clamp-1">{addon.name}</span>
-                            <span className="font-bold text-amber-400 ml-2 whitespace-nowrap">+{FORMAT_CURRENCY(addon.price)}</span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
+                <AnimatePresence>
+                  {selectedAddons.length > 0 && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.22 }}
+                      className="overflow-hidden pt-3 border-t border-slate-800/80 space-y-2 text-xs"
+                    >
+                      <span className="text-slate-400 font-semibold flex items-center justify-between">
+                        <span>Phụ kiện chọn thêm ({selectedAddons.length}):</span>
+                        <span className="text-amber-400 font-bold">+{FORMAT_CURRENCY(addonsTotal)}</span>
+                      </span>
+                      <div className="space-y-1.5">
+                        {selectedAddons.map(addonId => {
+                          const addon = customAddonList.find(a => a.id === addonId);
+                          if (!addon) return null;
+                          return (
+                            <motion.div 
+                              key={addonId} 
+                              layout
+                              initial={{ opacity: 0, y: -4 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0, y: -4 }}
+                              className="flex items-center justify-between text-[11px] text-slate-300 bg-slate-900/70 px-2.5 py-1 rounded-lg border border-slate-800"
+                            >
+                              <span className="line-clamp-1">{addon.name}</span>
+                              <span className="font-bold text-amber-400 ml-2 whitespace-nowrap">+{FORMAT_CURRENCY(addon.price)}</span>
+                            </motion.div>
+                          );
+                        })}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
 
                 {/* Price Display */}
                 <div className="pt-3 border-t border-slate-800">
@@ -550,16 +595,27 @@ export const HomeView: React.FC<HomeViewProps> = ({
                       Tiết kiệm 10%
                     </span>
                   </div>
-                  <div className="text-3xl font-black text-orange-400 tracking-tight mt-1">
-                    {FORMAT_CURRENCY(currentPrice)}
-                  </div>
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={currentPrice}
+                      initial={{ opacity: 0.5, y: -4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0.5, y: 4 }}
+                      transition={{ duration: 0.15 }}
+                      className="text-3xl font-black text-orange-400 tracking-tight mt-1"
+                    >
+                      {FORMAT_CURRENCY(currentPrice)}
+                    </motion.div>
+                  </AnimatePresence>
                   <div className="text-[11px] text-slate-400 mt-2 flex items-center gap-1.5">
                     <Clock className="w-3.5 h-3.5 text-sky-400 flex-shrink-0" />
                     <span>Thời gian thi công: <strong className="text-white">{estimatePackages[selectedPackage].time}</strong></span>
                   </div>
                 </div>
 
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.015 }}
+                  whileTap={{ scale: 0.985 }}
                   id="calc-submit-btn"
                   onClick={() => {
                     const vehicleLabel = 
@@ -574,7 +630,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 >
                   <Phone className="w-4 h-4" />
                   <span>Nhận Báo Giá Chi Tiết &amp; Giữ Lịch</span>
-                </button>
+                </motion.button>
 
                 <p className="text-[11px] text-center text-slate-500">
                   * Giá trên đã bao gồm toàn bộ công lắp đặt, cắm giắc Zin 100% và bảo hành chính hãng.

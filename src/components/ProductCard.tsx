@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'motion/react';
 import { 
   ShoppingBag, 
   Eye, 
@@ -37,9 +38,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   };
 
   return (
-    <div
+    <motion.div
       id={`product-card-${product.id}`}
-      className="group relative bg-slate-900/90 rounded-2xl border border-slate-800 hover:border-emerald-500/50 hover:shadow-xl hover:shadow-emerald-950/30 transition-all duration-300 flex flex-col overflow-hidden"
+      whileHover={{ y: -6, transition: { duration: 0.22, ease: 'easeOut' } }}
+      className="group relative bg-slate-900/90 rounded-2xl border border-slate-800 hover:border-emerald-500/50 hover:shadow-2xl hover:shadow-emerald-950/40 transition-shadow duration-300 flex flex-col overflow-hidden"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -197,6 +199,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           </button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };

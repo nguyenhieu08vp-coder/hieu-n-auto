@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { PageId, PolicyTab, Product, CartItem } from './types';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
@@ -59,6 +60,11 @@ export default function App() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Smoothly reset scroll position when changing views
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [currentPage]);
 
   const totalCartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
   const totalCartPrice = cartItems.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
@@ -125,49 +131,60 @@ export default function App() {
         setSearchQuery={setSearchQuery}
       />
 
-      {/* 2. Main Body View Rendering */}
-      <main className="flex-1">
-        {currentPage === 'home' && (
-          <HomeView
-            setCurrentPage={setCurrentPage}
-            onAddToCart={handleAddToCart}
-            onQuickView={(p) => setQuickViewProduct(p)}
-            openConsultation={openConsultationWithDetails}
-          />
-        )}
+      {/* 2. Main Body View Rendering with Smooth Transition Effects */}
+      <main className="flex-1 overflow-x-hidden">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentPage}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="w-full smooth-gpu"
+          >
+            {currentPage === 'home' && (
+              <HomeView
+                setCurrentPage={setCurrentPage}
+                onAddToCart={handleAddToCart}
+                onQuickView={(p) => setQuickViewProduct(p)}
+                openConsultation={openConsultationWithDetails}
+              />
+            )}
 
-        {currentPage === 'about' && (
-          <AboutView
-            setCurrentPage={setCurrentPage}
-            openConsultation={() => openConsultationWithDetails()}
-          />
-        )}
+            {currentPage === 'about' && (
+              <AboutView
+                setCurrentPage={setCurrentPage}
+                openConsultation={() => openConsultationWithDetails()}
+              />
+            )}
 
-        {currentPage === 'products' && (
-          <ProductsView
-            onAddToCart={handleAddToCart}
-            onQuickView={(p) => setQuickViewProduct(p)}
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-          />
-        )}
+            {currentPage === 'products' && (
+              <ProductsView
+                onAddToCart={handleAddToCart}
+                onQuickView={(p) => setQuickViewProduct(p)}
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+              />
+            )}
 
-        {currentPage === 'blog' && (
-          <BlogView
-            setCurrentPage={setCurrentPage}
-            openConsultation={(car, srv) => openConsultationWithDetails(car, srv)}
-          />
-        )}
+            {currentPage === 'blog' && (
+              <BlogView
+                setCurrentPage={setCurrentPage}
+                openConsultation={(car, srv) => openConsultationWithDetails(car, srv)}
+              />
+            )}
 
-        {currentPage === 'contact' && <ContactView />}
+            {currentPage === 'contact' && <ContactView />}
 
-        {currentPage === 'policies' && (
-          <PoliciesView
-            activeTab={policyTab}
-            setActiveTab={setPolicyTab}
-            setCurrentPage={setCurrentPage}
-          />
-        )}
+            {currentPage === 'policies' && (
+              <PoliciesView
+                activeTab={policyTab}
+                setActiveTab={setPolicyTab}
+                setCurrentPage={setCurrentPage}
+              />
+            )}
+          </motion.div>
+        </AnimatePresence>
       </main>
 
       {/* 3. Footer (Legal information, Policies hyperlinks, Copyright) */}
@@ -186,17 +203,21 @@ export default function App() {
         onClearCart={handleClearCart}
       />
 
-      {/* 5. Product Quick View Detail Modal */}
-      <ProductDetailModal
-        product={quickViewProduct}
-        onClose={() => setQuickViewProduct(null)}
-        onAddToCart={handleAddToCart}
-        openConsultation={() => {
-          if (quickViewProduct) {
-            openConsultationWithDetails('', quickViewProduct.name);
-          }
-        }}
-      />
+      {/* 5. Product Quick View Detail Modal with exit animation */}
+      <AnimatePresence>
+        {quickViewProduct && (
+          <ProductDetailModal
+            product={quickViewProduct}
+            onClose={() => setQuickViewProduct(null)}
+            onAddToCart={handleAddToCart}
+            openConsultation={() => {
+              if (quickViewProduct) {
+                openConsultationWithDetails('', quickViewProduct.name);
+              }
+            }}
+          />
+        )}
+      </AnimatePresence>
 
       {/* 6. Quick Consultation Popup Modal */}
       <QuickConsultationModal
@@ -209,10 +230,12 @@ export default function App() {
       {/* 7. Floating Fast Action Widget (Hotline & Consultation Floating Action) */}
       <div className="fixed bottom-6 right-6 z-30 flex flex-col items-end gap-3 pointer-events-auto">
         {/* Floating Call Button */}
-        <a
+        <motion.a
           href={`tel:${COMPANY_INFO.hotline}`}
           id="floating-hotline-btn"
-          className="relative group p-3.5 sm:p-4 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-2xl shadow-orange-500/40 hover:scale-110 active:scale-95 transition-all flex items-center justify-center cursor-pointer"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          className="relative group p-3.5 sm:p-4 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-2xl shadow-orange-500/40 flex items-center justify-center cursor-pointer"
           title="Gọi Hotline 24/7"
         >
           <span className="absolute -top-1 -right-1 flex h-3 w-3">
@@ -223,19 +246,26 @@ export default function App() {
           <span className="absolute right-full mr-3 top-1/2 -translate-y-1/2 px-3 py-1.5 rounded-xl bg-slate-900 text-white text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-slate-700 shadow-xl hidden sm:block">
             Hotline: {COMPANY_INFO.hotline}
           </span>
-        </a>
+        </motion.a>
 
-        {/* Scroll To Top Button */}
-        {showScrollTop && (
-          <button
-            onClick={scrollToTop}
-            id="scroll-to-top-btn"
-            className="p-3 rounded-full bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700 shadow-lg backdrop-blur-md transition-all cursor-pointer"
-            title="Lên đầu trang"
-          >
-            <ArrowUp className="w-4 h-4" />
-          </button>
-        )}
+        {/* Scroll To Top Button with Smooth AnimatePresence */}
+        <AnimatePresence>
+          {showScrollTop && (
+            <motion.button
+              onClick={scrollToTop}
+              id="scroll-to-top-btn"
+              initial={{ opacity: 0, scale: 0.6, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.6, y: 10 }}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              className="p-3 rounded-full bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700 shadow-lg backdrop-blur-md transition-colors cursor-pointer"
+              title="Lên đầu trang"
+            >
+              <ArrowUp className="w-4 h-4" />
+            </motion.button>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

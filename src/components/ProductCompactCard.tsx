@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'motion/react';
 import { 
   ShoppingBag, 
   Eye, 
@@ -35,9 +36,10 @@ export const ProductCompactCard: React.FC<ProductCompactCardProps> = ({
   };
 
   return (
-    <div
+    <motion.div
       id={`product-compact-${product.id}`}
-      className="group relative bg-slate-900/90 rounded-xl border border-slate-800 hover:border-emerald-500/50 hover:shadow-lg transition-all duration-200 flex flex-col overflow-hidden"
+      whileHover={{ y: -4, transition: { duration: 0.2, ease: 'easeOut' } }}
+      className="group relative bg-slate-900/90 rounded-xl border border-slate-800 hover:border-emerald-500/50 hover:shadow-lg transition-shadow duration-200 flex flex-col overflow-hidden"
     >
       {/* Square Image */}
       <div 
@@ -134,6 +136,6 @@ export const ProductCompactCard: React.FC<ProductCompactCardProps> = ({
           </button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
