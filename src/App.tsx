@@ -26,6 +26,30 @@ const PAGE_ORDER: Record<PageId, number> = {
   policies: 5,
 };
 
+// Hiệu ứng chuyển cảnh đồng bộ, mượt mà và sang trọng cho tất cả các mục (Home, About, Products, Blog, Contact, Policies)
+const pageTransitionVariants = {
+  enter: (dir: number) => ({
+    x: dir >= 0 ? 36 : -36,
+    opacity: 0,
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      x: { duration: 0.28, ease: [0.22, 1, 0.36, 1] },
+      opacity: { duration: 0.24, ease: 'easeOut' },
+    },
+  },
+  exit: (dir: number) => ({
+    x: dir >= 0 ? -36 : 36,
+    opacity: 0,
+    transition: {
+      x: { duration: 0.18, ease: [0.32, 0, 0.67, 0] },
+      opacity: { duration: 0.16, ease: 'easeIn' },
+    },
+  }),
+};
+
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageId>('home');
   const [policyTab, setPolicyTab] = useState<PolicyTab>('privacy');
@@ -61,10 +85,7 @@ export default function App() {
 
     setDirection(slideDirection);
     setCurrentPage(nextPage);
-
-    if (window.scrollY > 100) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    window.scrollTo({ top: 0, behavior: 'instant' });
 
     try {
       window.history.pushState({ page: nextPage }, '', `#${nextPage}`);
@@ -175,25 +196,27 @@ export default function App() {
         setSearchQuery={setSearchQuery}
       />
 
-      {/* 2. Main Body View Rendering (Chỉ áp dụng hiệu ứng chuyển cảnh cho Trang Chủ, các mục khác chuyển tức thì) */}
+      {/* 2. Main Body View Rendering with Identical, Silk-Smooth Transitions Across All Sections */}
       <main className="flex-1 overflow-x-hidden relative min-h-[70vh]">
-        {currentPage === 'home' ? (
+        <AnimatePresence mode="wait" custom={direction} initial={false}>
           <motion.div
-            key="home"
-            initial={{ opacity: 0, x: -80 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ type: 'spring', stiffness: 280, damping: 28, mass: 0.8 }}
-            className="w-full"
+            key={currentPage}
+            custom={direction}
+            variants={pageTransitionVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            className="w-full will-change-transform"
           >
-            <HomeView
-              setCurrentPage={navigateTo}
-              onAddToCart={handleAddToCart}
-              onQuickView={(p) => setQuickViewProduct(p)}
-              openConsultation={openConsultationWithDetails}
-            />
-          </motion.div>
-        ) : (
-          <div className="w-full">
+            {currentPage === 'home' && (
+              <HomeView
+                setCurrentPage={navigateTo}
+                onAddToCart={handleAddToCart}
+                onQuickView={(p) => setQuickViewProduct(p)}
+                openConsultation={openConsultationWithDetails}
+              />
+            )}
+
             {currentPage === 'about' && (
               <AboutView
                 setCurrentPage={navigateTo}
@@ -228,8 +251,8 @@ export default function App() {
                 setCurrentPage={navigateTo}
               />
             )}
-          </div>
-        )}
+          </motion.div>
+        </AnimatePresence>
       </main>
 
       {/* 3. Footer (Legal information, Policies hyperlinks, Copyright) */}

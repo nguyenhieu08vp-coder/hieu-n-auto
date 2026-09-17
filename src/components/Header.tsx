@@ -50,7 +50,6 @@ export const Header: React.FC<HeaderProps> = ({
   const handleNavClick = (page: PageId) => {
     setCurrentPage(page);
     setMobileMenuOpen(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleSearchSubmit = (e: React.FormEvent) => {
