@@ -1,0 +1,6 @@
+{
+  "name": "Hieu N Auto - Nội Thất Ô Tô Cao Cấp",
+  "description": "Website kinh doanh và dịch vụ nội thất ô tô chuyên nghiệp Hieu N Auto",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
