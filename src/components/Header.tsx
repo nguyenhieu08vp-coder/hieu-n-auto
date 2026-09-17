@@ -57,14 +57,18 @@ export const Header: React.FC<HeaderProps> = ({
     if (searchQuery.trim()) {
       setCurrentPage('products');
       setShowSearchModal(false);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
   return (
     <header className="sticky top-0 z-40 w-full backdrop-blur-xl bg-slate-950/90 border-b border-slate-800/80 transition-all duration-300">
       {/* Top Banner Bar */}
-      <div className="bg-gradient-to-r from-emerald-950/80 via-slate-900 to-purple-950/80 border-b border-slate-800/50 text-xs py-1.5 px-4 hidden md:block">
+      <motion.div
+        initial={{ opacity: 0, y: -8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: 'easeOut' }}
+        className="bg-gradient-to-r from-emerald-950/80 via-slate-900 to-purple-950/80 border-b border-slate-800/50 text-xs py-1.5 px-4 hidden md:block"
+      >
         <div className="max-w-7xl mx-auto flex items-center justify-between text-slate-300">
           <div className="flex items-center space-x-6">
             <span className="flex items-center gap-1.5 text-emerald-400 font-medium">
@@ -91,13 +95,18 @@ export const Header: React.FC<HeaderProps> = ({
             </a>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Main Navigation Bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Brand Logo */}
-          <div className="flex items-center gap-3">
+          <motion.div
+            initial={{ opacity: 0, x: -16 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            className="flex items-center gap-3"
+          >
             <button
               id="brand-logo-btn"
               onClick={() => handleNavClick('home')}
@@ -122,16 +131,19 @@ export const Header: React.FC<HeaderProps> = ({
                 </p>
               </div>
             </button>
-          </div>
+          </motion.div>
 
-          {/* Desktop Menu Navigation */}
+          {/* Desktop Menu Navigation with Staggered Entrance */}
           <nav className="hidden lg:flex items-center space-x-1 xl:space-x-1.5">
-            {navItems.map((item) => {
+            {navItems.map((item, index) => {
               const isActive = currentPage === item.id;
               return (
-                <button
+                <motion.button
                   key={item.id}
                   id={`nav-item-${item.id}`}
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.35, delay: 0.05 * index, ease: [0.22, 1, 0.36, 1] }}
                   onClick={() => handleNavClick(item.id)}
                   className={`relative px-4 py-2 rounded-xl text-sm font-semibold transition-colors duration-200 cursor-pointer ${
                     isActive
@@ -156,13 +168,18 @@ export const Header: React.FC<HeaderProps> = ({
                       </span>
                     )}
                   </span>
-                </button>
+                </motion.button>
               );
             })}
           </nav>
 
           {/* Action Buttons: Search, Cart, Consultation */}
-          <div className="flex items-center space-x-3">
+          <motion.div
+            initial={{ opacity: 0, x: 16 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.4, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            className="flex items-center space-x-3"
+          >
             {/* Search Trigger Button */}
             <motion.button
               id="header-search-btn"
@@ -229,7 +246,7 @@ export const Header: React.FC<HeaderProps> = ({
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
-          </div>
+          </motion.div>
         </div>
       </div>
 

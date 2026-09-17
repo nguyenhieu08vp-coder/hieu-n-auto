@@ -294,7 +294,6 @@ export const PoliciesView: React.FC<PoliciesViewProps> = ({
           <button
             onClick={() => {
               setCurrentPage('contact');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold whitespace-nowrap transition-colors"
           >

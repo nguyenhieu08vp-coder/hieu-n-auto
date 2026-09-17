@@ -28,24 +28,27 @@ const PAGE_ORDER: Record<PageId, number> = {
 
 // Hiệu ứng chuyển cảnh đồng bộ, mượt mà và sang trọng cho tất cả các mục (Home, About, Products, Blog, Contact, Policies)
 const pageTransitionVariants = {
-  enter: (dir: number) => ({
-    x: dir >= 0 ? 36 : -36,
+  enter: (custom: { dir: number; isInitial: boolean }) => ({
+    x: custom.isInitial ? 0 : (custom.dir >= 0 ? 72 : -72),
+    y: custom.isInitial ? 18 : 0,
     opacity: 0,
   }),
   center: {
     x: 0,
+    y: 0,
     opacity: 1,
     transition: {
-      x: { duration: 0.28, ease: [0.22, 1, 0.36, 1] },
-      opacity: { duration: 0.24, ease: 'easeOut' },
+      x: { duration: 0.32, ease: [0.22, 1, 0.36, 1] },
+      y: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
+      opacity: { duration: 0.28, ease: 'easeOut' },
     },
   },
-  exit: (dir: number) => ({
-    x: dir >= 0 ? -36 : 36,
+  exit: (custom: { dir: number; isInitial: boolean }) => ({
+    x: custom.dir >= 0 ? -72 : 72,
     opacity: 0,
     transition: {
-      x: { duration: 0.18, ease: [0.32, 0, 0.67, 0] },
-      opacity: { duration: 0.16, ease: 'easeIn' },
+      x: { duration: 0.22, ease: [0.32, 0, 0.67, 0] },
+      opacity: { duration: 0.18, ease: 'easeIn' },
     },
   }),
 };
@@ -54,6 +57,16 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState<PageId>('home');
   const [policyTab, setPolicyTab] = useState<PolicyTab>('privacy');
   
+  // Track initial page load vs subsequent page transitions
+  const [isInitialMount, setIsInitialMount] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsInitialMount(false);
+    }, 600);
+    return () => clearTimeout(timer);
+  }, []);
+
   // Direction: 1 for sliding right, -1 for sliding left
   const [direction, setDirection] = useState<number>(1);
 
@@ -198,15 +211,15 @@ export default function App() {
 
       {/* 2. Main Body View Rendering with Identical, Silk-Smooth Transitions Across All Sections */}
       <main className="flex-1 overflow-x-hidden relative min-h-[70vh]">
-        <AnimatePresence mode="wait" custom={direction} initial={false}>
+        <AnimatePresence mode="wait" custom={{ dir: direction, isInitial: isInitialMount }} initial={true}>
           <motion.div
             key={currentPage}
-            custom={direction}
+            custom={{ dir: direction, isInitial: isInitialMount }}
             variants={pageTransitionVariants}
             initial="enter"
             animate="center"
             exit="exit"
-            className="w-full will-change-transform"
+            className="w-full will-change-transform overflow-x-hidden"
           >
             {currentPage === 'home' && (
               <HomeView

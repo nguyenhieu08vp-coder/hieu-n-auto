@@ -279,7 +279,6 @@ export const AboutView: React.FC<AboutViewProps> = ({
             <button
               onClick={() => {
                 setCurrentPage('contact');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
               className="px-6 py-3 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-200 border border-slate-700 font-semibold text-sm transition-colors cursor-pointer"
             >

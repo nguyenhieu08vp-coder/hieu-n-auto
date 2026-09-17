@@ -213,7 +213,6 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 whileTap={{ scale: 0.97 }}
                 onClick={() => {
                   setCurrentPage('products');
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
                 className="px-8 py-4 rounded-2xl font-bold text-base bg-slate-900/90 hover:bg-slate-800 text-white border border-slate-700/80 hover:border-emerald-400/50 backdrop-blur-md transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
@@ -272,7 +271,6 @@ export const HomeView: React.FC<HomeViewProps> = ({
             id="view-all-bestsellers-btn"
             onClick={() => {
               setCurrentPage('products');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             className="inline-flex items-center gap-2 text-emerald-400 hover:text-emerald-300 font-bold text-sm transition-colors group cursor-pointer"
           >
@@ -320,7 +318,6 @@ export const HomeView: React.FC<HomeViewProps> = ({
                   id={`home-cat-card-${cat.id}`}
                   onClick={() => {
                     setCurrentPage('products');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
                   className="p-4 rounded-2xl bg-slate-900/80 hover:bg-slate-800/90 border border-slate-800 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-950/20 text-left transition-all duration-200 group cursor-pointer flex flex-col justify-between"
                 >
@@ -669,7 +666,6 @@ export const HomeView: React.FC<HomeViewProps> = ({
             <button
               onClick={() => {
                 setCurrentPage('products');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
               className="text-xs font-bold text-emerald-400 flex items-center gap-1 group-hover:gap-2 transition-all cursor-pointer"
             >
@@ -690,7 +686,6 @@ export const HomeView: React.FC<HomeViewProps> = ({
             <button
               onClick={() => {
                 setCurrentPage('products');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
               className="text-xs font-bold text-purple-400 flex items-center gap-1 group-hover:gap-2 transition-all cursor-pointer"
             >
@@ -711,7 +706,6 @@ export const HomeView: React.FC<HomeViewProps> = ({
             <button
               onClick={() => {
                 setCurrentPage('products');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
               className="text-xs font-bold text-sky-400 flex items-center gap-1 group-hover:gap-2 transition-all cursor-pointer"
             >
@@ -732,7 +726,6 @@ export const HomeView: React.FC<HomeViewProps> = ({
             <button
               onClick={() => {
                 setCurrentPage('products');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
               className="text-xs font-bold text-amber-400 flex items-center gap-1 group-hover:gap-2 transition-all cursor-pointer"
             >
@@ -811,12 +804,18 @@ export const HomeView: React.FC<HomeViewProps> = ({
             >
               Nhận Tư Vấn Miễn Phí Ngay
             </button>
+            <button
+              onClick={() => setCurrentPage('contact')}
+              className="w-full sm:w-auto px-8 py-4 rounded-xl font-bold text-sm bg-slate-900/90 hover:bg-slate-800 text-white border border-slate-700/80 hover:border-emerald-400/50 backdrop-blur-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <span>Xem Địa Chỉ Showroom &amp; Liên Hệ</span>
+            </button>
             <a
               href={`tel:${COMPANY_INFO.hotline}`}
               className="w-full sm:w-auto px-8 py-4 rounded-xl font-bold text-sm bg-slate-950 hover:bg-slate-800 text-slate-200 border border-slate-700 transition-all flex items-center justify-center gap-2"
             >
               <Phone className="w-4 h-4 text-emerald-400" />
-              <span>Gọi Hotline: {COMPANY_INFO.hotline}</span>
+              <span>Hotline: {COMPANY_INFO.hotline}</span>
             </a>
           </div>
         </div>

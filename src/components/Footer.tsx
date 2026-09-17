@@ -21,7 +21,6 @@ interface FooterProps {
 export const Footer: React.FC<FooterProps> = ({ setCurrentPage, openPolicyTab }) => {
   const handleNav = (page: PageId) => {
     setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handlePolicyClick = (tab: PolicyTab) => {
@@ -29,7 +28,6 @@ export const Footer: React.FC<FooterProps> = ({ setCurrentPage, openPolicyTab })
     if (openPolicyTab) {
       openPolicyTab(tab);
     }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (

@@ -415,7 +415,6 @@ export const BlogView: React.FC<BlogViewProps> = ({
                     onClick={() => {
                       setActivePost(null);
                       setCurrentPage('products');
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
                     }}
                     className="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold whitespace-nowrap border border-slate-700 cursor-pointer"
                   >
