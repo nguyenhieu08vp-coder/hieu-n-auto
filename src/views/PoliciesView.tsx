@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { 
   ShieldCheck, 
   RotateCcw, 
@@ -39,7 +40,12 @@ export const PoliciesView: React.FC<PoliciesViewProps> = ({
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10 pb-16">
       {/* 1. Header Banner */}
-      <div className="text-center max-w-3xl mx-auto space-y-3">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, delay: 0.05 }}
+        className="text-center max-w-3xl mx-auto space-y-3"
+      >
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold">
           <FileText className="w-3.5 h-3.5" />
           Quy Định &amp; Cam Kết Pháp Lý
@@ -50,10 +56,15 @@ export const PoliciesView: React.FC<PoliciesViewProps> = ({
         <p className="text-slate-400 text-xs sm:text-sm">
           Áp dụng cho toàn bộ thiết bị điện tử, camera, màn hình, âm thanh, đèn tăng sáng và phụ kiện nâng cấp ô tô tại Hệ thống Hieu N Auto.
         </p>
-      </div>
+      </motion.div>
 
       {/* 2. Policy Switcher Tabs */}
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-2 p-1.5 bg-slate-900 border border-slate-800 rounded-2xl max-w-3xl mx-auto">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, delay: 0.12 }}
+        className="flex flex-col sm:flex-row items-center justify-center gap-2 p-1.5 bg-slate-900 border border-slate-800 rounded-2xl max-w-3xl mx-auto"
+      >
         {tabs.map((tab) => {
           const isActive = activeTab === tab.id;
           return (
@@ -61,27 +72,48 @@ export const PoliciesView: React.FC<PoliciesViewProps> = ({
               key={tab.id}
               id={`policy-tab-${tab.id}`}
               onClick={() => setActiveTab(tab.id)}
-              className={`w-full sm:w-auto flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+              className={`relative w-full sm:w-auto flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold transition-colors cursor-pointer ${
                 isActive
-                  ? 'bg-gradient-to-r from-emerald-500 to-sky-500 text-slate-950 shadow-lg shadow-emerald-950/50'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                  ? 'text-slate-950 font-bold'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
               }`}
             >
-              {tab.icon}
-              <span className="truncate">{tab.label}</span>
+              {isActive && (
+                <motion.div
+                  layoutId="activePolicyTabIndicator"
+                  className="absolute inset-0 bg-gradient-to-r from-emerald-400 via-sky-400 to-emerald-400 rounded-xl shadow-lg shadow-emerald-950/50"
+                  transition={{ type: 'spring', stiffness: 420, damping: 32 }}
+                />
+              )}
+              <span className="relative z-10 flex items-center gap-2 truncate">
+                {tab.icon}
+                <span className="truncate">{tab.label}</span>
+              </span>
             </button>
           );
         })}
-      </div>
+      </motion.div>
 
       {/* 3. Content Panel based on Active Tab */}
-      <div className="p-6 sm:p-10 rounded-3xl bg-slate-900 border border-slate-800 shadow-2xl space-y-8 text-xs sm:text-sm text-slate-300 leading-relaxed">
-        
-        {/* ================= TAB 1: BẢO MẬT THÔNG TIN ================= */}
-        {activeTab === 'privacy' && (
-          <div className="space-y-6 animate-in fade-in">
-            <div className="border-b border-slate-800 pb-4">
-              <span className="text-xs uppercase font-bold text-emerald-400">Bảo mật dữ liệu cá nhân</span>
+      <motion.div 
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.48, delay: 0.18 }}
+        className="p-6 sm:p-10 rounded-3xl bg-slate-900 border border-slate-800 shadow-2xl space-y-8 text-xs sm:text-sm text-slate-300 leading-relaxed overflow-hidden"
+      >
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+          >
+            {/* ================= TAB 1: BẢO MẬT THÔNG TIN ================= */}
+            {activeTab === 'privacy' && (
+              <div className="space-y-6">
+                <div className="border-b border-slate-800 pb-4">
+                  <span className="text-xs uppercase font-bold text-emerald-400">Bảo mật dữ liệu cá nhân</span>
               <h2 className="text-xl sm:text-2xl font-extrabold text-white mt-1">
                 Chính Sách Bảo Mật Thông Tin Khách Hàng
               </h2>
@@ -240,6 +272,8 @@ export const PoliciesView: React.FC<PoliciesViewProps> = ({
             </div>
           </div>
         )}
+        </motion.div>
+      </AnimatePresence>
 
         {/* 4. Common FAQs Accordion */}
         <div className="border-t border-slate-800 pt-8 space-y-4">
@@ -300,7 +334,7 @@ export const PoliciesView: React.FC<PoliciesViewProps> = ({
             Liên Hệ CSKH
           </button>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

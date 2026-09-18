@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'motion/react';
 import { 
   Phone, 
   Mail, 
@@ -152,7 +153,12 @@ export const ContactView: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12 pb-16">
       {/* 1. Header Banner */}
-      <div className="text-center max-w-3xl mx-auto space-y-3">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, delay: 0.05 }}
+        className="text-center max-w-3xl mx-auto space-y-3"
+      >
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-bold">
           <MessageSquare className="w-3.5 h-3.5" />
           Hỗ Trợ &amp; Tư Vấn Trực Tiếp
@@ -163,7 +169,7 @@ export const ContactView: React.FC = () => {
         <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
           Đội ngũ kỹ thuật viên luôn sẵn sàng tư vấn sản phẩm tốt nhất và phù hợp nhất mà bạn đang tìm kiếm
         </p>
-      </div>
+      </motion.div>
 
       {/* 2-COLUMN LAYOUT AS REQUIRED:
           LEFT: Hotline, Email, Office Address, Embedded Google Map
@@ -172,7 +178,12 @@ export const ContactView: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
         
         {/* ================= LEFT COLUMN: CONTACT INFO & GOOGLE MAPS ================= */}
-        <div className="lg:col-span-6 space-y-6">
+        <motion.div 
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.48, delay: 0.12 }}
+          className="lg:col-span-6 space-y-6"
+        >
           {/* Contact Details Card */}
           <div className="p-6 sm:p-8 rounded-3xl bg-slate-900 border border-slate-800 shadow-xl space-y-6">
             <h2 className="text-xl font-bold text-white flex items-center gap-2">
@@ -283,10 +294,15 @@ export const ContactView: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* ================= RIGHT COLUMN: VALIDATED CONTACT FORM ================= */}
-        <div className="lg:col-span-6">
+        <motion.div 
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.48, delay: 0.18 }}
+          className="lg:col-span-6"
+        >
           <div className="p-6 sm:p-10 rounded-3xl bg-slate-900 border border-slate-800 shadow-2xl space-y-6">
             <div>
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold mb-2">
@@ -516,7 +532,7 @@ export const ContactView: React.FC = () => {
               </form>
             )}
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

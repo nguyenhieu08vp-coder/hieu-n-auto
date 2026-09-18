@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'motion/react';
 import { 
   Award, 
   ShieldCheck, 
@@ -28,7 +29,12 @@ export const AboutView: React.FC<AboutViewProps> = ({
   return (
     <div className="space-y-16 sm:space-y-24 pb-16">
       {/* 1. Header Banner */}
-      <section className="relative py-16 sm:py-20 rounded-3xl mx-4 sm:mx-6 lg:mx-8 mt-4 overflow-hidden border border-slate-800 bg-slate-950">
+      <motion.section 
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.05 }}
+        className="relative py-16 sm:py-20 rounded-3xl mx-4 sm:mx-6 lg:mx-8 mt-4 overflow-hidden border border-slate-800 bg-slate-950"
+      >
         <div className="absolute inset-0 z-0 opacity-25">
           <img
             src="https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=2000&q=80"
@@ -39,24 +45,44 @@ export const AboutView: React.FC<AboutViewProps> = ({
         </div>
 
         <div className="relative z-10 max-w-4xl mx-auto px-4 text-center space-y-4">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold">
+          <motion.div 
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, delay: 0.15 }}
+            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold"
+          >
             <Sparkles className="w-3.5 h-3.5" />
             Câu Chuyện Thương Hiệu
-          </div>
-          <h1 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight font-['Space_Grotesk']">
+          </motion.div>
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.22 }}
+            className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight font-['Space_Grotesk']"
+          >
             Hành Trình <br />
             <span className="bg-gradient-to-r from-emerald-400 via-sky-400 to-purple-400 bg-clip-text text-transparent">
               Nâng Tầm Trải Nghiệm Ở Khoang Nội Thất Ô Tô
             </span>
-          </h1>
-          <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto"
+          >
             Hieu N Auto ra đời với sứ mệnh mang đến không gian khoang lái sang trọng, êm ái và cá nhân hóa tuyệt đối cho từng chủ xe tại Việt Nam.
-          </p>
+          </motion.p>
         </div>
-      </section>
+      </motion.section>
 
       {/* 2. Brand Story & Mission / Vision */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <motion.section 
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.18 }}
+        className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8"
+      >
         <div className="space-y-6 bg-slate-900/60 p-6 sm:p-10 rounded-3xl border border-slate-800 backdrop-blur-sm">
           <div className="space-y-3">
             <span className="text-xs uppercase font-bold text-orange-400 tracking-wider">
@@ -111,10 +137,15 @@ export const AboutView: React.FC<AboutViewProps> = ({
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* 3. Core Values (4 Giá Trị Cốt Lõi) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <motion.section 
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.25 }}
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+      >
         <div className="text-center max-w-2xl mx-auto mb-12">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-bold mb-2">
             <Award className="w-4 h-4" />
@@ -166,10 +197,15 @@ export const AboutView: React.FC<AboutViewProps> = ({
             </p>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* 4. ĐỘI NGŨ CHUYÊN GIA KỸ THUẬT (EXPERT TEAM) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <motion.section 
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.32 }}
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+      >
         <div className="text-center max-w-2xl mx-auto mb-12">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold mb-2">
             <Users className="w-4 h-4" />
@@ -223,10 +259,15 @@ export const AboutView: React.FC<AboutViewProps> = ({
             </div>
           ))}
         </div>
-      </section>
+      </motion.section>
 
       {/* 5. QUY TRÌNH 6 BƯỚC THI CÔNG CHUẨN XÁC */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <motion.section 
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.38 }}
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+      >
         <div className="p-8 sm:p-12 rounded-3xl bg-slate-900/90 border border-slate-800 space-y-8">
           <div className="text-center max-w-2xl mx-auto">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
@@ -258,10 +299,15 @@ export const AboutView: React.FC<AboutViewProps> = ({
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* 6. CTA Footer */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <motion.section 
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.44 }}
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center"
+      >
         <div className="p-8 rounded-3xl bg-slate-900 border border-slate-800 space-y-4 max-w-3xl mx-auto">
           <h2 className="text-xl sm:text-2xl font-bold text-white">
             Bạn Đang Muốn Nâng Cấp Phụ Kiện &amp; Công Nghệ Cho Dòng Xe Nào?
@@ -286,7 +332,7 @@ export const AboutView: React.FC<AboutViewProps> = ({
             </button>
           </div>
         </div>
-      </section>
+      </motion.section>
     </div>
   );
 };

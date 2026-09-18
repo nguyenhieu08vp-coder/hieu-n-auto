@@ -26,31 +26,28 @@ const PAGE_ORDER: Record<PageId, number> = {
   policies: 5,
 };
 
-// Hiệu ứng chuyển cảnh đồng bộ, mượt mà và sang trọng cho tất cả các mục (Home, About, Products, Blog, Contact, Policies)
+// Hiệu ứng chuyển cảnh xuất hiện từ dưới lên (fade & slide up) mượt mà, đồng bộ cho tất cả các mục như Trang Chủ
 const pageTransitionVariants = {
-  enter: (custom: { dir: number; isInitial: boolean }) => ({
-    x: custom.isInitial ? 0 : (custom.dir >= 0 ? 72 : -72),
-    y: custom.isInitial ? 18 : 0,
+  enter: {
+    y: 28,
     opacity: 0,
-  }),
+  },
   center: {
-    x: 0,
     y: 0,
     opacity: 1,
     transition: {
-      x: { duration: 0.32, ease: [0.22, 1, 0.36, 1] },
-      y: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
+      y: { duration: 0.38, ease: [0.16, 1, 0.3, 1] },
       opacity: { duration: 0.28, ease: 'easeOut' },
     },
   },
-  exit: (custom: { dir: number; isInitial: boolean }) => ({
-    x: custom.dir >= 0 ? -72 : 72,
+  exit: {
+    y: -14,
     opacity: 0,
     transition: {
-      x: { duration: 0.22, ease: [0.32, 0, 0.67, 0] },
-      opacity: { duration: 0.18, ease: 'easeIn' },
+      y: { duration: 0.18, ease: 'easeIn' },
+      opacity: { duration: 0.14, ease: 'easeIn' },
     },
-  }),
+  },
 };
 
 export default function App() {
@@ -196,7 +193,20 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-emerald-500 selection:text-white">
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-emerald-500 selection:text-white relative">
+      {/* Sleek top glowing indicator that slides across on section/page change */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={`route-accent-${currentPage}`}
+          initial={{ scaleX: 0, opacity: 1 }}
+          animate={{ scaleX: 1, opacity: [1, 1, 0] }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
+          style={{ originX: 0 }}
+          className="fixed top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-emerald-400 via-sky-400 to-purple-500 z-[100] pointer-events-none shadow-[0_0_12px_rgba(52,211,153,0.8)]"
+        />
+      </AnimatePresence>
+
       {/* 1. Header with Original Navigation Taskbar */}
       <Header
         currentPage={currentPage}
@@ -211,10 +221,9 @@ export default function App() {
 
       {/* 2. Main Body View Rendering with Identical, Silk-Smooth Transitions Across All Sections */}
       <main className="flex-1 overflow-x-hidden relative min-h-[70vh]">
-        <AnimatePresence mode="wait" custom={{ dir: direction, isInitial: isInitialMount }} initial={true}>
+        <AnimatePresence mode="wait">
           <motion.div
             key={currentPage}
-            custom={{ dir: direction, isInitial: isInitialMount }}
             variants={pageTransitionVariants}
             initial="enter"
             animate="center"

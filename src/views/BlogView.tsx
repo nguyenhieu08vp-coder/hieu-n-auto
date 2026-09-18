@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { 
   BookOpen, 
   Search, 
@@ -83,7 +84,12 @@ export const BlogView: React.FC<BlogViewProps> = ({
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10 pb-16">
       {/* 1. Header Banner */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-6">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, delay: 0.05 }}
+        className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-6"
+      >
         <div>
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold mb-2">
             <BookOpen className="w-3.5 h-3.5" />
@@ -116,28 +122,43 @@ export const BlogView: React.FC<BlogViewProps> = ({
             </button>
           )}
         </div>
-      </div>
+      </motion.div>
 
       {/* 2. Category Tabs */}
-      <div className="space-y-3">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, delay: 0.12 }}
+        className="space-y-3"
+      >
         <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              type="button"
-              onClick={() => {
-                setSelectedCategory(cat.id);
-                setSelectedTag('all');
-              }}
-              className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
-                selectedCategory === cat.id && selectedTag === 'all'
-                  ? 'bg-gradient-to-r from-emerald-500 to-sky-500 text-slate-950 shadow-md shadow-emerald-500/20'
-                  : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
-              }`}
-            >
-              {cat.name}
-            </button>
-          ))}
+          {categories.map((cat) => {
+            const isActive = selectedCategory === cat.id && selectedTag === 'all';
+            return (
+              <button
+                key={cat.id}
+                type="button"
+                onClick={() => {
+                  setSelectedCategory(cat.id);
+                  setSelectedTag('all');
+                }}
+                className={`relative px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-colors cursor-pointer ${
+                  isActive
+                    ? 'text-slate-950 font-bold'
+                    : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
+                }`}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="activeBlogCategoryPill"
+                    className="absolute inset-0 bg-gradient-to-r from-emerald-400 via-sky-400 to-emerald-400 rounded-xl shadow-md shadow-emerald-500/20"
+                    transition={{ type: 'spring', stiffness: 420, damping: 32 }}
+                  />
+                )}
+                <span className="relative z-10">{cat.name}</span>
+              </button>
+            );
+          })}
         </div>
 
         {/* 3. Quick Product Filter Cloud */}
@@ -184,11 +205,14 @@ export const BlogView: React.FC<BlogViewProps> = ({
             </button>
           )}
         </div>
-      </div>
+      </motion.div>
 
       {/* 4. Featured Big Post (Khi xem tất cả và không search/tag) */}
       {selectedCategory === 'all' && selectedTag === 'all' && !searchQuery.trim() && featuredPost && (
-        <div 
+        <motion.div 
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.18 }}
           onClick={() => setActivePost(featuredPost)}
           className="relative rounded-3xl bg-slate-900 border border-slate-800 overflow-hidden group cursor-pointer hover:border-emerald-500/50 transition-all duration-300 shadow-2xl"
         >
@@ -243,7 +267,7 @@ export const BlogView: React.FC<BlogViewProps> = ({
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       )}
 
       {/* 5. Article Grid */}
@@ -264,8 +288,16 @@ export const BlogView: React.FC<BlogViewProps> = ({
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredPosts.map((post) => (
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`posts-${selectedCategory}-${selectedTag}-${searchQuery}`}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
+            {filteredPosts.map((post) => (
             <article
               key={post.id}
               id={`blog-card-${post.id}`}
@@ -326,7 +358,8 @@ export const BlogView: React.FC<BlogViewProps> = ({
               </div>
             </article>
           ))}
-        </div>
+          </motion.div>
+        </AnimatePresence>
       )}
 
       {/* 6. Full Article Reader Modal */}
