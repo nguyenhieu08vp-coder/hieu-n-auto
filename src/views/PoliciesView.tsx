@@ -28,9 +28,9 @@ export const PoliciesView: React.FC<PoliciesViewProps> = ({
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const tabs: { id: PolicyTab; label: string; icon: React.ReactNode; color: string }[] = [
-    { id: 'privacy', label: 'Chính Sách Bảo Mật Thông Tin', icon: <ShieldCheck className="w-4 h-4" />, color: 'emerald' },
-    { id: 'refund', label: 'Chính Sách Đổi Trả & Hoàn Tiền', icon: <RotateCcw className="w-4 h-4" />, color: 'orange' },
-    { id: 'shipping', label: 'Chính Sách Vận Chuyển & Lắp Đặt', icon: <Truck className="w-4 h-4" />, color: 'sky' },
+    { id: 'privacy', label: 'Bảo Mật Thông Tin', icon: <ShieldCheck className="w-4 h-4 shrink-0" />, color: 'emerald' },
+    { id: 'refund', label: 'Đổi Trả & Hoàn Tiền', icon: <RotateCcw className="w-4 h-4 shrink-0" />, color: 'orange' },
+    { id: 'shipping', label: 'Vận Chuyển & Lắp Đặt', icon: <Truck className="w-4 h-4 shrink-0" />, color: 'sky' },
   ];
 
   const toggleFaq = (index: number) => {
@@ -63,7 +63,7 @@ export const PoliciesView: React.FC<PoliciesViewProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, delay: 0.12 }}
-        className="flex flex-col sm:flex-row items-center justify-center gap-2 p-1.5 bg-slate-900 border border-slate-800 rounded-2xl max-w-3xl mx-auto"
+        className="grid grid-cols-1 sm:grid-cols-3 gap-2 p-1.5 sm:p-2 bg-slate-900/90 backdrop-blur-sm border border-slate-800 rounded-2xl max-w-4xl mx-auto w-full shadow-lg shadow-black/30"
       >
         {tabs.map((tab) => {
           const isActive = activeTab === tab.id;
@@ -72,7 +72,7 @@ export const PoliciesView: React.FC<PoliciesViewProps> = ({
               key={tab.id}
               id={`policy-tab-${tab.id}`}
               onClick={() => setActiveTab(tab.id)}
-              className={`relative w-full sm:w-auto flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold transition-colors cursor-pointer ${
+              className={`relative w-full flex items-center justify-center gap-2 py-3 px-3 sm:px-4 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer min-w-0 ${
                 isActive
                   ? 'text-slate-950 font-bold'
                   : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
@@ -85,9 +85,9 @@ export const PoliciesView: React.FC<PoliciesViewProps> = ({
                   transition={{ type: 'spring', stiffness: 420, damping: 32 }}
                 />
               )}
-              <span className="relative z-10 flex items-center gap-2 truncate">
-                {tab.icon}
-                <span className="truncate">{tab.label}</span>
+              <span className="relative z-10 flex items-center justify-center gap-2 min-w-0 max-w-full px-1">
+                <span className="shrink-0">{tab.icon}</span>
+                <span className="truncate whitespace-nowrap">{tab.label}</span>
               </span>
             </button>
           );
@@ -258,7 +258,7 @@ export const PoliciesView: React.FC<PoliciesViewProps> = ({
             <div className="space-y-4">
               <h3 className="font-bold text-white text-base">1. Miễn Phí Vận Chuyển Toàn Quốc</h3>
               <p>
-                Đối với các sản phẩm phụ kiện (Thảm lót sàn TPE, Camera hành trình, Loa Sub, Cảm biến lốp, Bệ tỳ tay, Tấm ốp gầm pin), Hieu N Auto <strong className="text-emerald-400">miễn phí vận chuyển 100%</strong> toàn quốc cho mọi đơn hàng có giá trị từ 5.000.000 ₫. Khách hàng được kiểm tra hàng trước khi thanh toán.
+                Đối với các sản phẩm phụ kiện (Thiết bị âm thanh &amp; ánh sáng, Camera hành trình, Cốp điện, Bệ tỳ tay,...), Hieu N Auto <strong className="text-emerald-400">miễn phí vận chuyển 100%</strong> toàn quốc cho mọi đơn hàng có giá trị từ 5.000.000 ₫. Khách hàng được kiểm tra hàng trước khi thanh toán.
               </p>
             </div>
 
