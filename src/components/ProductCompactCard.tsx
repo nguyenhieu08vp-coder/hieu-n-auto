@@ -6,7 +6,9 @@ import {
   Star, 
   Check, 
   ShieldCheck, 
-  Zap 
+  Zap,
+  Wrench,
+  PackageCheck 
 } from 'lucide-react';
 import { Product } from '../types';
 import { FORMAT_CURRENCY } from '../data/mockData';
@@ -58,13 +60,29 @@ export const ProductCompactCard: React.FC<ProductCompactCardProps> = ({
         {/* Top Badges */}
         <div className="absolute top-2 left-2 flex flex-col gap-1 z-10">
           {product.isBestSeller && (
-            <span className="px-1.5 py-0.5 rounded text-[9px] font-extrabold uppercase bg-amber-500 text-slate-950 shadow">
-              Hot
+            <span className="px-1.5 py-0.5 rounded text-[9px] font-extrabold uppercase tracking-wide bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow flex items-center gap-0.5">
+              <Zap className="w-2.5 h-2.5 fill-current" />
+              Bán chạy
             </span>
           )}
           {discountPercent > 0 && (
             <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-rose-600 text-white shadow">
               -{discountPercent}%
+            </span>
+          )}
+        </div>
+
+        {/* Top Right Classification Badge */}
+        <div className="absolute top-2 right-2 z-10">
+          {product.itemType === 'service' ? (
+            <span className="px-1.5 py-0.5 rounded text-[8px] font-extrabold uppercase tracking-wide bg-purple-950/90 text-purple-300 border border-purple-500/40 backdrop-blur-sm flex items-center gap-0.5 shadow">
+              <Wrench className="w-2 h-2" />
+              Dịch Vụ
+            </span>
+          ) : (
+            <span className="px-1.5 py-0.5 rounded text-[8px] font-extrabold uppercase tracking-wide bg-sky-950/90 text-sky-300 border border-sky-500/40 backdrop-blur-sm flex items-center gap-0.5 shadow">
+              <PackageCheck className="w-2 h-2" />
+              Chính Hãng
             </span>
           )}
         </div>

@@ -2,10 +2,13 @@ export type PageId = 'home' | 'about' | 'products' | 'blog' | 'contact' | 'polic
 
 export type PolicyTab = 'privacy' | 'refund' | 'shipping';
 
+export type ItemClassification = 'all' | 'product' | 'service';
+
 export interface Product {
   id: string;
   name: string;
-  category: 'leather-seats' | 'floor-mats' | 'screens-cams' | 'ambient-lights' | 'car-audio' | 'steering-accessories' | 'dashcams-tpms' | 'seat-covers' | 'wheels-exterior' | string;
+  itemType?: 'product' | 'service';
+  category: 'cameras-360' | 'screens-displays' | 'safety-sensors' | 'ambient-lights' | 'floor-mats' | 'seat-interior' | 'car-audio' | 'electric-automation' | 'heat-soundproofing' | 'wheels-exterior' | string;
   categoryName: string;
   price: number;
   originalPrice?: number;

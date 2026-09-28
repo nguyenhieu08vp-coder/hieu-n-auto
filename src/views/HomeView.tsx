@@ -24,7 +24,11 @@ import {
   Disc,
   Tag,
   CheckSquare,
-  Square
+  Square,
+  Armchair,
+  Tv,
+  ShieldAlert,
+  PackageCheck
 } from 'lucide-react';
 import { PageId, Product } from '../types';
 import { PRODUCTS, CATEGORIES, TESTIMONIALS, COMPANY_INFO, FORMAT_CURRENCY } from '../data/mockData';
@@ -43,8 +47,10 @@ export const HomeView: React.FC<HomeViewProps> = ({
   onQuickView,
   openConsultation,
 }) => {
-  // 4 Best selling products explicitly requested by prompt
-  const bestSellerProducts = PRODUCTS.filter((p) => p.isBestSeller).slice(0, 4);
+  // 4 Best selling products explicitly requested by prompt (đa dạng danh mục tiêu biểu)
+  const bestSellerProducts = ['prod-1', 'prod-3', 'prod-4', 'prod-5']
+    .map((id) => PRODUCTS.find((p) => p.id === id))
+    .filter((p): p is Product => Boolean(p));
 
   // Configurator / Quick estimate state
   const [selectedVehicle, setSelectedVehicle] = useState<'vf_mini' | 'sedan' | 'suv' | 'mpv' | 'luxury'>('suv');
@@ -53,7 +59,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
   const customAddonList = [
     { id: 'addon_led', name: 'Đèn LED nội thất & viền Ambient Light 64 màu', price: 2800000, icon: Sparkles },
-    { id: 'addon_cam360', name: 'Camera 360 Sony AHD tích hợp màn Zin', price: 7500000, icon: Video },
+    { id: 'addon_cam360', name: 'Camera 360 TECHCAM cắm giắc Zin tích hợp màn Zin', price: 7500000, icon: Video },
     { id: 'addon_hud', name: 'Màn hình HUD kính lái MCD91 cảnh báo tốc độ', price: 2800000, icon: Zap },
     { id: 'addon_sub', name: 'Nâng cấp Sub gầm ghế Rebec U10 & Âm thanh DSP', price: 4500000, icon: Volume2 },
     { id: 'addon_skidplate', name: 'Tấm giáp hợp kim bảo vệ pin gầm xe điện', price: 3200000, icon: ShieldCheck },
@@ -308,9 +314,25 @@ export const HomeView: React.FC<HomeViewProps> = ({
             </span>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3.5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
             {CATEGORIES.filter(c => c.id !== 'all').map((cat) => {
               const productCount = PRODUCTS.filter(p => p.category === cat.id).length;
+              const isService = cat.itemType === 'service';
+              const getHomeCatIcon = (id: string) => {
+                switch (id) {
+                  case 'cameras-360': return <ShieldCheck className="w-4 h-4" />;
+                  case 'screens-displays': return <Tv className="w-4 h-4" />;
+                  case 'safety-sensors': return <ShieldAlert className="w-4 h-4" />;
+                  case 'ambient-lights': return <Sparkles className="w-4 h-4" />;
+                  case 'floor-mats': return <Layers className="w-4 h-4" />;
+                  case 'car-audio': return <Volume2 className="w-4 h-4" />;
+                  case 'seat-interior': return <Armchair className="w-4 h-4" />;
+                  case 'electric-automation': return <Sliders className="w-4 h-4" />;
+                  case 'heat-soundproofing': return <Shield className="w-4 h-4" />;
+                  case 'wheels-exterior': return <Disc className="w-4 h-4" />;
+                  default: return <Sparkles className="w-4 h-4" />;
+                }
+              };
               return (
                 <button
                   key={cat.id}
@@ -319,22 +341,31 @@ export const HomeView: React.FC<HomeViewProps> = ({
                   onClick={() => {
                     setCurrentPage('products');
                   }}
-                  className="p-4 rounded-2xl bg-slate-900/80 hover:bg-slate-800/90 border border-slate-800 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-950/20 text-left transition-all duration-200 group cursor-pointer flex flex-col justify-between"
+                  className="p-3.5 rounded-2xl bg-slate-900/80 hover:bg-slate-800/90 border border-slate-800 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-950/20 text-left transition-all duration-200 group cursor-pointer flex flex-col justify-between"
                 >
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="w-9 h-9 rounded-xl bg-slate-950 border border-slate-700/80 flex items-center justify-center text-emerald-400 group-hover:scale-110 group-hover:text-emerald-300 group-hover:border-emerald-500/40 transition-all">
-                      <Sparkles className="w-4 h-4" />
+                  <div className="flex items-center justify-between mb-2.5">
+                    <div className={`w-9 h-9 rounded-xl bg-slate-950 border flex items-center justify-center group-hover:scale-110 transition-all ${
+                      isService 
+                        ? 'border-purple-800/60 text-purple-400 group-hover:text-purple-300 group-hover:border-purple-500/40' 
+                        : 'border-sky-800/60 text-sky-400 group-hover:text-sky-300 group-hover:border-sky-500/40'
+                    }`}>
+                      {getHomeCatIcon(cat.id)}
                     </div>
-                    <span className="text-[11px] font-bold text-slate-400 group-hover:text-emerald-400 bg-slate-950 px-2 py-0.5 rounded-full border border-slate-800">
+                    <span className="text-[10px] font-bold text-slate-400 group-hover:text-emerald-400 bg-slate-950 px-2 py-0.5 rounded-full border border-slate-800">
                       {productCount} SP
                     </span>
                   </div>
                   <div>
-                    <h4 className="font-bold text-xs sm:text-sm text-slate-200 group-hover:text-white line-clamp-1 group-hover:translate-x-0.5 transition-all">
+                    <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wider block w-fit mb-1 ${
+                      isService ? 'bg-purple-950 text-purple-300 border border-purple-800/40' : 'bg-sky-950 text-sky-300 border border-sky-800/40'
+                    }`}>
+                      {isService ? 'Dịch Vụ' : 'Sản Phẩm'}
+                    </span>
+                    <h4 className="font-bold text-xs sm:text-sm text-slate-200 group-hover:text-white line-clamp-2 group-hover:translate-x-0.5 transition-all">
                       {cat.name}
                     </h4>
-                    <span className="text-[11px] text-slate-400 group-hover:text-emerald-300 inline-flex items-center gap-1 mt-1 font-medium">
-                      <span>Xem chi tiết</span>
+                    <span className="text-[10px] text-slate-400 group-hover:text-emerald-300 inline-flex items-center gap-1 mt-1.5 font-medium">
+                      <span>Khám phá nhóm</span>
                       <ChevronRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                     </span>
                   </div>
@@ -638,100 +669,496 @@ export const HomeView: React.FC<HomeViewProps> = ({
         </div>
       </section>
 
-      {/* 4. DỊCH VỤ NỔI BẬT & QUY TRÌNH CHUYÊN NGHIỆP */}
+      {/* 4. DỊCH VỤ ĐỘ XE CHÍNH & CÁC HẠNG MỤC CHUYÊN SÂU */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold mb-2">
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold mb-3">
             <Sparkles className="w-4 h-4" />
-            Dịch Vụ Toàn Diện
+            Hệ Sinh Thái Dịch Vụ Độ Xe Chuyên Nghiệp
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-            Các Hạng Mục Chuyên Sâu Tại Hieu N Auto
+          <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+            8 Dịch Vụ Độ Xe Chính Hãng &amp; Thi Công Chuẩn Zin
           </h2>
-          <p className="text-slate-400 text-sm mt-1">
-            Đội ngũ nghệ nhân và kỹ thuật viên tay nghề cao sẵn sàng phục vụ mọi yêu cầu khắt khe nhất.
+          <p className="text-slate-400 text-sm sm:text-base mt-2">
+            Hieu N Auto cam kết 100% linh kiện chính hãng, lắp đặt cắm giắc Zin Plug &amp; Play không cắt trích dây điện, giữ trọn vẹn chế độ bảo hành hãng của xe.
           </p>
         </div>
 
+        {/* 8 Core Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Service 1: Camera & Dashcam */}
-          <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-emerald-500/40 transition-all group">
-            <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-              <Video className="w-6 h-6 text-emerald-400" />
+          <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-emerald-500/50 hover:shadow-xl hover:shadow-emerald-950/30 transition-all group flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Video className="w-6 h-6 text-emerald-400" />
+                </div>
+                <span className="text-[11px] font-bold text-emerald-400 bg-emerald-950/60 px-2.5 py-1 rounded-full border border-emerald-500/20">
+                  70mai &amp; VIETMAP
+                </span>
+              </div>
+              <h3 className="font-bold text-white text-lg mb-2">Camera Hành Trình</h3>
+              <p className="text-xs text-slate-400 leading-relaxed mb-4">
+                Ghi hình 3 kênh trước - trong cabin - sau xe siêu nét, hỗ trợ hồng ngoại quay đêm, siêu tụ điện chống cháy nổ và tự động ghi hình khi đỗ xe 24/7.
+              </p>
+              <div className="space-y-1.5 mb-6 text-[11px] text-slate-300">
+                <div className="flex items-center gap-1.5 text-emerald-400">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span>Cảnh báo giao thông &amp; camera phạt nguội</span>
+                </div>
+                <div className="flex items-center gap-1.5 text-emerald-400">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span>Định vị GPS &amp; trích xuất video qua Wifi</span>
+                </div>
+              </div>
             </div>
-            <h3 className="font-bold text-white text-lg mb-2">Camera Hành Trình</h3>
-            <p className="text-xs text-slate-400 leading-relaxed mb-4">
-              Ghi hình 3 kênh trước - trong cabin - sau xe siêu nét, hỗ trợ hồng ngoại quay đêm, siêu tụ điện chống cháy nổ và tự động ghi hình khi đỗ xe.
-            </p>
-            <button
-              onClick={() => {
-                setCurrentPage('products');
-              }}
-              className="text-xs font-bold text-emerald-400 flex items-center gap-1 group-hover:gap-2 transition-all cursor-pointer"
-            >
-              <span>Xem camera &amp; thiết bị giám sát</span>
-              <ChevronRight className="w-4 h-4" />
-            </button>
+            <div className="flex items-center justify-between pt-4 border-t border-slate-800">
+              <button
+                onClick={() => setCurrentPage('products')}
+                className="text-xs font-bold text-emerald-400 hover:text-emerald-300 flex items-center gap-1 group-hover:gap-1.5 transition-all cursor-pointer"
+              >
+                <span>Xem sản phẩm</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => openConsultation(undefined, 'Dịch vụ Camera Hành Trình')}
+                className="text-[11px] font-semibold text-slate-400 hover:text-white bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700/60 cursor-pointer"
+              >
+                Nhận tư vấn
+              </button>
+            </div>
           </div>
 
           {/* Service 2: LED Ambient */}
-          <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-purple-500/40 transition-all group">
-            <div className="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-              <Zap className="w-6 h-6 text-purple-400" />
+          <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-purple-500/50 hover:shadow-xl hover:shadow-purple-950/30 transition-all group flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Zap className="w-6 h-6 text-purple-400" />
+                </div>
+                <span className="text-[11px] font-bold text-purple-400 bg-purple-950/60 px-2.5 py-1 rounded-full border border-purple-500/20">
+                  64 - 256 Màu
+                </span>
+              </div>
+              <h3 className="font-bold text-white text-lg mb-2">LED Nội Thất &amp; Trần Sao</h3>
+              <p className="text-xs text-slate-400 leading-relaxed mb-4">
+                Dải LED viền ma trận 64 màu đổi màu mượt mà, hiệu ứng rượt đuổi chuyển động theo giai điệu nhạc và bầu trời trần sao rơi Rolls-Royce sang trọng.
+              </p>
+              <div className="space-y-1.5 mb-6 text-[11px] text-slate-300">
+                <div className="flex items-center gap-1.5 text-purple-400">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span>Điều khiển qua App điện thoại &amp; nút bấm zin</span>
+                </div>
+                <div className="flex items-center gap-1.5 text-purple-400">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span>Dải LED thanh mảnh đúc khuôn OEM</span>
+                </div>
+              </div>
             </div>
-            <h3 className="font-bold text-white text-lg mb-2">LED Nội Thất</h3>
-            <p className="text-xs text-slate-400 leading-relaxed mb-4">
-              Dải LED viền ma trận 64/256 màu thế hệ mới đổi màu mượt mà, hiệu ứng rượt đuổi chuyển động theo giai điệu nhạc và bầu trời trần sao rơi Rolls-Royce sang trọng.
-            </p>
-            <button
-              onClick={() => {
-                setCurrentPage('products');
-              }}
-              className="text-xs font-bold text-purple-400 flex items-center gap-1 group-hover:gap-2 transition-all cursor-pointer"
-            >
-              <span>Xem các gói LED nội thất</span>
-              <ChevronRight className="w-4 h-4" />
-            </button>
+            <div className="flex items-center justify-between pt-4 border-t border-slate-800">
+              <button
+                onClick={() => setCurrentPage('products')}
+                className="text-xs font-bold text-purple-400 hover:text-purple-300 flex items-center gap-1 group-hover:gap-1.5 transition-all cursor-pointer"
+              >
+                <span>Xem sản phẩm</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => openConsultation(undefined, 'Dịch vụ LED Nội Thất')}
+                className="text-[11px] font-semibold text-slate-400 hover:text-white bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700/60 cursor-pointer"
+              >
+                Nhận tư vấn
+              </button>
+            </div>
           </div>
 
           {/* Service 3: Camera 360 & MHU */}
-          <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-sky-500/40 transition-all group">
-            <div className="w-12 h-12 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-              <Wrench className="w-6 h-6 text-sky-400" />
+          <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-sky-500/50 hover:shadow-xl hover:shadow-sky-950/30 transition-all group flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Wrench className="w-6 h-6 text-sky-400" />
+                </div>
+                <span className="text-[11px] font-bold text-sky-400 bg-sky-950/60 px-2.5 py-1 rounded-full border border-sky-500/20">
+                  TECHCAM &amp; Màn Zin
+                </span>
+              </div>
+              <h3 className="font-bold text-white text-lg mb-2">Camera 360 &amp; Màn Hình</h3>
+              <p className="text-xs text-slate-400 leading-relaxed mb-4">
+                Nâng cấp Camera 360 toàn cảnh sắc nét xóa tan điểm mù kết hợp Màn hình giải trí trung tâm (MHU) Android hoặc Android Box cắm USB giữ màn zin 100%.
+              </p>
+              <div className="space-y-1.5 mb-6 text-[11px] text-slate-300">
+                <div className="flex items-center gap-1.5 text-sky-400">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span>Vạch đánh lái bẻ cong theo góc vô lăng</span>
+                </div>
+                <div className="flex items-center gap-1.5 text-sky-400">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span>Mắt cam góc rộng chống nước chuẩn IP68</span>
+                </div>
+              </div>
             </div>
-            <h3 className="font-bold text-white text-lg mb-2">Camera 360 &amp; MHU</h3>
-            <p className="text-xs text-slate-400 leading-relaxed mb-4">
-              Nâng cấp Camera 360 toàn cảnh sắc nét xóa tan điểm mù kết hợp Màn hình giải trí trung tâm (MHU) Android/Android Box thông minh, mượt mà và chuẩn giắc Zin theo xe.
-            </p>
-            <button
-              onClick={() => {
-                setCurrentPage('products');
-              }}
-              className="text-xs font-bold text-sky-400 flex items-center gap-1 group-hover:gap-2 transition-all cursor-pointer"
-            >
-              <span>Xem Camera 360 &amp; Màn hình MHU</span>
-              <ChevronRight className="w-4 h-4" />
-            </button>
+            <div className="flex items-center justify-between pt-4 border-t border-slate-800">
+              <button
+                onClick={() => setCurrentPage('products')}
+                className="text-xs font-bold text-sky-400 hover:text-sky-300 flex items-center gap-1 group-hover:gap-1.5 transition-all cursor-pointer"
+              >
+                <span>Xem sản phẩm</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => openConsultation(undefined, 'Dịch vụ Camera 360 & Màn Hình')}
+                className="text-[11px] font-semibold text-slate-400 hover:text-white bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700/60 cursor-pointer"
+              >
+                Nhận tư vấn
+              </button>
+            </div>
           </div>
 
           {/* Service 4: Phim Cách Nhiệt */}
-          <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-amber-500/40 transition-all group">
-            <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-              <Shield className="w-6 h-6 text-amber-400" />
+          <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-amber-500/50 hover:shadow-xl hover:shadow-amber-950/30 transition-all group flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Shield className="w-6 h-6 text-amber-400" />
+                </div>
+                <span className="text-[11px] font-bold text-amber-400 bg-amber-950/60 px-2.5 py-1 rounded-full border border-amber-500/20">
+                  3M Crystalline
+                </span>
+              </div>
+              <h3 className="font-bold text-white text-lg mb-2">Phim Cách Nhiệt 3M</h3>
+              <p className="text-xs text-slate-400 leading-relaxed mb-4">
+                Dán Phim cách nhiệt quang học 200 lớp 3M Crystalline chính hãng bảo hành điện tử 10 năm, cản tia cực tím UV 99.9% và giảm nhiệt lượng tối đa cho khoang lái.
+              </p>
+              <div className="space-y-1.5 mb-6 text-[11px] text-slate-300">
+                <div className="flex items-center gap-1.5 text-amber-400">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span>Không cản sóng thẻ thu phí ETC, GPS, 4G</span>
+                </div>
+                <div className="flex items-center gap-1.5 text-amber-400">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span>Bảo vệ nội thất da không bạc màu nứt nẻ</span>
+                </div>
+              </div>
             </div>
-            <h3 className="font-bold text-white text-lg mb-2">Phim Cách Nhiệt</h3>
-            <p className="text-xs text-slate-400 leading-relaxed mb-4">
-              Dán Phim cách nhiệt quang học 200 lớp 3M Crystalline chính hãng bảo hành 10 năm, cản tia cực tím UV 99.9% và giảm nhiệt lượng tối đa cho khoang lái.
-            </p>
+            <div className="flex items-center justify-between pt-4 border-t border-slate-800">
+              <button
+                onClick={() => setCurrentPage('products')}
+                className="text-xs font-bold text-amber-400 hover:text-amber-300 flex items-center gap-1 group-hover:gap-1.5 transition-all cursor-pointer"
+              >
+                <span>Xem sản phẩm</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => openConsultation(undefined, 'Dịch vụ Dán Phim Cách Nhiệt 3M')}
+                className="text-[11px] font-semibold text-slate-400 hover:text-white bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700/60 cursor-pointer"
+              >
+                Nhận tư vấn
+              </button>
+            </div>
+          </div>
+
+          {/* Service 5: Cửa Hít & Cốp Điện */}
+          <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-emerald-500/50 hover:shadow-xl hover:shadow-emerald-950/30 transition-all group flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <ShieldCheck className="w-6 h-6 text-emerald-400" />
+                </div>
+                <span className="text-[11px] font-bold text-emerald-400 bg-emerald-950/60 px-2.5 py-1 rounded-full border border-emerald-500/20">
+                  Owin &amp; ICAR
+                </span>
+              </div>
+              <h3 className="font-bold text-white text-lg mb-2">Cửa Hít &amp; Cốp Điện</h3>
+              <p className="text-xs text-slate-400 leading-relaxed mb-4">
+                Hệ thống cửa hít tự động động cơ Mabuchi Nhật Bản chống kẹt 2 nấc êm ái cùng cốp điện tự động chống kẹt thông minh, tích hợp cảm biến đá cốp rảnh tay tiện lợi.
+              </p>
+              <div className="space-y-1.5 mb-6 text-[11px] text-slate-300">
+                <div className="flex items-center gap-1.5 text-emerald-400">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span>Độ ồn &lt; 40dB, đóng cửa êm ái nhẹ nhàng</span>
+                </div>
+                <div className="flex items-center gap-1.5 text-emerald-400">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span>Cắm giắc Zin 100%, không khoan cắt vỏ xe</span>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center justify-between pt-4 border-t border-slate-800">
+              <button
+                onClick={() => setCurrentPage('products')}
+                className="text-xs font-bold text-emerald-400 hover:text-emerald-300 flex items-center gap-1 group-hover:gap-1.5 transition-all cursor-pointer"
+              >
+                <span>Xem sản phẩm</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => openConsultation(undefined, 'Dịch vụ Cửa Hít & Cốp Điện')}
+                className="text-[11px] font-semibold text-slate-400 hover:text-white bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700/60 cursor-pointer"
+              >
+                Nhận tư vấn
+              </button>
+            </div>
+          </div>
+
+          {/* Service 6: Nâng Cấp Âm Thanh DSP */}
+          <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-rose-500/50 hover:shadow-xl hover:shadow-rose-950/30 transition-all group flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Volume2 className="w-6 h-6 text-rose-400" />
+                </div>
+                <span className="text-[11px] font-bold text-rose-400 bg-rose-950/60 px-2.5 py-1 rounded-full border border-rose-500/20">
+                  Rebec Car Audio
+                </span>
+              </div>
+              <h3 className="font-bold text-white text-lg mb-2">Độ Âm Thanh &amp; Sub Gầm</h3>
+              <p className="text-xs text-slate-400 leading-relaxed mb-4">
+                Giải pháp nâng cấp hệ thống loa cánh, loa Sub điện gầm ghế Rebec U10 và Amply DSP cân chỉnh âm thanh phòng thu chuyên nghiệp, mang lại dải âm trầm uy lực.
+              </p>
+              <div className="space-y-1.5 mb-6 text-[11px] text-slate-300">
+                <div className="flex items-center gap-1.5 text-rose-400">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span>Loa Sub Rebec U10 thiết kế gọn gầm ghế</span>
+                </div>
+                <div className="flex items-center gap-1.5 text-rose-400">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span>Căn chỉnh phần mềm DSP theo gu âm nhạc</span>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center justify-between pt-4 border-t border-slate-800">
+              <button
+                onClick={() => setCurrentPage('products')}
+                className="text-xs font-bold text-rose-400 hover:text-rose-300 flex items-center gap-1 group-hover:gap-1.5 transition-all cursor-pointer"
+              >
+                <span>Xem sản phẩm</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => openConsultation(undefined, 'Dịch vụ Nâng Cấp Âm Thanh')}
+                className="text-[11px] font-semibold text-slate-400 hover:text-white bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700/60 cursor-pointer"
+              >
+                Nhận tư vấn
+              </button>
+            </div>
+          </div>
+
+          {/* Service 7: Bọc Ghế Da Nappa & Độ Ghế Điện */}
+          <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-orange-500/50 hover:shadow-xl hover:shadow-orange-950/30 transition-all group flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Armchair className="w-6 h-6 text-orange-400" />
+                </div>
+                <span className="text-[11px] font-bold text-orange-400 bg-orange-950/60 px-2.5 py-1 rounded-full border border-orange-500/20">
+                  Da Nappa Ý 100%
+                </span>
+              </div>
+              <h3 className="font-bold text-white text-lg mb-2">Bọc Ghế Da &amp; Ghế Điện</h3>
+              <p className="text-xs text-slate-400 leading-relaxed mb-4">
+                May đo thủ công ghế da Nappa Ý tự nhiên đục lỗ thông khí CNC, nâng cấp ghế chỉnh điện đa hướng, quạt thông gió làm mát lưng và chế độ massage thương gia.
+              </p>
+              <div className="space-y-1.5 mb-6 text-[11px] text-slate-300">
+                <div className="flex items-center gap-1.5 text-orange-400">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span>Phom dáng chuẩn công thái học ôm sát người</span>
+                </div>
+                <div className="flex items-center gap-1.5 text-orange-400">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span>Bảo hành độ bền da và đường may 5 năm</span>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center justify-between pt-4 border-t border-slate-800">
+              <button
+                onClick={() => setCurrentPage('products')}
+                className="text-xs font-bold text-orange-400 hover:text-orange-300 flex items-center gap-1 group-hover:gap-1.5 transition-all cursor-pointer"
+              >
+                <span>Xem sản phẩm</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => openConsultation(undefined, 'Dịch vụ Bọc Ghế Da Nappa & Ghế Điện')}
+                className="text-[11px] font-semibold text-slate-400 hover:text-white bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700/60 cursor-pointer"
+              >
+                Nhận tư vấn
+              </button>
+            </div>
+          </div>
+
+          {/* Service 8: Phay Lazang CNC & Giáp Bảo Vệ Pin */}
+          <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-teal-500/50 hover:shadow-xl hover:shadow-teal-950/30 transition-all group flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 rounded-xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Disc className="w-6 h-6 text-teal-400" />
+                </div>
+                <span className="text-[11px] font-bold text-teal-400 bg-teal-950/60 px-2.5 py-1 rounded-full border border-teal-500/20">
+                  CNC &amp; Giáp Xe Điện
+                </span>
+              </div>
+              <h3 className="font-bold text-white text-lg mb-2">Phay Lazang &amp; Giáp Pin</h3>
+              <p className="text-xs text-slate-400 leading-relaxed mb-4">
+                Phay phục hồi mâm lazang hợp kim bằng máy CNC công nghệ kim cương, sơn đổi màu mâm thể thao và lắp đặt giáp nhôm bảo vệ cụm pin gầm xe điện VinFast an tâm vận hành.
+              </p>
+              <div className="space-y-1.5 mb-6 text-[11px] text-slate-300">
+                <div className="flex items-center gap-1.5 text-teal-400">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span>Đường phay ánh kim bóng sắc nét chuẩn xác</span>
+                </div>
+                <div className="flex items-center gap-1.5 text-teal-400">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span>Giáp hợp kim bảo vệ pin chống đá văng cạ gầm</span>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center justify-between pt-4 border-t border-slate-800">
+              <button
+                onClick={() => setCurrentPage('products')}
+                className="text-xs font-bold text-teal-400 hover:text-teal-300 flex items-center gap-1 group-hover:gap-1.5 transition-all cursor-pointer"
+              >
+                <span>Xem sản phẩm</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => openConsultation(undefined, 'Dịch vụ Phay Lazang & Giáp Bảo Vệ Pin')}
+                className="text-[11px] font-semibold text-slate-400 hover:text-white bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700/60 cursor-pointer"
+              >
+                Nhận tư vấn
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* 4.2 GÓI ĐỘ XE CHUYÊN BIỆT THEO HÃNG XE (VINFAST, TOYOTA, HYUNDAI, FORD...) */}
+        <div className="mt-14 rounded-3xl bg-slate-900/60 border border-slate-800/80 p-6 sm:p-8">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+            <div>
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-bold mb-1.5">
+                <Car className="w-3.5 h-3.5" />
+                Giải Pháp Chuẩn Hãng
+              </div>
+              <h3 className="text-xl sm:text-2xl font-extrabold text-white">
+                Giải Pháp Độ Xe Theo Từng Dòng Xe Trọng Điểm
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-400 mt-1">
+                Các gói giải pháp nâng cấp đồng bộ may đo chuẩn phom cho các dòng xe thịnh hành nhất Việt Nam
+              </p>
+            </div>
             <button
-              onClick={() => {
-                setCurrentPage('products');
-              }}
-              className="text-xs font-bold text-amber-400 flex items-center gap-1 group-hover:gap-2 transition-all cursor-pointer"
+              onClick={() => openConsultation()}
+              className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-lg shadow-emerald-600/25 transition-all flex items-center gap-2 self-start md:self-auto cursor-pointer"
             >
-              <span>Xem phim cách nhiệt &amp; chống nóng</span>
-              <ChevronRight className="w-4 h-4" />
+              <Phone className="w-4 h-4" />
+              <span>Tư Vấn Đúng Dòng Xe Của Bạn</span>
             </button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {/* VinFast */}
+            <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/40 transition-all">
+              <div className="flex items-center justify-between mb-2.5">
+                <h4 className="font-extrabold text-sm text-white">VinFast (VF3, 5, 6, 7, 8, 9)</h4>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400">Chuyên sâu</span>
+              </div>
+              <ul className="text-xs text-slate-400 space-y-1.5">
+                <li className="flex items-center gap-1.5">
+                  <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                  <span>Màn đôi 20.8" song song 2 hệ điều hành</span>
+                </li>
+                <li className="flex items-center gap-1.5">
+                  <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                  <span>Cốp điện &amp; Cửa hít tự động cắm giắc Zin</span>
+                </li>
+                <li className="flex items-center gap-1.5">
+                  <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                  <span>Bệ tỳ tay sạc không dây Qi &amp; Giáp bảo vệ pin</span>
+                </li>
+                <li className="flex items-center gap-1.5">
+                  <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                  <span>Màn HUD MCD91 &amp; Module xi nhan demi VINIK</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Toyota / Lexus */}
+            <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/40 transition-all">
+              <div className="flex items-center justify-between mb-2.5">
+                <h4 className="font-extrabold text-sm text-white">Toyota &amp; Lexus</h4>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-sky-500/20 text-sky-400">Zin 100%</span>
+              </div>
+              <ul className="text-xs text-slate-400 space-y-1.5">
+                <li className="flex items-center gap-1.5">
+                  <Check className="w-3.5 h-3.5 text-sky-400 flex-shrink-0" />
+                  <span>LED nội thất Raipow Toyota Cross 24 chi tiết</span>
+                </li>
+                <li className="flex items-center gap-1.5">
+                  <Check className="w-3.5 h-3.5 text-sky-400 flex-shrink-0" />
+                  <span>Camera 360 độ TECHCAM tích hợp màn Zin</span>
+                </li>
+                <li className="flex items-center gap-1.5">
+                  <Check className="w-3.5 h-3.5 text-sky-400 flex-shrink-0" />
+                  <span>Cửa hít Owin 2 nấc &amp; Gập gương lên kính tự động</span>
+                </li>
+                <li className="flex items-center gap-1.5">
+                  <Check className="w-3.5 h-3.5 text-sky-400 flex-shrink-0" />
+                  <span>Phim cách nhiệt 3M Crystalline 200 lớp cản nhiệt</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Hyundai & Kia */}
+            <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/40 transition-all">
+              <div className="flex items-center justify-between mb-2.5">
+                <h4 className="font-extrabold text-sm text-white">Hyundai &amp; Kia</h4>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-purple-500/20 text-purple-400">Cao cấp</span>
+              </div>
+              <ul className="text-xs text-slate-400 space-y-1.5">
+                <li className="flex items-center gap-1.5">
+                  <Check className="w-3.5 h-3.5 text-purple-400 flex-shrink-0" />
+                  <span>Bệ bước chân điện thò thụt Carnival, SantaFe</span>
+                </li>
+                <li className="flex items-center gap-1.5">
+                  <Check className="w-3.5 h-3.5 text-purple-400 flex-shrink-0" />
+                  <span>Cửa hít Owin chống kẹt siêu êm ái</span>
+                </li>
+                <li className="flex items-center gap-1.5">
+                  <Check className="w-3.5 h-3.5 text-purple-400 flex-shrink-0" />
+                  <span>Android Box Caska / Zestech cắm cổng USB</span>
+                </li>
+                <li className="flex items-center gap-1.5">
+                  <Check className="w-3.5 h-3.5 text-purple-400 flex-shrink-0" />
+                  <span>Bọc da Nappa thương gia &amp; Thảm TPE tràn viền</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Ford, Honda & Dòng Khác */}
+            <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/40 transition-all">
+              <div className="flex items-center justify-between mb-2.5">
+                <h4 className="font-extrabold text-sm text-white">Ford, Honda, Mazda...</h4>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-orange-500/20 text-orange-400">Hiệu năng</span>
+              </div>
+              <ul className="text-xs text-slate-400 space-y-1.5">
+                <li className="flex items-center gap-1.5">
+                  <Check className="w-3.5 h-3.5 text-orange-400 flex-shrink-0" />
+                  <span>Bi LED Aozoom Extra Sapphire pha siêu sáng</span>
+                </li>
+                <li className="flex items-center gap-1.5">
+                  <Check className="w-3.5 h-3.5 text-orange-400 flex-shrink-0" />
+                  <span>Cảm biến áp suất lốp ICAR Ellisafe van trong</span>
+                </li>
+                <li className="flex items-center gap-1.5">
+                  <Check className="w-3.5 h-3.5 text-orange-400 flex-shrink-0" />
+                  <span>Sub gầm ghế Rebec U10 âm thanh chắc khỏe</span>
+                </li>
+                <li className="flex items-center gap-1.5">
+                  <Check className="w-3.5 h-3.5 text-orange-400 flex-shrink-0" />
+                  <span>Gói cách âm chống ồn 3 lớp SIP tiêu chuẩn Nga</span>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </section>

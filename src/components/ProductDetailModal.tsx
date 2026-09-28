@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   X, 
@@ -52,6 +52,13 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   const [quantity, setQuantity] = useState<number>(1);
   const [added, setAdded] = useState(false);
   const [selectedStarFilter, setSelectedStarFilter] = useState<number | 'all'>('all');
+
+  useEffect(() => {
+    if (product) {
+      setActiveImage(product.primaryImage);
+      setSelectedColor(product.colors[0]?.name || '');
+    }
+  }, [product?.id, product?.primaryImage]);
 
   // Interactive review submission state
   const [userRating, setUserRating] = useState<number>(5);
@@ -239,7 +246,18 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             {/* Product Details Column */}
             <div className="lg:col-span-6 space-y-5">
               <div>
-                <div className="flex items-center gap-2 mb-1.5">
+                <div className="flex flex-wrap items-center gap-2 mb-1.5">
+                  {product.itemType === 'service' ? (
+                    <span className="px-2.5 py-0.5 rounded-md text-xs font-bold bg-purple-950/80 text-purple-300 border border-purple-500/30 flex items-center gap-1">
+                      <Wrench className="w-3 h-3" />
+                      Dịch Vụ Độ Xe Chính Hãng
+                    </span>
+                  ) : (
+                    <span className="px-2.5 py-0.5 rounded-md text-xs font-bold bg-sky-950/80 text-sky-300 border border-sky-500/30 flex items-center gap-1">
+                      <ShieldCheck className="w-3 h-3" />
+                      Sản Phẩm Chính Hãng
+                    </span>
+                  )}
                   <span className="px-2.5 py-0.5 rounded-md text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                     {product.categoryName}
                   </span>

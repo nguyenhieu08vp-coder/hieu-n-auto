@@ -7,7 +7,9 @@ import {
   ShieldCheck, 
   Zap, 
   Car, 
-  Layers 
+  Layers,
+  Wrench,
+  PackageCheck
 } from 'lucide-react';
 import { Product } from '../types';
 import { FORMAT_CURRENCY } from '../data/mockData';
@@ -110,9 +112,22 @@ export const ProductListItem: React.FC<ProductListItemProps> = ({
         <div className="space-y-2">
           {/* Category & Rating */}
           <div className="flex items-center justify-between gap-2 text-xs">
-            <span className="text-emerald-400 font-semibold">
-              {product.categoryName}
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="text-emerald-400 font-semibold">
+                {product.categoryName}
+              </span>
+              {product.itemType === 'service' ? (
+                <span className="inline-flex items-center gap-1 text-[10px] font-bold text-purple-300 bg-purple-950/70 px-2 py-0.5 rounded-full border border-purple-500/30">
+                  <Wrench className="w-2.5 h-2.5" />
+                  Dịch Vụ Độ Xe
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1 text-[10px] font-bold text-sky-300 bg-sky-950/70 px-2 py-0.5 rounded-full border border-sky-500/30">
+                  <PackageCheck className="w-2.5 h-2.5" />
+                  Sản Phẩm Chính Hãng
+                </span>
+              )}
+            </div>
             <div className="flex items-center gap-1 bg-slate-950/80 px-2 py-0.5 rounded-md border border-slate-800">
               <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
               <span className="text-amber-400 font-extrabold text-xs">{product.rating.toFixed(1)}</span>

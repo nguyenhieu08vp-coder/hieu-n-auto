@@ -30,14 +30,16 @@ import {
   ArrowUpDown,
   Zap,
   ShieldAlert,
+  Shield,
   Video,
   Wifi,
   Mic,
   Sun,
-  Droplets
+  Droplets,
+  Wrench
 } from 'lucide-react';
-import { Product } from '../types';
-import { PRODUCTS, CATEGORIES, FORMAT_CURRENCY } from '../data/mockData';
+import { Product, ItemClassification } from '../types';
+import { PRODUCTS, CATEGORIES, CLASSIFICATIONS, FORMAT_CURRENCY } from '../data/mockData';
 import { ProductListItem } from '../components/ProductListItem';
 import { ProductCompactCard } from '../components/ProductCompactCard';
 import { ProductTableView } from '../components/ProductTableView';
@@ -58,6 +60,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
   setSearchQuery,
 }) => {
   // Filter states
+  const [selectedClassification, setSelectedClassification] = useState<ItemClassification>('all');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [priceRange, setPriceRange] = useState<string>('all');
   const [customMinPrice, setCustomMinPrice] = useState<string>('');
@@ -230,6 +233,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
 
   // Reset all filters
   const handleResetFilters = () => {
+    setSelectedClassification('all');
     setSelectedCategory('all');
     setPriceRange('all');
     setCustomMinPrice('');
@@ -250,20 +254,28 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
   // Helper to get category icon component
   const getCategoryIcon = (catId: string) => {
     switch (catId) {
+      case 'cameras-360':
       case 'dashcams-tpms':
         return <ShieldCheck className="w-4 h-4" />;
+      case 'screens-displays':
       case 'screens-cams':
         return <Tv className="w-4 h-4" />;
+      case 'safety-sensors':
+        return <ShieldAlert className="w-4 h-4" />;
       case 'ambient-lights':
         return <Sparkles className="w-4 h-4" />;
-      case 'seat-covers':
-        return <Armchair className="w-4 h-4" />;
       case 'floor-mats':
         return <Layers className="w-4 h-4" />;
       case 'car-audio':
         return <Volume2 className="w-4 h-4" />;
+      case 'seat-interior':
+      case 'seat-covers':
+        return <Armchair className="w-4 h-4" />;
+      case 'electric-automation':
       case 'steering-accessories':
         return <Sliders className="w-4 h-4" />;
+      case 'heat-soundproofing':
+        return <Shield className="w-4 h-4" />;
       case 'wheels-exterior':
         return <Disc className="w-4 h-4" />;
       default:
@@ -274,6 +286,11 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
   // Filter and sort products
   const filteredProducts = useMemo(() => {
     return PRODUCTS.filter((product) => {
+      // Classification filter (Sản phẩm chính hãng vs Dịch vụ độ xe chính hãng)
+      if (selectedClassification !== 'all' && product.itemType !== selectedClassification) {
+        return false;
+      }
+
       // Category filter
       if (selectedCategory !== 'all' && product.category !== selectedCategory) {
         return false;
@@ -349,6 +366,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
       return 0; // default featured
     });
   }, [
+    selectedClassification,
     selectedCategory, 
     searchQuery, 
     priceRange, 
@@ -368,6 +386,8 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
   const filterCounts = useMemo(() => {
     return {
       total: PRODUCTS.length,
+      productCount: PRODUCTS.filter(p => p.itemType === 'product').length,
+      serviceCount: PRODUCTS.filter(p => p.itemType === 'service').length,
       sale: PRODUCTS.filter(p => p.isSale).length,
       bestSeller: PRODUCTS.filter(p => p.isBestSeller).length,
       inStock: PRODUCTS.filter(p => p.inStock).length,
@@ -384,8 +404,32 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
     };
   }, []);
 
+  // Separate Camera products into their own dedicated product group
+  const cameraProducts = useMemo(() => {
+    return filteredProducts.filter((p) => p.category === 'cameras-360');
+  }, [filteredProducts]);
+
+  // Nhóm Ánh Sáng Tăng Sáng (Bi LED Aozoom, Bi gầm TS V3 / G2 Plus): prod-16, prod-23
+  const lightingProductIds = useMemo(() => new Set(['prod-16', 'prod-23']), []);
+  const lightingProducts = useMemo(() => {
+    return filteredProducts.filter((p) => lightingProductIds.has(p.id));
+  }, [filteredProducts, lightingProductIds]);
+
+  // Specific 3 LED products: prod-3 (LED Nội Thất), prod-8 (LED Cánh Chim), prod-24 (Mạch Xi Nhan Demi LED)
+  const ledProductIds = useMemo(() => new Set(['prod-3', 'prod-8', 'prod-24']), []);
+  const ledProducts = useMemo(() => {
+    return filteredProducts.filter((p) => ledProductIds.has(p.id));
+  }, [filteredProducts, ledProductIds]);
+
+  const otherProducts = useMemo(() => {
+    return filteredProducts.filter(
+      (p) => p.category !== 'cameras-360' && !lightingProductIds.has(p.id) && !ledProductIds.has(p.id)
+    );
+  }, [filteredProducts, lightingProductIds, ledProductIds]);
+
   // Active filters count for badge indicator
   const activeFiltersCount = [
+    selectedClassification !== 'all',
     selectedCategory !== 'all',
     priceRange !== 'all',
     vehicleType !== 'all',
@@ -440,7 +484,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
         </div>
       </motion.div>
 
-      {/* 2. Top Quick Filter Chips (Lọc Nhanh 1 Chạm) */}
+      {/* Top Quick Filter Chips (Lọc Nhanh 1 Chạm) */}
       <motion.div
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
@@ -525,15 +569,15 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
         </button>
 
         <button
-          onClick={() => setSelectedCategory(selectedCategory === 'dashcams-tpms' ? 'all' : 'dashcams-tpms')}
+          onClick={() => setSelectedCategory(selectedCategory === 'cameras-360' ? 'all' : 'cameras-360')}
           className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border transition-all shrink-0 cursor-pointer font-semibold ${
-            selectedCategory === 'dashcams-tpms'
+            selectedCategory === 'cameras-360'
               ? 'bg-emerald-500 text-slate-950 border-emerald-400 shadow-md shadow-emerald-500/20'
               : 'bg-slate-900 text-slate-300 border-slate-800 hover:border-slate-700'
           }`}
         >
           <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-          <span>Camera &amp; Cảm Biến</span>
+          <span>Camera &amp; Giám Sát</span>
         </button>
 
         <button
@@ -638,13 +682,13 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
             </div>
           </div>
 
-          {/* 2. Accordion: Danh Mục Sản Phẩm (Categories) */}
+          {/* 2. Accordion: Phân Loại & Danh Mục Sản Phẩm */}
           <div className="border-t border-slate-800/80 pt-3">
             <button
               onClick={() => toggleSection('categories')}
               className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-slate-300 py-1 hover:text-white"
             >
-              <span>Danh Mục Sản Phẩm</span>
+              <span>Phân Loại &amp; Danh Mục</span>
               {openSections.categories ? (
                 <ChevronUp className="w-4 h-4 text-slate-400" />
               ) : (
@@ -653,38 +697,141 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
             </button>
             
             {openSections.categories && (
-              <div className="space-y-1 mt-2.5">
-                {CATEGORIES.map((cat) => {
-                  const isActive = selectedCategory === cat.id;
-                  const count = cat.id === 'all' 
-                    ? PRODUCTS.length 
-                    : PRODUCTS.filter(p => p.category === cat.id).length;
+              <div className="space-y-3 mt-2.5">
+                {/* Classification Pills in Sidebar */}
+                <div className="grid grid-cols-3 gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800">
+                  {CLASSIFICATIONS.map(c => {
+                    const isSel = selectedClassification === c.id;
+                    return (
+                      <button
+                        key={c.id}
+                        type="button"
+                        onClick={() => setSelectedClassification(c.id as ItemClassification)}
+                        className={`py-1.5 px-1 text-[11px] font-bold rounded-lg transition-all text-center truncate ${
+                          isSel
+                            ? c.id === 'service'
+                              ? 'bg-purple-600 text-white shadow-sm'
+                              : c.id === 'product'
+                              ? 'bg-sky-600 text-white shadow-sm'
+                              : 'bg-emerald-500 text-slate-950 shadow-sm'
+                            : 'text-slate-400 hover:text-white hover:bg-slate-900'
+                        }`}
+                      >
+                        {c.shortName}
+                      </button>
+                    );
+                  })}
+                </div>
 
-                  return (
-                    <button
-                      key={cat.id}
-                      type="button"
-                      onClick={() => setSelectedCategory(cat.id)}
-                      className={`relative w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all text-left cursor-pointer ${
-                        isActive
-                          ? 'text-slate-950 font-bold bg-emerald-500 shadow-md shadow-emerald-500/20'
-                          : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2 truncate">
-                        <span className={isActive ? 'text-slate-950' : 'text-emerald-400'}>
-                          {getCategoryIcon(cat.id)}
-                        </span>
-                        <span className="truncate">{cat.name}</span>
+                {/* Categories List Grouped */}
+                <div className="space-y-1">
+                  {/* All option */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedCategory('all');
+                    }}
+                    className={`relative w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all text-left cursor-pointer ${
+                      selectedCategory === 'all'
+                        ? 'text-slate-950 font-bold bg-emerald-500 shadow-md shadow-emerald-500/20'
+                        : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2 truncate">
+                      <Grid2X2 className="w-4 h-4" />
+                      <span className="truncate">Tất Cả Danh Mục</span>
+                    </div>
+                    <span className={`text-[10px] px-1.5 py-0.5 rounded-full shrink-0 ml-1.5 ${
+                      selectedCategory === 'all' ? 'bg-slate-950/20 text-slate-950 font-bold' : 'bg-slate-800 text-slate-400'
+                    }`}>
+                      {PRODUCTS.length}
+                    </span>
+                  </button>
+
+                  {/* Group 1: Sản Phẩm Chính Hãng */}
+                  {(selectedClassification === 'all' || selectedClassification === 'product') && (
+                    <div className="pt-2">
+                      <div className="text-[10px] font-bold uppercase tracking-wider text-sky-400 px-2 py-1 flex items-center gap-1.5">
+                        <PackageCheck className="w-3 h-3" />
+                        <span>Sản Phẩm Chính Hãng</span>
                       </div>
-                      <span className={`text-[10px] px-1.5 py-0.5 rounded-full shrink-0 ml-1.5 ${
-                        isActive ? 'bg-slate-950/20 text-slate-950 font-bold' : 'bg-slate-800 text-slate-400'
-                      }`}>
-                        {count}
-                      </span>
-                    </button>
-                  );
-                })}
+                      <div className="space-y-0.5 mt-0.5">
+                        {CATEGORIES.filter(cat => cat.itemType === 'product').map((cat) => {
+                          const isActive = selectedCategory === cat.id;
+                          const count = PRODUCTS.filter(p => p.category === cat.id).length;
+                          return (
+                            <button
+                              key={cat.id}
+                              type="button"
+                              onClick={() => {
+                                setSelectedCategory(cat.id);
+                              }}
+                              className={`relative w-full flex items-center justify-between px-3 py-1.5 rounded-xl text-xs font-medium transition-all text-left cursor-pointer ${
+                                isActive
+                                  ? 'text-white font-bold bg-sky-600 shadow-md shadow-sky-600/30'
+                                  : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
+                              }`}
+                            >
+                              <div className="flex items-center gap-2 truncate">
+                                <span className={isActive ? 'text-white' : 'text-sky-400'}>
+                                  {getCategoryIcon(cat.id)}
+                                </span>
+                                <span className="truncate">{cat.name}</span>
+                              </div>
+                              <span className={`text-[10px] px-1.5 py-0.5 rounded-full shrink-0 ml-1.5 ${
+                                isActive ? 'bg-white/20 text-white font-bold' : 'bg-slate-800 text-slate-400'
+                              }`}>
+                                {count}
+                              </span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Group 2: Dịch Vụ Độ Xe Chính Hãng */}
+                  {(selectedClassification === 'all' || selectedClassification === 'service') && (
+                    <div className="pt-2">
+                      <div className="text-[10px] font-bold uppercase tracking-wider text-purple-400 px-2 py-1 flex items-center gap-1.5">
+                        <Wrench className="w-3 h-3" />
+                        <span>Dịch Vụ Độ Xe Chính Hãng</span>
+                      </div>
+                      <div className="space-y-0.5 mt-0.5">
+                        {CATEGORIES.filter(cat => cat.itemType === 'service').map((cat) => {
+                          const isActive = selectedCategory === cat.id;
+                          const count = PRODUCTS.filter(p => p.category === cat.id).length;
+                          return (
+                            <button
+                              key={cat.id}
+                              type="button"
+                              onClick={() => {
+                                setSelectedCategory(cat.id);
+                              }}
+                              className={`relative w-full flex items-center justify-between px-3 py-1.5 rounded-xl text-xs font-medium transition-all text-left cursor-pointer ${
+                                isActive
+                                  ? 'text-white font-bold bg-purple-600 shadow-md shadow-purple-600/30'
+                                  : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
+                              }`}
+                            >
+                              <div className="flex items-center gap-2 truncate">
+                                <span className={isActive ? 'text-white' : 'text-purple-400'}>
+                                  {getCategoryIcon(cat.id)}
+                                </span>
+                                <span className="truncate">{cat.name}</span>
+                              </div>
+                              <span className={`text-[10px] px-1.5 py-0.5 rounded-full shrink-0 ml-1.5 ${
+                                isActive ? 'bg-white/20 text-white font-bold' : 'bg-slate-800 text-slate-400'
+                              }`}>
+                                {count}
+                              </span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
           </div>
@@ -1088,9 +1235,9 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
               <span className="text-slate-400 hidden sm:inline font-medium">Chế độ xem:</span>
               <div className="flex items-center border border-slate-700 rounded-xl overflow-hidden bg-slate-950 p-0.5">
                 {[
-                  { id: 'grid-compact', label: 'Nhỏ Gọn', icon: <Grid2X2 className="w-3.5 h-3.5" /> },
+                  { id: 'grid-compact', label: 'Lưới', icon: <Grid2X2 className="w-3.5 h-3.5" /> },
                   { id: 'list', label: 'Danh Sách', icon: <List className="w-3.5 h-3.5" /> },
-                  { id: 'table', label: 'Bảng Biểu', icon: <TableIcon className="w-3.5 h-3.5" /> },
+                  { id: 'table', label: 'Bảng', icon: <TableIcon className="w-3.5 h-3.5" /> },
                 ].map((mode) => {
                   const isActive = viewMode === mode.id;
                   return (
@@ -1128,6 +1275,27 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                 <SlidersHorizontal className="w-3.5 h-3.5 text-emerald-400" />
                 Đang lọc ({activeFiltersCount}):
               </span>
+
+              {selectedClassification !== 'all' && (
+                <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg font-medium border ${
+                  selectedClassification === 'service'
+                    ? 'bg-purple-950/80 border-purple-500/40 text-purple-300'
+                    : 'bg-sky-950/80 border-sky-500/40 text-sky-300'
+                }`}>
+                  {selectedClassification === 'service' ? (
+                    <>
+                      <Wrench className="w-3 h-3 text-purple-400" />
+                      <span>Dịch Vụ Độ Xe Chính Hãng</span>
+                    </>
+                  ) : (
+                    <>
+                      <PackageCheck className="w-3 h-3 text-sky-400" />
+                      <span>Sản Phẩm Chính Hãng</span>
+                    </>
+                  )}
+                  <X className="w-3 h-3 cursor-pointer hover:text-white" onClick={() => setSelectedClassification('all')} />
+                </span>
+              )}
 
               {selectedCategory !== 'all' && (
                 <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 font-medium">
@@ -1266,41 +1434,214 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                   onQuickView={onQuickView}
                 />
               </motion.div>
-            ) : viewMode === 'list' ? (
-              <motion.div 
-                key={`list-${selectedCategory}-${sortBy}-${filteredProducts.length}`}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-                className="space-y-4"
-              >
-                {filteredProducts.map((product) => (
-                  <ProductListItem
-                    key={product.id}
-                    product={product}
-                    onAddToCart={onAddToCart}
-                    onQuickView={onQuickView}
-                  />
-                ))}
-              </motion.div>
             ) : (
-              <motion.div 
-                key={`grid-${selectedCategory}-${sortBy}-${filteredProducts.length}`}
+              <motion.div
+                key={`products-view-${viewMode}-${selectedCategory}-${sortBy}-${filteredProducts.length}`}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-                className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4"
+                className="space-y-8"
               >
-                {filteredProducts.map((product) => (
-                  <ProductCompactCard
-                    key={product.id}
-                    product={product}
-                    onAddToCart={onAddToCart}
-                    onQuickView={onQuickView}
-                  />
-                ))}
+                {/* 📹 1. NHÓM SẢN PHẨM CAMERA & GHI HÌNH CHUYÊN NGHIỆP */}
+                {cameraProducts.length > 0 && (
+                  <div className="rounded-2xl border border-sky-500/30 bg-gradient-to-b from-sky-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-sky-500/20">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-sky-500/20 border border-sky-400/40 text-sky-400 flex items-center justify-center flex-shrink-0 shadow-lg shadow-sky-500/10">
+                          <Video className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h2 className="text-sm sm:text-base font-extrabold text-white tracking-tight">
+                              Nhóm Sản Phẩm Camera &amp; Ghi Hình Chuyên Nghiệp
+                            </h2>
+                            <span className="px-2.5 py-0.5 rounded-full bg-sky-500/20 border border-sky-400/30 text-sky-300 text-[11px] font-extrabold">
+                              {cameraProducts.length} Sản phẩm
+                            </span>
+                          </div>
+                          <p className="text-[11px] text-slate-400 mt-0.5">
+                            Camera hành trình 4K HDR, camera 3 kênh, cảnh báo giao thông giọng nói &amp; Camera 360 toàn cảnh cắm giắc Zin
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {viewMode === 'list' ? (
+                      <div className="space-y-3.5">
+                        {cameraProducts.map((product) => (
+                          <ProductListItem
+                            key={product.id}
+                            product={product}
+                            onAddToCart={onAddToCart}
+                            onQuickView={onQuickView}
+                          />
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
+                        {cameraProducts.map((product) => (
+                          <ProductCompactCard
+                            key={product.id}
+                            product={product}
+                            onAddToCart={onAddToCart}
+                            onQuickView={onQuickView}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* 🔆 2. MỤC ÁNH SÁNG (BI LED, BI GẦM TĂNG SÁNG) - BÊN DƯỚI CAMERA VÀ TÁCH RIÊNG VỚI ĐÈN LED */}
+                {lightingProducts.length > 0 && (
+                  <div className="rounded-2xl border border-yellow-500/30 bg-gradient-to-b from-yellow-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-yellow-500/20">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-yellow-500/20 border border-yellow-400/40 text-yellow-400 flex items-center justify-center flex-shrink-0 shadow-lg shadow-yellow-500/10">
+                          <Sun className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h2 className="text-sm sm:text-base font-extrabold text-white tracking-tight">
+                              Mục Nâng Cấp Ánh Sáng &amp; Đèn Tăng Sáng
+                            </h2>
+                            <span className="px-2.5 py-0.5 rounded-full bg-yellow-500/20 border border-yellow-400/30 text-yellow-300 text-[11px] font-extrabold">
+                              {lightingProducts.length} Sản phẩm
+                            </span>
+                          </div>
+                          <p className="text-[11px] text-slate-400 mt-0.5">
+                            Bi LED pha/cos siêu công suất Aozoom 98W &amp; Đèn trợ sáng mặt ca lăng TS V3 kết hợp Bi gầm G2 Plus 3 chế độ màu
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {viewMode === 'list' ? (
+                      <div className="space-y-3.5">
+                        {lightingProducts.map((product) => (
+                          <ProductListItem
+                            key={product.id}
+                            product={product}
+                            onAddToCart={onAddToCart}
+                            onQuickView={onQuickView}
+                          />
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
+                        {lightingProducts.map((product) => (
+                          <ProductCompactCard
+                            key={product.id}
+                            product={product}
+                            onAddToCart={onAddToCart}
+                            onQuickView={onQuickView}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* 💡 3. NHÓM ĐÈN LED (TÁCH RIÊNG VỚI MỤC ÁNH SÁNG) */}
+                {ledProducts.length > 0 && (
+                  <div className="rounded-2xl border border-amber-500/30 bg-gradient-to-b from-amber-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-amber-500/20">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-400/40 text-amber-400 flex items-center justify-center flex-shrink-0 shadow-lg shadow-amber-500/10">
+                          <Sparkles className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h2 className="text-sm sm:text-base font-extrabold text-white tracking-tight">
+                              Nhóm Đèn LED &amp; Hiệu Ứng Ánh Sáng
+                            </h2>
+                            <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 text-[11px] font-extrabold">
+                              {ledProducts.length} Sản phẩm
+                            </span>
+                          </div>
+                          <p className="text-[11px] text-slate-400 mt-0.5">
+                            LED nội thất RGB 64 màu đổi theo nhạc, LED cánh chim định vị quét ma trận &amp; module mạch xi nhan demi LED cắm giắc Zin
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {viewMode === 'list' ? (
+                      <div className="space-y-3.5">
+                        {ledProducts.map((product) => (
+                          <ProductListItem
+                            key={product.id}
+                            product={product}
+                            onAddToCart={onAddToCart}
+                            onQuickView={onQuickView}
+                          />
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
+                        {ledProducts.map((product) => (
+                          <ProductCompactCard
+                            key={product.id}
+                            product={product}
+                            onAddToCart={onAddToCart}
+                            onQuickView={onQuickView}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* 🚗 4. CÁC SẢN PHẨM & DỊCH VỤ ĐỘ XE KHÁC */}
+                {otherProducts.length > 0 && (
+                  <div className="space-y-4">
+                    {(cameraProducts.length > 0 || lightingProducts.length > 0 || ledProducts.length > 0) && (
+                      <div className="flex items-center justify-between gap-3 px-1 pb-2 border-b border-slate-800">
+                        <div className="flex items-center gap-2.5">
+                          <div className="w-8 h-8 rounded-lg bg-slate-800 border border-slate-700 text-emerald-400 flex items-center justify-center">
+                            <PackageCheck className="w-4 h-4" />
+                          </div>
+                          <div>
+                            <h3 className="text-sm sm:text-base font-extrabold text-white">
+                              Các Sản Phẩm &amp; Dịch Vụ Độ Xe Khác
+                            </h3>
+                            <p className="text-[11px] text-slate-400">
+                              Màn hình Android, âm thanh DSP, thảm sàn TPE, bệ bước chân &amp; dịch vụ nâng cấp chuẩn Zin
+                            </p>
+                          </div>
+                        </div>
+                        <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+                          {otherProducts.length} Mục
+                        </span>
+                      </div>
+                    )}
+
+                    {viewMode === 'list' ? (
+                      <div className="space-y-3.5">
+                        {otherProducts.map((product) => (
+                          <ProductListItem
+                            key={product.id}
+                            product={product}
+                            onAddToCart={onAddToCart}
+                            onQuickView={onQuickView}
+                          />
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
+                        {otherProducts.map((product) => (
+                          <ProductCompactCard
+                            key={product.id}
+                            product={product}
+                            onAddToCart={onAddToCart}
+                            onQuickView={onQuickView}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
               </motion.div>
             )}
           </AnimatePresence>
@@ -1373,37 +1714,117 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                     </div>
                   </div>
 
-                  {/* Categories */}
-                  <div className="space-y-2">
-                    <label className="font-bold uppercase tracking-wider text-slate-400 text-[11px]">
-                      Danh Mục
+                  {/* Classification & Categories in Drawer */}
+                  <div className="space-y-3">
+                    <label className="font-bold uppercase tracking-wider text-slate-400 text-[11px] block">
+                      Phân Loại Hạng Mục
                     </label>
-                    <div className="space-y-1">
-                      {CATEGORIES.map((cat) => {
-                        const count = cat.id === 'all' 
-                          ? PRODUCTS.length 
-                          : PRODUCTS.filter(p => p.category === cat.id).length;
-
+                    <div className="grid grid-cols-3 gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800">
+                      {CLASSIFICATIONS.map(c => {
+                        const isSel = selectedClassification === c.id;
                         return (
                           <button
-                            key={cat.id}
+                            key={c.id}
                             type="button"
-                            onClick={() => setSelectedCategory(cat.id)}
-                            className={`w-full flex items-center justify-between px-3 py-2 rounded-xl font-medium transition-colors ${
-                              selectedCategory === cat.id
-                                ? 'bg-emerald-500 text-slate-950 font-bold'
-                                : 'text-slate-300 hover:bg-slate-800'
+                            onClick={() => setSelectedClassification(c.id as ItemClassification)}
+                            className={`py-1.5 px-1 text-[11px] font-bold rounded-lg transition-all text-center truncate ${
+                              isSel
+                                ? c.id === 'service'
+                                  ? 'bg-purple-600 text-white'
+                                  : c.id === 'product'
+                                  ? 'bg-sky-600 text-white'
+                                  : 'bg-emerald-500 text-slate-950'
+                                : 'text-slate-400 hover:text-white'
                             }`}
                           >
-                            <span className="truncate">{cat.name}</span>
-                            <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
-                              selectedCategory === cat.id ? 'bg-slate-950/20 text-slate-950 font-bold' : 'bg-slate-800 text-slate-400'
-                            }`}>
-                              {count}
-                            </span>
+                            {c.shortName}
                           </button>
                         );
                       })}
+                    </div>
+
+                    <label className="font-bold uppercase tracking-wider text-slate-400 text-[11px] block pt-2">
+                      Danh Mục Chi Tiết
+                    </label>
+                    <div className="space-y-1">
+                      <button
+                        type="button"
+                        onClick={() => setSelectedCategory('all')}
+                        className={`w-full flex items-center justify-between px-3 py-2 rounded-xl font-medium transition-colors ${
+                          selectedCategory === 'all'
+                            ? 'bg-emerald-500 text-slate-950 font-bold'
+                            : 'text-slate-300 hover:bg-slate-800'
+                        }`}
+                      >
+                        <span>Tất Cả Danh Mục</span>
+                        <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
+                          selectedCategory === 'all' ? 'bg-slate-950/20 text-slate-950 font-bold' : 'bg-slate-800 text-slate-400'
+                        }`}>
+                          {PRODUCTS.length}
+                        </span>
+                      </button>
+
+                      {(selectedClassification === 'all' || selectedClassification === 'product') && (
+                        <div className="pt-2">
+                          <div className="text-[10px] font-bold uppercase tracking-wider text-sky-400 px-2 py-1 flex items-center gap-1.5">
+                            <PackageCheck className="w-3 h-3" />
+                            <span>Sản Phẩm Chính Hãng</span>
+                          </div>
+                          {CATEGORIES.filter(cat => cat.itemType === 'product').map((cat) => {
+                            const count = PRODUCTS.filter(p => p.category === cat.id).length;
+                            return (
+                              <button
+                                key={cat.id}
+                                type="button"
+                                onClick={() => setSelectedCategory(cat.id)}
+                                className={`w-full flex items-center justify-between px-3 py-1.5 rounded-xl font-medium transition-colors ${
+                                  selectedCategory === cat.id
+                                    ? 'bg-sky-600 text-white font-bold'
+                                    : 'text-slate-300 hover:bg-slate-800'
+                                }`}
+                              >
+                                <span className="truncate">{cat.name}</span>
+                                <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
+                                  selectedCategory === cat.id ? 'bg-white/20 text-white font-bold' : 'bg-slate-800 text-slate-400'
+                                }`}>
+                                  {count}
+                                </span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      )}
+
+                      {(selectedClassification === 'all' || selectedClassification === 'service') && (
+                        <div className="pt-2">
+                          <div className="text-[10px] font-bold uppercase tracking-wider text-purple-400 px-2 py-1 flex items-center gap-1.5">
+                            <Wrench className="w-3 h-3" />
+                            <span>Dịch Vụ Độ Xe Chính Hãng</span>
+                          </div>
+                          {CATEGORIES.filter(cat => cat.itemType === 'service').map((cat) => {
+                            const count = PRODUCTS.filter(p => p.category === cat.id).length;
+                            return (
+                              <button
+                                key={cat.id}
+                                type="button"
+                                onClick={() => setSelectedCategory(cat.id)}
+                                className={`w-full flex items-center justify-between px-3 py-1.5 rounded-xl font-medium transition-colors ${
+                                  selectedCategory === cat.id
+                                    ? 'bg-purple-600 text-white font-bold'
+                                    : 'text-slate-300 hover:bg-slate-800'
+                                }`}
+                              >
+                                <span className="truncate">{cat.name}</span>
+                                <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
+                                  selectedCategory === cat.id ? 'bg-white/20 text-white font-bold' : 'bg-slate-800 text-slate-400'
+                                }`}>
+                                  {count}
+                                </span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      )}
                     </div>
                   </div>
 
