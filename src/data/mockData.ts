@@ -13,7 +13,6 @@ import carSoundproofingImg from '../assets/images/car_soundproofing_179034893210
 import electricSideStepImg from '../assets/images/electric_side_step_1790348943973.jpg';
 import manHinhOdoGbaImg from '../assets/images/man_hinh_odo_gba_1790349551626.jpg';
 import odoGbaFeaturesImg from '../assets/images/odo_gba_features_1790349563223.jpg';
-import rebecComboPosterImg from '../assets/images/rebec_u10_bl80_combo_1790585578637.jpg';
 import vf6BatteryShieldPlateImg from '../assets/images/images/vf6_battery_shield_plate.jpg';
 
 export const CLASSIFICATIONS = [
@@ -468,28 +467,28 @@ export const PRODUCTS: Product[] = [
   {
     id: 'prod-6',
     itemType: 'service',
-    name: 'Gói Nâng Cấp Loa Sub Điện Gầm Ghế Rebec U10 & Cặp Loa Mid-Treble Rebec BL80 (Bổ Sung Hệ Thống Loa Zin)',
+    name: 'Gói Nâng Cấp Loa Sub Điện Gầm Ghế Rebec U10 Cao Cấp (Bổ Sung Âm Trầm Siêu Sâu)',
     category: 'car-audio',
-    categoryName: 'Nâng Cấp Âm Thanh Xe Hơi',
-    price: 8500000,
-    originalPrice: 9800000,
+    categoryName: 'Loa Sub Điện Gầm Ghế Ô Tô',
+    price: 5600000,
+    originalPrice: 6800000,
     isBestSeller: true,
     isSale: true,
     rating: 4.9,
     reviewCount: 196,
-    primaryImage: rebecComboPosterImg,
-    secondaryImage: '/images/rebec_bl80_speaker.jpg',
-    description: 'Combo nâng cấp âm thanh Rebec Car Audio chính hãng cắm giắc Zin cực nhanh, bổ sung hoàn hảo cho hệ thống loa zin của ô tô. Bao gồm Loa Sub điện gầm ghế Rebec U10 siêu trầm uy lực (160W RMS / 400W MAX, Size 10") và cặp loa Mid - Treble Rebec BL80 (80mm/3", 250Hz - 15KHz, 15W RMS / 30W Peak, 89dB) màng phay CNC tinh xảo tái tạo dải trung cao ngọt ngào, âm trường rộng mở.',
+    primaryImage: '/images/rebec_sub_vf3_kit.jpg',
+    secondaryImage: '/images/rebec_sub_closeup.jpg',
+    description: 'Loa Sub điện gầm ghế Rebec U10 (10 inch) chính hãng cao cấp cắm giắc Zin 100%, bổ sung dải âm bass siêu trầm mạnh mẽ và uy lực cho hệ thống âm thanh ô tô. Kích thước siêu mỏng nhỏ gọn dễ dàng đặt vừa vặn dưới gầm ghế các dòng xe VinFast VF3, Sedan, SUV, MPV mà không chiếm diện tích khoang nội thất.',
     features: [
-      'Loa Sub điện Rebec U10 (10 inch): Dải tần 150Hz - 20Hz, Công suất 160W RMS / 400W MAX siêu trầm sâu chắc',
-      'Cặp loa Mid - Treble Rebec BL80 (80mm/3 inch): Dải tần 250Hz - 15KHz, Công suất 15W RMS / 30W Peak, 89dB, trở kháng 4Ω',
-      'Lắp đặt cực nhanh, cắm giắc Zin 100% bổ sung trực tiếp cho hệ thống loa nguyên bản của xe',
-      'Tương thích hoàn hảo cho VinFast VF3, SUV, Sedan, MPV với bộ phụ kiện và cầu chì an toàn cao cấp',
-      'Trang bị cầu chì ngắt nguồn an toàn độc lập và dây bọc lưới chống cháy tiêu chuẩn xe hơi',
+      'Loa Sub điện Rebec U10 kích thước 10 inch, công suất 160W RMS / 400W MAX tái tạo dải trầm 150Hz - 20Hz sâu thẳm, gọn gàng',
+      'Khung nhôm đúc nguyên khối tản nhiệt cực tốt, chống rung chấn hiệu quả khi đánh dải bass cao độ',
+      'Tích hợp bộ điều chỉnh âm lượng Bass Remote Controller đặt tại vị trí lái xe tiện lợi',
+      'Bộ dây cắm giắc Zin 100% theo xe, có cầu chì ngắt nguồn độc lập bảo vệ an toàn hệ thống điện',
+      'Tặng kèm pát và ốc đôn ghế chuyên dụng vừa khít gầm ghế VinFast VF3 và nhiều dòng xe',
       'Bảo hành chính hãng Rebec 24 tháng đổi mới'
     ],
     vehicleTypes: ['suv', 'sedan', 'mpv'],
-    materials: ['Khung Nhôm Đúc Liền Khối Rebec U10', 'Màng Loa Nhôm Phay CNC Rebec BL80'],
+    materials: ['Khung Nhôm Đúc Liền Khối Rebec U10', 'Màng Loa Cao Cấp Sợi Thủy Tinh & Hợp Kim'],
     colors: [
       { name: 'Đen Mờ Nhôm Phay Rebec', hex: '#18181B' }
     ],
