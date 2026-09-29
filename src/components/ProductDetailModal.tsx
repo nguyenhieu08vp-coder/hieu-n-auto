@@ -12,6 +12,9 @@ import {
   Sparkles, 
   PhoneCall,
   ChevronRight,
+  ChevronLeft,
+  Maximize2,
+  Camera,
   MessageSquare,
   CheckCircle2,
   ThumbsUp,
@@ -47,18 +50,25 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
 }) => {
   if (!product) return null;
 
+  const allImages = Array.from(
+    new Set([product.primaryImage, product.secondaryImage, ...(product.galleryImages || [])])
+  ).filter(Boolean);
+
   const [activeImage, setActiveImage] = useState<string>(product.primaryImage);
   const [selectedColor, setSelectedColor] = useState<string>(product.colors[0]?.name || '');
   const [quantity, setQuantity] = useState<number>(1);
   const [added, setAdded] = useState(false);
   const [selectedStarFilter, setSelectedStarFilter] = useState<number | 'all'>('all');
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
   useEffect(() => {
     if (product) {
-      setActiveImage(product.primaryImage);
+      if (!allImages.includes(activeImage)) {
+        setActiveImage(allImages[0] || product.primaryImage);
+      }
       setSelectedColor(product.colors[0]?.name || '');
     }
-  }, [product?.id, product?.primaryImage]);
+  }, [product?.id, product?.primaryImage, allImages, activeImage]);
 
   // Interactive review submission state
   const [userRating, setUserRating] = useState<number>(5);
@@ -188,42 +198,140 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
         <div className="overflow-y-auto p-6 sm:p-8 space-y-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
-            {/* Gallery Column */}
+            {/* Gallery Column - Expanded Space */}
             <div className="lg:col-span-6 space-y-4">
-              <div className="relative aspect-square rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 shadow-inner group">
+              <div 
+                className="relative aspect-square sm:min-h-[380px] rounded-2xl overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 border border-slate-700/80 shadow-2xl group p-2.5 sm:p-3.5 flex items-center justify-center cursor-zoom-in"
+                onClick={() => setIsLightboxOpen(true)}
+              >
                 <img
                   src={activeImage}
                   alt={product.name}
                   referrerPolicy="no-referrer"
-                  className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105 contrast-[1.02] select-none"
+                  className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105 contrast-[1.03] select-none rounded-xl"
                   style={{ imageRendering: '-webkit-optimize-contrast' }}
                 />
-                {discountPercent > 0 && (
-                  <span className="absolute top-3 left-3 px-3 py-1 rounded-lg text-xs font-extrabold bg-rose-600 text-white shadow-md">
-                    Tiết kiệm {discountPercent}%
-                  </span>
+                
+                {/* Previous & Next Buttons */}
+                {allImages.length > 1 && (
+                  <>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const currIdx = allImages.indexOf(activeImage);
+                        const prevIdx = (currIdx - 1 + allImages.length) % allImages.length;
+                        setActiveImage(allImages[prevIdx]);
+                      }}
+                      className="absolute left-2.5 top-1/2 -translate-y-1/2 p-2 rounded-full bg-slate-950/80 hover:bg-slate-800 text-white border border-slate-700 shadow-xl cursor-pointer transition-all hover:scale-110 z-10"
+                      title="Ảnh trước"
+                      aria-label="Ảnh trước"
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const currIdx = allImages.indexOf(activeImage);
+                        const nextIdx = (currIdx + 1) % allImages.length;
+                        setActiveImage(allImages[nextIdx]);
+                      }}
+                      className="absolute right-2.5 top-1/2 -translate-y-1/2 p-2 rounded-full bg-slate-950/80 hover:bg-slate-800 text-white border border-slate-700 shadow-xl cursor-pointer transition-all hover:scale-110 z-10"
+                      title="Ảnh tiếp theo"
+                      aria-label="Ảnh tiếp theo"
+                    >
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                  </>
                 )}
+
+                {/* Top Badges */}
+                <div className="absolute top-3 left-3 flex items-center gap-2 z-10">
+                  {discountPercent > 0 && (
+                    <span className="px-3 py-1 rounded-lg text-xs font-extrabold bg-rose-600 text-white shadow-md">
+                      Tiết kiệm {discountPercent}%
+                    </span>
+                  )}
+                </div>
+
+                {/* Top Right Maximize / Fullscreen Button */}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsLightboxOpen(true);
+                  }}
+                  className="absolute top-3 right-3 p-2 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700/80 shadow-lg cursor-pointer transition-all z-10 flex items-center gap-1 text-[11px] font-semibold"
+                  title="Phóng to toàn cảnh"
+                >
+                  <Maximize2 className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Phóng to</span>
+                </button>
+
+                {/* Active Image Indicator & Dots */}
+                <div className="absolute bottom-3 inset-x-3 flex items-center justify-between pointer-events-none z-10">
+                  <div className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-slate-900/85 backdrop-blur-md border border-slate-700/70 shadow">
+                    {allImages.map((_, i) => (
+                      <span
+                        key={i}
+                        className={`w-2 h-2 rounded-full transition-all ${
+                          allImages.indexOf(activeImage) === i
+                            ? 'bg-emerald-400 w-4'
+                            : 'bg-slate-600'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                  <div className="px-2.5 py-1 rounded-full bg-slate-900/90 backdrop-blur-md border border-slate-700/80 text-[11px] font-bold text-slate-300 shadow">
+                    Ảnh {Math.max(1, allImages.indexOf(activeImage) + 1)} / {allImages.length}
+                  </div>
+                </div>
               </div>
 
-              {/* Thumbnails */}
-              <div className="flex gap-3">
-                {[product.primaryImage, product.secondaryImage].filter(Boolean).map((img, idx) => (
+              {/* Thumbnails - Expanded Image Placement Space */}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+                    Không Gian Góc Chụp Thực Tế ({allImages.length} Ảnh)
+                  </span>
+                  <span className="text-[11px] text-slate-500 hidden sm:inline">
+                    Click để đổi ảnh hoặc phóng to
+                  </span>
+                </div>
+                <div className="flex items-center gap-3 overflow-x-auto pb-1.5 scrollbar-thin">
+                  {allImages.map((img, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => setActiveImage(img)}
+                      className={`relative flex-shrink-0 w-24 sm:w-28 h-20 sm:h-22 rounded-xl overflow-hidden border-2 transition-all cursor-pointer shadow-md ${
+                        activeImage === img
+                          ? 'border-emerald-500 ring-2 ring-emerald-500/40 scale-[1.02]'
+                          : 'border-slate-800 opacity-70 hover:opacity-100 hover:border-slate-600'
+                      }`}
+                    >
+                      <img src={img} alt={`thumbnail-${idx + 1}`} referrerPolicy="no-referrer" className="w-full h-full object-cover" />
+                      <span className="absolute bottom-1 right-1 px-1.5 py-0.5 rounded text-[9px] font-extrabold bg-slate-950/90 text-emerald-400 border border-emerald-500/30">
+                        Ảnh {idx + 1}
+                      </span>
+                    </button>
+                  ))}
+
+                  {/* Extra slot: Request custom vehicle photos */}
                   <button
-                    key={idx}
                     type="button"
-                    onClick={() => setActiveImage(img)}
-                    className={`relative w-24 h-18 rounded-xl overflow-hidden border-2 transition-all cursor-pointer ${
-                      activeImage === img
-                        ? 'border-emerald-500 ring-2 ring-emerald-500/30'
-                        : 'border-slate-800 opacity-60 hover:opacity-100'
-                    }`}
+                    onClick={openConsultation}
+                    className="relative flex-shrink-0 w-24 sm:w-28 h-20 sm:h-22 rounded-xl border-2 border-dashed border-slate-700 hover:border-emerald-500/60 bg-slate-950/50 hover:bg-slate-900/60 flex flex-col items-center justify-center p-2 text-center transition-all cursor-pointer group/add"
+                    title="Gửi hình ảnh hoặc yêu cầu thêm góc chụp"
                   >
-                    <img src={img} alt="thumbnail" referrerPolicy="no-referrer" className="w-full h-full object-cover" />
-                    <span className="absolute bottom-1 right-1 px-1.5 py-0.5 rounded text-[8px] font-bold bg-slate-900/90 text-slate-300">
-                      Ảnh {idx + 1}
+                    <Camera className="w-4 h-4 text-emerald-400 mb-1 group-hover/add:scale-110 transition-transform" />
+                    <span className="text-[9px] font-bold text-slate-300 leading-tight">
+                      + Thêm Góc Chụp
                     </span>
                   </button>
-                ))}
+                </div>
               </div>
 
               {/* Quality Badges */}
@@ -721,6 +829,72 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
           </div>
         </div>
       </motion.div>
+
+      {/* Lightbox / Fullscreen Image Space */}
+      <AnimatePresence>
+        {isLightboxOpen && (
+          <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 sm:p-8 bg-black/95 backdrop-blur-xl">
+            <button
+              type="button"
+              onClick={() => setIsLightboxOpen(false)}
+              className="absolute top-5 right-5 p-3 rounded-full bg-slate-900/90 hover:bg-slate-800 text-white border border-slate-700 cursor-pointer transition-all z-20"
+              title="Đóng xem toàn cảnh"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            {/* Lightbox Prev / Next */}
+            {allImages.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const currIdx = allImages.indexOf(activeImage);
+                    const prevIdx = (currIdx - 1 + allImages.length) % allImages.length;
+                    setActiveImage(allImages[prevIdx]);
+                  }}
+                  className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 p-3 sm:p-4 rounded-full bg-slate-900/80 hover:bg-slate-800 text-white border border-slate-700 cursor-pointer transition-all hover:scale-110 z-20"
+                >
+                  <ChevronLeft className="w-6 h-6" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const currIdx = allImages.indexOf(activeImage);
+                    const nextIdx = (currIdx + 1) % allImages.length;
+                    setActiveImage(allImages[nextIdx]);
+                  }}
+                  className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 p-3 sm:p-4 rounded-full bg-slate-900/80 hover:bg-slate-800 text-white border border-slate-700 cursor-pointer transition-all hover:scale-110 z-20"
+                >
+                  <ChevronRight className="w-6 h-6" />
+                </button>
+              </>
+            )}
+
+            <div className="relative max-w-5xl max-h-[85vh] w-full h-full flex flex-col items-center justify-center">
+              <img
+                src={activeImage}
+                alt={product.name}
+                className="max-w-full max-h-[75vh] object-contain rounded-2xl shadow-2xl border border-slate-800"
+              />
+              <div className="mt-4 flex items-center gap-2">
+                {allImages.map((img, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => setActiveImage(img)}
+                    className={`w-16 h-12 rounded-lg overflow-hidden border-2 transition-all cursor-pointer ${
+                      activeImage === img ? 'border-emerald-500 scale-105' : 'border-slate-800 opacity-60'
+                    }`}
+                  >
+                    <img src={img} alt="thumb" className="w-full h-full object-cover" />
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

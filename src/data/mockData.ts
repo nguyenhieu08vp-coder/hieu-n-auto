@@ -46,18 +46,18 @@ export const CLASSIFICATIONS = [
 ] as const;
 
 export const CATEGORIES = [
-  { id: 'all', name: 'Tất Cả Danh Mục', count: 30, icon: 'LayoutGrid', itemType: 'all' },
+  { id: 'all', name: 'Tất Cả Danh Mục', count: 37, icon: 'LayoutGrid', itemType: 'all' },
   // Nhóm Sản Phẩm Chính Hãng
   { id: 'cameras-360', name: 'Camera Hành Trình & Camera 360 Toàn Cảnh', count: 5, icon: 'ShieldCheck', itemType: 'product' },
   { id: 'screens-displays', name: 'Màn Hình ODO, Android, HUD & Android Box', count: 5, icon: 'Tv', itemType: 'product' },
   { id: 'safety-sensors', name: 'Cảm Biến Áp Suất Lốp TPMS & Cảm Biến Đỗ Xe', count: 2, icon: 'ShieldAlert', itemType: 'product' },
-  { id: 'ambient-lights', name: 'Đèn Bi LED, Bi Gầm & LED Nội Thất 64 Màu', count: 5, icon: 'Sparkles', itemType: 'product' },
+  { id: 'ambient-lights', name: 'Đèn Bi LED, Bi Gầm & LED Nội Thất 64 Màu', count: 7, icon: 'Sparkles', itemType: 'product' },
   { id: 'floor-mats', name: 'Thảm Lót Sàn TPE Đúc Khuôn 3D & Tràn Viền', count: 2, icon: 'Layers', itemType: 'product' },
   // Nhóm Dịch Vụ Độ Xe Chính Hãng
-  { id: 'car-audio', name: 'Nâng Cấp Loa Sub Điện & Âm Thanh DSP', count: 1, icon: 'Volume2', itemType: 'service' },
+  { id: 'car-audio', name: 'Nâng Cấp Loa Sub Điện & Âm Thanh DSP', count: 2, icon: 'Volume2', itemType: 'service' },
   { id: 'seat-interior', name: 'Bọc Ghế Da Nappa, Độ Ghế Điện & Bệ Tỳ Tay', count: 3, icon: 'Armchair', itemType: 'service' },
-  { id: 'electric-automation', name: 'Cốp Điện, Bệ Bước Chân & Gương Gập Tự Động', count: 3, icon: 'Sliders', itemType: 'service' },
-  { id: 'heat-soundproofing', name: 'Dán Phim Cách Nhiệt 3M & Cách Âm Chống Ồn SIP', count: 2, icon: 'Shield', itemType: 'service' },
+  { id: 'electric-automation', name: 'Cốp Điện, Bệ Bước Chân & Gương Gập Tự Động', count: 6, icon: 'Sliders', itemType: 'service' },
+  { id: 'heat-soundproofing', name: 'Dán Phim Cách Nhiệt 3M & Cách Âm Chống Ồn SIP', count: 1, icon: 'Shield', itemType: 'service' },
   { id: 'wheels-exterior', name: 'Phay Lazang CNC & Giáp Gầm Bảo Vệ Pin', count: 2, icon: 'Disc', itemType: 'service' },
 ];
 
@@ -246,7 +246,7 @@ export const PRODUCTS: Product[] = [
     rating: 4.8,
     reviewCount: 142,
     primaryImage: '/images/hcl_tsv3_projector.jpg',
-    secondaryImage: '/images/hcl_g2plus_biled.jpg',
+    secondaryImage: '/images/bi_gam_eagle_flight_spec.jpg',
     description: 'Hệ thống đèn tăng sáng chuyên dụng HCLightAuto cao cấp gồm đèn trợ sáng cản trước/mặt ca lăng TS V3 (Projector Grille Bumper Light 3 mắt bi cầu) và Bi gầm LED G2 Plus (2.0 Inch - 3 nhiệt màu đa năng). Công suất siêu sáng, gom tia cắt sáng chuẩn không gây chói mắt người đối diện, tản nhiệt nhôm đúc nguyên khối chống nước IP68.',
     features: [
       'Đèn trợ sáng TS V3 thiết kế 3 mắt bi Projector hội tụ công nghệ cao, chiếu xa vượt trội',
@@ -301,6 +301,173 @@ export const PRODUCTS: Product[] = [
     inStock: true,
     installationTimeHours: 2
   },
+  {
+    id: 'prod-34',
+    itemType: 'product',
+    name: 'Đèn LED A50 - Đèn Bi LED Tăng Sáng Cao Cấp (Chuẩn Zin)',
+    category: 'ambient-lights',
+    categoryName: 'Đèn Bi LED Tăng Sáng',
+    price: 4850000,
+    originalPrice: 5800000,
+    isSale: true,
+    isBestSeller: true,
+    rating: 4.9,
+    reviewCount: 289,
+    primaryImage: '/images/bi_gam_aozoom_eagle_flight_real.jpg',
+    secondaryImage: '/images/hcl_g2plus_biled.jpg',
+    description: 'Đèn Bi Gầm LED Aozoom Eagle F-Light thế hệ mới công suất 48W-58W tích hợp 3 chế độ nhiệt màu (3000K vàng đậm phá sương, 4300K vàng nắng bám đường mưa, 5500K trắng thời trang). Chuẩn chống nước ngập sâu IP68, mặt cắt cos sắc nét không gây chói mắt xe đối diện.',
+    features: [
+      'Tích hợp 3 chế độ nhiệt màu linh hoạt: 3000K (phá sương mù dày) - 4300K (mưa ẩm bám đường) - 5500K (trắng sáng cung đường phố)',
+      'Chỉ số chống nước IP68 kháng nước ngập sâu, chống bụi tuyệt đối thích ứng thời tiết Việt Nam',
+      'Công suất thực 48W Cos / 58W Pha, đường cắt ánh sáng phẳng rộng không gây chói mắt người đối diện',
+      'Thấu kính Polarized phủ lớp chống lóa, tăng cường độ nét và quang thông lên đến 9.800 Lumen',
+      'Lắp đặt cắm giắc Zin và pát gắn chuyên dụng theo từng dòng xe, không đục khoét chóa đèn',
+      'Bảo hành chính hãng Aozoom 36 tháng đổi mới'
+    ],
+    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
+    materials: ['Nhôm Hàng Không 6063 CNC', 'Thấu Kính Quang Học Phủ Lớp Polarized'],
+    colors: [
+      { name: '3 Chế Độ Màu (3000K-4300K-5500K)', hex: '#EAB308' },
+      { name: 'Ánh Sáng Trắng 5500K OEM', hex: '#F8FAFC' }
+    ],
+    warrantyMonths: 36,
+    inStock: true,
+    installationTimeHours: 1.5
+  },
+  {
+    id: 'prod-35',
+    itemType: 'product',
+    name: 'Bi Laser Aozoom OMEGA LASER Siêu Pha Hội Tụ 65W/110W (Tầm Rọi 1000m Chuẩn Đức)',
+    category: 'ambient-lights',
+    categoryName: 'Đèn Bi Laser Siêu Pha',
+    price: 14500000,
+    originalPrice: 17500000,
+    isSale: true,
+    isNew: true,
+    rating: 5.0,
+    reviewCount: 134,
+    primaryImage: '/images/bi_laser_aozoom_omega.jpg',
+    secondaryImage: '/images/aozoom_extra_sapphire_poster.jpg',
+    description: 'Đỉnh cao tăng sáng xe hơi với công nghệ Diode Laser Nichia (Nhật Bản) kết hợp chip LED OSRAM Đức, sản sinh chùm tia pha hội tụ rực sáng quét xa lên tới 1000 mét. Khả năng tản nhiệt bằng ống đồng kép và quạt bi turbine siêu êm ái.',
+    features: [
+      'Công nghệ chiếu sáng kép Bi-Laser: Cos 65W LED phủ đều, Pha 110W kích hoạt Diode Laser phóng xa 1000m',
+      'Sử dụng Diode Laser Nichia (Nhật Bản) cùng 9+3 nhân LED Osram công nghệ Đức cao cấp',
+      'Tản nhiệt kép thế hệ mới: Ống đồng dẫn nhiệt nhiệt độ cao kết hợp quạt turbine 9 cánh êm ái',
+      'Thấu kính xanh Cobalt quang học độc quyền của Aozoom, chống chói và tăng chiều sâu chùm sáng',
+      'Chuẩn đăng kiểm ánh sáng hiện hành tại Việt Nam, mặt cắt Cos sắc lẹm chuẩn ranh giới an toàn',
+      'Bảo hành chính hãng Aozoom 36 tháng 1 đổi 1'
+    ],
+    vehicleTypes: ['suv', 'sedan', 'luxury'],
+    materials: ['Hợp Kim Titanium Nhôm Hàng Không', 'Diode Laser Nichia & Chip LED Osram'],
+    colors: [
+      { name: 'Cobalt Blue Optical Lens (Laser 1000m)', hex: '#2563EB' },
+      { name: 'Titanium Edition', hex: '#64748B' }
+    ],
+    warrantyMonths: 36,
+    inStock: true,
+    installationTimeHours: 2.5
+  },
+  {
+    id: 'prod-26',
+    itemType: 'service',
+    name: 'Cặp Loa Toàn Dải Ô Tô Rebec BL80 Đặt Taplo Cao Cấp (Cắm Giắc Zin 100%)',
+    category: 'car-audio',
+    categoryName: 'Nâng Cấp Âm Thanh Ô Tô',
+    price: 2850000,
+    originalPrice: 3500000,
+    isBestSeller: true,
+    isSale: true,
+    rating: 4.9,
+    reviewCount: 195,
+    primaryImage: '/images/rebec_bl80_taplo_speaker.png',
+    secondaryImage: '/images/rebec_bl80_speaker.jpg',
+    description: 'Cặp loa toàn dải Rebec BL80 (Mid-Treble 80mm/3 inch) cao cấp chuyên đặt Taplo hoặc góc cột A ô tô, giải pháp nâng cấp âm thanh bổ sung cho hệ thống loa zin cực nhanh và hiệu quả. Tái hiện trọn vẹn dải tần số 250Hz - 15KHz ngọt ngào, âm trường rộng mở, giọng ca sĩ và nhạc cụ chân thực, cắm giắc Zin 100% không cắt trích dây.',
+    features: [
+      'Cặp loa toàn dải Rebec BL80 (80mm / 3 inch) tái tạo hoàn hảo dải âm trung (Mid) ấm áp và dải cao (Treble) trong trẻo',
+      'Thông số chuẩn: Dải tần 250Hz - 15KHz, công suất 15W RMS / 30W Peak, độ nhạy cao 89dB, trở kháng 4Ω',
+      'Màng loa gia công phay CNC hoa văn tinh xảo, chống cộng hưởng và tăng vẻ sang trọng nội thất khoang lái',
+      'Giải pháp cắm giắc Zin 100% bổ sung trực tiếp cho hệ thống loa nguyên bản của xe, không cắt trích dây',
+      'Thiết kế đế đặt Taplo hoặc góc cột A chuẩn xác, tương thích VinFast VF3, SUV, Sedan, MPV',
+      'Trang bị tụ lọc âm thanh chuyên dụng và bảo hành chính hãng Rebec 24 tháng đổi mới'
+    ],
+    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
+    materials: ['Khung Nhôm Phay CNC Rebec BL80', 'Màng Loa Hợp Kim Cao Cấp'],
+    colors: [
+      { name: 'Bạc Kim Loại CNC (Mặt Lưới Hoa Văn Rebec)', hex: '#CBD5E1' },
+      { name: 'Đen Mờ Nhôm Phay Rebec', hex: '#1E293B' }
+    ],
+    warrantyMonths: 24,
+    inStock: true,
+    installationTimeHours: 1
+  },
+  {
+    id: 'prod-36',
+    itemType: 'product',
+    name: 'Cặp Loa Bầu Dục Ô Tô PERTORS QP-4603 (4x6 Inch - 4-Way Đồng Trục 450W Max)',
+    category: 'car-audio',
+    categoryName: 'Loa Đồng Trục Ô Tô',
+    price: 650000,
+    originalPrice: 850000,
+    isSale: true,
+    isNew: true,
+    rating: 4.9,
+    reviewCount: 156,
+    primaryImage: '/images/pertors_qp4603_1.jpg',
+    secondaryImage: '/images/pertors_qp4603_2.jpg',
+    description: 'Cặp loa bầu dục ô tô PERTORS QP-4603 kích thước 4x6 inch (10.2cm x 15.2cm) đồng trục 4 đường tiếng (4-Way Coaxial) công suất cực đại 450W Max / 36W Nom, trở kháng 4 Ohm. Thiết kế chuẩn kích thước thay thế trực tiếp vào vị trí loa zin cánh cửa, cốp sau hoặc khoang nội thất nhiều dòng xe hơi, mang lại âm thanh sống động, chi tiết và dải âm rộng.',
+    features: [
+      'Cấu hình loa đồng trục 4 đường tiếng (4-Ways Coaxial) phân bổ chi tiết âm trầm, trung và dải cao',
+      'Kích thước tiêu chuẩn 4x6 inch (10.2cm x 15.2cm), 4 tai ốc bắt chuẩn vị trí loa zin nhiều dòng xe',
+      'Công suất cực đại 450W Max (36W Nom), độ nhạy cao kéo khỏe với đầu phát màn hình Zin nguyên bản',
+      'Màng loa Polypropylene siêu bền kháng ẩm, gân loa đàn hồi cho dải âm trầm nảy gọn gàng',
+      'Tích hợp 2 củ loa Treble Dome & Super Tweeter trên trụ đồng trục mở rộng âm trường',
+      'Bảo hành chính hãng 12 tháng lỗi 1 đổi 1'
+    ],
+    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
+    materials: ['Khung Thép Dập PERTORS', 'Màng Loa Polypropylene & Treble Dome'],
+    colors: [
+      { name: 'Đen Bạc Titan PERTORS', hex: '#1E293B' },
+      { name: 'Mặt Bầu Dục 4x6 Inch', hex: '#64748B' }
+    ],
+    warrantyMonths: 12,
+    inStock: true,
+    installationTimeHours: 1.0
+  },
+  {
+    id: 'prod-37',
+    itemType: 'service',
+    name: 'DSP Amply Rebec D6II - Bộ Xử Lý Tín Hiệu Số 6 Kênh Tích Hợp Ampli (Cắm Giắc Zin 100%)',
+    category: 'car-audio',
+    categoryName: 'Bộ Xử Lý DSP & Ampli',
+    price: 6800000,
+    originalPrice: 8500000,
+    isSale: true,
+    isNew: true,
+    rating: 4.9,
+    reviewCount: 142,
+    primaryImage: '/images/rebec_sub_closeup.jpg',
+    secondaryImage: '/images/rebec_combo_u10_bl80.jpg',
+    description: 'Bộ xử lý tín hiệu âm thanh kỹ thuật số cao cấp tích hợp bộ khuếch đại công suất 6 kênh chuyên dụng cho xe hơi. Cân chỉnh âm hình chi tiết qua phần mềm chuyên dụng 31-Band EQ, điều chỉnh độ trễ thời gian (Time Alignment) định vị ca sĩ hát ngay giữa vô-lăng, cắm giắc Zin 100% không cắt nối dây.',
+    features: [
+      'Tích hợp DSP 31-Band EQ độc lập từng kênh, tùy biến phân tần số High-pass/Low-pass chính xác',
+      'Công nghệ căn chỉnh độ trễ thời gian (Time Alignment) tạo sân khấu âm thanh 3D sống động',
+      'Mạch khuếch đại Class AB/D hiệu suất cao, chất âm ấm áp, chi tiết sạch sẽ không tạp âm',
+      'Kết nối Bluetooth 5.0 AptX HD phát nhạc Lossless trực tiếp từ điện thoại thông minh',
+      'Cắm giắc Zin 100% chuẩn theo các dòng xe VinFast, Toyota, Honda, Mazda, Hyundai, Kia',
+      'Bảo hành chính hãng Rebec 24 tháng đổi mới'
+    ],
+    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
+    materials: ['Vỏ Nhôm Hàng Không Tản Nhiệt Tự Nhiên', 'Linh Kiện Tụ Điểm Âm Thanh Audio-Grade'],
+    colors: [
+      { name: 'Nhôm Phay Đen Titan Rebec', hex: '#1E293B' },
+      { name: 'Bạc Kim Loại Rebec DSP', hex: '#94A3B8' }
+    ],
+    warrantyMonths: 24,
+    inStock: true,
+    installationTimeHours: 1.5
+  },
+
+
   {
     id: 'prod-3',
     itemType: 'product',
@@ -730,7 +897,7 @@ export const PRODUCTS: Product[] = [
   {
     id: 'prod-15',
     itemType: 'service',
-    name: 'Gương Gập Điện Lắp Zin Tự Động Theo Xe MCD91 & HUVI Limo Green (VinFast VF3, VF5, VF6, Limo...)',
+    name: 'Gập Gương VF5 - Gương Gập Điện Tự Động (Cắm Giắc Zin 100%)',
     category: 'electric-automation',
     categoryName: 'Gương Gập Điện Tự Động',
     price: 2400000,
@@ -738,8 +905,8 @@ export const PRODUCTS: Product[] = [
     isSale: true,
     rating: 4.7,
     reviewCount: 188,
-    primaryImage: '/images/mcd91_guong_gap_dien_poster.jpg',
-    secondaryImage: '/images/huvi_guong_gap_dien_limo.jpg',
+    primaryImage: '/images/guong_gap_dien_vf5_kit_v2.webp',
+    secondaryImage: '/images/mcd91_guong_gap_dien_poster.jpg',
     description: 'Bộ nâng cấp gương gập điện tự động MCD91 & HUVI Auto Accessories cắm giắc Zin 100% không cắt trích dây điện cho các dòng xe VinFast VF3, VF5, VF6, Limo... Tự động cụp gương khi bấm khóa cửa xe và xòe gương khi mở khóa, tích hợp phím bấm công tắc gập gương cơ động trong xe.',
     features: [
       'Cắm giắc Zin 100% theo xe, giữ nguyên bản hệ thống điện, không cắt nối dây, an toàn tuyệt đối',
@@ -754,6 +921,103 @@ export const PRODUCTS: Product[] = [
     colors: [
       { name: 'Bộ Giắc Zin MCD91 VinFast', hex: '#DC2626' },
       { name: 'Bộ Gương HUVI Limo Green', hex: '#16A34A' }
+    ],
+    warrantyMonths: 36,
+    inStock: true,
+    installationTimeHours: 1.5
+  },
+  {
+    id: 'prod-31',
+    itemType: 'service',
+    name: 'Gập Gương VF6 - Gương Gập Điện Tự Động Theo Xe (Cắm Giắc Zin 100%)',
+    category: 'electric-automation',
+    categoryName: 'Gương Gập Điện Tự Động',
+    price: 2450000,
+    originalPrice: 3200000,
+    isSale: true,
+    isBestSeller: true,
+    rating: 4.9,
+    reviewCount: 242,
+    primaryImage: '/images/guong_gap_dien_vf6_kit.jpg',
+    secondaryImage: '/images/mcd91_guong_gap_dien_poster.jpg',
+    description: 'Bộ nâng cấp gương gập điện tự động chuyên biệt cho VinFast VF6 cắm giắc Zin 100% không cắt nối dây điện. Tự động cụp tai gương sát thân xe khi bấm khóa trên chìa khóa Smartkey và mở gương khi mở khóa, tích hợp nút bấm công tắc gập gương cơ động trong cabin.',
+    features: [
+      'Thiết kế cụm xương mô tơ chuẩn khít theo tai gương nguyên bản VinFast VF6',
+      'Cắm giắc Zin 100%, giữ nguyên vẹn chính sách bảo hành chính hãng của xe',
+      'Tự động cụp gương khi khóa xe, mở gương khi mở cửa hoặc bấm nút Smartkey',
+      'Tích hợp công tắc gập/mở gương chủ động vị trí chờ trong cabin khi đi ngõ hẹp',
+      'Mô tơ nhông kim loại chịu tải cao, vận hành êm ái chống kẹt và chịu nước IP67',
+      'Bảo hành chính hãng 36 tháng 1 đổi 1'
+    ],
+    vehicleTypes: ['suv'],
+    materials: ['Mô Tơ Xương Nhôm Hợp Kim Đúc', 'Dây Giắc Cắm Zin OEM Chịu Nhiệt'],
+    colors: [
+      { name: 'Bộ Giắc Zin MCD91 VF6', hex: '#DC2626' },
+      { name: 'Bộ Gương Tiêu Chuẩn OEM', hex: '#2563EB' }
+    ],
+    warrantyMonths: 24,
+    inStock: true,
+    installationTimeHours: 1.5
+  },
+  {
+    id: 'prod-32',
+    itemType: 'service',
+    name: 'LimoGreen - Gương Gập Điện Tự Động Bản Tiêu Chuẩn (Cắm Giắc Zin 100%)',
+    category: 'electric-automation',
+    categoryName: 'Gương Gập Điện Tự Động',
+    price: 2350000,
+    originalPrice: 3100000,
+    isSale: true,
+    isNew: true,
+    rating: 4.8,
+    reviewCount: 165,
+    primaryImage: '/images/limo_green_guong_gap_dien_standard.jpg',
+    secondaryImage: '/images/mcd91_guong_gap_dien_poster.jpg',
+    description: 'Bộ nâng cấp gương gập điện tự động LimoGreen (Bản Tiêu Chuẩn) cắm giắc Zin 100% không cắt nối dây. Tự động cụp mở gương theo Smartkey và phím cơ động trong cabin, thiết kế chuyên biệt chịu tải cao cho dòng xe Limo Green / MPV.',
+    features: [
+      'Thiết kế chuẩn Zin theo tai gương xe Limo Green, cắm giắc 100% an toàn điện',
+      'Tự động cụp gương khi khóa xe, mở gương khi mở cửa hoặc bấm nút Smartkey',
+      'Tích hợp công tắc gập/mở gương chủ động trong cabin khi đi ngõ hẹp',
+      'Mô tơ nhông kim loại chịu lực, vận hành êm ái chống kẹt và chịu nước IP67',
+      'Bảo hành chính hãng 36 tháng 1 đổi 1'
+    ],
+    vehicleTypes: ['mpv', 'suv', 'sedan'],
+    materials: ['Mô Tơ Xương Hợp Kim Nhôm Đúc', 'Dây Giắc Cắm Zin OEM Chịu Nhiệt'],
+    colors: [
+      { name: 'Bản Tiêu Chuẩn Limo Green', hex: '#16A34A' },
+      { name: 'Bộ Giắc Zin MCD91', hex: '#DC2626' }
+    ],
+    warrantyMonths: 36,
+    inStock: true,
+    installationTimeHours: 2.0
+  },
+  {
+    id: 'prod-33',
+    itemType: 'service',
+    name: 'LimoGreen - Gương Gập Điện Tự Động Bản LED Xi Nhan (Cắm Giắc Zin 100%)',
+    category: 'electric-automation',
+    categoryName: 'Gương Gập Điện Tự Động',
+    price: 2550000,
+    originalPrice: 3400000,
+    isSale: true,
+    rating: 4.9,
+    reviewCount: 176,
+    primaryImage: '/images/limo_green_guong_gap_dien_led_xinhan.jpg',
+    secondaryImage: '/images/mcd91_guong_gap_dien_poster.jpg',
+    description: 'Bộ nâng cấp gương gập điện tự động LimoGreen Bản Tích Hợp Dải LED Xi Nhan Đuổi cao cấp cắm giắc Zin 100% không cắt nối dây. Tự động cụp mở gương theo Smartkey, tăng tính an toàn và thẩm mỹ nhận diện xe khi chuyển làn.',
+    features: [
+      'Tích hợp dải LED xi nhan đuổi chạy hiệu ứng sang trọng trên ốp gương',
+      'Cắm giắc Zin 100% theo xe Limo Green & MPV7, bảo vệ toàn diện hệ thống điện',
+      'Tự động cụp tai gương khi khóa xe từ xa, mở gương khi mở cửa xe',
+      'Công tắc nút bấm gập mở gương chủ động lắp vị trí chờ trong cabin',
+      'Mô tơ bánh răng kim loại chịu tải va quẹt tốt, độ bền cao vượt trội',
+      'Bảo hành chính hãng 36 tháng 1 đổi 1'
+    ],
+    vehicleTypes: ['mpv', 'suv', 'sedan'],
+    materials: ['Mô Tơ Xương Thép & Nhôm Hợp Kim', 'Dây Giắc Cắm Zin OEM Chịu Nhiệt'],
+    colors: [
+      { name: 'Bộ Gương HUVI Limo Green', hex: '#16A34A' },
+      { name: 'Bộ Giắc Zin OEM Chịu Tải', hex: '#0284C7' }
     ],
     warrantyMonths: 36,
     inStock: true,
@@ -921,39 +1185,6 @@ export const PRODUCTS: Product[] = [
     warrantyMonths: 24,
     inStock: true,
     installationTimeHours: 1.5
-  },
-  {
-    id: 'prod-26',
-    itemType: 'service',
-    name: 'Cặp Loa Toàn Dải Ô Tô Rebec BL80 Đặt Taplo Cao Cấp (Cắm Giắc Zin 100%)',
-    category: 'heat-soundproofing',
-    categoryName: 'Loa Toàn Dải & Âm Thanh Xe Hơi',
-    price: 2850000,
-    originalPrice: 3500000,
-    isBestSeller: true,
-    isSale: true,
-    rating: 4.9,
-    reviewCount: 195,
-    primaryImage: carSoundproofingImg,
-    secondaryImage: '/images/rebec_bl80_speaker.jpg',
-    description: 'Cặp loa toàn dải Rebec BL80 (Mid-Treble 80mm/3 inch) cao cấp chuyên đặt Taplo hoặc góc cột A ô tô, giải pháp nâng cấp âm thanh bổ sung cho hệ thống loa zin cực nhanh và hiệu quả. Tái hiện trọn vẹn dải tần số 250Hz - 15KHz ngọt ngào, âm trường rộng mở, giọng ca sĩ và nhạc cụ chân thực, cắm giắc Zin 100% không cắt trích dây.',
-    features: [
-      'Cặp loa toàn dải Rebec BL80 (80mm / 3 inch) tái tạo hoàn hảo dải âm trung (Mid) ấm áp và dải cao (Treble) trong trẻo',
-      'Thông số chuẩn: Dải tần 250Hz - 15KHz, công suất 15W RMS / 30W Peak, độ nhạy cao 89dB, trở kháng 4Ω',
-      'Màng loa gia công phay CNC hoa văn tinh xảo, chống cộng hưởng và tăng vẻ sang trọng nội thất khoang lái',
-      'Giải pháp cắm giắc Zin 100% bổ sung trực tiếp cho hệ thống loa nguyên bản của xe, không cắt trích dây',
-      'Thiết kế đế đặt Taplo hoặc góc cột A chuẩn xác, tương thích VinFast VF3, SUV, Sedan, MPV',
-      'Trang bị tụ lọc âm thanh chuyên dụng và bảo hành chính hãng Rebec 24 tháng đổi mới'
-    ],
-    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
-    materials: ['Khung Nhôm Phay CNC Rebec BL80', 'Màng Loa Hợp Kim Cao Cấp'],
-    colors: [
-      { name: 'Bạc Kim Loại CNC (Mặt Lưới Hoa Văn Rebec)', hex: '#CBD5E1' },
-      { name: 'Đen Mờ Nhôm Phay Rebec', hex: '#1E293B' }
-    ],
-    warrantyMonths: 24,
-    inStock: true,
-    installationTimeHours: 1
   },
   {
     id: 'prod-27',

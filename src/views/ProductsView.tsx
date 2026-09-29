@@ -409,8 +409,8 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
     return filteredProducts.filter((p) => p.category === 'cameras-360');
   }, [filteredProducts]);
 
-  // Nhóm Ánh Sáng Tăng Sáng (Bi LED Aozoom, Bi gầm TS V3 / G2 Plus): prod-16, prod-23
-  const lightingProductIds = useMemo(() => new Set(['prod-16', 'prod-23']), []);
+  // Nhóm Ánh Sáng Tăng Sáng (Bi LED Aozoom, Bi gầm TS V3 / G2 Plus, Bi Laser Omega, Bi gầm Aozoom Eagle): prod-16, prod-23, prod-34, prod-35
+  const lightingProductIds = useMemo(() => new Set(['prod-16', 'prod-23', 'prod-34', 'prod-35']), []);
   const lightingProducts = useMemo(() => {
     return filteredProducts.filter((p) => lightingProductIds.has(p.id));
   }, [filteredProducts, lightingProductIds]);
@@ -421,11 +421,36 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
     return filteredProducts.filter((p) => ledProductIds.has(p.id));
   }, [filteredProducts, ledProductIds]);
 
+  // Nhóm Nâng Cấp Âm Thanh Ô Tô (prod-6: Sub gầm ghế Rebec U10, prod-26: Loa toàn dải Rebec BL80)
+  const audioProductIds = useMemo(() => new Set(['prod-6', 'prod-26', 'prod-36', 'prod-37']), []);
+  const audioProducts = useMemo(() => {
+    return filteredProducts.filter((p) => audioProductIds.has(p.id) || p.category === 'car-audio');
+  }, [filteredProducts, audioProductIds]);
+
+  // Nhóm Màn Hình Liền Khối, Màn ODO & Kính Lái HUD: prod-5 (Màn đôi 20.8"), prod-10 (HUD MCD91), prod-25 (Màn ODO GBA OLED)
+  const displayProductIds = useMemo(() => new Set(['prod-5', 'prod-10', 'prod-25']), []);
+  const displayProducts = useMemo(() => {
+    return filteredProducts.filter((p) => displayProductIds.has(p.id));
+  }, [filteredProducts, displayProductIds]);
+
+  // Nhóm Gương Gập Điện Tự Động Theo Xe: prod-15 (VF5), prod-31 (VF3), prod-32 (VF6/VF7), prod-33 (HUVI Limo Green)
+  const mirrorProductIds = useMemo(() => new Set(['prod-15', 'prod-31', 'prod-32', 'prod-33']), []);
+  const mirrorProducts = useMemo(() => {
+    return filteredProducts.filter((p) => mirrorProductIds.has(p.id));
+  }, [filteredProducts, mirrorProductIds]);
+
   const otherProducts = useMemo(() => {
     return filteredProducts.filter(
-      (p) => p.category !== 'cameras-360' && !lightingProductIds.has(p.id) && !ledProductIds.has(p.id)
+      (p) =>
+        p.category !== 'cameras-360' &&
+        !lightingProductIds.has(p.id) &&
+        !ledProductIds.has(p.id) &&
+        !audioProductIds.has(p.id) &&
+        !displayProductIds.has(p.id) &&
+        !mirrorProductIds.has(p.id) &&
+        p.category !== 'car-audio'
     );
-  }, [filteredProducts, lightingProductIds, ledProductIds]);
+  }, [filteredProducts, lightingProductIds, ledProductIds, audioProductIds, displayProductIds, mirrorProductIds]);
 
   // Active filters count for badge indicator
   const activeFiltersCount = [
@@ -1511,7 +1536,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                             </span>
                           </div>
                           <p className="text-[11px] text-slate-400 mt-0.5">
-                            Bi LED pha/cos siêu công suất Aozoom 98W &amp; Đèn trợ sáng mặt ca lăng TS V3 kết hợp Bi gầm G2 Plus 3 chế độ màu
+                            Bi Laser Aozoom Omega tầm xa 1000m, Bi LED Extra Sapphire 98W, Đèn LED A50 &amp; Đèn trợ sáng TS V3 Pro
                           </p>
                         </div>
                       </div>
@@ -1593,10 +1618,160 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                   </div>
                 )}
 
-                {/* 🚗 4. CÁC SẢN PHẨM & DỊCH VỤ ĐỘ XE KHÁC */}
+                {/* 🔊 4. NHÓM NÂNG CẤP ÂM THANH Ô TÔ & LOA SUB ĐIỆN (BÊN DƯỚI CÁC SẢN PHẨM ÁNH SÁNG) */}
+                {audioProducts.length > 0 && (
+                  <div className="rounded-2xl border border-purple-500/30 bg-gradient-to-b from-purple-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-purple-500/20">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-purple-500/20 border border-purple-400/40 text-purple-400 flex items-center justify-center flex-shrink-0 shadow-lg shadow-purple-500/10">
+                          <Volume2 className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h2 className="text-sm sm:text-base font-extrabold text-white tracking-tight">
+                              Nhóm Nâng Cấp Âm Thanh Ô Tô &amp; Loa Sub Điện
+                            </h2>
+                            <span className="px-2.5 py-0.5 rounded-full bg-purple-500/20 border border-purple-400/30 text-purple-300 text-[11px] font-extrabold">
+                              {audioProducts.length} Sản phẩm
+                            </span>
+                          </div>
+                          <p className="text-[11px] text-slate-400 mt-0.5">
+                            Loa Sub gầm ghế Rebec U10, Cặp loa toàn dải BL80, DSP Amply D6II &amp; Loa bầu dục PERTORS QP-4603 450W
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {viewMode === 'list' ? (
+                      <div className="space-y-3.5">
+                        {audioProducts.map((product) => (
+                          <ProductListItem
+                            key={product.id}
+                            product={product}
+                            onAddToCart={onAddToCart}
+                            onQuickView={onQuickView}
+                          />
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
+                        {audioProducts.map((product) => (
+                          <ProductCompactCard
+                            key={product.id}
+                            product={product}
+                            onAddToCart={onAddToCart}
+                            onQuickView={onQuickView}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* 🖥️ 5. NHÓM MÀN HÌNH LIỀN KHỐI, MÀN ODO & HIỂN THỊ KÍNH LÁI HUD */}
+                {displayProducts.length > 0 && (
+                  <div className="rounded-2xl border border-cyan-500/30 bg-gradient-to-b from-cyan-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-cyan-500/20">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-cyan-500/20 border border-cyan-400/40 text-cyan-400 flex items-center justify-center flex-shrink-0 shadow-lg shadow-cyan-500/10">
+                          <Tv className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h2 className="text-sm sm:text-base font-extrabold text-white tracking-tight">
+                              Nhóm Màn Hình Liền Khối, Màn ODO &amp; Hiển Thị Kính Lái HUD
+                            </h2>
+                            <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/20 border border-cyan-400/30 text-cyan-300 text-[11px] font-extrabold">
+                              {displayProducts.length} Sản phẩm
+                            </span>
+                          </div>
+                          <p className="text-[11px] text-slate-400 mt-0.5">
+                            Màn hình đôi 20.8" liền khối ODO &amp; Android, Màn HUD kính lái MCD91 đa chế độ &amp; Màn ODO GBA OLED 10.3" cắm giắc Zin
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {viewMode === 'list' ? (
+                      <div className="space-y-3.5">
+                        {displayProducts.map((product) => (
+                          <ProductListItem
+                            key={product.id}
+                            product={product}
+                            onAddToCart={onAddToCart}
+                            onQuickView={onQuickView}
+                          />
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
+                        {displayProducts.map((product) => (
+                          <ProductCompactCard
+                            key={product.id}
+                            product={product}
+                            onAddToCart={onAddToCart}
+                            onQuickView={onQuickView}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* 🪞 6. NHÓM GƯƠNG GẬP ĐIỆN TỰ ĐỘNG THEO XE */}
+                {mirrorProducts.length > 0 && (
+                  <div className="rounded-2xl border border-amber-500/30 bg-gradient-to-b from-amber-950/30 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-amber-500/20">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-400/40 text-amber-400 flex items-center justify-center flex-shrink-0 shadow-lg shadow-amber-500/10">
+                          <Sliders className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h2 className="text-sm sm:text-base font-extrabold text-white tracking-tight">
+                              Nhóm Gương Gập Điện Tự Động Theo Xe (Cắm Giắc Zin 100%)
+                            </h2>
+                            <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 text-[11px] font-extrabold">
+                              {mirrorProducts.length} Sản phẩm
+                            </span>
+                          </div>
+                          <p className="text-[11px] text-slate-400 mt-0.5">
+                            Mô tơ gập gương tự động theo chìa khóa Smartkey và công tắc trong cabin cho VinFast VF5, VF6 &amp; Limo Green (Bản Tiêu Chuẩn / Bản LED Xi Nhan)
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {viewMode === 'list' ? (
+                      <div className="space-y-3.5">
+                        {mirrorProducts.map((product) => (
+                          <ProductListItem
+                            key={product.id}
+                            product={product}
+                            onAddToCart={onAddToCart}
+                            onQuickView={onQuickView}
+                          />
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
+                        {mirrorProducts.map((product) => (
+                          <ProductCompactCard
+                            key={product.id}
+                            product={product}
+                            onAddToCart={onAddToCart}
+                            onQuickView={onQuickView}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* 🚗 7. CÁC SẢN PHẨM & DỊCH VỤ ĐỘ XE KHÁC */}
                 {otherProducts.length > 0 && (
                   <div className="space-y-4">
-                    {(cameraProducts.length > 0 || lightingProducts.length > 0 || ledProducts.length > 0) && (
+                    {(cameraProducts.length > 0 || lightingProducts.length > 0 || ledProducts.length > 0 || audioProducts.length > 0 || displayProducts.length > 0 || mirrorProducts.length > 0) && (
                       <div className="flex items-center justify-between gap-3 px-1 pb-2 border-b border-slate-800">
                         <div className="flex items-center gap-2.5">
                           <div className="w-8 h-8 rounded-lg bg-slate-800 border border-slate-700 text-emerald-400 flex items-center justify-center">

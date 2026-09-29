@@ -19,6 +19,7 @@ export interface Product {
   reviewCount: number;
   primaryImage: string;
   secondaryImage: string;
+  galleryImages?: string[];
   description: string;
   features: string[];
   vehicleTypes: ('sedan' | 'suv' | 'mpv' | 'luxury')[];
