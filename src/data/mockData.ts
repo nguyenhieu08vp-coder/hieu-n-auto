@@ -46,12 +46,12 @@ export const CLASSIFICATIONS = [
 ] as const;
 
 export const CATEGORIES = [
-  { id: 'all', name: 'Tất Cả Danh Mục', count: 37, icon: 'LayoutGrid', itemType: 'all' },
+  { id: 'all', name: 'Tất Cả Danh Mục', count: 40, icon: 'LayoutGrid', itemType: 'all' },
   // Nhóm Sản Phẩm Chính Hãng
-  { id: 'cameras-360', name: 'Camera Hành Trình & Camera 360 Toàn Cảnh', count: 5, icon: 'ShieldCheck', itemType: 'product' },
+  { id: 'cameras-360', name: 'Camera Hành Trình & Camera 360 Toàn Cảnh', count: 7, icon: 'ShieldCheck', itemType: 'product' },
   { id: 'screens-displays', name: 'Màn Hình ODO, Android, HUD & Android Box', count: 5, icon: 'Tv', itemType: 'product' },
   { id: 'safety-sensors', name: 'Cảm Biến Áp Suất Lốp TPMS & Cảm Biến Đỗ Xe', count: 2, icon: 'ShieldAlert', itemType: 'product' },
-  { id: 'ambient-lights', name: 'Đèn Bi LED, Bi Gầm & LED Nội Thất 64 Màu', count: 7, icon: 'Sparkles', itemType: 'product' },
+  { id: 'ambient-lights', name: 'Đèn Bi LED, Bi Gầm & LED Nội Thất 64 Màu', count: 8, icon: 'Sparkles', itemType: 'product' },
   { id: 'floor-mats', name: 'Thảm Lót Sàn TPE Đúc Khuôn 3D & Tràn Viền', count: 2, icon: 'Layers', itemType: 'product' },
   // Nhóm Dịch Vụ Độ Xe Chính Hãng
   { id: 'car-audio', name: 'Nâng Cấp Loa Sub Điện & Âm Thanh DSP', count: 2, icon: 'Volume2', itemType: 'service' },
@@ -125,6 +125,73 @@ export const PRODUCTS: Product[] = [
     materials: ['Mắt Cam Kính Quang Học Chống Nước IP68', 'Bộ Dây Giắc Cắm Zin Plug & Play Theo Xe'],
     colors: [
       { name: 'Đen Sang Trọng OEM', hex: '#1E293B' }
+    ],
+    warrantyMonths: 24,
+    inStock: true,
+    installationTimeHours: 2.5
+  },
+  {
+    id: 'prod-38',
+    itemType: 'product',
+    name: 'Hệ Thống Camera 360 Độ SETCAR AI 360 (Tích Hợp Màn Zin VF3 & Limo Green - Chip UIS7862 8 Nhân)',
+    category: 'cameras-360',
+    categoryName: 'Camera 360 SETCAR AI',
+    price: 10500000,
+    originalPrice: 12800000,
+    isSale: true,
+    isBestSeller: true,
+    rating: 4.9,
+    reviewCount: 198,
+    primaryImage: '/images/setcar_ai_360_main.jpg',
+    secondaryImage: '/images/setcar_ai_360_screen.jpg',
+    description: 'Hệ thống Camera 360 độ SETCAR AI 360 cao cấp — Giải trí trọn vẹn, dẫn đường chuẩn xác, quan sát an toàn. Tích hợp trực tiếp trên màn hình Zin của xe VinFast VF3 và Limo Green, vận hành cấu hình khủng Chip UIS7862 8 nhân, RAM 4GB + ROM 64GB mượt mà. Hỗ trợ trợ lý ảo giọng nói thông minh, tích hợp hiển thị thông tin tiến trình sạc của xe, cắm giắc Zin 100% Plug & Play và chế độ bảo hành 2 năm lỗi 1 đổi 1.',
+    features: [
+      'Cấu hình phần cứng vượt trội: Vi xử lý UIS7862 8 nhân 2.0GHz, RAM 4GB + ROM 64GB chạy đa nhiệm cực mượt',
+      'Tích hợp Camera 360 độ toàn cảnh: Kiểm soát xe toàn thời gian, hỗ trợ lái xe và lùi chuồng đường hẹp an toàn',
+      'Lắp đặt cắm giắc Zin 100% Plug & Play chuẩn theo xe VinFast VF3 & Limo Green, giữ nguyên hệ thống điện hãng',
+      'Trợ lý ảo AI thông minh: Ra lệnh giọng nói dẫn đường bản đồ, mở Youtube, tìm kiếm bài hát và điều khiển sạc',
+      'Tích hợp tính năng hiển thị thông tin tiến trình sạc độc quyền trực tiếp trên màn hình xe khi cắm sạc',
+      'Giao diện tiếng Việt thân thiện, đồng bộ hiển thị cảm biến lùi và vạch đánh lái bẻ cong theo vô lăng',
+      'Chính sách bảo hành chính hãng SETCAR 2 năm (24 tháng) 1 đổi 1 lỗi từ nhà sản xuất'
+    ],
+    vehicleTypes: ['suv', 'sedan'],
+    materials: ['Mắt Cam Sony 4K Quang Học Chống Nước IP68', 'Bộ Jack Dây Cắm Zin 100% Theo Xe VF3'],
+    colors: [
+      { name: 'Mắt Cam Đen Chuẩn Zin OEM', hex: '#0F172A' },
+      { name: 'Giao Diện SETCAR Red AI', hex: '#DC2626' }
+    ],
+    warrantyMonths: 24,
+    inStock: true,
+    installationTimeHours: 2.0
+  },
+  {
+    id: 'prod-39',
+    itemType: 'product',
+    name: 'Camera 360 Độ Safeview S500 Cao Cấp (Hiển Thị 28 Góc Nhìn Toàn Cảnh & Giám Sát Tắt Máy)',
+    category: 'cameras-360',
+    categoryName: 'Camera 360 Toàn Cảnh',
+    price: 14900000,
+    originalPrice: 17500000,
+    isSale: true,
+    isNew: true,
+    rating: 5.0,
+    reviewCount: 129,
+    primaryImage: '/images/camera_360_mhu_lux_compare.jpg',
+    secondaryImage: '/images/lux_cam360_1.webp',
+    description: 'Dòng camera 360 độ cao cấp thế hệ mới với 28 góc nhìn toàn diện độc quyền, loại bỏ 100% điểm mù xung quanh xe. Tích hợp núm xoay Bluetooth tiện lợi đổi góc siêu nhanh, tính năng ghi hình 4 hướng giám sát đỗ xe khi tắt máy, cắm giắc Zin tương thích mọi dòng xe phổ thông đến xe sang.',
+    features: [
+      'Cung cấp tới 28 góc nhìn 2D/3D đa dạng: quan sát 2 bên sườn, góc nhìn từ trên cao, góc rộng 180 độ',
+      'Trang bị núm xoay điều khiển Bluetooth thông minh đặt cạnh cần số chuyển đổi góc chỉ 0.1 giây',
+      'Tích hợp bộ nhớ trong tốc độ cao ghi hình vòng lặp 4 hướng khi xe đỗ tắt máy chống va quẹt',
+      'Cảm biến hình ảnh Sony độ phân giải Full HD đêm rõ như ban ngày',
+      'Cắm giắc Zin theo xe qua cổng video AV/HDMI/AHD không ảnh hưởng bảo hành hãng',
+      'Bảo hành chính hãng 24 tháng điện tử toàn quốc'
+    ],
+    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
+    materials: ['Hợp Kim Nhôm Tản Nhiệt Cực Tốt', 'Mắt Kính Quang Học 6 Lớp Chống Nước'],
+    colors: [
+      { name: 'Đen Sang Trọng OEM', hex: '#1E293B' },
+      { name: 'Núm Xoay Hợp Kim Titan', hex: '#475569' }
     ],
     warrantyMonths: 24,
     inStock: true,
@@ -205,32 +272,35 @@ export const PRODUCTS: Product[] = [
   {
     id: 'prod-28',
     itemType: 'product',
-    name: 'Camera Hành Trình 70mai Omni X200 Xoay 360 Độ AI Giám Sát Đỗ Xe & Cảnh Báo Va Chạm 24/7',
+    name: 'Camera Hành Trình 70mai Dash Cam A510 HDR (Cảm Biến Sony STARVIS 2 IMX675, Độ Phân Giải 1944P 3K & Bản Quốc Tế)',
     category: 'cameras-360',
-    categoryName: 'Camera Hành Trình 70mai Omni',
-    price: 4200000,
-    originalPrice: 4900000,
+    categoryName: 'Camera Hành Trình 70mai A510 HDR',
+    price: 2450000,
+    originalPrice: 2950000,
     isBestSeller: true,
+    isNew: true,
     isSale: true,
-    rating: 4.95,
-    reviewCount: 210,
-    primaryImage: '/images/camera_70mai_omni.jpg',
-    secondaryImage: '/images/camera_70mai_omni_poster.jpg',
-    description: 'Camera hành trình đột phá với thiết kế xoay 360 độ đầu tiên trên thế giới từ 70mai Xiaomi. Ống kính F1.5 công nghệ PureCel®Plus-S HDR ghi hình siêu sắc nét cả ban đêm, tích hợp thuật toán AI phát hiện chuyển động con người và va chạm quanh xe khi đỗ xe 24/7.',
+    rating: 4.96,
+    reviewCount: 228,
+    primaryImage: '/images/camera_70mai_a510.jpg',
+    secondaryImage: '/images/camera_70mai_a510.jpg',
+    description: 'Camera hành trình 70mai Dash Cam A510 HDR thế hệ mới - Phiên bản Quốc tế (Global Version) chính hãng trang bị cảm biến ảnh đỉnh cao Sony STARVIS 2 IMX675 với độ phân giải siêu nét 1944P (3K Ultra HD). Tích hợp công nghệ xử lý hình ảnh MaiColor Vivid+ độc quyền cùng chế độ HDR chất lượng cao giúp tái tạo hình ảnh sống động, sắc nét rõ biển số xe cả ngày lẫn đêm. Hỗ trợ ghi hình vòng lặp liên tục, kết nối Wi-Fi tốc độ cao xem video mượt mà trên App 70mai và hệ thống hỗ trợ lái xe an toàn ADAS.',
     features: [
-      'Thiết kế xoay 340° linh hoạt loại bỏ mọi điểm mù quanh xe',
-      'Khẩu độ siêu lớn F1.5 kết hợp công nghệ xử lý ảnh đêm MaiColor Vivid+ Solution',
-      'Giám sát bãi đỗ xe thông minh bằng AI phát hiện người lạ tiếp cận xe',
-      'Hệ thống cảnh báo an toàn lái xe ADAS thông minh & cảnh báo lệch làn',
-      'Tích hợp GPS định vị hành trình và hiển thị hiệu ứng đồ họa công nghệ cao RS e-sport',
-      'Bộ nhớ trong eMMC siêu bền, không lo lỗi thẻ nhớ'
+      'Cảm biến hình ảnh thế hệ mới Sony STARVIS 2 IMX675: Độ nhạy sáng siêu cao, khử nhiễu tối đa và ghi hình ban đêm cực rõ nét',
+      'Độ phân giải 1944P (3K Ultra HD) kết hợp công nghệ HDR: Tái tạo chi tiết sắc sảo và cân bằng sáng tối xuất sắc',
+      'Công nghệ xử lý màu sắc MaiColor Vivid+ Solution: Màu sắc sống động, độ tương phản chân thực nhất trong mọi điều kiện ánh sáng',
+      'Chế độ ghi hình vòng lặp (Loop Recording): Liên tục ghi đè lên các video cũ khi thẻ nhớ đầy, đảm bảo không bao giờ bị gián đoạn',
+      'Hệ thống cảnh báo an toàn lái xe ADAS thông minh: Cảnh báo lệch làn, cảnh báo va chạm sớm với xe phía trước',
+      'Tích hợp GPS độ chính xác cao: Đo tốc độ thời gian thực, lưu trữ tọa độ và lộ trình di chuyển của xe',
+      'Kết nối Wi-Fi qua ứng dụng 70mai: Xem trực tiếp, tải video độ phân giải cao nhanh chóng về điện thoại',
+      'Giám sát đỗ xe 24H thông minh: Tự động kích hoạt ghi hình khẩn cấp khi phát hiện rung lắc hoặc va chạm'
     ],
     vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
-    materials: ['Nhựa Polycarbonate Chịu Nhiệt', 'Thấu Kính Quang Học 6 Lớp F1.5'],
+    materials: ['Thân Vỏ Hợp Kim & Nhựa Chịu Nhiệt Cao Cấp', 'Ống Kính Thủy Tinh Quang Học 6 Lớp F1.8 Khử Lóa'],
     colors: [
-      { name: 'Đỏ Thể Thao Phối Đen (Red/Black)', hex: '#DC2626' }
+      { name: 'Xám Đen Không Gian (Space Gray)', hex: '#334155' }
     ],
-    warrantyMonths: 24,
+    warrantyMonths: 18,
     inStock: true,
     installationTimeHours: 1
   },
@@ -302,6 +372,40 @@ export const PRODUCTS: Product[] = [
     installationTimeHours: 2
   },
   {
+    id: 'prod-35',
+    itemType: 'product',
+    name: 'Bi Gầm Aozoom LED WASP Fog Light 3.0 Inch (TIR Super LED - Hiệu Suất 105-115 Lm/W - Nhiệt Màu 4500K)',
+    category: 'ambient-lights',
+    categoryName: 'Đèn Bi Gầm Aozoom WASP',
+    price: 5500000,
+    originalPrice: 6500000,
+    isSale: true,
+    isNew: true,
+    rating: 5.0,
+    reviewCount: 168,
+    primaryImage: '/images/aozoom_wasp_fog_1.jpg',
+    secondaryImage: '/images/aozoom_wasp_fog_2.webp',
+    description: 'Bi Gầm Aozoom LED WASP Fog Light 3.0 Inch cao cấp ứng dụng công nghệ quang học TIR Super LED độc quyền từ Aozoom (German Technology). Hiệu suất phát quang cực khủng 105 - 115 LM/W, nhiệt màu vàng nắng 4500K và chỉ số hoàn màu CRI 85 cho khả năng bám đường, phá sương mưa vượt trội. Đường cắt ánh sáng phẳng rộng sắc lẹm, đạt chuẩn chống nước ngập sâu IP68 và tản nhiệt nhôm CNC bền bỉ.',
+    features: [
+      'Công nghệ TIR Super LED quang học tối tân: Hội tụ hơn 90% ánh sáng phát ra, tăng 30% hiệu suất quang thông so với bi thông thường',
+      'Hiệu suất phát quang đạt 105 - 115 LM/W với chỉ số hoàn màu vượt trội CIE RA (CRI) 85 phản ánh vật thể chân thực',
+      'Nhiệt màu 4500K (vàng nắng trung tính) bám đường cực kỳ xuất sắc trong mọi điều kiện mưa lớn, sương mù dày đặc và đường đèo',
+      'Đường cắt cos phẳng rộng sắc lẹm, không gây chói mắt xe đi ngược chiều, đạt chuẩn đăng kiểm Việt Nam',
+      'Chỉ số chống nước IP68 tuyệt đối kháng nước ngập sâu, chịu nhiệt khắc nghiệt từ -40°C đến 105°C',
+      'Kích thước chuẩn 3.0 Inch cắm giắc Zin và pát chuyên dụng theo xe không đục khoét chóa',
+      'Bảo hành chính hãng Aozoom Việt Nam 36 tháng (3 năm) 1 đổi 1'
+    ],
+    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
+    materials: ['Thấu Kính Quang Học TIR Super LED', 'Thân Nhôm Đúc Hàng Không Tản Nhiệt CNC'],
+    colors: [
+      { name: 'Nhiệt Màu 4500K Vàng Nắng Bám Đường', hex: '#F59E0B' },
+      { name: 'Thấu Kính 3.0 Inch Chống Nước IP68', hex: '#334155' }
+    ],
+    warrantyMonths: 36,
+    inStock: true,
+    installationTimeHours: 1.5
+  },
+  {
     id: 'prod-34',
     itemType: 'product',
     name: 'Đèn LED A50 - Đèn Bi LED Tăng Sáng Cao Cấp (Chuẩn Zin)',
@@ -335,37 +439,70 @@ export const PRODUCTS: Product[] = [
     installationTimeHours: 1.5
   },
   {
-    id: 'prod-35',
+    id: 'prod-6',
+    itemType: 'service',
+    name: 'Gói Nâng Cấp Loa Sub Điện Gầm Ghế Rebec U10 Cao Cấp (Bổ Sung Âm Trầm Siêu Sâu)',
+    category: 'car-audio',
+    categoryName: 'Loa Sub Điện Gầm Ghế Ô Tô',
+    price: 5600000,
+    originalPrice: 6800000,
+    isBestSeller: true,
+    isSale: true,
+    rating: 4.9,
+    reviewCount: 196,
+    primaryImage: '/images/rebec_sub_vf3_kit.jpg',
+    secondaryImage: '/images/rebec_sub_closeup.jpg',
+    description: 'Loa Sub điện gầm ghế Rebec U10 (10 inch) chính hãng cao cấp cắm giắc Zin 100%, bổ sung dải âm bass siêu trầm mạnh mẽ và uy lực cho hệ thống âm thanh ô tô. Kích thước siêu mỏng nhỏ gọn dễ dàng đặt vừa vặn dưới gầm ghế các dòng xe VinFast VF3, Sedan, SUV, MPV mà không chiếm diện tích khoang nội thất.',
+    features: [
+      'Loa Sub điện Rebec U10 kích thước 10 inch, công suất 160W RMS / 400W MAX tái tạo dải trầm 150Hz - 20Hz sâu thẳm, gọn gàng',
+      'Khung nhôm đúc nguyên khối tản nhiệt cực tốt, chống rung chấn hiệu quả khi đánh dải bass cao độ',
+      'Tích hợp bộ điều chỉnh âm lượng Bass Remote Controller đặt tại vị trí lái xe tiện lợi',
+      'Bộ dây cắm giắc Zin 100% theo xe, có cầu chì ngắt nguồn độc lập bảo vệ an toàn hệ thống điện',
+      'Tặng kèm pát và ốc đôn ghế chuyên dụng vừa khít gầm ghế VinFast VF3 và nhiều dòng xe',
+      'Bảo hành chính hãng Rebec 24 tháng đổi mới'
+    ],
+    vehicleTypes: ['suv', 'sedan', 'mpv'],
+    materials: ['Khung Nhôm Đúc Liền Khối Rebec U10', 'Màng Loa Cao Cấp Sợi Thủy Tinh & Hợp Kim'],
+    colors: [
+      { name: 'Đen Mờ Nhôm Phay Rebec', hex: '#18181B' }
+    ],
+    warrantyMonths: 24,
+    inStock: true,
+    installationTimeHours: 2
+  },
+  {
+    id: 'prod-37',
     itemType: 'product',
-    name: 'Bi Laser Aozoom OMEGA LASER Siêu Pha Hội Tụ 65W/110W (Tầm Rọi 1000m Chuẩn Đức)',
-    category: 'ambient-lights',
-    categoryName: 'Đèn Bi Laser Siêu Pha',
-    price: 14500000,
-    originalPrice: 17500000,
+    name: 'Loa Sub Điện Gầm Ghế Cao Cấp STEG SA-8W (Thương Hiệu STEG Italy - Chuẩn Âm Thanh Châu Âu)',
+    category: 'car-audio',
+    categoryName: 'Loa Sub Điện Gầm Ghế STEG',
+    price: 6200000,
+    originalPrice: 7500000,
     isSale: true,
     isNew: true,
-    rating: 5.0,
-    reviewCount: 134,
-    primaryImage: '/images/bi_laser_aozoom_omega.jpg',
-    secondaryImage: '/images/aozoom_extra_sapphire_poster.jpg',
-    description: 'Đỉnh cao tăng sáng xe hơi với công nghệ Diode Laser Nichia (Nhật Bản) kết hợp chip LED OSRAM Đức, sản sinh chùm tia pha hội tụ rực sáng quét xa lên tới 1000 mét. Khả năng tản nhiệt bằng ống đồng kép và quạt bi turbine siêu êm ái.',
+    isBestSeller: true,
+    rating: 4.95,
+    reviewCount: 182,
+    primaryImage: '/images/steg_sa_8w_subwoofer.jpg',
+    secondaryImage: '/images/steg_sa_8w_secondary.png',
+    description: 'Loa Sub điện gầm ghế cao cấp STEG SA-8W chính hãng đến từ thương hiệu âm thanh xe hơi hàng đầu nước Ý (STEG Italy). Thiết kế nhôm đúc nguyên khối siêu mỏng gọn gàng, trang bị củ loa bass 8 inch công suất cực mạnh, dải tần trầm 20Hz - 150Hz uy lực, sâu lắng và sạch tiếng. Tích hợp mạch công suất Class D hiệu suất cao, cắm giắc Zin 100% không cắt dây và tối ưu hoàn hảo cho VinFast VF3, Sedan, SUV, MPV.',
     features: [
-      'Công nghệ chiếu sáng kép Bi-Laser: Cos 65W LED phủ đều, Pha 110W kích hoạt Diode Laser phóng xa 1000m',
-      'Sử dụng Diode Laser Nichia (Nhật Bản) cùng 9+3 nhân LED Osram công nghệ Đức cao cấp',
-      'Tản nhiệt kép thế hệ mới: Ống đồng dẫn nhiệt nhiệt độ cao kết hợp quạt turbine 9 cánh êm ái',
-      'Thấu kính xanh Cobalt quang học độc quyền của Aozoom, chống chói và tăng chiều sâu chùm sáng',
-      'Chuẩn đăng kiểm ánh sáng hiện hành tại Việt Nam, mặt cắt Cos sắc lẹm chuẩn ranh giới an toàn',
-      'Bảo hành chính hãng Aozoom 36 tháng 1 đổi 1'
+      'Thương hiệu âm thanh cao cấp STEG Italy: Đẳng cấp chất âm Châu Âu trầm ấm, uy lực và không bị ù rền',
+      'Củ loa siêu trầm 8 inch màng nón hợp kim nhôm, công suất cực đại 250W Max / 140W RMS đánh bass cực chắc',
+      'Dải tần số đáp ứng siêu trầm 20Hz - 150Hz, độ nhạy cao 90dB cho âm bass mềm sâu và sạch tiếng',
+      'Thiết kế nhôm đúc nguyên khối tản nhiệt tuyệt hảo, kích thước siêu mỏng dễ dàng đặt vừa gầm ghế lái hoặc phụ',
+      'Tích hợp bộ điều khiển âm lượng Bass Controller độc lập đặt gần vị trí lái xe tiện lợi',
+      'Lắp đặt cắm giắc Zin 100% theo xe, kèm cầu chì chống quá tải bảo vệ tuyệt đối hệ thống điện xe',
+      'Bảo hành chính hãng STEG 24 tháng (2 năm) 1 đổi 1'
     ],
-    vehicleTypes: ['suv', 'sedan', 'luxury'],
-    materials: ['Hợp Kim Titanium Nhôm Hàng Không', 'Diode Laser Nichia & Chip LED Osram'],
+    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
+    materials: ['Khung Nhôm Đúc Liền Khối STEG Italy', 'Màng Loa Hợp Kim Nhôm Anodized'],
     colors: [
-      { name: 'Cobalt Blue Optical Lens (Laser 1000m)', hex: '#2563EB' },
-      { name: 'Titanium Edition', hex: '#64748B' }
+      { name: 'Đen Nhám Logo STEG Italy Flag', hex: '#1E293B' }
     ],
-    warrantyMonths: 36,
+    warrantyMonths: 24,
     inStock: true,
-    installationTimeHours: 2.5
+    installationTimeHours: 1.5
   },
   {
     id: 'prod-26',
@@ -406,14 +543,14 @@ export const PRODUCTS: Product[] = [
     name: 'Cặp Loa Bầu Dục Ô Tô PERTORS QP-4603 (4x6 Inch - 4-Way Đồng Trục 450W Max)',
     category: 'car-audio',
     categoryName: 'Loa Đồng Trục Ô Tô',
-    price: 650000,
-    originalPrice: 850000,
+    price: 1500000,
+    originalPrice: 1950000,
     isSale: true,
     isNew: true,
     rating: 4.9,
     reviewCount: 156,
-    primaryImage: '/images/pertors_qp4603_1.jpg',
-    secondaryImage: '/images/pertors_qp4603_2.jpg',
+    primaryImage: '/images/pertors_qp4603_2.jpg',
+    secondaryImage: '/images/pertors_qp4603_1.jpg',
     description: 'Cặp loa bầu dục ô tô PERTORS QP-4603 kích thước 4x6 inch (10.2cm x 15.2cm) đồng trục 4 đường tiếng (4-Way Coaxial) công suất cực đại 450W Max / 36W Nom, trở kháng 4 Ohm. Thiết kế chuẩn kích thước thay thế trực tiếp vào vị trí loa zin cánh cửa, cốp sau hoặc khoang nội thất nhiều dòng xe hơi, mang lại âm thanh sống động, chi tiết và dải âm rộng.',
     features: [
       'Cấu hình loa đồng trục 4 đường tiếng (4-Ways Coaxial) phân bổ chi tiết âm trầm, trung và dải cao',
@@ -433,45 +570,13 @@ export const PRODUCTS: Product[] = [
     inStock: true,
     installationTimeHours: 1.0
   },
-  {
-    id: 'prod-37',
-    itemType: 'service',
-    name: 'DSP Amply Rebec D6II - Bộ Xử Lý Tín Hiệu Số 6 Kênh Tích Hợp Ampli (Cắm Giắc Zin 100%)',
-    category: 'car-audio',
-    categoryName: 'Bộ Xử Lý DSP & Ampli',
-    price: 6800000,
-    originalPrice: 8500000,
-    isSale: true,
-    isNew: true,
-    rating: 4.9,
-    reviewCount: 142,
-    primaryImage: '/images/rebec_sub_closeup.jpg',
-    secondaryImage: '/images/rebec_combo_u10_bl80.jpg',
-    description: 'Bộ xử lý tín hiệu âm thanh kỹ thuật số cao cấp tích hợp bộ khuếch đại công suất 6 kênh chuyên dụng cho xe hơi. Cân chỉnh âm hình chi tiết qua phần mềm chuyên dụng 31-Band EQ, điều chỉnh độ trễ thời gian (Time Alignment) định vị ca sĩ hát ngay giữa vô-lăng, cắm giắc Zin 100% không cắt nối dây.',
-    features: [
-      'Tích hợp DSP 31-Band EQ độc lập từng kênh, tùy biến phân tần số High-pass/Low-pass chính xác',
-      'Công nghệ căn chỉnh độ trễ thời gian (Time Alignment) tạo sân khấu âm thanh 3D sống động',
-      'Mạch khuếch đại Class AB/D hiệu suất cao, chất âm ấm áp, chi tiết sạch sẽ không tạp âm',
-      'Kết nối Bluetooth 5.0 AptX HD phát nhạc Lossless trực tiếp từ điện thoại thông minh',
-      'Cắm giắc Zin 100% chuẩn theo các dòng xe VinFast, Toyota, Honda, Mazda, Hyundai, Kia',
-      'Bảo hành chính hãng Rebec 24 tháng đổi mới'
-    ],
-    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
-    materials: ['Vỏ Nhôm Hàng Không Tản Nhiệt Tự Nhiên', 'Linh Kiện Tụ Điểm Âm Thanh Audio-Grade'],
-    colors: [
-      { name: 'Nhôm Phay Đen Titan Rebec', hex: '#1E293B' },
-      { name: 'Bạc Kim Loại Rebec DSP', hex: '#94A3B8' }
-    ],
-    warrantyMonths: 24,
-    inStock: true,
-    installationTimeHours: 1.5
-  },
+
 
 
   {
     id: 'prod-3',
     itemType: 'product',
-    name: 'Bộ Đèn LED Nội Thất Raipow Toyota Cross 24 Chi Tiết 64 Màu Đổi Theo Nhạc',
+    name: 'Bộ Đèn LED Nội Thất Ambient Light 24 Chi Tiết 64 Màu Cảm Biến Đổi Theo Nhạc (Cắm Giắc Zin 100%)',
     category: 'ambient-lights',
     categoryName: 'Đèn LED Nội Thất 64 Màu',
     price: 3500000,
@@ -482,13 +587,13 @@ export const PRODUCTS: Product[] = [
     reviewCount: 178,
     primaryImage: '/images/led_raipow_toyota_cross.jpg',
     secondaryImage: '/images/led_ambient_interior.jpg',
-    description: 'Bộ LED nội thất Raipow cao cấp dành riêng cho Toyota Cross và các dòng xe với trọn bộ 24 chi tiết đồng bộ: thanh đèn điều khiển trung tâm, hộp điều khiển, khuôn cửa trước, đèn hộp đựng đồ, đèn gác chân, thanh đèn viền 4 cửa, LED vành loa, đèn xử lý và dây nguồn jack Zin 100%. Đổi 64 màu mượt mà, chuyển động theo nhịp điệu âm nhạc.',
+    description: 'Bộ LED nội thất Ambient Light cao cấp với trọn bộ 18 - 24 chi tiết đồng bộ: thanh đèn viền taplo điều khiển trung tâm, hộp vi điều khiển thông minh, đèn viền 4 cánh cửa, đèn hộc để đồ, đèn soi chân gầm ghế, LED vành loa và bộ dây nguồn cắm giắc Zin 100%. Tùy chỉnh 64 triệu dải màu mượt mà, hiệu ứng chuyển màu ma trận cảm biến theo giai điệu bài hát qua App điện thoại.',
     features: [
-      'Trọn bộ 24 chi tiết cao cấp: Thanh đèn trung tâm, khuôn cửa, đèn gác chân, đèn hộp đồ, LED vành loa',
-      'Dải LED đa sắc RGB 64 triệu màu với hiệu ứng đổi màu đa vùng và chuyển động theo âm nhạc',
-      'Hộp điều khiển Raipow thông minh, kết nối Bluetooth tùy chỉnh tiện lợi qua App điện thoại',
-      'Lắp đặt khuôn cắm giắc Zin 100%, không cắt trích dây điện, an toàn tuyệt đối',
-      'Độ sáng đều, không chói mắt, tạo không gian sang trọng đẳng cấp như xe sang'
+      'Trọn bộ 24 chi tiết cao cấp: Thanh LED viền Taplo trung tâm, đèn viền 4 cánh cửa, đèn hộc tay nắm, đèn gác chân, LED vành loa',
+      'Dải LED đa sắc RGB 64 triệu màu với hiệu ứng đổi màu đa vùng và chuyển động mượt mà theo nhịp điệu âm nhạc',
+      'Hộp điều khiển vi mạch thông minh, kết nối Bluetooth tùy chỉnh hàng trăm chế độ qua App điện thoại',
+      'Lắp đặt cắm giắc Zin 100%, không cắt trích một sợi dây điện nào của xe, an toàn tuyệt đối',
+      'Ánh sáng đồng đều dịu mắt không gây chói, kiến tạo không gian khoang lái sang trọng đẳng cấp'
     ],
     vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
     materials: ['Thanh LED Quang Học Raipow', 'Dây Nguồn Jack Cắm Zin Chống Cháy'],
@@ -568,6 +673,39 @@ export const PRODUCTS: Product[] = [
     installationTimeHours: 1
   },
   {
+    id: 'prod-40',
+    itemType: 'product',
+    name: 'Bộ Đèn LED Cản Sau VinFast Limo Green (Hiệu Ứng Audi DMX Ma Trận, Xi Nhan Chạy & Cắm Giắc Zin 100%)',
+    category: 'ambient-lights',
+    categoryName: 'Đèn LED Cản Sau Limo Green',
+    price: 1650000,
+    originalPrice: 2300000,
+    isSale: true,
+    isNew: true,
+    rating: 4.95,
+    reviewCount: 158,
+    primaryImage: '/images/led_can_sau_limo_green_on.webp',
+    secondaryImage: '/images/led_can_sau_limo_green_kit.webp',
+    description: 'Bộ đèn LED cản sau cao cấp chuyên biệt cho dòng xe điện VinFast Limo Green (Tương lai di chuyển xanh). Tích hợp module điều khiển Audi DMX thông minh tạo hiệu ứng quét ma trận chào mừng khi mở khóa xe, dải LED demi dạ quang rực rỡ ban đêm, đèn phanh cảnh báo siêu sáng và xi-nhan chạy đuổi Audi thể thao. Thiết kế chuẩn phom cản zin 100%, cắm giắc Plug & Play không cắt trích dây điện.',
+    features: [
+      'Thiết kế chuẩn form cản sau VinFast Limo Green thay thế miếng phản quang zin nguyên bản',
+      'Trang bị module Audi DMX thông minh: Tích hợp hiệu ứng quét ma trận Welcome Light cực kỳ ấn tượng khi mở khóa xe',
+      '3 Chế độ sáng thông minh: Dải LED Demi dạ quang ban đêm, Đèn phanh siêu sáng chống tông đuôi & Xi-nhan LED chạy đuổi thể thao',
+      'Thiết kế cắm giắc Zin 100% Plug & Play, không đấu nối, không cắt trích một sợi dây điện nào của xe',
+      'Chất liệu vỏ nhựa ABS quang học chống ố vàng, tiêu chuẩn chống nước IP68 chịu rửa xe xịt áp lực cao',
+      'Bảo hành chính hãng 12 tháng 1 đổi 1 tại hệ thống Hieu N Auto'
+    ],
+    vehicleTypes: ['mpv', 'suv'],
+    materials: ['Nhựa ABS Kỹ Thuật Quang Học Chống Lóa', 'Hộp Điều Khiển Mạch Audi DMX Tiêu Chuẩn Ô Tô'],
+    colors: [
+      { name: 'Hiệu Ứng Audi DMX Đa Sắc', hex: '#EC4899' },
+      { name: 'Dải Đỏ Demi Thể Thao', hex: '#EF4444' }
+    ],
+    warrantyMonths: 12,
+    inStock: true,
+    installationTimeHours: 1.0
+  },
+  {
     id: 'prod-4',
     itemType: 'service',
     name: 'Phim Cách Nhiệt Cao Cấp 3M Crystalline 200 Lớp Chính Hãng',
@@ -630,38 +768,6 @@ export const PRODUCTS: Product[] = [
     warrantyMonths: 24,
     inStock: true,
     installationTimeHours: 3
-  },
-  {
-    id: 'prod-6',
-    itemType: 'service',
-    name: 'Gói Nâng Cấp Loa Sub Điện Gầm Ghế Rebec U10 Cao Cấp (Bổ Sung Âm Trầm Siêu Sâu)',
-    category: 'car-audio',
-    categoryName: 'Loa Sub Điện Gầm Ghế Ô Tô',
-    price: 5600000,
-    originalPrice: 6800000,
-    isBestSeller: true,
-    isSale: true,
-    rating: 4.9,
-    reviewCount: 196,
-    primaryImage: '/images/rebec_sub_vf3_kit.jpg',
-    secondaryImage: '/images/rebec_sub_closeup.jpg',
-    description: 'Loa Sub điện gầm ghế Rebec U10 (10 inch) chính hãng cao cấp cắm giắc Zin 100%, bổ sung dải âm bass siêu trầm mạnh mẽ và uy lực cho hệ thống âm thanh ô tô. Kích thước siêu mỏng nhỏ gọn dễ dàng đặt vừa vặn dưới gầm ghế các dòng xe VinFast VF3, Sedan, SUV, MPV mà không chiếm diện tích khoang nội thất.',
-    features: [
-      'Loa Sub điện Rebec U10 kích thước 10 inch, công suất 160W RMS / 400W MAX tái tạo dải trầm 150Hz - 20Hz sâu thẳm, gọn gàng',
-      'Khung nhôm đúc nguyên khối tản nhiệt cực tốt, chống rung chấn hiệu quả khi đánh dải bass cao độ',
-      'Tích hợp bộ điều chỉnh âm lượng Bass Remote Controller đặt tại vị trí lái xe tiện lợi',
-      'Bộ dây cắm giắc Zin 100% theo xe, có cầu chì ngắt nguồn độc lập bảo vệ an toàn hệ thống điện',
-      'Tặng kèm pát và ốc đôn ghế chuyên dụng vừa khít gầm ghế VinFast VF3 và nhiều dòng xe',
-      'Bảo hành chính hãng Rebec 24 tháng đổi mới'
-    ],
-    vehicleTypes: ['suv', 'sedan', 'mpv'],
-    materials: ['Khung Nhôm Đúc Liền Khối Rebec U10', 'Màng Loa Cao Cấp Sợi Thủy Tinh & Hợp Kim'],
-    colors: [
-      { name: 'Đen Mờ Nhôm Phay Rebec', hex: '#18181B' }
-    ],
-    warrantyMonths: 24,
-    inStock: true,
-    installationTimeHours: 2
   },
   {
     id: 'prod-7',

@@ -32,11 +32,13 @@ import {
   ShieldAlert,
   Shield,
   Video,
+  Eye,
   Wifi,
   Mic,
   Sun,
   Droplets,
-  Wrench
+  Wrench,
+  Cpu
 } from 'lucide-react';
 import { Product, ItemClassification } from '../types';
 import { PRODUCTS, CATEGORIES, CLASSIFICATIONS, FORMAT_CURRENCY } from '../data/mockData';
@@ -404,25 +406,32 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
     };
   }, []);
 
-  // Separate Camera products into their own dedicated product group
-  const cameraProducts = useMemo(() => {
-    return filteredProducts.filter((p) => p.category === 'cameras-360');
-  }, [filteredProducts]);
+  // Nhóm Camera Hành Trình & Ghi Hình Chuyên Nghiệp (loại trừ camera 360)
+  const camera360ProductIds = useMemo(() => new Set(['prod-2', 'prod-38', 'prod-39']), []);
+  const dashcamProducts = useMemo(() => {
+    return filteredProducts.filter((p) => p.category === 'cameras-360' && !camera360ProductIds.has(p.id));
+  }, [filteredProducts, camera360ProductIds]);
 
-  // Nhóm Ánh Sáng Tăng Sáng (Bi LED Aozoom, Bi gầm TS V3 / G2 Plus, Bi Laser Omega, Bi gầm Aozoom Eagle): prod-16, prod-23, prod-34, prod-35
-  const lightingProductIds = useMemo(() => new Set(['prod-16', 'prod-23', 'prod-34', 'prod-35']), []);
+  // Mục Camera 360 Độ Toàn Cảnh (prod-2: Hệ thống Camera 360 độ TECHCAM System cắm giắc Zin 100%)
+  // camera360ProductIds declared above
+  const camera360Products = useMemo(() => {
+    return filteredProducts.filter((p) => camera360ProductIds.has(p.id));
+  }, [filteredProducts, camera360ProductIds]);
+
+  // Nhóm Ánh Sáng Tăng Sáng (Bi LED Aozoom, Bi gầm TS V3 / G2 Plus, Bi Gầm WASP, Bi gầm Aozoom Eagle): prod-16, prod-23, prod-35, prod-34
+  const lightingProductIds = useMemo(() => new Set(['prod-16', 'prod-23', 'prod-35', 'prod-34']), []);
   const lightingProducts = useMemo(() => {
     return filteredProducts.filter((p) => lightingProductIds.has(p.id));
   }, [filteredProducts, lightingProductIds]);
 
   // Specific 3 LED products: prod-3 (LED Nội Thất), prod-8 (LED Cánh Chim), prod-24 (Mạch Xi Nhan Demi LED)
-  const ledProductIds = useMemo(() => new Set(['prod-3', 'prod-8', 'prod-24']), []);
+  const ledProductIds = useMemo(() => new Set(['prod-3', 'prod-8', 'prod-24', 'prod-40']), []);
   const ledProducts = useMemo(() => {
     return filteredProducts.filter((p) => ledProductIds.has(p.id));
   }, [filteredProducts, ledProductIds]);
 
-  // Nhóm Nâng Cấp Âm Thanh Ô Tô (prod-6: Sub gầm ghế Rebec U10, prod-26: Loa toàn dải Rebec BL80)
-  const audioProductIds = useMemo(() => new Set(['prod-6', 'prod-26', 'prod-36', 'prod-37']), []);
+  // Nhóm Nâng Cấp Âm Thanh Ô Tô (prod-6: Sub Rebec U10, prod-37: Sub STEG SA-8W, prod-26: Loa toàn dải Rebec BL80, prod-36: Loa bầu dục)
+  const audioProductIds = useMemo(() => new Set(['prod-6', 'prod-37', 'prod-26', 'prod-36']), []);
   const audioProducts = useMemo(() => {
     return filteredProducts.filter((p) => audioProductIds.has(p.id) || p.category === 'car-audio');
   }, [filteredProducts, audioProductIds]);
@@ -439,18 +448,66 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
     return filteredProducts.filter((p) => mirrorProductIds.has(p.id));
   }, [filteredProducts, mirrorProductIds]);
 
+  // 8. Nhóm Android Box: prod-12 (Zestech DX165), prod-30 (CASKA Smart USB)
+  const androidBoxProductIds = useMemo(() => new Set(['prod-12', 'prod-30']), []);
+  const androidBoxProducts = useMemo(() => {
+    return filteredProducts.filter((p) => androidBoxProductIds.has(p.id));
+  }, [filteredProducts, androidBoxProductIds]);
+
+  // 9. Nhóm Cảm Biến An Toàn: prod-17 (ICAR Ellisafe TN405), prod-20 (ICAR Ellisen S40 / E48)
+  const safetySensorProductIds = useMemo(() => new Set(['prod-17', 'prod-20']), []);
+  const safetySensorProducts = useMemo(() => {
+    return filteredProducts.filter((p) => safetySensorProductIds.has(p.id));
+  }, [filteredProducts, safetySensorProductIds]);
+
+  // 10. Nhóm Nội Thất & Ghế Xe (bao gồm Thảm Sàn TPE): prod-7 (Bệ tỳ tay VF3), prod-13 (Áo ghế Nappa 9D), prod-18 (Ghế điện Limo Green / UNISEAT), prod-14 (CARSEN 3D), prod-29 (HUVI 3D)
+  const interiorSeatProductIds = useMemo(() => new Set(['prod-7', 'prod-13', 'prod-18', 'prod-14', 'prod-29']), []);
+  const interiorSeatProducts = useMemo(() => {
+    return filteredProducts.filter((p) => interiorSeatProductIds.has(p.id));
+  }, [filteredProducts, interiorSeatProductIds]);
+
+  // 11. Nhóm Cốp Điện & Bệ Bước: prod-11 (Cốp điện ICAR VF3), prod-27 (Bệ bước chân điện)
+  const electricConvenienceProductIds = useMemo(() => new Set(['prod-11', 'prod-27']), []);
+  const electricConvenienceProducts = useMemo(() => {
+    return filteredProducts.filter((p) => electricConvenienceProductIds.has(p.id));
+  }, [filteredProducts, electricConvenienceProductIds]);
+
+  // 12. Nhóm Bảo Vệ & Chăm Sóc Xe: prod-4 (Phim 3M Crystalline), prod-9 (Giáp gầm pin SICHER VF6), prod-19 (Phay lazang CNC)
+  const protectionCareProductIds = useMemo(() => new Set(['prod-4', 'prod-9', 'prod-19']), []);
+  const protectionCareProducts = useMemo(() => {
+    return filteredProducts.filter((p) => protectionCareProductIds.has(p.id));
+  }, [filteredProducts, protectionCareProductIds]);
+
   const otherProducts = useMemo(() => {
-    return filteredProducts.filter(
-      (p) =>
-        p.category !== 'cameras-360' &&
-        !lightingProductIds.has(p.id) &&
-        !ledProductIds.has(p.id) &&
-        !audioProductIds.has(p.id) &&
-        !displayProductIds.has(p.id) &&
-        !mirrorProductIds.has(p.id) &&
-        p.category !== 'car-audio'
-    );
-  }, [filteredProducts, lightingProductIds, ledProductIds, audioProductIds, displayProductIds, mirrorProductIds]);
+    const allCategorizedIds = new Set([
+      ...camera360ProductIds,
+      'prod-1', 'prod-21', 'prod-22', 'prod-28',
+      ...lightingProductIds,
+      ...ledProductIds,
+      ...audioProductIds,
+      ...displayProductIds,
+      ...mirrorProductIds,
+      ...androidBoxProductIds,
+      ...safetySensorProductIds,
+      ...interiorSeatProductIds,
+      ...electricConvenienceProductIds,
+      ...protectionCareProductIds
+    ]);
+    return filteredProducts.filter((p) => !allCategorizedIds.has(p.id));
+  }, [
+    filteredProducts,
+    camera360ProductIds,
+    lightingProductIds,
+    ledProductIds,
+    audioProductIds,
+    displayProductIds,
+    mirrorProductIds,
+    androidBoxProductIds,
+    safetySensorProductIds,
+    interiorSeatProductIds,
+    electricConvenienceProductIds,
+    protectionCareProductIds
+  ]);
 
   // Active filters count for badge indicator
   const activeFiltersCount = [
@@ -1468,8 +1525,8 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                 transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
                 className="space-y-8"
               >
-                {/* 📹 1. NHÓM SẢN PHẨM CAMERA & GHI HÌNH CHUYÊN NGHIỆP */}
-                {cameraProducts.length > 0 && (
+                {/* 📹 1. NHÓM CAMERA HÀNH TRÌNH & GHI HÌNH CHUYÊN NGHIỆP */}
+                {dashcamProducts.length > 0 && (
                   <div className="rounded-2xl border border-sky-500/30 bg-gradient-to-b from-sky-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-sky-500/20">
                       <div className="flex items-center gap-3">
@@ -1479,14 +1536,14 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                         <div>
                           <div className="flex items-center gap-2">
                             <h2 className="text-sm sm:text-base font-extrabold text-white tracking-tight">
-                              Nhóm Sản Phẩm Camera &amp; Ghi Hình Chuyên Nghiệp
+                              Camera Hành Trình
                             </h2>
                             <span className="px-2.5 py-0.5 rounded-full bg-sky-500/20 border border-sky-400/30 text-sky-300 text-[11px] font-extrabold">
-                              {cameraProducts.length} Sản phẩm
+                              {dashcamProducts.length} Sản phẩm
                             </span>
                           </div>
                           <p className="text-[11px] text-slate-400 mt-0.5">
-                            Camera hành trình 4K HDR, camera 3 kênh, cảnh báo giao thông giọng nói &amp; Camera 360 toàn cảnh cắm giắc Zin
+                            Camera hành trình 4K HDR, camera 3 kênh trước - trong - sau, cảnh báo giao thông giọng nói Vietmap &amp; 70mai
                           </p>
                         </div>
                       </div>
@@ -1494,7 +1551,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
 
                     {viewMode === 'list' ? (
                       <div className="space-y-3.5">
-                        {cameraProducts.map((product) => (
+                        {dashcamProducts.map((product) => (
                           <ProductListItem
                             key={product.id}
                             product={product}
@@ -1505,7 +1562,57 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                       </div>
                     ) : (
                       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
-                        {cameraProducts.map((product) => (
+                        {dashcamProducts.map((product) => (
+                          <ProductCompactCard
+                            key={product.id}
+                            product={product}
+                            onAddToCart={onAddToCart}
+                            onQuickView={onQuickView}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* 🌐 2. MỤC CAMERA 360 ĐỘ TOÀN CẢNH (BÊN DƯỚI MỤC CAMERA) */}
+                {camera360Products.length > 0 && (
+                  <div className="rounded-2xl border border-indigo-500/30 bg-gradient-to-b from-indigo-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-indigo-500/20">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-indigo-500/20 border border-indigo-400/40 text-indigo-400 flex items-center justify-center flex-shrink-0 shadow-lg shadow-indigo-500/10">
+                          <Eye className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h2 className="text-sm sm:text-base font-extrabold text-white tracking-tight">
+                              Camera 360 - Hỗ Trợ Đỗ Xe
+                            </h2>
+                            <span className="px-2.5 py-0.5 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 text-[11px] font-extrabold">
+                              {camera360Products.length} Sản phẩm
+                            </span>
+                          </div>
+                          <p className="text-[11px] text-slate-400 mt-0.5">
+                            Hệ thống Camera 360 độ TECHCAM, SETCAR AI 360 &amp; Safeview cao cấp hiển thị 2D/3D siêu nét, mô phỏng xe thực tế, cắm giắc Zin 100%
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {viewMode === 'list' ? (
+                      <div className="space-y-3.5">
+                        {camera360Products.map((product) => (
+                          <ProductListItem
+                            key={product.id}
+                            product={product}
+                            onAddToCart={onAddToCart}
+                            onQuickView={onQuickView}
+                          />
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
+                        {camera360Products.map((product) => (
                           <ProductCompactCard
                             key={product.id}
                             product={product}
@@ -1529,14 +1636,14 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                         <div>
                           <div className="flex items-center gap-2">
                             <h2 className="text-sm sm:text-base font-extrabold text-white tracking-tight">
-                              Mục Nâng Cấp Ánh Sáng &amp; Đèn Tăng Sáng
+                              Cá Nhân Hóa Ánh Sáng
                             </h2>
                             <span className="px-2.5 py-0.5 rounded-full bg-yellow-500/20 border border-yellow-400/30 text-yellow-300 text-[11px] font-extrabold">
                               {lightingProducts.length} Sản phẩm
                             </span>
                           </div>
                           <p className="text-[11px] text-slate-400 mt-0.5">
-                            Bi Laser Aozoom Omega tầm xa 1000m, Bi LED Extra Sapphire 98W, Đèn LED A50 &amp; Đèn trợ sáng TS V3 Pro
+                            Bi Gầm Aozoom LED WASP 3.0 Inch, Bi LED Extra Sapphire 98W, Đèn LED A50 &amp; Đèn trợ sáng TS V3 Pro
                           </p>
                         </div>
                       </div>
@@ -1568,7 +1675,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                   </div>
                 )}
 
-                {/* 💡 3. NHÓM ĐÈN LED (TÁCH RIÊNG VỚI MỤC ÁNH SÁNG) */}
+                {/* 💡 4. NHÓM ĐÈN LED (TÁCH RIÊNG VỚI MỤC ÁNH SÁNG) */}
                 {ledProducts.length > 0 && (
                   <div className="rounded-2xl border border-amber-500/30 bg-gradient-to-b from-amber-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-amber-500/20">
@@ -1579,14 +1686,14 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                         <div>
                           <div className="flex items-center gap-2">
                             <h2 className="text-sm sm:text-base font-extrabold text-white tracking-tight">
-                              Nhóm Đèn LED &amp; Hiệu Ứng Ánh Sáng
+                              Đèn LED (Nội &amp; Ngoại Thất)
                             </h2>
                             <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 text-[11px] font-extrabold">
                               {ledProducts.length} Sản phẩm
                             </span>
                           </div>
                           <p className="text-[11px] text-slate-400 mt-0.5">
-                            LED nội thất RGB 64 màu đổi theo nhạc, LED cánh chim định vị quét ma trận &amp; module mạch xi nhan demi LED cắm giắc Zin
+                            LED nội thất RGB 64 màu, LED cánh chim ma trận, mạch xi nhan demi &amp; LED cản sau Audi DMX Limo Green
                           </p>
                         </div>
                       </div>
@@ -1629,14 +1736,14 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                         <div>
                           <div className="flex items-center gap-2">
                             <h2 className="text-sm sm:text-base font-extrabold text-white tracking-tight">
-                              Nhóm Nâng Cấp Âm Thanh Ô Tô &amp; Loa Sub Điện
+                              Cá Nhân Hóa Âm Thanh
                             </h2>
                             <span className="px-2.5 py-0.5 rounded-full bg-purple-500/20 border border-purple-400/30 text-purple-300 text-[11px] font-extrabold">
                               {audioProducts.length} Sản phẩm
                             </span>
                           </div>
                           <p className="text-[11px] text-slate-400 mt-0.5">
-                            Loa Sub gầm ghế Rebec U10, Cặp loa toàn dải BL80, DSP Amply D6II &amp; Loa bầu dục PERTORS QP-4603 450W
+                            Loa Sub gầm ghế Rebec U10, Loa Sub STEG SA-8W (Italy), Cặp loa toàn dải BL80 &amp; Loa bầu dục PERTORS QP-4603
                           </p>
                         </div>
                       </div>
@@ -1679,7 +1786,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                         <div>
                           <div className="flex items-center gap-2">
                             <h2 className="text-sm sm:text-base font-extrabold text-white tracking-tight">
-                              Nhóm Màn Hình Liền Khối, Màn ODO &amp; Hiển Thị Kính Lái HUD
+                              Màn Hình Hiển Thị
                             </h2>
                             <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/20 border border-cyan-400/30 text-cyan-300 text-[11px] font-extrabold">
                               {displayProducts.length} Sản phẩm
@@ -1729,7 +1836,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                         <div>
                           <div className="flex items-center gap-2">
                             <h2 className="text-sm sm:text-base font-extrabold text-white tracking-tight">
-                              Nhóm Gương Gập Điện Tự Động Theo Xe (Cắm Giắc Zin 100%)
+                              Gập Gương
                             </h2>
                             <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 text-[11px] font-extrabold">
                               {mirrorProducts.length} Sản phẩm
@@ -1768,29 +1875,277 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                   </div>
                 )}
 
-                {/* 🚗 7. CÁC SẢN PHẨM & DỊCH VỤ ĐỘ XE KHÁC */}
-                {otherProducts.length > 0 && (
-                  <div className="space-y-4">
-                    {(cameraProducts.length > 0 || lightingProducts.length > 0 || ledProducts.length > 0 || audioProducts.length > 0 || displayProducts.length > 0 || mirrorProducts.length > 0) && (
-                      <div className="flex items-center justify-between gap-3 px-1 pb-2 border-b border-slate-800">
-                        <div className="flex items-center gap-2.5">
-                          <div className="w-8 h-8 rounded-lg bg-slate-800 border border-slate-700 text-emerald-400 flex items-center justify-center">
-                            <PackageCheck className="w-4 h-4" />
-                          </div>
-                          <div>
-                            <h3 className="text-sm sm:text-base font-extrabold text-white">
-                              Các Sản Phẩm &amp; Dịch Vụ Độ Xe Khác
-                            </h3>
-                            <p className="text-[11px] text-slate-400">
-                              Màn hình Android, âm thanh DSP, thảm sàn TPE, bệ bước chân &amp; dịch vụ nâng cấp chuẩn Zin
-                            </p>
-                          </div>
+                {/* 📱 8. ANDROID BOX */}
+                {androidBoxProducts.length > 0 && (
+                  <div className="rounded-2xl border border-emerald-500/30 bg-gradient-to-b from-emerald-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-emerald-500/20">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-400/40 text-emerald-400 flex items-center justify-center flex-shrink-0 shadow-lg shadow-emerald-500/10">
+                          <Cpu className="w-5 h-5" />
                         </div>
-                        <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
-                          {otherProducts.length} Mục
-                        </span>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h2 className="text-sm sm:text-base font-extrabold text-white tracking-tight">
+                              Android Box
+                            </h2>
+                            <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-[11px] font-extrabold">
+                              {androidBoxProducts.length} Sản phẩm
+                            </span>
+                          </div>
+                          <p className="text-[11px] text-slate-400 mt-0.5">
+                            Zestech DX165 Thế Hệ 2 &amp; CASKA Smart USB 8 Nhân - Biến màn Zin thành màn Android thông minh
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {viewMode === 'list' ? (
+                      <div className="space-y-3.5">
+                        {androidBoxProducts.map((product) => (
+                          <ProductListItem
+                            key={product.id}
+                            product={product}
+                            onAddToCart={onAddToCart}
+                            onQuickView={onQuickView}
+                          />
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
+                        {androidBoxProducts.map((product) => (
+                          <ProductCompactCard
+                            key={product.id}
+                            product={product}
+                            onAddToCart={onAddToCart}
+                            onQuickView={onQuickView}
+                          />
+                        ))}
                       </div>
                     )}
+                  </div>
+                )}
+
+                {/* 🛡️ 9. CẢM BIẾN AN TOÀN */}
+                {safetySensorProducts.length > 0 && (
+                  <div className="rounded-2xl border border-rose-500/30 bg-gradient-to-b from-rose-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-rose-500/20">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-rose-500/20 border border-rose-400/40 text-rose-400 flex items-center justify-center flex-shrink-0 shadow-lg shadow-rose-500/10">
+                          <ShieldAlert className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h2 className="text-sm sm:text-base font-extrabold text-white tracking-tight">
+                              Cảm Biến An Toàn
+                            </h2>
+                            <span className="px-2.5 py-0.5 rounded-full bg-rose-500/20 border border-rose-400/30 text-rose-300 text-[11px] font-extrabold">
+                              {safetySensorProducts.length} Sản phẩm
+                            </span>
+                          </div>
+                          <p className="text-[11px] text-slate-400 mt-0.5">
+                            Cảm biến áp suất lốp ICAR Ellisafe TN405 &amp; Cảm biến đỗ xe hiển thị màn ODO zin Ellisen S40 / E48
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {viewMode === 'list' ? (
+                      <div className="space-y-3.5">
+                        {safetySensorProducts.map((product) => (
+                          <ProductListItem
+                            key={product.id}
+                            product={product}
+                            onAddToCart={onAddToCart}
+                            onQuickView={onQuickView}
+                          />
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
+                        {safetySensorProducts.map((product) => (
+                          <ProductCompactCard
+                            key={product.id}
+                            product={product}
+                            onAddToCart={onAddToCart}
+                            onQuickView={onQuickView}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* 💺 10. NỘI THẤT & GHẾ XE */}
+                {interiorSeatProducts.length > 0 && (
+                  <div className="rounded-2xl border border-indigo-500/30 bg-gradient-to-b from-indigo-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-indigo-500/20">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-indigo-500/20 border border-indigo-400/40 text-indigo-400 flex items-center justify-center flex-shrink-0 shadow-lg shadow-indigo-500/10">
+                          <Armchair className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h2 className="text-sm sm:text-base font-extrabold text-white tracking-tight">
+                              Nội Thất &amp; Ghế Xe
+                            </h2>
+                            <span className="px-2.5 py-0.5 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 text-[11px] font-extrabold">
+                              {interiorSeatProducts.length} Sản phẩm
+                            </span>
+                          </div>
+                          <p className="text-[11px] text-slate-400 mt-0.5">
+                            Độ ghế chỉnh điện UNISEAT / Limo Green, Áo ghế da Nappa 9D, Thảm sàn TPE CARSEN / HUVI &amp; Bệ tỳ tay trung tâm
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {viewMode === 'list' ? (
+                      <div className="space-y-3.5">
+                        {interiorSeatProducts.map((product) => (
+                          <ProductListItem
+                            key={product.id}
+                            product={product}
+                            onAddToCart={onAddToCart}
+                            onQuickView={onQuickView}
+                          />
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
+                        {interiorSeatProducts.map((product) => (
+                          <ProductCompactCard
+                            key={product.id}
+                            product={product}
+                            onAddToCart={onAddToCart}
+                            onQuickView={onQuickView}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* ⚡ 11. CỐP ĐIỆN & BỆ BƯỚC */}
+                {electricConvenienceProducts.length > 0 && (
+                  <div className="rounded-2xl border border-blue-500/30 bg-gradient-to-b from-blue-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-blue-500/20">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-blue-500/20 border border-blue-400/40 text-blue-400 flex items-center justify-center flex-shrink-0 shadow-lg shadow-blue-500/10">
+                          <Zap className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h2 className="text-sm sm:text-base font-extrabold text-white tracking-tight">
+                              Cốp Điện &amp; Bệ Bước
+                            </h2>
+                            <span className="px-2.5 py-0.5 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-300 text-[11px] font-extrabold">
+                              {electricConvenienceProducts.length} Sản phẩm
+                            </span>
+                          </div>
+                          <p className="text-[11px] text-slate-400 mt-0.5">
+                            Cốp điện tự động ICAR ELLIGATE chống kẹt thông minh cho VF3 &amp; Bệ bước chân điện thò thụt chịu tải 300kg
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {viewMode === 'list' ? (
+                      <div className="space-y-3.5">
+                        {electricConvenienceProducts.map((product) => (
+                          <ProductListItem
+                            key={product.id}
+                            product={product}
+                            onAddToCart={onAddToCart}
+                            onQuickView={onQuickView}
+                          />
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
+                        {electricConvenienceProducts.map((product) => (
+                          <ProductCompactCard
+                            key={product.id}
+                            product={product}
+                            onAddToCart={onAddToCart}
+                            onQuickView={onQuickView}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* 🛡️ 12. BẢO VỆ & CHĂM SÓC XE */}
+                {protectionCareProducts.length > 0 && (
+                  <div className="rounded-2xl border border-orange-500/30 bg-gradient-to-b from-orange-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-orange-500/20">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-orange-500/20 border border-orange-400/40 text-orange-400 flex items-center justify-center flex-shrink-0 shadow-lg shadow-orange-500/10">
+                          <ShieldCheck className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h2 className="text-sm sm:text-base font-extrabold text-white tracking-tight">
+                              Bảo Vệ &amp; Chăm Sóc Xe
+                            </h2>
+                            <span className="px-2.5 py-0.5 rounded-full bg-orange-500/20 border border-orange-400/30 text-orange-300 text-[11px] font-extrabold">
+                              {protectionCareProducts.length} Sản phẩm
+                            </span>
+                          </div>
+                          <p className="text-[11px] text-slate-400 mt-0.5">
+                            Dán phim cách nhiệt 3M Crystalline 200 lớp, giáp gầm bảo vệ pin VinFast SICHER &amp; Phay phục hồi lazang CNC
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {viewMode === 'list' ? (
+                      <div className="space-y-3.5">
+                        {protectionCareProducts.map((product) => (
+                          <ProductListItem
+                            key={product.id}
+                            product={product}
+                            onAddToCart={onAddToCart}
+                            onQuickView={onQuickView}
+                          />
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
+                        {protectionCareProducts.map((product) => (
+                          <ProductCompactCard
+                            key={product.id}
+                            product={product}
+                            onAddToCart={onAddToCart}
+                            onQuickView={onQuickView}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* 🚗 CÁC SẢN PHẨM KHÁC (DỰ PHÒNG KHI CÓ SẢN PHẨM MỚI CHƯA PHÂN LOẠI) */}
+                {otherProducts.length > 0 && (
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between gap-3 px-1 pb-2 border-b border-slate-800">
+                      <div className="flex items-center gap-2.5">
+                        <div className="w-8 h-8 rounded-lg bg-slate-800 border border-slate-700 text-emerald-400 flex items-center justify-center">
+                          <PackageCheck className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <h3 className="text-sm sm:text-base font-extrabold text-white">
+                            Các Sản Phẩm &amp; Dịch Vụ Khác
+                          </h3>
+                          <p className="text-[11px] text-slate-400">
+                            Các phụ kiện và dịch vụ nâng cấp xe bổ sung
+                          </p>
+                        </div>
+                      </div>
+                      <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+                        {otherProducts.length} Mục
+                      </span>
+                    </div>
 
                     {viewMode === 'list' ? (
                       <div className="space-y-3.5">

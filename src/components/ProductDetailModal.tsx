@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   X, 
@@ -63,12 +63,10 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
 
   useEffect(() => {
     if (product) {
-      if (!allImages.includes(activeImage)) {
-        setActiveImage(allImages[0] || product.primaryImage);
-      }
+      setActiveImage(product.primaryImage);
       setSelectedColor(product.colors[0]?.name || '');
     }
-  }, [product?.id, product?.primaryImage, allImages, activeImage]);
+  }, [product?.id, product?.primaryImage]);
 
   // Interactive review submission state
   const [userRating, setUserRating] = useState<number>(5);
