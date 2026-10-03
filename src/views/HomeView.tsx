@@ -39,6 +39,7 @@ interface HomeViewProps {
   onAddToCart: (product: Product, selectedColor?: string) => void;
   onQuickView: (product: Product) => void;
   openConsultation: (carModel?: string, service?: string) => void;
+  onSelectCategory?: (category: string) => void;
 }
 
 export const HomeView: React.FC<HomeViewProps> = ({
@@ -46,9 +47,10 @@ export const HomeView: React.FC<HomeViewProps> = ({
   onAddToCart,
   onQuickView,
   openConsultation,
+  onSelectCategory,
 }) => {
   // 4 Best selling products explicitly requested by prompt (đa dạng danh mục tiêu biểu)
-  const bestSellerProducts = ['prod-1', 'prod-3', 'prod-4', 'prod-5']
+  const bestSellerProducts = ['prod-1', 'prod-23', 'prod-6', 'prod-4']
     .map((id) => PRODUCTS.find((p) => p.id === id))
     .filter((p): p is Product => Boolean(p));
 
@@ -190,7 +192,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
               transition={{ duration: 0.6, delay: 0.3 }}
               className="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl"
             >
-              Hieu N Auto thiết kế và thi công nội thất theo từng dòng xe và theo yêu cầu của khách hàng — từ camera hành trình, camera 360, LED nội thất, phim cách nhiệt,... đảm bảo thi công chuẩn zin, không cắt trích dây zin của xe.
+              Hieu N Auto — Chuyên gia nâng cấp công nghệ, ánh sáng và cá nhân hóa nội ngoại thất ô tô toàn diện: Đèn Bi LED &amp; Bi gầm, Camera 360, âm thanh xe hơi, màn hình Android đến tiện ích an toàn thông minh. Cam kết thi công cắm giắc Zin 100%, bảo toàn hệ thống điện nguyên bản và an tâm đăng kiểm.
             </motion.p>
 
             {/* Prominent CTA Buttons explicitly requested: "Mua ngay" hoặc "Nhận tư vấn" */}
@@ -339,6 +341,9 @@ export const HomeView: React.FC<HomeViewProps> = ({
                   type="button"
                   id={`home-cat-card-${cat.id}`}
                   onClick={() => {
+                    if (onSelectCategory) {
+                      onSelectCategory(cat.id);
+                    }
                     setCurrentPage('products');
                   }}
                   className="p-3.5 rounded-2xl bg-slate-900/80 hover:bg-slate-800/90 border border-slate-800 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-950/20 text-left transition-all duration-200 group cursor-pointer flex flex-col justify-between"
@@ -697,7 +702,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                   70mai &amp; VIETMAP
                 </span>
               </div>
-              <h3 className="font-bold text-white text-lg mb-2">Camera Hành Trình</h3>
+              <h3 className="font-bold text-white text-lg mb-2">Lắp Đặt Camera Hành Trình Thông Minh</h3>
               <p className="text-xs text-slate-400 leading-relaxed mb-4">
                 Ghi hình 3 kênh trước - trong cabin - sau xe siêu nét, hỗ trợ hồng ngoại quay đêm, siêu tụ điện chống cháy nổ và tự động ghi hình khi đỗ xe 24/7.
               </p>
@@ -721,7 +726,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 <ChevronRight className="w-4 h-4" />
               </button>
               <button
-                onClick={() => openConsultation(undefined, 'Dịch vụ Camera Hành Trình')}
+                onClick={() => openConsultation(undefined, 'Dịch vụ Lắp Đặt Camera Hành Trình Thông Minh')}
                 className="text-[11px] font-semibold text-slate-400 hover:text-white bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700/60 cursor-pointer"
               >
                 Nhận tư vấn
@@ -740,7 +745,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                   64 - 256 Màu
                 </span>
               </div>
-              <h3 className="font-bold text-white text-lg mb-2">LED Nội Thất &amp; Trần Sao</h3>
+              <h3 className="font-bold text-white text-lg mb-2">Độ LED Viền Nội Thất &amp; Trần Sao Rơi</h3>
               <p className="text-xs text-slate-400 leading-relaxed mb-4">
                 Dải LED viền ma trận 64 màu đổi màu mượt mà, hiệu ứng rượt đuổi chuyển động theo giai điệu nhạc và bầu trời trần sao rơi Rolls-Royce sang trọng.
               </p>
@@ -764,7 +769,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 <ChevronRight className="w-4 h-4" />
               </button>
               <button
-                onClick={() => openConsultation(undefined, 'Dịch vụ LED Nội Thất')}
+                onClick={() => openConsultation(undefined, 'Dịch vụ Độ LED Viền Nội Thất & Trần Sao Rơi')}
                 className="text-[11px] font-semibold text-slate-400 hover:text-white bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700/60 cursor-pointer"
               >
                 Nhận tư vấn
@@ -783,7 +788,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                   TECHCAM &amp; Màn Zin
                 </span>
               </div>
-              <h3 className="font-bold text-white text-lg mb-2">Camera 360 &amp; Màn Hình</h3>
+              <h3 className="font-bold text-white text-lg mb-2">Hệ Thống Camera 360 &amp; Màn Hình Android</h3>
               <p className="text-xs text-slate-400 leading-relaxed mb-4">
                 Nâng cấp Camera 360 toàn cảnh sắc nét xóa tan điểm mù kết hợp Màn hình giải trí trung tâm (MHU) Android hoặc Android Box cắm USB giữ màn zin 100%.
               </p>
@@ -807,7 +812,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 <ChevronRight className="w-4 h-4" />
               </button>
               <button
-                onClick={() => openConsultation(undefined, 'Dịch vụ Camera 360 & Màn Hình')}
+                onClick={() => openConsultation(undefined, 'Dịch vụ Hệ Thống Camera 360 & Màn Hình Android')}
                 className="text-[11px] font-semibold text-slate-400 hover:text-white bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700/60 cursor-pointer"
               >
                 Nhận tư vấn
@@ -826,7 +831,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                   3M Crystalline
                 </span>
               </div>
-              <h3 className="font-bold text-white text-lg mb-2">Phim Cách Nhiệt 3M</h3>
+              <h3 className="font-bold text-white text-lg mb-2">Dán Phim Cách Nhiệt 3M Crystalline</h3>
               <p className="text-xs text-slate-400 leading-relaxed mb-4">
                 Dán Phim cách nhiệt quang học 200 lớp 3M Crystalline chính hãng bảo hành điện tử 10 năm, cản tia cực tím UV 99.9% và giảm nhiệt lượng tối đa cho khoang lái.
               </p>
@@ -850,7 +855,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 <ChevronRight className="w-4 h-4" />
               </button>
               <button
-                onClick={() => openConsultation(undefined, 'Dịch vụ Dán Phim Cách Nhiệt 3M')}
+                onClick={() => openConsultation(undefined, 'Dịch vụ Dán Phim Cách Nhiệt 3M Crystalline')}
                 className="text-[11px] font-semibold text-slate-400 hover:text-white bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700/60 cursor-pointer"
               >
                 Nhận tư vấn
@@ -869,7 +874,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                   Owin &amp; ICAR
                 </span>
               </div>
-              <h3 className="font-bold text-white text-lg mb-2">Cửa Hít &amp; Cốp Điện</h3>
+              <h3 className="font-bold text-white text-lg mb-2">Độ Cửa Hít Tự Động &amp; Cốp Điện Thông Minh</h3>
               <p className="text-xs text-slate-400 leading-relaxed mb-4">
                 Hệ thống cửa hít tự động động cơ Mabuchi Nhật Bản chống kẹt 2 nấc êm ái cùng cốp điện tự động chống kẹt thông minh, tích hợp cảm biến đá cốp rảnh tay tiện lợi.
               </p>
@@ -893,7 +898,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 <ChevronRight className="w-4 h-4" />
               </button>
               <button
-                onClick={() => openConsultation(undefined, 'Dịch vụ Cửa Hít & Cốp Điện')}
+                onClick={() => openConsultation(undefined, 'Dịch vụ Độ Cửa Hít Tự Động & Cốp Điện Thông Minh')}
                 className="text-[11px] font-semibold text-slate-400 hover:text-white bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700/60 cursor-pointer"
               >
                 Nhận tư vấn
@@ -912,7 +917,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                   Rebec Car Audio
                 </span>
               </div>
-              <h3 className="font-bold text-white text-lg mb-2">Độ Âm Thanh &amp; Sub Gầm</h3>
+              <h3 className="font-bold text-white text-lg mb-2">Nâng Cấp Âm Thanh DSP &amp; Loa Sub Gầm</h3>
               <p className="text-xs text-slate-400 leading-relaxed mb-4">
                 Giải pháp nâng cấp hệ thống loa cánh, loa Sub điện gầm ghế Rebec U10 và Amply DSP cân chỉnh âm thanh phòng thu chuyên nghiệp, mang lại dải âm trầm uy lực.
               </p>
@@ -936,7 +941,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 <ChevronRight className="w-4 h-4" />
               </button>
               <button
-                onClick={() => openConsultation(undefined, 'Dịch vụ Nâng Cấp Âm Thanh')}
+                onClick={() => openConsultation(undefined, 'Dịch vụ Nâng Cấp Âm Thanh DSP & Loa Sub Gầm')}
                 className="text-[11px] font-semibold text-slate-400 hover:text-white bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700/60 cursor-pointer"
               >
                 Nhận tư vấn
@@ -955,7 +960,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                   Da Nappa Ý 100%
                 </span>
               </div>
-              <h3 className="font-bold text-white text-lg mb-2">Bọc Ghế Da &amp; Ghế Điện</h3>
+              <h3 className="font-bold text-white text-lg mb-2">Bọc Ghế Da Nappa &amp; Độ Ghế Chỉnh Điện</h3>
               <p className="text-xs text-slate-400 leading-relaxed mb-4">
                 May đo thủ công ghế da Nappa Ý tự nhiên đục lỗ thông khí CNC, nâng cấp ghế chỉnh điện đa hướng, quạt thông gió làm mát lưng và chế độ massage thương gia.
               </p>
@@ -979,7 +984,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 <ChevronRight className="w-4 h-4" />
               </button>
               <button
-                onClick={() => openConsultation(undefined, 'Dịch vụ Bọc Ghế Da Nappa & Ghế Điện')}
+                onClick={() => openConsultation(undefined, 'Dịch vụ Bọc Ghế Da Nappa & Độ Ghế Chỉnh Điện')}
                 className="text-[11px] font-semibold text-slate-400 hover:text-white bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700/60 cursor-pointer"
               >
                 Nhận tư vấn
@@ -998,7 +1003,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                   CNC &amp; Giáp Xe Điện
                 </span>
               </div>
-              <h3 className="font-bold text-white text-lg mb-2">Phay Lazang &amp; Giáp Pin</h3>
+              <h3 className="font-bold text-white text-lg mb-2">Phay Mâm Lazang CNC &amp; Giáp Gầm Xe Điện</h3>
               <p className="text-xs text-slate-400 leading-relaxed mb-4">
                 Phay phục hồi mâm lazang hợp kim bằng máy CNC công nghệ kim cương, sơn đổi màu mâm thể thao và lắp đặt giáp nhôm bảo vệ cụm pin gầm xe điện VinFast an tâm vận hành.
               </p>
@@ -1022,7 +1027,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 <ChevronRight className="w-4 h-4" />
               </button>
               <button
-                onClick={() => openConsultation(undefined, 'Dịch vụ Phay Lazang & Giáp Bảo Vệ Pin')}
+                onClick={() => openConsultation(undefined, 'Dịch vụ Phay Mâm Lazang CNC & Giáp Gầm Xe Điện')}
                 className="text-[11px] font-semibold text-slate-400 hover:text-white bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700/60 cursor-pointer"
               >
                 Nhận tư vấn

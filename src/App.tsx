@@ -53,6 +53,7 @@ const pageTransitionVariants = {
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageId>('home');
   const [policyTab, setPolicyTab] = useState<PolicyTab>('privacy');
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
   
   // Track initial page load vs subsequent page transitions
   const [isInitialMount, setIsInitialMount] = useState(true);
@@ -211,6 +212,11 @@ export default function App() {
       <Header
         currentPage={currentPage}
         setCurrentPage={navigateTo}
+        selectedCategory={selectedCategory}
+        onSelectCategory={(category) => {
+          setSelectedCategory(category);
+          navigateTo('products');
+        }}
         cartCount={totalCartCount}
         cartTotal={totalCartPrice}
         openCart={() => setIsCartOpen(true)}
@@ -236,6 +242,10 @@ export default function App() {
                 onAddToCart={handleAddToCart}
                 onQuickView={(p) => setQuickViewProduct(p)}
                 openConsultation={openConsultationWithDetails}
+                onSelectCategory={(category) => {
+                  setSelectedCategory(category);
+                  navigateTo('products');
+                }}
               />
             )}
 
@@ -252,6 +262,8 @@ export default function App() {
                 onQuickView={(p) => setQuickViewProduct(p)}
                 searchQuery={searchQuery}
                 setSearchQuery={setSearchQuery}
+                selectedCategory={selectedCategory}
+                setSelectedCategory={setSelectedCategory}
               />
             )}
 

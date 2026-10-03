@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Filter, 
@@ -9,7 +9,7 @@ import {
   Table as TableIcon,
   SlidersHorizontal, 
   X, 
-  Sparkles,
+  Sparkles, 
   ChevronDown,
   ChevronUp,
   Check,
@@ -33,6 +33,7 @@ import {
   Shield,
   Video,
   Eye,
+  EyeOff,
   Wifi,
   Mic,
   Sun,
@@ -42,17 +43,22 @@ import {
 } from 'lucide-react';
 import { Product, ItemClassification } from '../types';
 import { PRODUCTS, CATEGORIES, CLASSIFICATIONS, FORMAT_CURRENCY } from '../data/mockData';
+import { STORE_CATEGORY_GROUPS, type StoreCategoryItem } from '../data/storeCategories';
 import { ProductListItem } from '../components/ProductListItem';
 import { ProductCompactCard } from '../components/ProductCompactCard';
 import { ProductTableView } from '../components/ProductTableView';
 
 type ViewMode = 'grid-compact' | 'list' | 'table';
 
+export { STORE_CATEGORY_GROUPS, type StoreCategoryItem };
+
 interface ProductsViewProps {
   onAddToCart: (product: Product, selectedColor?: string) => void;
   onQuickView: (product: Product) => void;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
+  selectedCategory?: string;
+  setSelectedCategory?: (category: string) => void;
 }
 
 export const ProductsView: React.FC<ProductsViewProps> = ({
@@ -60,10 +66,24 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
   onQuickView,
   searchQuery,
   setSearchQuery,
+  selectedCategory: controlledCategory,
+  setSelectedCategory: setControlledCategory,
 }) => {
   // Filter states
   const [selectedClassification, setSelectedClassification] = useState<ItemClassification>('all');
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [internalCategory, setInternalCategory] = useState<string>(controlledCategory || 'all');
+
+  useEffect(() => {
+    if (controlledCategory !== undefined) {
+      setInternalCategory(controlledCategory);
+    }
+  }, [controlledCategory]);
+
+  const selectedCategory = controlledCategory !== undefined ? controlledCategory : internalCategory;
+  const setSelectedCategory = (cat: string) => {
+    setInternalCategory(cat);
+    setControlledCategory?.(cat);
+  };
   const [priceRange, setPriceRange] = useState<string>('all');
   const [customMinPrice, setCustomMinPrice] = useState<string>('');
   const [customMaxPrice, setCustomMaxPrice] = useState<string>('');
@@ -83,21 +103,35 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
   // Sort & View Modes
   const [sortBy, setSortBy] = useState<'featured' | 'price-asc' | 'price-desc' | 'rating' | 'discount' | 'installation'>('featured');
   const [viewMode, setViewMode] = useState<ViewMode>('grid-compact');
-  const [showMobileFilterDrawer, setShowMobileFilterDrawer] = useState(false);
 
-  // Accordion collapse state for sidebar sections
-  const [openSections, setOpenSections] = useState<Record<string, boolean>>({
-    categories: true,
-    price: true,
-    vehicle: true,
-    status: true,
-    useful: true,
-    color: false,
-    rating: false,
-  });
+  // State to hide / collapse product items in each category section
+  const [collapsedSections, setCollapsedSections] = useState<Record<string, boolean>>({});
 
-  const toggleSection = (sectionKey: string) => {
-    setOpenSections(prev => ({ ...prev, [sectionKey]: !prev[sectionKey] }));
+  const toggleSectionCollapse = (sectionKey: string) => {
+    setCollapsedSections(prev => ({
+      ...prev,
+      [sectionKey]: !prev[sectionKey]
+    }));
+  };
+
+  const collapseAllSections = () => {
+    const allCollapsed: Record<string, boolean> = {
+      dashcam: true,
+      camera360: true,
+      lighting: true,
+      led: true,
+      audio: true,
+      display: true,
+      mirror: true,
+      'interior-seat': true,
+      'safety-utility': true,
+      other: true,
+    };
+    setCollapsedSections(allCollapsed);
+  };
+
+  const expandAllSections = () => {
+    setCollapsedSections({});
   };
 
   // Price range definitions
@@ -285,6 +319,33 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
     }
   };
 
+  const getStoreGroupIcon = (groupId: string) => {
+    switch (groupId) {
+      case 'dashcam':
+        return <Video className="w-4 h-4 text-sky-400" />;
+      case 'camera360':
+        return <Eye className="w-4 h-4 text-emerald-400" />;
+      case 'lighting':
+        return <Sun className="w-4 h-4 text-yellow-400" />;
+      case 'led':
+        return <Sparkles className="w-4 h-4 text-amber-400" />;
+      case 'audio':
+        return <Volume2 className="w-4 h-4 text-purple-400" />;
+      case 'display':
+        return <Tv className="w-4 h-4 text-cyan-400" />;
+      case 'mirror':
+        return <Sliders className="w-4 h-4 text-amber-400" />;
+      case 'android-box':
+        return <Cpu className="w-4 h-4 text-emerald-400" />;
+      case 'interior-seat':
+        return <Armchair className="w-4 h-4 text-indigo-400" />;
+      case 'safety-utility':
+        return <ShieldCheck className="w-4 h-4 text-teal-400" />;
+      default:
+        return <Grid2X2 className="w-4 h-4 text-emerald-400" />;
+    }
+  };
+
   // Filter and sort products
   const filteredProducts = useMemo(() => {
     return PRODUCTS.filter((product) => {
@@ -293,9 +354,16 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
         return false;
       }
 
-      // Category filter
-      if (selectedCategory !== 'all' && product.category !== selectedCategory) {
-        return false;
+      // Category / Store Group filter
+      if (selectedCategory !== 'all') {
+        const targetGroup = STORE_CATEGORY_GROUPS.find((g) => g.id === selectedCategory);
+        if (targetGroup && targetGroup.productIds.length > 0) {
+          if (!targetGroup.productIds.includes(product.id)) {
+            return false;
+          }
+        } else if (product.category !== selectedCategory) {
+          return false;
+        }
       }
 
       // Search keyword filter
@@ -436,8 +504,8 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
     return filteredProducts.filter((p) => audioProductIds.has(p.id) || p.category === 'car-audio');
   }, [filteredProducts, audioProductIds]);
 
-  // Nhóm Màn Hình Liền Khối, Màn ODO & Kính Lái HUD: prod-5 (Màn đôi 20.8"), prod-10 (HUD MCD91), prod-25 (Màn ODO GBA OLED)
-  const displayProductIds = useMemo(() => new Set(['prod-5', 'prod-10', 'prod-25']), []);
+  // Nhóm Màn Hình Liền Khối, Màn ODO, HUD & Android Box: prod-5 (Màn đôi 20.8"), prod-10 (HUD MCD91), prod-25 (Màn ODO GBA OLED), prod-12 (Zestech DX165), prod-30 (CASKA Smart USB)
+  const displayProductIds = useMemo(() => new Set(['prod-5', 'prod-10', 'prod-25', 'prod-12', 'prod-30']), []);
   const displayProducts = useMemo(() => {
     return filteredProducts.filter((p) => displayProductIds.has(p.id));
   }, [filteredProducts, displayProductIds]);
@@ -448,50 +516,33 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
     return filteredProducts.filter((p) => mirrorProductIds.has(p.id));
   }, [filteredProducts, mirrorProductIds]);
 
-  // 8. Nhóm Android Box: prod-12 (Zestech DX165), prod-30 (CASKA Smart USB)
-  const androidBoxProductIds = useMemo(() => new Set(['prod-12', 'prod-30']), []);
-  const androidBoxProducts = useMemo(() => {
-    return filteredProducts.filter((p) => androidBoxProductIds.has(p.id));
-  }, [filteredProducts, androidBoxProductIds]);
-
-  // 9. Nhóm Cảm Biến An Toàn: prod-17 (ICAR Ellisafe TN405), prod-20 (ICAR Ellisen S40 / E48)
-  const safetySensorProductIds = useMemo(() => new Set(['prod-17', 'prod-20']), []);
-  const safetySensorProducts = useMemo(() => {
-    return filteredProducts.filter((p) => safetySensorProductIds.has(p.id));
-  }, [filteredProducts, safetySensorProductIds]);
-
-  // 10. Nhóm Nội Thất & Ghế Xe (bao gồm Thảm Sàn TPE): prod-7 (Bệ tỳ tay VF3), prod-13 (Áo ghế Nappa 9D), prod-18 (Ghế điện Limo Green / UNISEAT), prod-14 (CARSEN 3D), prod-29 (HUVI 3D)
+  // 8. Nhóm Nội Thất & Ghế Xe (gồm ghế chỉnh điện, áo ghế nappa, bệ tỳ tay, thảm sàn TPE):
+  // prod-7 (Bệ tỳ tay), prod-13 (Áo ghế Nappa 9D), prod-18 (Độ ghế điện Limo Green), prod-14 (Thảm sàn Carsen), prod-29 (Thảm sàn HUVI)
   const interiorSeatProductIds = useMemo(() => new Set(['prod-7', 'prod-13', 'prod-18', 'prod-14', 'prod-29']), []);
   const interiorSeatProducts = useMemo(() => {
     return filteredProducts.filter((p) => interiorSeatProductIds.has(p.id));
   }, [filteredProducts, interiorSeatProductIds]);
 
-  // 11. Nhóm Cốp Điện & Bệ Bước: prod-11 (Cốp điện ICAR VF3), prod-27 (Bệ bước chân điện)
-  const electricConvenienceProductIds = useMemo(() => new Set(['prod-11', 'prod-27']), []);
-  const electricConvenienceProducts = useMemo(() => {
-    return filteredProducts.filter((p) => electricConvenienceProductIds.has(p.id));
-  }, [filteredProducts, electricConvenienceProductIds]);
-
-  // 12. Nhóm Bảo Vệ & Chăm Sóc Xe: prod-4 (Phim 3M Crystalline), prod-9 (Giáp gầm pin SICHER VF6), prod-19 (Phay lazang CNC)
-  const protectionCareProductIds = useMemo(() => new Set(['prod-4', 'prod-9', 'prod-19']), []);
-  const protectionCareProducts = useMemo(() => {
-    return filteredProducts.filter((p) => protectionCareProductIds.has(p.id));
-  }, [filteredProducts, protectionCareProductIds]);
+  // 9. Nhóm Tiện Ích & An Toàn Xe (Gộp: Cảm Biến An Toàn, Cốp Điện & Bệ Bước, Bảo Vệ & Chăm Sóc Xe):
+  // prod-17, prod-20, prod-11, prod-27, prod-4, prod-9, prod-19
+  const safetyUtilityProductIds = useMemo(() => new Set([
+    'prod-17', 'prod-20', 'prod-11', 'prod-27', 'prod-4', 'prod-9', 'prod-19'
+  ]), []);
+  const safetyUtilityProducts = useMemo(() => {
+    return filteredProducts.filter((p) => safetyUtilityProductIds.has(p.id));
+  }, [filteredProducts, safetyUtilityProductIds]);
 
   const otherProducts = useMemo(() => {
     const allCategorizedIds = new Set([
-      ...camera360ProductIds,
       'prod-1', 'prod-21', 'prod-22', 'prod-28',
+      ...camera360ProductIds,
       ...lightingProductIds,
       ...ledProductIds,
       ...audioProductIds,
       ...displayProductIds,
       ...mirrorProductIds,
-      ...androidBoxProductIds,
-      ...safetySensorProductIds,
       ...interiorSeatProductIds,
-      ...electricConvenienceProductIds,
-      ...protectionCareProductIds
+      ...safetyUtilityProductIds
     ]);
     return filteredProducts.filter((p) => !allCategorizedIds.has(p.id));
   }, [
@@ -502,11 +553,8 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
     audioProductIds,
     displayProductIds,
     mirrorProductIds,
-    androidBoxProductIds,
-    safetySensorProductIds,
     interiorSeatProductIds,
-    electricConvenienceProductIds,
-    protectionCareProductIds
+    safetyUtilityProductIds
   ]);
 
   // Active filters count for badge indicator
@@ -547,752 +595,15 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
             Hiển thị <strong className="text-emerald-400 font-bold">{filteredProducts.length}</strong> / {PRODUCTS.length} sản phẩm và gói nâng cấp tương thích hoàn hảo
           </p>
         </div>
-
-        {/* Mobile Filter Button */}
-        <div className="flex items-center gap-3 lg:hidden">
-          <button
-            id="mobile-open-filter-btn"
-            onClick={() => setShowMobileFilterDrawer(true)}
-            className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-slate-900 border border-slate-700 text-slate-200 text-xs font-bold hover:bg-slate-800 transition-colors shadow-lg"
-          >
-            <SlidersHorizontal className="w-4 h-4 text-emerald-400" />
-            <span>Bộ Lọc Sản Phẩm</span>
-            {activeFiltersCount > 0 && (
-              <span className="w-5 h-5 rounded-full bg-emerald-500 text-slate-950 text-[11px] font-extrabold flex items-center justify-center">
-                {activeFiltersCount}
-              </span>
-            )}
-          </button>
-        </div>
       </motion.div>
 
-      {/* Top Quick Filter Chips (Lọc Nhanh 1 Chạm) */}
-      <motion.div
-        initial={{ opacity: 0, y: 15 }}
+      {/* Main Product Content */}
+      <motion.main 
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.1 }}
-        className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none text-xs"
+        transition={{ duration: 0.45, delay: 0.1 }}
+        className="w-full space-y-5"
       >
-        <button
-          onClick={() => {
-            setSelectedCategory('all');
-            setOnlySale(false);
-            setOnlyBestSeller(false);
-            setVehicleType('all');
-            setUsefulFilter('all');
-          }}
-          className={`px-3.5 py-1.5 rounded-full border transition-all shrink-0 cursor-pointer font-semibold ${
-            selectedCategory === 'all' && !onlySale && !onlyBestSeller && vehicleType === 'all' && usefulFilter === 'all'
-              ? 'bg-emerald-500 text-slate-950 border-emerald-400 shadow-md shadow-emerald-500/20'
-              : 'bg-slate-900 text-slate-300 border-slate-800 hover:border-slate-700'
-          }`}
-        >
-          Tất Cả ({filterCounts.total})
-        </button>
-
-        <button
-          onClick={() => setOnlySale(prev => !prev)}
-          className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border transition-all shrink-0 cursor-pointer font-semibold ${
-            onlySale
-              ? 'bg-rose-500 text-white border-rose-400 shadow-md shadow-rose-500/20'
-              : 'bg-slate-900 text-rose-300 border-slate-800 hover:border-rose-500/40'
-          }`}
-        >
-          <Flame className="w-3.5 h-3.5 text-rose-400" />
-          <span>Đang Giảm Giá ({filterCounts.sale})</span>
-        </button>
-
-        <button
-          onClick={() => setOnlyBestSeller(prev => !prev)}
-          className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border transition-all shrink-0 cursor-pointer font-semibold ${
-            onlyBestSeller
-              ? 'bg-amber-500 text-slate-950 border-amber-400 shadow-md shadow-amber-500/20'
-              : 'bg-slate-900 text-amber-300 border-slate-800 hover:border-amber-500/40'
-          }`}
-        >
-          <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
-          <span>Bán Chạy Nhất ({filterCounts.bestSeller})</span>
-        </button>
-
-        <button
-          onClick={() => setOnlyInStock(prev => !prev)}
-          className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border transition-all shrink-0 cursor-pointer font-semibold ${
-            onlyInStock
-              ? 'bg-sky-500 text-slate-950 border-sky-400 shadow-md shadow-sky-500/20'
-              : 'bg-slate-900 text-sky-300 border-slate-800 hover:border-sky-500/40'
-          }`}
-        >
-          <PackageCheck className="w-3.5 h-3.5 text-sky-400" />
-          <span>Sẵn Hàng Lắp Ngay ({filterCounts.inStock})</span>
-        </button>
-
-        <button
-          onClick={() => setVehicleType(vehicleType === 'sedan' ? 'all' : 'sedan')}
-          className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border transition-all shrink-0 cursor-pointer font-semibold ${
-            vehicleType === 'sedan'
-              ? 'bg-purple-500 text-white border-purple-400 shadow-md shadow-purple-500/20'
-              : 'bg-slate-900 text-purple-300 border-slate-800 hover:border-purple-500/40'
-          }`}
-        >
-          <Car className="w-3.5 h-3.5 text-purple-400" />
-          <span>Sedan ({filterCounts.sedan})</span>
-        </button>
-
-        <button
-          onClick={() => setVehicleType(vehicleType === 'suv' ? 'all' : 'suv')}
-          className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border transition-all shrink-0 cursor-pointer font-semibold ${
-            vehicleType === 'suv'
-              ? 'bg-purple-500 text-white border-purple-400 shadow-md shadow-purple-500/20'
-              : 'bg-slate-900 text-purple-300 border-slate-800 hover:border-purple-500/40'
-          }`}
-        >
-          <Car className="w-3.5 h-3.5 text-purple-400" />
-          <span>SUV / CUV ({filterCounts.suv})</span>
-        </button>
-
-        <button
-          onClick={() => setSelectedCategory(selectedCategory === 'cameras-360' ? 'all' : 'cameras-360')}
-          className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border transition-all shrink-0 cursor-pointer font-semibold ${
-            selectedCategory === 'cameras-360'
-              ? 'bg-emerald-500 text-slate-950 border-emerald-400 shadow-md shadow-emerald-500/20'
-              : 'bg-slate-900 text-slate-300 border-slate-800 hover:border-slate-700'
-          }`}
-        >
-          <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-          <span>Camera &amp; Giám Sát</span>
-        </button>
-
-        <button
-          onClick={() => setSelectedCategory(selectedCategory === 'ambient-lights' ? 'all' : 'ambient-lights')}
-          className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border transition-all shrink-0 cursor-pointer font-semibold ${
-            selectedCategory === 'ambient-lights'
-              ? 'bg-emerald-500 text-slate-950 border-emerald-400 shadow-md shadow-emerald-500/20'
-              : 'bg-slate-900 text-slate-300 border-slate-800 hover:border-slate-700'
-          }`}
-        >
-          <Sparkles className="w-3.5 h-3.5 text-yellow-400" />
-          <span>Đèn LED &amp; Bi Gầm</span>
-        </button>
-
-        <button
-          onClick={() => setPriceRange(priceRange === 'under-2m' ? 'all' : 'under-2m')}
-          className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border transition-all shrink-0 cursor-pointer font-semibold ${
-            priceRange === 'under-2m'
-              ? 'bg-emerald-500 text-slate-950 border-emerald-400 shadow-md shadow-emerald-500/20'
-              : 'bg-slate-900 text-slate-300 border-slate-800 hover:border-slate-700'
-          }`}
-        >
-          <DollarSign className="w-3.5 h-3.5 text-emerald-400" />
-          <span>Dưới 2 Triệu ({filterCounts.under2m})</span>
-        </button>
-
-        <button
-          onClick={() => setUsefulFilter(usefulFilter === 'plug-play' ? 'all' : 'plug-play')}
-          className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border transition-all shrink-0 cursor-pointer font-semibold ${
-            usefulFilter === 'plug-play'
-              ? 'bg-amber-500 text-slate-950 border-amber-400 shadow-md shadow-amber-500/20'
-              : 'bg-slate-900 text-amber-300 border-slate-800 hover:border-amber-500/40'
-          }`}
-        >
-          <Zap className="w-3.5 h-3.5 text-amber-400" />
-          <span>Cắm Giắc Zin ({PRODUCTS.filter(usefulFeaturesList[1].matcher).length})</span>
-        </button>
-
-        <button
-          onClick={() => setUsefulFilter(usefulFilter === 'traffic-alert' ? 'all' : 'traffic-alert')}
-          className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border transition-all shrink-0 cursor-pointer font-semibold ${
-            usefulFilter === 'traffic-alert'
-              ? 'bg-rose-500 text-white border-rose-400 shadow-md shadow-rose-500/20'
-              : 'bg-slate-900 text-rose-300 border-slate-800 hover:border-rose-500/40'
-          }`}
-        >
-          <ShieldAlert className="w-3.5 h-3.5 text-rose-400" />
-          <span>Cảnh Báo Tốc Độ ({PRODUCTS.filter(usefulFeaturesList[2].matcher).length})</span>
-        </button>
-      </motion.div>
-
-      {/* 3. Main 2-Column Layout: Left = Filter Sidebar, Right = Product Content */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        
-        {/* ================= LEFT COLUMN: FILTER SIDEBAR ================= */}
-        <motion.aside 
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.48, delay: 0.12 }}
-          className="hidden lg:block lg:col-span-3 space-y-5 sticky top-28 bg-slate-900/80 backdrop-blur-md p-5 rounded-3xl border border-slate-800 shadow-xl max-h-[calc(100vh-140px)] overflow-y-auto scrollbar-none"
-        >
-          {/* Sidebar Top: Title + Reset Button */}
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-            <div className="flex items-center gap-2 font-bold text-white text-sm">
-              <Filter className="w-4 h-4 text-emerald-400" />
-              <span>Bộ Lọc Nâng Cao</span>
-            </div>
-            {activeFiltersCount > 0 && (
-              <button
-                id="sidebar-reset-filter-btn"
-                onClick={handleResetFilters}
-                className="text-xs font-semibold text-orange-400 hover:text-orange-300 flex items-center gap-1 transition-colors cursor-pointer bg-orange-500/10 px-2 py-1 rounded-lg border border-orange-500/20"
-              >
-                <RotateCcw className="w-3 h-3" />
-                <span>Đặt lại ({activeFiltersCount})</span>
-              </button>
-            )}
-          </div>
-
-          {/* 1. Keyword Search */}
-          <div className="space-y-1.5">
-            <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
-              Tìm theo từ khóa
-            </label>
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Tên sản phẩm, dòng xe, hãng..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-8 pr-7 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition-colors"
-              />
-              <Search className="w-3.5 h-3.5 text-slate-500 absolute left-2.5 top-2.5" />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-2 top-2 text-slate-500 hover:text-white"
-                >
-                  <X className="w-3.5 h-3.5" />
-                </button>
-              )}
-            </div>
-          </div>
-
-          {/* 2. Accordion: Phân Loại & Danh Mục Sản Phẩm */}
-          <div className="border-t border-slate-800/80 pt-3">
-            <button
-              onClick={() => toggleSection('categories')}
-              className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-slate-300 py-1 hover:text-white"
-            >
-              <span>Phân Loại &amp; Danh Mục</span>
-              {openSections.categories ? (
-                <ChevronUp className="w-4 h-4 text-slate-400" />
-              ) : (
-                <ChevronDown className="w-4 h-4 text-slate-400" />
-              )}
-            </button>
-            
-            {openSections.categories && (
-              <div className="space-y-3 mt-2.5">
-                {/* Classification Pills in Sidebar */}
-                <div className="grid grid-cols-3 gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800">
-                  {CLASSIFICATIONS.map(c => {
-                    const isSel = selectedClassification === c.id;
-                    return (
-                      <button
-                        key={c.id}
-                        type="button"
-                        onClick={() => setSelectedClassification(c.id as ItemClassification)}
-                        className={`py-1.5 px-1 text-[11px] font-bold rounded-lg transition-all text-center truncate ${
-                          isSel
-                            ? c.id === 'service'
-                              ? 'bg-purple-600 text-white shadow-sm'
-                              : c.id === 'product'
-                              ? 'bg-sky-600 text-white shadow-sm'
-                              : 'bg-emerald-500 text-slate-950 shadow-sm'
-                            : 'text-slate-400 hover:text-white hover:bg-slate-900'
-                        }`}
-                      >
-                        {c.shortName}
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {/* Categories List Grouped */}
-                <div className="space-y-1">
-                  {/* All option */}
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSelectedCategory('all');
-                    }}
-                    className={`relative w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all text-left cursor-pointer ${
-                      selectedCategory === 'all'
-                        ? 'text-slate-950 font-bold bg-emerald-500 shadow-md shadow-emerald-500/20'
-                        : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2 truncate">
-                      <Grid2X2 className="w-4 h-4" />
-                      <span className="truncate">Tất Cả Danh Mục</span>
-                    </div>
-                    <span className={`text-[10px] px-1.5 py-0.5 rounded-full shrink-0 ml-1.5 ${
-                      selectedCategory === 'all' ? 'bg-slate-950/20 text-slate-950 font-bold' : 'bg-slate-800 text-slate-400'
-                    }`}>
-                      {PRODUCTS.length}
-                    </span>
-                  </button>
-
-                  {/* Group 1: Sản Phẩm Chính Hãng */}
-                  {(selectedClassification === 'all' || selectedClassification === 'product') && (
-                    <div className="pt-2">
-                      <div className="text-[10px] font-bold uppercase tracking-wider text-sky-400 px-2 py-1 flex items-center gap-1.5">
-                        <PackageCheck className="w-3 h-3" />
-                        <span>Sản Phẩm Chính Hãng</span>
-                      </div>
-                      <div className="space-y-0.5 mt-0.5">
-                        {CATEGORIES.filter(cat => cat.itemType === 'product').map((cat) => {
-                          const isActive = selectedCategory === cat.id;
-                          const count = PRODUCTS.filter(p => p.category === cat.id).length;
-                          return (
-                            <button
-                              key={cat.id}
-                              type="button"
-                              onClick={() => {
-                                setSelectedCategory(cat.id);
-                              }}
-                              className={`relative w-full flex items-center justify-between px-3 py-1.5 rounded-xl text-xs font-medium transition-all text-left cursor-pointer ${
-                                isActive
-                                  ? 'text-white font-bold bg-sky-600 shadow-md shadow-sky-600/30'
-                                  : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
-                              }`}
-                            >
-                              <div className="flex items-center gap-2 truncate">
-                                <span className={isActive ? 'text-white' : 'text-sky-400'}>
-                                  {getCategoryIcon(cat.id)}
-                                </span>
-                                <span className="truncate">{cat.name}</span>
-                              </div>
-                              <span className={`text-[10px] px-1.5 py-0.5 rounded-full shrink-0 ml-1.5 ${
-                                isActive ? 'bg-white/20 text-white font-bold' : 'bg-slate-800 text-slate-400'
-                              }`}>
-                                {count}
-                              </span>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Group 2: Dịch Vụ Độ Xe Chính Hãng */}
-                  {(selectedClassification === 'all' || selectedClassification === 'service') && (
-                    <div className="pt-2">
-                      <div className="text-[10px] font-bold uppercase tracking-wider text-purple-400 px-2 py-1 flex items-center gap-1.5">
-                        <Wrench className="w-3 h-3" />
-                        <span>Dịch Vụ Độ Xe Chính Hãng</span>
-                      </div>
-                      <div className="space-y-0.5 mt-0.5">
-                        {CATEGORIES.filter(cat => cat.itemType === 'service').map((cat) => {
-                          const isActive = selectedCategory === cat.id;
-                          const count = PRODUCTS.filter(p => p.category === cat.id).length;
-                          return (
-                            <button
-                              key={cat.id}
-                              type="button"
-                              onClick={() => {
-                                setSelectedCategory(cat.id);
-                              }}
-                              className={`relative w-full flex items-center justify-between px-3 py-1.5 rounded-xl text-xs font-medium transition-all text-left cursor-pointer ${
-                                isActive
-                                  ? 'text-white font-bold bg-purple-600 shadow-md shadow-purple-600/30'
-                                  : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
-                              }`}
-                            >
-                              <div className="flex items-center gap-2 truncate">
-                                <span className={isActive ? 'text-white' : 'text-purple-400'}>
-                                  {getCategoryIcon(cat.id)}
-                                </span>
-                                <span className="truncate">{cat.name}</span>
-                              </div>
-                              <span className={`text-[10px] px-1.5 py-0.5 rounded-full shrink-0 ml-1.5 ${
-                                isActive ? 'bg-white/20 text-white font-bold' : 'bg-slate-800 text-slate-400'
-                              }`}>
-                                {count}
-                              </span>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* 3. Accordion: Khoảng Giá (Price Range) & Custom Price Input */}
-          <div className="border-t border-slate-800/80 pt-3">
-            <button
-              onClick={() => toggleSection('price')}
-              className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-slate-300 py-1 hover:text-white"
-            >
-              <span>Khoảng Giá (VND)</span>
-              {openSections.price ? (
-                <ChevronUp className="w-4 h-4 text-slate-400" />
-              ) : (
-                <ChevronDown className="w-4 h-4 text-slate-400" />
-              )}
-            </button>
-
-            {openSections.price && (
-              <div className="space-y-3 mt-2.5">
-                {/* Preset Radio Buttons with Counts */}
-                <div className="space-y-1">
-                  {priceRanges.map((pr) => {
-                    const count = pr.id === 'all'
-                      ? PRODUCTS.length
-                      : PRODUCTS.filter(p => p.price >= pr.min && p.price < pr.max).length;
-
-                    return (
-                      <label
-                        key={pr.id}
-                        className={`flex items-center justify-between px-2.5 py-1.5 rounded-lg cursor-pointer text-xs transition-colors ${
-                          priceRange === pr.id
-                            ? 'bg-slate-800 text-emerald-400 font-semibold'
-                            : 'text-slate-300 hover:bg-slate-800/50'
-                        }`}
-                      >
-                        <div className="flex items-center gap-2">
-                          <input
-                            type="radio"
-                            name="price-range-sidebar"
-                            checked={priceRange === pr.id}
-                            onChange={() => {
-                              setPriceRange(pr.id);
-                              setAppliedCustomPrice(null);
-                            }}
-                            className="accent-emerald-500"
-                          />
-                          <span>{pr.label}</span>
-                        </div>
-                        <span className="text-[10px] text-slate-400 bg-slate-950 px-1.5 py-0.5 rounded">
-                          {count}
-                        </span>
-                      </label>
-                    );
-                  })}
-                </div>
-
-                {/* Custom Min / Max Price Input */}
-                <div className="p-3 bg-slate-950/70 border border-slate-800/80 rounded-xl space-y-2">
-                  <div className="text-[11px] font-bold text-slate-400 flex items-center justify-between">
-                    <span>Tự nhập khoảng giá</span>
-                    {priceRange === 'custom' && (
-                      <button 
-                        onClick={handleClearCustomPrice}
-                        className="text-[10px] text-orange-400 hover:underline"
-                      >
-                        Xóa
-                      </button>
-                    )}
-                  </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    <input
-                      type="number"
-                      placeholder="Từ (₫)"
-                      value={customMinPrice}
-                      onChange={(e) => setCustomMinPrice(e.target.value)}
-                      className="w-full px-2 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
-                    />
-                    <input
-                      type="number"
-                      placeholder="Đến (₫)"
-                      value={customMaxPrice}
-                      onChange={(e) => setCustomMaxPrice(e.target.value)}
-                      className="w-full px-2 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
-                    />
-                  </div>
-                  <button
-                    type="button"
-                    onClick={handleApplyCustomPrice}
-                    disabled={!customMinPrice && !customMaxPrice}
-                    className="w-full py-1.5 rounded-lg bg-emerald-500 text-slate-950 font-bold text-xs hover:bg-emerald-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    Áp Dụng Khoảng Giá
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* 4. Accordion: Phân Khúc Xe (Vehicle Types) */}
-          <div className="border-t border-slate-800/80 pt-3">
-            <button
-              onClick={() => toggleSection('vehicle')}
-              className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-slate-300 py-1 hover:text-white"
-            >
-              <span>Phân Khúc Xe</span>
-              {openSections.vehicle ? (
-                <ChevronUp className="w-4 h-4 text-slate-400" />
-              ) : (
-                <ChevronDown className="w-4 h-4 text-slate-400" />
-              )}
-            </button>
-
-            {openSections.vehicle && (
-              <div className="space-y-1 mt-2.5">
-                {vehicleTypesList.map((vt) => {
-                  const isActive = vehicleType === vt.id;
-                  const count = vt.id === 'all'
-                    ? PRODUCTS.length
-                    : PRODUCTS.filter(p => p.vehicleTypes.includes(vt.id as any)).length;
-
-                  return (
-                    <button
-                      key={vt.id}
-                      type="button"
-                      onClick={() => setVehicleType(vt.id)}
-                      className={`w-full flex items-center justify-between px-3 py-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
-                        isActive
-                          ? 'bg-purple-950/70 text-purple-300 border border-purple-500/40 font-bold'
-                          : 'text-slate-400 hover:text-white hover:bg-slate-800/40'
-                      }`}
-                    >
-                      <span className="truncate">{vt.label}</span>
-                      <span className="text-[10px] text-slate-400 bg-slate-950 px-1.5 py-0.5 rounded">
-                        {count}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-
-          {/* 5. Accordion: Trạng Thái & Ưu Đãi (Status & Stock) */}
-          <div className="border-t border-slate-800/80 pt-3">
-            <button
-              onClick={() => toggleSection('status')}
-              className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-slate-300 py-1 hover:text-white"
-            >
-              <span>Ưu Đãi &amp; Tình Trạng</span>
-              {openSections.status ? (
-                <ChevronUp className="w-4 h-4 text-slate-400" />
-              ) : (
-                <ChevronDown className="w-4 h-4 text-slate-400" />
-              )}
-            </button>
-
-            {openSections.status && (
-              <div className="space-y-2 mt-2.5 text-xs text-slate-300">
-                <label className="flex items-center justify-between p-2 rounded-lg bg-slate-950/60 border border-slate-800/80 hover:border-slate-700 cursor-pointer">
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      checked={onlySale}
-                      onChange={(e) => setOnlySale(e.target.checked)}
-                      className="accent-rose-500 rounded"
-                    />
-                    <span className="text-rose-300 font-medium">🔥 Đang Giảm Giá</span>
-                  </div>
-                  <span className="text-[10px] text-slate-400 bg-slate-900 px-1.5 py-0.5 rounded">
-                    {filterCounts.sale}
-                  </span>
-                </label>
-
-                <label className="flex items-center justify-between p-2 rounded-lg bg-slate-950/60 border border-slate-800/80 hover:border-slate-700 cursor-pointer">
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      checked={onlyBestSeller}
-                      onChange={(e) => setOnlyBestSeller(e.target.checked)}
-                      className="accent-amber-500 rounded"
-                    />
-                    <span className="text-amber-300 font-medium">⭐ Bán Chạy Nhất</span>
-                  </div>
-                  <span className="text-[10px] text-slate-400 bg-slate-900 px-1.5 py-0.5 rounded">
-                    {filterCounts.bestSeller}
-                  </span>
-                </label>
-
-                <label className="flex items-center justify-between p-2 rounded-lg bg-slate-950/60 border border-slate-800/80 hover:border-slate-700 cursor-pointer">
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      checked={onlyInStock}
-                      onChange={(e) => setOnlyInStock(e.target.checked)}
-                      className="accent-sky-500 rounded"
-                    />
-                    <span className="text-sky-300 font-medium">📦 Sẵn Hàng Lắp Ngay</span>
-                  </div>
-                  <span className="text-[10px] text-slate-400 bg-slate-900 px-1.5 py-0.5 rounded">
-                    {filterCounts.inStock}
-                  </span>
-                </label>
-              </div>
-            )}
-          </div>
-
-          {/* 6. Accordion: Tính Năng Hữu Ích & Nhu Cầu Thực Tế */}
-          <div className="border-t border-slate-800/80 pt-3">
-            <button
-              onClick={() => toggleSection('useful')}
-              className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-slate-300 py-1 hover:text-white group cursor-pointer"
-            >
-              <div className="flex items-center gap-1.5 text-emerald-400">
-                <Sparkles className="w-3.5 h-3.5" />
-                <span className="text-slate-200 group-hover:text-emerald-300 transition-colors">Tính Năng Hữu Ích</span>
-              </div>
-              {openSections.useful ? (
-                <ChevronUp className="w-4 h-4 text-slate-400" />
-              ) : (
-                <ChevronDown className="w-4 h-4 text-slate-400" />
-              )}
-            </button>
-
-            {openSections.useful && (
-              <div className="space-y-1.5 mt-2.5">
-                {usefulFeaturesList.map((uf) => {
-                  const isActive = usefulFilter === uf.id;
-                  const count = uf.id === 'all'
-                    ? PRODUCTS.length
-                    : PRODUCTS.filter(uf.matcher).length;
-
-                  return (
-                    <button
-                      key={uf.id}
-                      type="button"
-                      onClick={() => setUsefulFilter(isActive && uf.id !== 'all' ? 'all' : uf.id)}
-                      className={`w-full flex items-start justify-between p-2 rounded-xl text-xs transition-all text-left cursor-pointer border ${
-                        isActive
-                          ? 'bg-emerald-950/80 text-emerald-300 border-emerald-500/50 shadow-sm font-semibold'
-                          : 'bg-slate-900/60 text-slate-300 border-slate-800/80 hover:border-slate-700 hover:bg-slate-800/50'
-                      }`}
-                    >
-                      <div className="flex items-start gap-2 min-w-0 pr-1">
-                        <span className="mt-0.5 shrink-0">{uf.icon}</span>
-                        <div className="min-w-0">
-                          <div className={`truncate ${isActive ? 'text-emerald-300 font-bold' : 'text-slate-200'}`}>
-                            {uf.label}
-                          </div>
-                          {uf.tag && (
-                            <div className="text-[10px] text-slate-400 truncate mt-0.5">
-                              {uf.tag}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                      <span className={`text-[10px] shrink-0 px-1.5 py-0.5 rounded font-mono font-medium ${
-                        isActive 
-                          ? 'bg-emerald-500 text-slate-950 font-bold' 
-                          : 'text-slate-400 bg-slate-950'
-                      }`}>
-                        {count}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-
-          {/* 7. Accordion: Tone Màu Nội Thất (Colors) */}
-          <div className="border-t border-slate-800/80 pt-3">
-            <button
-              onClick={() => toggleSection('color')}
-              className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-slate-300 py-1 hover:text-white"
-            >
-              <span>Tone Màu Nội Thất</span>
-              {openSections.color ? (
-                <ChevronUp className="w-4 h-4 text-slate-400" />
-              ) : (
-                <ChevronDown className="w-4 h-4 text-slate-400" />
-              )}
-            </button>
-
-            {openSections.color && (
-              <div className="space-y-1 mt-2.5">
-                {colorsList.map((c) => {
-                  const isActive = colorFilter === c.id;
-                  const count = c.id === 'all'
-                    ? PRODUCTS.length
-                    : PRODUCTS.filter(p => p.colors.some(col => col.name.toLowerCase().includes(c.id.toLowerCase()))).length;
-
-                  return (
-                    <button
-                      key={c.id}
-                      type="button"
-                      onClick={() => setColorFilter(c.id)}
-                      className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg border text-xs transition-all cursor-pointer ${
-                        isActive
-                          ? 'border-emerald-400 bg-emerald-950/60 text-emerald-300 font-bold'
-                          : 'border-slate-800 bg-slate-950 text-slate-400 hover:border-slate-700'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2">
-                        <span
-                          className="w-3 h-3 rounded-full border border-slate-700 shrink-0"
-                          style={{ backgroundColor: c.hex }}
-                        />
-                        <span className="truncate">{c.label}</span>
-                      </div>
-                      <span className="text-[10px] text-slate-400 bg-slate-900 px-1.5 py-0.5 rounded">
-                        {count}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-
-          {/* 8. Accordion: Đánh Giá & Bảo Hành */}
-          <div className="border-t border-slate-800/80 pt-3">
-            <button
-              onClick={() => toggleSection('rating')}
-              className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-slate-300 py-1 hover:text-white"
-            >
-              <span>Đánh Giá &amp; Bảo Hành</span>
-              {openSections.rating ? (
-                <ChevronUp className="w-4 h-4 text-slate-400" />
-              ) : (
-                <ChevronDown className="w-4 h-4 text-slate-400" />
-              )}
-            </button>
-
-            {openSections.rating && (
-              <div className="space-y-2 mt-2.5 text-xs text-slate-300">
-                <button
-                  type="button"
-                  onClick={() => setMinRating(minRating === 4.8 ? 0 : 4.8)}
-                  className={`w-full flex items-center justify-between px-3 py-1.5 rounded-lg transition-colors cursor-pointer ${
-                    minRating === 4.8
-                      ? 'bg-amber-950/70 text-amber-300 border border-amber-500/40 font-bold'
-                      : 'text-slate-400 hover:bg-slate-800/40'
-                  }`}
-                >
-                  <div className="flex items-center gap-1.5">
-                    <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
-                    <span>Từ 4.8★ trở lên</span>
-                  </div>
-                  <span className="text-[10px] bg-slate-950 px-1.5 py-0.5 rounded">{filterCounts.highRating}</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setMinWarranty(minWarranty === 24 ? 0 : 24)}
-                  className={`w-full flex items-center justify-between px-3 py-1.5 rounded-lg transition-colors cursor-pointer ${
-                    minWarranty === 24
-                      ? 'bg-emerald-950/70 text-emerald-300 border border-emerald-500/40 font-bold'
-                      : 'text-slate-400 hover:bg-slate-800/40'
-                  }`}
-                >
-                  <div className="flex items-center gap-1.5">
-                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>Bảo hành 24 tháng+</span>
-                  </div>
-                  <span className="text-[10px] bg-slate-950 px-1.5 py-0.5 rounded">{filterCounts.warranty24}</span>
-                </button>
-              </div>
-            )}
-          </div>
-        </motion.aside>
-
-        {/* ================= RIGHT COLUMN: PRODUCT CONTENT ================= */}
-        <motion.main 
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.48, delay: 0.16 }}
-          className="lg:col-span-9 space-y-5"
-        >
           {/* Top Sort & Grid View Switcher Bar */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-2xl bg-slate-900 border border-slate-800 text-xs shadow-md">
             <div className="flex items-center gap-2 text-slate-400">
@@ -1347,6 +658,30 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                   );
                 })}
               </div>
+
+              {/* Nút Thu gọn / Mở rộng tất cả nhóm */}
+              {viewMode !== 'table' && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    const isAnyCollapsed = Object.values(collapsedSections).some(Boolean);
+                    if (isAnyCollapsed) {
+                      expandAllSections();
+                    } else {
+                      collapseAllSections();
+                    }
+                  }}
+                  title={Object.values(collapsedSections).some(Boolean) ? 'Mở rộng tất cả sản phẩm' : 'Thu gọn tất cả sản phẩm'}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-slate-700 bg-slate-950 hover:bg-slate-800 text-slate-300 hover:text-white hover:border-slate-500 text-xs font-semibold transition-all cursor-pointer shadow-sm active:scale-95"
+                >
+                  <span>{Object.values(collapsedSections).some(Boolean) ? 'Mở rộng tất cả' : 'Thu gọn tất cả'}</span>
+                  <ChevronDown
+                    className={`w-4 h-4 text-white transition-transform duration-300 ${
+                      Object.values(collapsedSections).some(Boolean) ? '-rotate-90' : 'rotate-0'
+                    }`}
+                  />
+                </button>
+              )}
             </div>
           </div>
 
@@ -1381,7 +716,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
 
               {selectedCategory !== 'all' && (
                 <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 font-medium">
-                  {CATEGORIES.find(c => c.id === selectedCategory)?.name}
+                  {CATEGORIES.find(c => c.id === selectedCategory)?.name || STORE_CATEGORY_GROUPS.find(g => g.id === selectedCategory)?.name}
                   <X className="w-3 h-3 cursor-pointer hover:text-white" onClick={() => setSelectedCategory('all')} />
                 </span>
               )}
@@ -1528,7 +863,10 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                 {/* 📹 1. NHÓM CAMERA HÀNH TRÌNH & GHI HÌNH CHUYÊN NGHIỆP */}
                 {dashcamProducts.length > 0 && (
                   <div className="rounded-2xl border border-sky-500/30 bg-gradient-to-b from-sky-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-sky-500/20">
+                    <div 
+                      onClick={() => toggleSectionCollapse('dashcam')}
+                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-sky-500/20 cursor-pointer select-none"
+                    >
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-xl bg-sky-500/20 border border-sky-400/40 text-sky-400 flex items-center justify-center flex-shrink-0 shadow-lg shadow-sky-500/10">
                           <Video className="w-5 h-5" />
@@ -1541,36 +879,63 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                             <span className="px-2.5 py-0.5 rounded-full bg-sky-500/20 border border-sky-400/30 text-sky-300 text-[11px] font-extrabold">
                               {dashcamProducts.length} Sản phẩm
                             </span>
+                            {collapsedSections['dashcam'] && (
+                              <span className="text-[11px] text-slate-400 font-medium">
+                                (Đã thu gọn)
+                              </span>
+                            )}
                           </div>
                           <p className="text-[11px] text-slate-400 mt-0.5">
                             Camera hành trình 4K HDR, camera 3 kênh trước - trong - sau, cảnh báo giao thông giọng nói Vietmap &amp; 70mai
                           </p>
                         </div>
                       </div>
+
+                      <button
+                        type="button"
+                        id="toggle-collapse-dashcam-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleSectionCollapse('dashcam');
+                        }}
+                        className="self-start sm:self-center flex items-center gap-2 px-3 py-1.5 rounded-full border border-sky-500/40 bg-slate-900/90 hover:bg-slate-800 hover:border-sky-400 text-sky-200 hover:text-white text-xs font-semibold transition-all cursor-pointer shadow-sm active:scale-95 shrink-0"
+                        title={collapsedSections['dashcam'] ? 'Mở rộng sản phẩm' : 'Thu gọn sản phẩm'}
+                      >
+                        <span className="text-[11px] font-medium text-slate-300">
+                          {collapsedSections['dashcam'] ? 'Mở rộng' : 'Thu gọn'}
+                        </span>
+                        <ChevronDown
+                          className={`w-4 h-4 text-white transition-transform duration-300 ${
+                            collapsedSections['dashcam'] ? '-rotate-90' : 'rotate-0'
+                          }`}
+                        />
+                      </button>
                     </div>
 
-                    {viewMode === 'list' ? (
-                      <div className="space-y-3.5">
-                        {dashcamProducts.map((product) => (
-                          <ProductListItem
-                            key={product.id}
-                            product={product}
-                            onAddToCart={onAddToCart}
-                            onQuickView={onQuickView}
-                          />
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
-                        {dashcamProducts.map((product) => (
-                          <ProductCompactCard
-                            key={product.id}
-                            product={product}
-                            onAddToCart={onAddToCart}
-                            onQuickView={onQuickView}
-                          />
-                        ))}
-                      </div>
+                    {!collapsedSections['dashcam'] && (
+                      viewMode === 'list' ? (
+                        <div className="space-y-3.5">
+                          {dashcamProducts.map((product) => (
+                            <ProductListItem
+                              key={product.id}
+                              product={product}
+                              onAddToCart={onAddToCart}
+                              onQuickView={onQuickView}
+                            />
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
+                          {dashcamProducts.map((product) => (
+                            <ProductCompactCard
+                              key={product.id}
+                              product={product}
+                              onAddToCart={onAddToCart}
+                              onQuickView={onQuickView}
+                            />
+                          ))}
+                        </div>
+                      )
                     )}
                   </div>
                 )}
@@ -1578,7 +943,10 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                 {/* 🌐 2. MỤC CAMERA 360 ĐỘ TOÀN CẢNH (BÊN DƯỚI MỤC CAMERA) */}
                 {camera360Products.length > 0 && (
                   <div className="rounded-2xl border border-indigo-500/30 bg-gradient-to-b from-indigo-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-indigo-500/20">
+                    <div 
+                      onClick={() => toggleSectionCollapse('camera360')}
+                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-indigo-500/20 cursor-pointer select-none"
+                    >
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-xl bg-indigo-500/20 border border-indigo-400/40 text-indigo-400 flex items-center justify-center flex-shrink-0 shadow-lg shadow-indigo-500/10">
                           <Eye className="w-5 h-5" />
@@ -1591,44 +959,74 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                             <span className="px-2.5 py-0.5 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 text-[11px] font-extrabold">
                               {camera360Products.length} Sản phẩm
                             </span>
+                            {collapsedSections['camera360'] && (
+                              <span className="text-[11px] text-slate-400 font-medium">
+                                (Đã thu gọn)
+                              </span>
+                            )}
                           </div>
                           <p className="text-[11px] text-slate-400 mt-0.5">
                             Hệ thống Camera 360 độ TECHCAM, SETCAR AI 360 &amp; Safeview cao cấp hiển thị 2D/3D siêu nét, mô phỏng xe thực tế, cắm giắc Zin 100%
                           </p>
                         </div>
                       </div>
+
+                      <button
+                        type="button"
+                        id="toggle-collapse-camera360-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleSectionCollapse('camera360');
+                        }}
+                        className="self-start sm:self-center flex items-center gap-2 px-3 py-1.5 rounded-full border border-indigo-500/40 bg-slate-900/90 hover:bg-slate-800 hover:border-indigo-400 text-indigo-200 hover:text-white text-xs font-semibold transition-all cursor-pointer shadow-sm active:scale-95 shrink-0"
+                        title={collapsedSections['camera360'] ? 'Mở rộng sản phẩm' : 'Thu gọn sản phẩm'}
+                      >
+                        <span className="text-[11px] font-medium text-slate-300">
+                          {collapsedSections['camera360'] ? 'Mở rộng' : 'Thu gọn'}
+                        </span>
+                        <ChevronDown
+                          className={`w-4 h-4 text-white transition-transform duration-300 ${
+                            collapsedSections['camera360'] ? '-rotate-90' : 'rotate-0'
+                          }`}
+                        />
+                      </button>
                     </div>
 
-                    {viewMode === 'list' ? (
-                      <div className="space-y-3.5">
-                        {camera360Products.map((product) => (
-                          <ProductListItem
-                            key={product.id}
-                            product={product}
-                            onAddToCart={onAddToCart}
-                            onQuickView={onQuickView}
-                          />
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
-                        {camera360Products.map((product) => (
-                          <ProductCompactCard
-                            key={product.id}
-                            product={product}
-                            onAddToCart={onAddToCart}
-                            onQuickView={onQuickView}
-                          />
-                        ))}
-                      </div>
+                    {!collapsedSections['camera360'] && (
+                      viewMode === 'list' ? (
+                        <div className="space-y-3.5">
+                          {camera360Products.map((product) => (
+                            <ProductListItem
+                              key={product.id}
+                              product={product}
+                              onAddToCart={onAddToCart}
+                              onQuickView={onQuickView}
+                            />
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
+                          {camera360Products.map((product) => (
+                            <ProductCompactCard
+                              key={product.id}
+                              product={product}
+                              onAddToCart={onAddToCart}
+                              onQuickView={onQuickView}
+                            />
+                          ))}
+                        </div>
+                      )
                     )}
                   </div>
                 )}
 
-                {/* 🔆 2. MỤC ÁNH SÁNG (BI LED, BI GẦM TĂNG SÁNG) - BÊN DƯỚI CAMERA VÀ TÁCH RIÊNG VỚI ĐÈN LED */}
+                {/* 🔆 3. MỤC ÁNH SÁNG (BI LED, BI GẦM TĂNG SÁNG) - BÊN DƯỚI CAMERA VÀ TÁCH RIÊNG VỚI ĐÈN LED */}
                 {lightingProducts.length > 0 && (
                   <div className="rounded-2xl border border-yellow-500/30 bg-gradient-to-b from-yellow-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-yellow-500/20">
+                    <div 
+                      onClick={() => toggleSectionCollapse('lighting')}
+                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-yellow-500/20 cursor-pointer select-none"
+                    >
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-xl bg-yellow-500/20 border border-yellow-400/40 text-yellow-400 flex items-center justify-center flex-shrink-0 shadow-lg shadow-yellow-500/10">
                           <Sun className="w-5 h-5" />
@@ -1641,36 +1039,63 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                             <span className="px-2.5 py-0.5 rounded-full bg-yellow-500/20 border border-yellow-400/30 text-yellow-300 text-[11px] font-extrabold">
                               {lightingProducts.length} Sản phẩm
                             </span>
+                            {collapsedSections['lighting'] && (
+                              <span className="text-[11px] text-slate-400 font-medium">
+                                (Đã thu gọn)
+                              </span>
+                            )}
                           </div>
                           <p className="text-[11px] text-slate-400 mt-0.5">
                             Bi Gầm Aozoom LED WASP 3.0 Inch, Bi LED Extra Sapphire 98W, Đèn LED A50 &amp; Đèn trợ sáng TS V3 Pro
                           </p>
                         </div>
                       </div>
+
+                      <button
+                        type="button"
+                        id="toggle-collapse-lighting-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleSectionCollapse('lighting');
+                        }}
+                        className="self-start sm:self-center flex items-center gap-2 px-3 py-1.5 rounded-full border border-yellow-500/40 bg-slate-900/90 hover:bg-slate-800 hover:border-yellow-400 text-yellow-200 hover:text-white text-xs font-semibold transition-all cursor-pointer shadow-sm active:scale-95 shrink-0"
+                        title={collapsedSections['lighting'] ? 'Mở rộng sản phẩm' : 'Thu gọn sản phẩm'}
+                      >
+                        <span className="text-[11px] font-medium text-slate-300">
+                          {collapsedSections['lighting'] ? 'Mở rộng' : 'Thu gọn'}
+                        </span>
+                        <ChevronDown
+                          className={`w-4 h-4 text-white transition-transform duration-300 ${
+                            collapsedSections['lighting'] ? '-rotate-90' : 'rotate-0'
+                          }`}
+                        />
+                      </button>
                     </div>
 
-                    {viewMode === 'list' ? (
-                      <div className="space-y-3.5">
-                        {lightingProducts.map((product) => (
-                          <ProductListItem
-                            key={product.id}
-                            product={product}
-                            onAddToCart={onAddToCart}
-                            onQuickView={onQuickView}
-                          />
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
-                        {lightingProducts.map((product) => (
-                          <ProductCompactCard
-                            key={product.id}
-                            product={product}
-                            onAddToCart={onAddToCart}
-                            onQuickView={onQuickView}
-                          />
-                        ))}
-                      </div>
+                    {!collapsedSections['lighting'] && (
+                      viewMode === 'list' ? (
+                        <div className="space-y-3.5">
+                          {lightingProducts.map((product) => (
+                            <ProductListItem
+                              key={product.id}
+                              product={product}
+                              onAddToCart={onAddToCart}
+                              onQuickView={onQuickView}
+                            />
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
+                          {lightingProducts.map((product) => (
+                            <ProductCompactCard
+                              key={product.id}
+                              product={product}
+                              onAddToCart={onAddToCart}
+                              onQuickView={onQuickView}
+                            />
+                          ))}
+                        </div>
+                      )
                     )}
                   </div>
                 )}
@@ -1678,7 +1103,10 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                 {/* 💡 4. NHÓM ĐÈN LED (TÁCH RIÊNG VỚI MỤC ÁNH SÁNG) */}
                 {ledProducts.length > 0 && (
                   <div className="rounded-2xl border border-amber-500/30 bg-gradient-to-b from-amber-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-amber-500/20">
+                    <div 
+                      onClick={() => toggleSectionCollapse('led')}
+                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-amber-500/20 cursor-pointer select-none"
+                    >
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-400/40 text-amber-400 flex items-center justify-center flex-shrink-0 shadow-lg shadow-amber-500/10">
                           <Sparkles className="w-5 h-5" />
@@ -1691,44 +1119,74 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                             <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 text-[11px] font-extrabold">
                               {ledProducts.length} Sản phẩm
                             </span>
+                            {collapsedSections['led'] && (
+                              <span className="text-[11px] text-slate-400 font-medium">
+                                (Đã thu gọn)
+                              </span>
+                            )}
                           </div>
                           <p className="text-[11px] text-slate-400 mt-0.5">
                             LED nội thất RGB 64 màu, LED cánh chim ma trận, mạch xi nhan demi &amp; LED cản sau Audi DMX Limo Green
                           </p>
                         </div>
                       </div>
+
+                      <button
+                        type="button"
+                        id="toggle-collapse-led-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleSectionCollapse('led');
+                        }}
+                        className="self-start sm:self-center flex items-center gap-2 px-3 py-1.5 rounded-full border border-amber-500/40 bg-slate-900/90 hover:bg-slate-800 hover:border-amber-400 text-amber-200 hover:text-white text-xs font-semibold transition-all cursor-pointer shadow-sm active:scale-95 shrink-0"
+                        title={collapsedSections['led'] ? 'Mở rộng sản phẩm' : 'Thu gọn sản phẩm'}
+                      >
+                        <span className="text-[11px] font-medium text-slate-300">
+                          {collapsedSections['led'] ? 'Mở rộng' : 'Thu gọn'}
+                        </span>
+                        <ChevronDown
+                          className={`w-4 h-4 text-white transition-transform duration-300 ${
+                            collapsedSections['led'] ? '-rotate-90' : 'rotate-0'
+                          }`}
+                        />
+                      </button>
                     </div>
 
-                    {viewMode === 'list' ? (
-                      <div className="space-y-3.5">
-                        {ledProducts.map((product) => (
-                          <ProductListItem
-                            key={product.id}
-                            product={product}
-                            onAddToCart={onAddToCart}
-                            onQuickView={onQuickView}
-                          />
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
-                        {ledProducts.map((product) => (
-                          <ProductCompactCard
-                            key={product.id}
-                            product={product}
-                            onAddToCart={onAddToCart}
-                            onQuickView={onQuickView}
-                          />
-                        ))}
-                      </div>
+                    {!collapsedSections['led'] && (
+                      viewMode === 'list' ? (
+                        <div className="space-y-3.5">
+                          {ledProducts.map((product) => (
+                            <ProductListItem
+                              key={product.id}
+                              product={product}
+                              onAddToCart={onAddToCart}
+                              onQuickView={onQuickView}
+                            />
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
+                          {ledProducts.map((product) => (
+                            <ProductCompactCard
+                              key={product.id}
+                              product={product}
+                              onAddToCart={onAddToCart}
+                              onQuickView={onQuickView}
+                            />
+                          ))}
+                        </div>
+                      )
                     )}
                   </div>
                 )}
 
-                {/* 🔊 4. NHÓM NÂNG CẤP ÂM THANH Ô TÔ & LOA SUB ĐIỆN (BÊN DƯỚI CÁC SẢN PHẨM ÁNH SÁNG) */}
+                {/* 🔊 5. NHÓM NÂNG CẤP ÂM THANH Ô TÔ & LOA SUB ĐIỆN (BÊN DƯỚI CÁC SẢN PHẨM ÁNH SÁNG) */}
                 {audioProducts.length > 0 && (
                   <div className="rounded-2xl border border-purple-500/30 bg-gradient-to-b from-purple-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-purple-500/20">
+                    <div 
+                      onClick={() => toggleSectionCollapse('audio')}
+                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-purple-500/20 cursor-pointer select-none"
+                    >
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-xl bg-purple-500/20 border border-purple-400/40 text-purple-400 flex items-center justify-center flex-shrink-0 shadow-lg shadow-purple-500/10">
                           <Volume2 className="w-5 h-5" />
@@ -1741,44 +1199,74 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                             <span className="px-2.5 py-0.5 rounded-full bg-purple-500/20 border border-purple-400/30 text-purple-300 text-[11px] font-extrabold">
                               {audioProducts.length} Sản phẩm
                             </span>
+                            {collapsedSections['audio'] && (
+                              <span className="text-[11px] text-slate-400 font-medium">
+                                (Đã thu gọn)
+                              </span>
+                            )}
                           </div>
                           <p className="text-[11px] text-slate-400 mt-0.5">
                             Loa Sub gầm ghế Rebec U10, Loa Sub STEG SA-8W (Italy), Cặp loa toàn dải BL80 &amp; Loa bầu dục PERTORS QP-4603
                           </p>
                         </div>
                       </div>
+
+                      <button
+                        type="button"
+                        id="toggle-collapse-audio-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleSectionCollapse('audio');
+                        }}
+                        className="self-start sm:self-center flex items-center gap-2 px-3 py-1.5 rounded-full border border-purple-500/40 bg-slate-900/90 hover:bg-slate-800 hover:border-purple-400 text-purple-200 hover:text-white text-xs font-semibold transition-all cursor-pointer shadow-sm active:scale-95 shrink-0"
+                        title={collapsedSections['audio'] ? 'Mở rộng sản phẩm' : 'Thu gọn sản phẩm'}
+                      >
+                        <span className="text-[11px] font-medium text-slate-300">
+                          {collapsedSections['audio'] ? 'Mở rộng' : 'Thu gọn'}
+                        </span>
+                        <ChevronDown
+                          className={`w-4 h-4 text-white transition-transform duration-300 ${
+                            collapsedSections['audio'] ? '-rotate-90' : 'rotate-0'
+                          }`}
+                        />
+                      </button>
                     </div>
 
-                    {viewMode === 'list' ? (
-                      <div className="space-y-3.5">
-                        {audioProducts.map((product) => (
-                          <ProductListItem
-                            key={product.id}
-                            product={product}
-                            onAddToCart={onAddToCart}
-                            onQuickView={onQuickView}
-                          />
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
-                        {audioProducts.map((product) => (
-                          <ProductCompactCard
-                            key={product.id}
-                            product={product}
-                            onAddToCart={onAddToCart}
-                            onQuickView={onQuickView}
-                          />
-                        ))}
-                      </div>
+                    {!collapsedSections['audio'] && (
+                      viewMode === 'list' ? (
+                        <div className="space-y-3.5">
+                          {audioProducts.map((product) => (
+                            <ProductListItem
+                              key={product.id}
+                              product={product}
+                              onAddToCart={onAddToCart}
+                              onQuickView={onQuickView}
+                            />
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
+                          {audioProducts.map((product) => (
+                            <ProductCompactCard
+                              key={product.id}
+                              product={product}
+                              onAddToCart={onAddToCart}
+                              onQuickView={onQuickView}
+                            />
+                          ))}
+                        </div>
+                      )
                     )}
                   </div>
                 )}
 
-                {/* 🖥️ 5. NHÓM MÀN HÌNH LIỀN KHỐI, MÀN ODO & HIỂN THỊ KÍNH LÁI HUD */}
+                {/* 🖥️ 6. NHÓM MÀN HÌNH LIỀN KHỐI, MÀN ODO & ANDROID BOX */}
                 {displayProducts.length > 0 && (
                   <div className="rounded-2xl border border-cyan-500/30 bg-gradient-to-b from-cyan-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-cyan-500/20">
+                    <div 
+                      onClick={() => toggleSectionCollapse('display')}
+                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-cyan-500/20 cursor-pointer select-none"
+                    >
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-xl bg-cyan-500/20 border border-cyan-400/40 text-cyan-400 flex items-center justify-center flex-shrink-0 shadow-lg shadow-cyan-500/10">
                           <Tv className="w-5 h-5" />
@@ -1786,49 +1274,79 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                         <div>
                           <div className="flex items-center gap-2">
                             <h2 className="text-sm sm:text-base font-extrabold text-white tracking-tight">
-                              Màn Hình Hiển Thị
+                              Màn Hình &amp; Android Box
                             </h2>
                             <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/20 border border-cyan-400/30 text-cyan-300 text-[11px] font-extrabold">
                               {displayProducts.length} Sản phẩm
                             </span>
+                            {collapsedSections['display'] && (
+                              <span className="text-[11px] text-slate-400 font-medium">
+                                (Đã thu gọn)
+                              </span>
+                            )}
                           </div>
                           <p className="text-[11px] text-slate-400 mt-0.5">
-                            Màn hình đôi 20.8" liền khối ODO &amp; Android, Màn HUD kính lái MCD91 đa chế độ &amp; Màn ODO GBA OLED 10.3" cắm giắc Zin
+                            Màn hình đôi 20.8" liền khối ODO &amp; Android, HUD kính lái MCD91, Màn ODO OLED &amp; Android Box Zestech DX165 / CASKA cắm cổng USB zin siêu mượt
                           </p>
                         </div>
                       </div>
+
+                      <button
+                        type="button"
+                        id="toggle-collapse-display-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleSectionCollapse('display');
+                        }}
+                        className="self-start sm:self-center flex items-center gap-2 px-3 py-1.5 rounded-full border border-cyan-500/40 bg-slate-900/90 hover:bg-slate-800 hover:border-cyan-400 text-cyan-200 hover:text-white text-xs font-semibold transition-all cursor-pointer shadow-sm active:scale-95 shrink-0"
+                        title={collapsedSections['display'] ? 'Mở rộng sản phẩm' : 'Thu gọn sản phẩm'}
+                      >
+                        <span className="text-[11px] font-medium text-slate-300">
+                          {collapsedSections['display'] ? 'Mở rộng' : 'Thu gọn'}
+                        </span>
+                        <ChevronDown
+                          className={`w-4 h-4 text-white transition-transform duration-300 ${
+                            collapsedSections['display'] ? '-rotate-90' : 'rotate-0'
+                          }`}
+                        />
+                      </button>
                     </div>
 
-                    {viewMode === 'list' ? (
-                      <div className="space-y-3.5">
-                        {displayProducts.map((product) => (
-                          <ProductListItem
-                            key={product.id}
-                            product={product}
-                            onAddToCart={onAddToCart}
-                            onQuickView={onQuickView}
-                          />
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
-                        {displayProducts.map((product) => (
-                          <ProductCompactCard
-                            key={product.id}
-                            product={product}
-                            onAddToCart={onAddToCart}
-                            onQuickView={onQuickView}
-                          />
-                        ))}
-                      </div>
+                    {!collapsedSections['display'] && (
+                      viewMode === 'list' ? (
+                        <div className="space-y-3.5">
+                          {displayProducts.map((product) => (
+                            <ProductListItem
+                              key={product.id}
+                              product={product}
+                              onAddToCart={onAddToCart}
+                              onQuickView={onQuickView}
+                            />
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
+                          {displayProducts.map((product) => (
+                            <ProductCompactCard
+                              key={product.id}
+                              product={product}
+                              onAddToCart={onAddToCart}
+                              onQuickView={onQuickView}
+                            />
+                          ))}
+                        </div>
+                      )
                     )}
                   </div>
                 )}
 
-                {/* 🪞 6. NHÓM GƯƠNG GẬP ĐIỆN TỰ ĐỘNG THEO XE */}
+                {/* 🪞 7. NHÓM GƯƠNG GẬP ĐIỆN TỰ ĐỘNG THEO XE */}
                 {mirrorProducts.length > 0 && (
                   <div className="rounded-2xl border border-amber-500/30 bg-gradient-to-b from-amber-950/30 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-amber-500/20">
+                    <div 
+                      onClick={() => toggleSectionCollapse('mirror')}
+                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-amber-500/20 cursor-pointer select-none"
+                    >
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-400/40 text-amber-400 flex items-center justify-center flex-shrink-0 shadow-lg shadow-amber-500/10">
                           <Sliders className="w-5 h-5" />
@@ -1841,144 +1359,74 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                             <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 text-[11px] font-extrabold">
                               {mirrorProducts.length} Sản phẩm
                             </span>
+                            {collapsedSections['mirror'] && (
+                              <span className="text-[11px] text-slate-400 font-medium">
+                                (Đã thu gọn)
+                              </span>
+                            )}
                           </div>
                           <p className="text-[11px] text-slate-400 mt-0.5">
                             Mô tơ gập gương tự động theo chìa khóa Smartkey và công tắc trong cabin cho VinFast VF5, VF6 &amp; Limo Green (Bản Tiêu Chuẩn / Bản LED Xi Nhan)
                           </p>
                         </div>
                       </div>
+
+                      <button
+                        type="button"
+                        id="toggle-collapse-mirror-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleSectionCollapse('mirror');
+                        }}
+                        className="self-start sm:self-center flex items-center gap-2 px-3 py-1.5 rounded-full border border-amber-500/40 bg-slate-900/90 hover:bg-slate-800 hover:border-amber-400 text-amber-200 hover:text-white text-xs font-semibold transition-all cursor-pointer shadow-sm active:scale-95 shrink-0"
+                        title={collapsedSections['mirror'] ? 'Mở rộng sản phẩm' : 'Thu gọn sản phẩm'}
+                      >
+                        <span className="text-[11px] font-medium text-slate-300">
+                          {collapsedSections['mirror'] ? 'Mở rộng' : 'Thu gọn'}
+                        </span>
+                        <ChevronDown
+                          className={`w-4 h-4 text-white transition-transform duration-300 ${
+                            collapsedSections['mirror'] ? '-rotate-90' : 'rotate-0'
+                          }`}
+                        />
+                      </button>
                     </div>
 
-                    {viewMode === 'list' ? (
-                      <div className="space-y-3.5">
-                        {mirrorProducts.map((product) => (
-                          <ProductListItem
-                            key={product.id}
-                            product={product}
-                            onAddToCart={onAddToCart}
-                            onQuickView={onQuickView}
-                          />
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
-                        {mirrorProducts.map((product) => (
-                          <ProductCompactCard
-                            key={product.id}
-                            product={product}
-                            onAddToCart={onAddToCart}
-                            onQuickView={onQuickView}
-                          />
-                        ))}
-                      </div>
+                    {!collapsedSections['mirror'] && (
+                      viewMode === 'list' ? (
+                        <div className="space-y-3.5">
+                          {mirrorProducts.map((product) => (
+                            <ProductListItem
+                              key={product.id}
+                              product={product}
+                              onAddToCart={onAddToCart}
+                              onQuickView={onQuickView}
+                            />
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
+                          {mirrorProducts.map((product) => (
+                            <ProductCompactCard
+                              key={product.id}
+                              product={product}
+                              onAddToCart={onAddToCart}
+                              onQuickView={onQuickView}
+                            />
+                          ))}
+                        </div>
+                      )
                     )}
                   </div>
                 )}
 
-                {/* 📱 8. ANDROID BOX */}
-                {androidBoxProducts.length > 0 && (
-                  <div className="rounded-2xl border border-emerald-500/30 bg-gradient-to-b from-emerald-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-emerald-500/20">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-400/40 text-emerald-400 flex items-center justify-center flex-shrink-0 shadow-lg shadow-emerald-500/10">
-                          <Cpu className="w-5 h-5" />
-                        </div>
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <h2 className="text-sm sm:text-base font-extrabold text-white tracking-tight">
-                              Android Box
-                            </h2>
-                            <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-[11px] font-extrabold">
-                              {androidBoxProducts.length} Sản phẩm
-                            </span>
-                          </div>
-                          <p className="text-[11px] text-slate-400 mt-0.5">
-                            Zestech DX165 Thế Hệ 2 &amp; CASKA Smart USB 8 Nhân - Biến màn Zin thành màn Android thông minh
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {viewMode === 'list' ? (
-                      <div className="space-y-3.5">
-                        {androidBoxProducts.map((product) => (
-                          <ProductListItem
-                            key={product.id}
-                            product={product}
-                            onAddToCart={onAddToCart}
-                            onQuickView={onQuickView}
-                          />
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
-                        {androidBoxProducts.map((product) => (
-                          <ProductCompactCard
-                            key={product.id}
-                            product={product}
-                            onAddToCart={onAddToCart}
-                            onQuickView={onQuickView}
-                          />
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {/* 🛡️ 9. CẢM BIẾN AN TOÀN */}
-                {safetySensorProducts.length > 0 && (
-                  <div className="rounded-2xl border border-rose-500/30 bg-gradient-to-b from-rose-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-rose-500/20">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-rose-500/20 border border-rose-400/40 text-rose-400 flex items-center justify-center flex-shrink-0 shadow-lg shadow-rose-500/10">
-                          <ShieldAlert className="w-5 h-5" />
-                        </div>
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <h2 className="text-sm sm:text-base font-extrabold text-white tracking-tight">
-                              Cảm Biến An Toàn
-                            </h2>
-                            <span className="px-2.5 py-0.5 rounded-full bg-rose-500/20 border border-rose-400/30 text-rose-300 text-[11px] font-extrabold">
-                              {safetySensorProducts.length} Sản phẩm
-                            </span>
-                          </div>
-                          <p className="text-[11px] text-slate-400 mt-0.5">
-                            Cảm biến áp suất lốp ICAR Ellisafe TN405 &amp; Cảm biến đỗ xe hiển thị màn ODO zin Ellisen S40 / E48
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {viewMode === 'list' ? (
-                      <div className="space-y-3.5">
-                        {safetySensorProducts.map((product) => (
-                          <ProductListItem
-                            key={product.id}
-                            product={product}
-                            onAddToCart={onAddToCart}
-                            onQuickView={onQuickView}
-                          />
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
-                        {safetySensorProducts.map((product) => (
-                          <ProductCompactCard
-                            key={product.id}
-                            product={product}
-                            onAddToCart={onAddToCart}
-                            onQuickView={onQuickView}
-                          />
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {/* 💺 10. NỘI THẤT & GHẾ XE */}
+                {/* 💺 8. NỘI THẤT & GHẾ XE */}
                 {interiorSeatProducts.length > 0 && (
                   <div className="rounded-2xl border border-indigo-500/30 bg-gradient-to-b from-indigo-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-indigo-500/20">
+                    <div 
+                      onClick={() => toggleSectionCollapse('interior-seat')}
+                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-indigo-500/20 cursor-pointer select-none"
+                    >
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-xl bg-indigo-500/20 border border-indigo-400/40 text-indigo-400 flex items-center justify-center flex-shrink-0 shadow-lg shadow-indigo-500/10">
                           <Armchair className="w-5 h-5" />
@@ -1991,184 +1439,223 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                             <span className="px-2.5 py-0.5 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 text-[11px] font-extrabold">
                               {interiorSeatProducts.length} Sản phẩm
                             </span>
+                            {collapsedSections['interior-seat'] && (
+                              <span className="text-[11px] text-slate-400 font-medium">
+                                (Đã thu gọn)
+                              </span>
+                            )}
                           </div>
                           <p className="text-[11px] text-slate-400 mt-0.5">
                             Độ ghế chỉnh điện UNISEAT / Limo Green, Áo ghế da Nappa 9D, Thảm sàn TPE CARSEN / HUVI &amp; Bệ tỳ tay trung tâm
                           </p>
                         </div>
                       </div>
+
+                      <button
+                        type="button"
+                        id="toggle-collapse-interior-seat-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleSectionCollapse('interior-seat');
+                        }}
+                        className="self-start sm:self-center flex items-center gap-2 px-3 py-1.5 rounded-full border border-indigo-500/40 bg-slate-900/90 hover:bg-slate-800 hover:border-indigo-400 text-indigo-200 hover:text-white text-xs font-semibold transition-all cursor-pointer shadow-sm active:scale-95 shrink-0"
+                        title={collapsedSections['interior-seat'] ? 'Mở rộng sản phẩm' : 'Thu gọn sản phẩm'}
+                      >
+                        <span className="text-[11px] font-medium text-slate-300">
+                          {collapsedSections['interior-seat'] ? 'Mở rộng' : 'Thu gọn'}
+                        </span>
+                        <ChevronDown
+                          className={`w-4 h-4 text-white transition-transform duration-300 ${
+                            collapsedSections['interior-seat'] ? '-rotate-90' : 'rotate-0'
+                          }`}
+                        />
+                      </button>
                     </div>
 
-                    {viewMode === 'list' ? (
-                      <div className="space-y-3.5">
-                        {interiorSeatProducts.map((product) => (
-                          <ProductListItem
-                            key={product.id}
-                            product={product}
-                            onAddToCart={onAddToCart}
-                            onQuickView={onQuickView}
-                          />
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
-                        {interiorSeatProducts.map((product) => (
-                          <ProductCompactCard
-                            key={product.id}
-                            product={product}
-                            onAddToCart={onAddToCart}
-                            onQuickView={onQuickView}
-                          />
-                        ))}
-                      </div>
+                    {!collapsedSections['interior-seat'] && (
+                      viewMode === 'list' ? (
+                        <div className="space-y-3.5">
+                          {interiorSeatProducts.map((product) => (
+                            <ProductListItem
+                              key={product.id}
+                              product={product}
+                              onAddToCart={onAddToCart}
+                              onQuickView={onQuickView}
+                            />
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
+                          {interiorSeatProducts.map((product) => (
+                            <ProductCompactCard
+                              key={product.id}
+                              product={product}
+                              onAddToCart={onAddToCart}
+                              onQuickView={onQuickView}
+                            />
+                          ))}
+                        </div>
+                      )
                     )}
                   </div>
                 )}
 
-                {/* ⚡ 11. CỐP ĐIỆN & BỆ BƯỚC */}
-                {electricConvenienceProducts.length > 0 && (
-                  <div className="rounded-2xl border border-blue-500/30 bg-gradient-to-b from-blue-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-blue-500/20">
+                {/* 🛡️ 9. TIỆN ÍCH & AN TOÀN XE */}
+                {safetyUtilityProducts.length > 0 && (
+                  <div className="rounded-2xl border border-teal-500/30 bg-gradient-to-b from-teal-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
+                    <div 
+                      onClick={() => toggleSectionCollapse('safety-utility')}
+                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-teal-500/20 cursor-pointer select-none"
+                    >
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-blue-500/20 border border-blue-400/40 text-blue-400 flex items-center justify-center flex-shrink-0 shadow-lg shadow-blue-500/10">
-                          <Zap className="w-5 h-5" />
-                        </div>
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <h2 className="text-sm sm:text-base font-extrabold text-white tracking-tight">
-                              Cốp Điện &amp; Bệ Bước
-                            </h2>
-                            <span className="px-2.5 py-0.5 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-300 text-[11px] font-extrabold">
-                              {electricConvenienceProducts.length} Sản phẩm
-                            </span>
-                          </div>
-                          <p className="text-[11px] text-slate-400 mt-0.5">
-                            Cốp điện tự động ICAR ELLIGATE chống kẹt thông minh cho VF3 &amp; Bệ bước chân điện thò thụt chịu tải 300kg
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {viewMode === 'list' ? (
-                      <div className="space-y-3.5">
-                        {electricConvenienceProducts.map((product) => (
-                          <ProductListItem
-                            key={product.id}
-                            product={product}
-                            onAddToCart={onAddToCart}
-                            onQuickView={onQuickView}
-                          />
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
-                        {electricConvenienceProducts.map((product) => (
-                          <ProductCompactCard
-                            key={product.id}
-                            product={product}
-                            onAddToCart={onAddToCart}
-                            onQuickView={onQuickView}
-                          />
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {/* 🛡️ 12. BẢO VỆ & CHĂM SÓC XE */}
-                {protectionCareProducts.length > 0 && (
-                  <div className="rounded-2xl border border-orange-500/30 bg-gradient-to-b from-orange-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-orange-500/20">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-orange-500/20 border border-orange-400/40 text-orange-400 flex items-center justify-center flex-shrink-0 shadow-lg shadow-orange-500/10">
+                        <div className="w-10 h-10 rounded-xl bg-teal-500/20 border border-teal-400/40 text-teal-400 flex items-center justify-center flex-shrink-0 shadow-lg shadow-teal-500/10">
                           <ShieldCheck className="w-5 h-5" />
                         </div>
                         <div>
                           <div className="flex items-center gap-2">
                             <h2 className="text-sm sm:text-base font-extrabold text-white tracking-tight">
-                              Bảo Vệ &amp; Chăm Sóc Xe
+                              Tiện Ích &amp; An Toàn Xe
                             </h2>
-                            <span className="px-2.5 py-0.5 rounded-full bg-orange-500/20 border border-orange-400/30 text-orange-300 text-[11px] font-extrabold">
-                              {protectionCareProducts.length} Sản phẩm
+                            <span className="px-2.5 py-0.5 rounded-full bg-teal-500/20 border border-teal-400/30 text-teal-300 text-[11px] font-extrabold">
+                              {safetyUtilityProducts.length} Sản phẩm
                             </span>
+                            {collapsedSections['safety-utility'] && (
+                              <span className="text-[11px] text-slate-400 font-medium">
+                                (Đã thu gọn)
+                              </span>
+                            )}
                           </div>
                           <p className="text-[11px] text-slate-400 mt-0.5">
-                            Dán phim cách nhiệt 3M Crystalline 200 lớp, giáp gầm bảo vệ pin VinFast SICHER &amp; Phay phục hồi lazang CNC
+                            Cảm biến áp suất lốp &amp; đỗ xe ICAR, Cốp điện tự động VF3, Bệ bước chân điện thò thụt, Phim cách nhiệt 3M Crystalline, Giáp gầm bảo vệ pin &amp; Phay lazang CNC
                           </p>
                         </div>
                       </div>
+
+                      <button
+                        type="button"
+                        id="toggle-collapse-safety-utility-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleSectionCollapse('safety-utility');
+                        }}
+                        className="self-start sm:self-center flex items-center gap-2 px-3 py-1.5 rounded-full border border-teal-500/40 bg-slate-900/90 hover:bg-slate-800 hover:border-teal-400 text-teal-200 hover:text-white text-xs font-semibold transition-all cursor-pointer shadow-sm active:scale-95 shrink-0"
+                        title={collapsedSections['safety-utility'] ? 'Mở rộng sản phẩm' : 'Thu gọn sản phẩm'}
+                      >
+                        <span className="text-[11px] font-medium text-slate-300">
+                          {collapsedSections['safety-utility'] ? 'Mở rộng' : 'Thu gọn'}
+                        </span>
+                        <ChevronDown
+                          className={`w-4 h-4 text-white transition-transform duration-300 ${
+                            collapsedSections['safety-utility'] ? '-rotate-90' : 'rotate-0'
+                          }`}
+                        />
+                      </button>
                     </div>
 
-                    {viewMode === 'list' ? (
-                      <div className="space-y-3.5">
-                        {protectionCareProducts.map((product) => (
-                          <ProductListItem
-                            key={product.id}
-                            product={product}
-                            onAddToCart={onAddToCart}
-                            onQuickView={onQuickView}
-                          />
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
-                        {protectionCareProducts.map((product) => (
-                          <ProductCompactCard
-                            key={product.id}
-                            product={product}
-                            onAddToCart={onAddToCart}
-                            onQuickView={onQuickView}
-                          />
-                        ))}
-                      </div>
+                    {!collapsedSections['safety-utility'] && (
+                      viewMode === 'list' ? (
+                        <div className="space-y-3.5">
+                          {safetyUtilityProducts.map((product) => (
+                            <ProductListItem
+                              key={product.id}
+                              product={product}
+                              onAddToCart={onAddToCart}
+                              onQuickView={onQuickView}
+                            />
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
+                          {safetyUtilityProducts.map((product) => (
+                            <ProductCompactCard
+                              key={product.id}
+                              product={product}
+                              onAddToCart={onAddToCart}
+                              onQuickView={onQuickView}
+                            />
+                          ))}
+                        </div>
+                      )
                     )}
                   </div>
                 )}
 
                 {/* 🚗 CÁC SẢN PHẨM KHÁC (DỰ PHÒNG KHI CÓ SẢN PHẨM MỚI CHƯA PHÂN LOẠI) */}
                 {otherProducts.length > 0 && (
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between gap-3 px-1 pb-2 border-b border-slate-800">
-                      <div className="flex items-center gap-2.5">
-                        <div className="w-8 h-8 rounded-lg bg-slate-800 border border-slate-700 text-emerald-400 flex items-center justify-center">
-                          <PackageCheck className="w-4 h-4" />
+                  <div className="rounded-2xl border border-slate-700/40 bg-gradient-to-b from-slate-900/80 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
+                    <div 
+                      onClick={() => toggleSectionCollapse('other')}
+                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-700/40 cursor-pointer select-none"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 text-emerald-400 flex items-center justify-center flex-shrink-0">
+                          <PackageCheck className="w-5 h-5" />
                         </div>
                         <div>
-                          <h3 className="text-sm sm:text-base font-extrabold text-white">
-                            Các Sản Phẩm &amp; Dịch Vụ Khác
-                          </h3>
-                          <p className="text-[11px] text-slate-400">
+                          <div className="flex items-center gap-2">
+                            <h3 className="text-sm sm:text-base font-extrabold text-white">
+                              Các Sản Phẩm &amp; Dịch Vụ Khác
+                            </h3>
+                            <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+                              {otherProducts.length} Mục
+                            </span>
+                            {collapsedSections['other'] && (
+                              <span className="text-[11px] text-slate-400 font-medium">
+                                (Đã thu gọn)
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-[11px] text-slate-400 mt-0.5">
                             Các phụ kiện và dịch vụ nâng cấp xe bổ sung
                           </p>
                         </div>
                       </div>
-                      <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
-                        {otherProducts.length} Mục
-                      </span>
+
+                      <button
+                        type="button"
+                        id="toggle-collapse-other-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleSectionCollapse('other');
+                        }}
+                        className="self-start sm:self-center flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-700 bg-slate-850 hover:bg-slate-750 text-slate-300 hover:text-white text-xs font-semibold transition-all cursor-pointer shadow-sm active:scale-95 shrink-0"
+                        title={collapsedSections['other'] ? 'Mở rộng sản phẩm' : 'Thu gọn sản phẩm'}
+                      >
+                        <span className="text-[11px] font-medium text-slate-300">
+                          {collapsedSections['other'] ? 'Mở rộng' : 'Thu gọn'}
+                        </span>
+                        <ChevronDown
+                          className={`w-4 h-4 text-white transition-transform duration-300 ${
+                            collapsedSections['other'] ? '-rotate-90' : 'rotate-0'
+                          }`}
+                        />
+                      </button>
                     </div>
 
-                    {viewMode === 'list' ? (
-                      <div className="space-y-3.5">
-                        {otherProducts.map((product) => (
-                          <ProductListItem
-                            key={product.id}
-                            product={product}
-                            onAddToCart={onAddToCart}
-                            onQuickView={onQuickView}
-                          />
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
-                        {otherProducts.map((product) => (
-                          <ProductCompactCard
-                            key={product.id}
-                            product={product}
-                            onAddToCart={onAddToCart}
-                            onQuickView={onQuickView}
-                          />
-                        ))}
-                      </div>
+                    {!collapsedSections['other'] && (
+                      viewMode === 'list' ? (
+                        <div className="space-y-3.5">
+                          {otherProducts.map((product) => (
+                            <ProductListItem
+                              key={product.id}
+                              product={product}
+                              onAddToCart={onAddToCart}
+                              onQuickView={onQuickView}
+                            />
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
+                          {otherProducts.map((product) => (
+                            <ProductCompactCard
+                              key={product.id}
+                              product={product}
+                              onAddToCart={onAddToCart}
+                              onQuickView={onQuickView}
+                            />
+                          ))}
+                        </div>
+                      )
                     )}
                   </div>
                 )}
@@ -2176,361 +1663,6 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
             )}
           </AnimatePresence>
         </motion.main>
-      </div>
-
-      {/* 4. Full-Featured Mobile Filter Slide-over Drawer */}
-      <AnimatePresence>
-        {showMobileFilterDrawer && (
-          <div className="fixed inset-0 z-50 overflow-hidden lg:hidden">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="fixed inset-0 bg-black/80 backdrop-blur-sm cursor-pointer"
-              onClick={() => setShowMobileFilterDrawer(false)}
-            />
-            <div className="absolute inset-y-0 right-0 max-w-full flex pl-8 pointer-events-none">
-              <motion.div
-                initial={{ x: '100%' }}
-                animate={{ x: 0 }}
-                exit={{ x: '100%' }}
-                transition={{ type: 'spring', damping: 27, stiffness: 280 }}
-                className="w-screen max-w-md bg-slate-900 border-l border-slate-800 flex flex-col justify-between overflow-hidden pointer-events-auto shadow-2xl"
-              >
-                {/* Drawer Header */}
-                <div className="p-5 border-b border-slate-800 flex items-center justify-between shrink-0 bg-slate-950/60">
-                  <div className="flex items-center gap-2 font-bold text-white text-base">
-                    <SlidersHorizontal className="w-5 h-5 text-emerald-400" />
-                    <span>Bộ Lọc Sản Phẩm</span>
-                    {activeFiltersCount > 0 && (
-                      <span className="px-2 py-0.5 rounded-full bg-emerald-500 text-slate-950 text-xs font-extrabold">
-                        {activeFiltersCount}
-                      </span>
-                    )}
-                  </div>
-                  <button
-                    onClick={() => setShowMobileFilterDrawer(false)}
-                    className="p-2 rounded-xl text-slate-400 hover:text-white"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
-                </div>
-
-                {/* Drawer Scrollable Content */}
-                <div className="p-5 space-y-6 overflow-y-auto flex-1 text-xs">
-                  {/* Search in Drawer */}
-                  <div className="space-y-1.5">
-                    <label className="font-bold uppercase tracking-wider text-slate-400 text-[11px]">
-                      Từ khóa tìm kiếm
-                    </label>
-                    <div className="relative">
-                      <input
-                        type="text"
-                        placeholder="Tìm tên sản phẩm, dòng xe..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full pl-8 pr-7 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
-                      />
-                      <Search className="w-3.5 h-3.5 text-slate-500 absolute left-2.5 top-2.5" />
-                      {searchQuery && (
-                        <button
-                          onClick={() => setSearchQuery('')}
-                          className="absolute right-2 top-2 text-slate-500 hover:text-white"
-                        >
-                          <X className="w-3.5 h-3.5" />
-                        </button>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Classification & Categories in Drawer */}
-                  <div className="space-y-3">
-                    <label className="font-bold uppercase tracking-wider text-slate-400 text-[11px] block">
-                      Phân Loại Hạng Mục
-                    </label>
-                    <div className="grid grid-cols-3 gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800">
-                      {CLASSIFICATIONS.map(c => {
-                        const isSel = selectedClassification === c.id;
-                        return (
-                          <button
-                            key={c.id}
-                            type="button"
-                            onClick={() => setSelectedClassification(c.id as ItemClassification)}
-                            className={`py-1.5 px-1 text-[11px] font-bold rounded-lg transition-all text-center truncate ${
-                              isSel
-                                ? c.id === 'service'
-                                  ? 'bg-purple-600 text-white'
-                                  : c.id === 'product'
-                                  ? 'bg-sky-600 text-white'
-                                  : 'bg-emerald-500 text-slate-950'
-                                : 'text-slate-400 hover:text-white'
-                            }`}
-                          >
-                            {c.shortName}
-                          </button>
-                        );
-                      })}
-                    </div>
-
-                    <label className="font-bold uppercase tracking-wider text-slate-400 text-[11px] block pt-2">
-                      Danh Mục Chi Tiết
-                    </label>
-                    <div className="space-y-1">
-                      <button
-                        type="button"
-                        onClick={() => setSelectedCategory('all')}
-                        className={`w-full flex items-center justify-between px-3 py-2 rounded-xl font-medium transition-colors ${
-                          selectedCategory === 'all'
-                            ? 'bg-emerald-500 text-slate-950 font-bold'
-                            : 'text-slate-300 hover:bg-slate-800'
-                        }`}
-                      >
-                        <span>Tất Cả Danh Mục</span>
-                        <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
-                          selectedCategory === 'all' ? 'bg-slate-950/20 text-slate-950 font-bold' : 'bg-slate-800 text-slate-400'
-                        }`}>
-                          {PRODUCTS.length}
-                        </span>
-                      </button>
-
-                      {(selectedClassification === 'all' || selectedClassification === 'product') && (
-                        <div className="pt-2">
-                          <div className="text-[10px] font-bold uppercase tracking-wider text-sky-400 px-2 py-1 flex items-center gap-1.5">
-                            <PackageCheck className="w-3 h-3" />
-                            <span>Sản Phẩm Chính Hãng</span>
-                          </div>
-                          {CATEGORIES.filter(cat => cat.itemType === 'product').map((cat) => {
-                            const count = PRODUCTS.filter(p => p.category === cat.id).length;
-                            return (
-                              <button
-                                key={cat.id}
-                                type="button"
-                                onClick={() => setSelectedCategory(cat.id)}
-                                className={`w-full flex items-center justify-between px-3 py-1.5 rounded-xl font-medium transition-colors ${
-                                  selectedCategory === cat.id
-                                    ? 'bg-sky-600 text-white font-bold'
-                                    : 'text-slate-300 hover:bg-slate-800'
-                                }`}
-                              >
-                                <span className="truncate">{cat.name}</span>
-                                <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
-                                  selectedCategory === cat.id ? 'bg-white/20 text-white font-bold' : 'bg-slate-800 text-slate-400'
-                                }`}>
-                                  {count}
-                                </span>
-                              </button>
-                            );
-                          })}
-                        </div>
-                      )}
-
-                      {(selectedClassification === 'all' || selectedClassification === 'service') && (
-                        <div className="pt-2">
-                          <div className="text-[10px] font-bold uppercase tracking-wider text-purple-400 px-2 py-1 flex items-center gap-1.5">
-                            <Wrench className="w-3 h-3" />
-                            <span>Dịch Vụ Độ Xe Chính Hãng</span>
-                          </div>
-                          {CATEGORIES.filter(cat => cat.itemType === 'service').map((cat) => {
-                            const count = PRODUCTS.filter(p => p.category === cat.id).length;
-                            return (
-                              <button
-                                key={cat.id}
-                                type="button"
-                                onClick={() => setSelectedCategory(cat.id)}
-                                className={`w-full flex items-center justify-between px-3 py-1.5 rounded-xl font-medium transition-colors ${
-                                  selectedCategory === cat.id
-                                    ? 'bg-purple-600 text-white font-bold'
-                                    : 'text-slate-300 hover:bg-slate-800'
-                                }`}
-                              >
-                                <span className="truncate">{cat.name}</span>
-                                <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
-                                  selectedCategory === cat.id ? 'bg-white/20 text-white font-bold' : 'bg-slate-800 text-slate-400'
-                                }`}>
-                                  {count}
-                                </span>
-                              </button>
-                            );
-                          })}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Price Ranges */}
-                  <div className="space-y-2 pt-3 border-t border-slate-800">
-                    <label className="font-bold uppercase tracking-wider text-slate-400 text-[11px]">
-                      Khoảng Giá
-                    </label>
-                    <div className="space-y-1">
-                      {priceRanges.map((pr) => (
-                        <label key={pr.id} className="flex items-center justify-between text-slate-300 py-1.5 px-2 rounded-lg hover:bg-slate-800/50 cursor-pointer">
-                          <div className="flex items-center gap-2">
-                            <input
-                              type="radio"
-                              name="mobile-price"
-                              checked={priceRange === pr.id}
-                              onChange={() => {
-                                setPriceRange(pr.id);
-                                setAppliedCustomPrice(null);
-                              }}
-                              className="accent-emerald-500"
-                            />
-                            <span>{pr.label}</span>
-                          </div>
-                        </label>
-                      ))}
-                    </div>
-
-                    {/* Custom Price in Drawer */}
-                    <div className="p-3 bg-slate-950 border border-slate-800 rounded-xl space-y-2 mt-2">
-                      <div className="text-[11px] font-bold text-slate-400">Tự nhập khoảng giá (₫)</div>
-                      <div className="grid grid-cols-2 gap-2">
-                        <input
-                          type="number"
-                          placeholder="Từ"
-                          value={customMinPrice}
-                          onChange={(e) => setCustomMinPrice(e.target.value)}
-                          className="w-full px-2 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-xs text-white placeholder-slate-500"
-                        />
-                        <input
-                          type="number"
-                          placeholder="Đến"
-                          value={customMaxPrice}
-                          onChange={(e) => setCustomMaxPrice(e.target.value)}
-                          className="w-full px-2 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-xs text-white placeholder-slate-500"
-                        />
-                      </div>
-                      <button
-                        type="button"
-                        onClick={handleApplyCustomPrice}
-                        disabled={!customMinPrice && !customMaxPrice}
-                        className="w-full py-1.5 rounded-lg bg-emerald-500 text-slate-950 font-bold text-xs"
-                      >
-                        Áp Dụng
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Vehicle Types */}
-                  <div className="space-y-2 pt-3 border-t border-slate-800">
-                    <label className="font-bold uppercase tracking-wider text-slate-400 text-[11px]">
-                      Phân Khúc Xe
-                    </label>
-                    <div className="space-y-1">
-                      {vehicleTypesList.map((vt) => (
-                        <button
-                          key={vt.id}
-                          type="button"
-                          onClick={() => setVehicleType(vt.id)}
-                          className={`w-full flex items-center justify-between px-3 py-1.5 rounded-lg text-xs transition-colors ${
-                            vehicleType === vt.id
-                              ? 'bg-purple-950 text-purple-300 border border-purple-500/40 font-bold'
-                              : 'text-slate-400 hover:text-white'
-                          }`}
-                        >
-                          <span>{vt.label}</span>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Status */}
-                  <div className="space-y-2 pt-3 border-t border-slate-800">
-                    <label className="font-bold uppercase tracking-wider text-slate-400 text-[11px]">
-                      Ưu Đãi &amp; Tình Trạng
-                    </label>
-                    <div className="space-y-1.5">
-                      <label className="flex items-center gap-2 text-slate-300 py-1">
-                        <input
-                          type="checkbox"
-                          checked={onlySale}
-                          onChange={(e) => setOnlySale(e.target.checked)}
-                          className="accent-rose-500 rounded"
-                        />
-                        <span className="text-rose-300 font-medium">🔥 Đang Giảm Giá ({filterCounts.sale})</span>
-                      </label>
-                      <label className="flex items-center gap-2 text-slate-300 py-1">
-                        <input
-                          type="checkbox"
-                          checked={onlyBestSeller}
-                          onChange={(e) => setOnlyBestSeller(e.target.checked)}
-                          className="accent-amber-500 rounded"
-                        />
-                        <span className="text-amber-300 font-medium">⭐ Bán Chạy Nhất ({filterCounts.bestSeller})</span>
-                      </label>
-                      <label className="flex items-center gap-2 text-slate-300 py-1">
-                        <input
-                          type="checkbox"
-                          checked={onlyInStock}
-                          onChange={(e) => setOnlyInStock(e.target.checked)}
-                          className="accent-sky-500 rounded"
-                        />
-                        <span className="text-sky-300 font-medium">📦 Sẵn Hàng ({filterCounts.inStock})</span>
-                      </label>
-                    </div>
-                  </div>
-
-                  {/* Useful Features (Tính năng hữu ích) */}
-                  <div className="space-y-2 pt-3 border-t border-slate-800">
-                    <div className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-emerald-400 text-[11px]">
-                      <Sparkles className="w-3.5 h-3.5" />
-                      <span>Tính Năng Hữu Ích</span>
-                    </div>
-                    <div className="space-y-1.5">
-                      {usefulFeaturesList.map((uf) => {
-                        const isActive = usefulFilter === uf.id;
-                        const count = uf.id === 'all'
-                          ? PRODUCTS.length
-                          : PRODUCTS.filter(uf.matcher).length;
-                        return (
-                          <button
-                            key={uf.id}
-                            type="button"
-                            onClick={() => setUsefulFilter(isActive && uf.id !== 'all' ? 'all' : uf.id)}
-                            className={`w-full flex items-center justify-between p-2 rounded-xl text-xs transition-colors border ${
-                              isActive
-                                ? 'bg-emerald-950 text-emerald-300 border-emerald-500/50 font-bold'
-                                : 'bg-slate-900/60 text-slate-400 border-slate-800/80 hover:text-white'
-                            }`}
-                          >
-                            <div className="flex items-center gap-2 truncate">
-                              {uf.icon}
-                              <span className="truncate">{uf.label}</span>
-                            </div>
-                            <span className="text-[10px] bg-slate-950 text-slate-400 px-1.5 py-0.5 rounded font-mono ml-2">
-                              {count}
-                            </span>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Drawer Footer */}
-                <div className="p-4 border-t border-slate-800 flex gap-2 shrink-0 bg-slate-950">
-                  <button
-                    type="button"
-                    onClick={handleResetFilters}
-                    className="w-1/3 py-3 rounded-xl bg-slate-800 text-slate-300 font-semibold text-xs hover:bg-slate-700 transition-colors"
-                  >
-                    Đặt Lại
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setShowMobileFilterDrawer(false)}
-                    className="w-2/3 py-3 rounded-xl bg-emerald-500 text-slate-950 font-bold text-xs hover:bg-emerald-400 transition-colors shadow-lg shadow-emerald-500/20"
-                  >
-                    Xem ({filteredProducts.length}) Sản Phẩm
-                  </button>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        )}
-      </AnimatePresence>
     </div>
   );
 };

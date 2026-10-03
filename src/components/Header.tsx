@@ -10,10 +10,20 @@ import {
   ShieldCheck, 
   MapPin, 
   Wrench,
-  ChevronRight
+  ChevronRight,
+  ChevronDown,
+  LayoutGrid,
+  Video,
+  Eye,
+  Sun,
+  Volume2,
+  Tv,
+  Sliders,
+  Armchair
 } from 'lucide-react';
 import { PageId } from '../types';
 import { COMPANY_INFO, FORMAT_CURRENCY } from '../data/mockData';
+import { STORE_CATEGORY_GROUPS } from '../data/storeCategories';
 
 interface HeaderProps {
   currentPage: PageId;
@@ -24,7 +34,37 @@ interface HeaderProps {
   openConsultation: () => void;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
+  selectedCategory?: string;
+  onSelectCategory?: (category: string) => void;
 }
+
+const renderCategoryIcon = (iconName: string, colorClass?: string) => {
+  const cls = `w-4 h-4 ${colorClass || 'text-slate-300'}`;
+  switch (iconName) {
+    case 'LayoutGrid':
+      return <LayoutGrid className={cls} />;
+    case 'Video':
+    case 'Camera':
+      return <Video className={cls} />;
+    case 'Eye':
+      return <Eye className={cls} />;
+    case 'Sun':
+      return <Sun className={cls} />;
+    case 'Sparkles':
+      return <Sparkles className={cls} />;
+    case 'Volume2':
+      return <Volume2 className={cls} />;
+    case 'Tv':
+      return <Tv className={cls} />;
+    case 'Sliders':
+      return <Sliders className={cls} />;
+    case 'Armchair':
+      return <Armchair className={cls} />;
+    case 'ShieldCheck':
+    default:
+      return <ShieldCheck className={cls} />;
+  }
+};
 
 export const Header: React.FC<HeaderProps> = ({
   currentPage,
@@ -35,8 +75,11 @@ export const Header: React.FC<HeaderProps> = ({
   openConsultation,
   searchQuery,
   setSearchQuery,
+  selectedCategory,
+  onSelectCategory,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [desktopDropdownOpen, setDesktopDropdownOpen] = useState(false);
   const [showSearchModal, setShowSearchModal] = useState(false);
 
   const navItems: { id: PageId; label: string; tag?: string }[] = [
@@ -137,6 +180,112 @@ export const Header: React.FC<HeaderProps> = ({
           <nav className="hidden lg:flex items-center space-x-1 xl:space-x-1.5">
             {navItems.map((item, index) => {
               const isActive = currentPage === item.id;
+              
+              if (item.id === 'products') {
+                return (
+                  <div
+                    key={item.id}
+                    className="relative"
+                    onMouseEnter={() => setDesktopDropdownOpen(true)}
+                    onMouseLeave={() => setDesktopDropdownOpen(false)}
+                  >
+                    <motion.button
+                      id={`nav-item-${item.id}`}
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.35, delay: 0.05 * index, ease: [0.22, 1, 0.36, 1] }}
+                      onClick={() => {
+                        handleNavClick(item.id);
+                        setDesktopDropdownOpen(false);
+                      }}
+                      className={`relative px-4 py-2 rounded-xl text-sm font-semibold transition-colors duration-200 cursor-pointer flex items-center gap-1.5 ${
+                        isActive
+                          ? 'text-white'
+                          : 'text-slate-300 hover:text-white hover:bg-slate-900/60'
+                      }`}
+                    >
+                      {isActive && (
+                        <motion.div
+                          layoutId="activeNavIndicator"
+                          className="absolute inset-0 bg-slate-800/90 rounded-xl border border-slate-700/80 shadow-inner"
+                          transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                        >
+                          <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-gradient-to-r from-emerald-400 via-sky-400 to-purple-500 rounded-full" />
+                        </motion.div>
+                      )}
+                      <span className="relative z-10 flex items-center gap-1.5">
+                        {item.label}
+                        {item.tag && (
+                          <span className="px-1.5 py-0.2 text-[10px] font-bold rounded-full bg-orange-500/20 text-orange-400 border border-orange-500/30">
+                            {item.tag}
+                          </span>
+                        )}
+                        <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${desktopDropdownOpen ? 'rotate-180 text-emerald-400' : ''}`} />
+                      </span>
+                    </motion.button>
+
+                    {/* Desktop Dropdown Mega Menu */}
+                    <AnimatePresence>
+                      {desktopDropdownOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: 6, scale: 0.98 }}
+                          transition={{ duration: 0.18, ease: 'easeOut' }}
+                          className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[520px] p-3 rounded-2xl bg-slate-950/95 border border-slate-800 shadow-2xl backdrop-blur-2xl z-50"
+                        >
+                          <div className="flex items-center justify-between pb-2 mb-2 border-b border-slate-800/80 px-2">
+                            <span className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+                              <LayoutGrid className="w-3.5 h-3.5 text-emerald-400" />
+                              Danh Mục Sản Phẩm &amp; Dịch Vụ
+                            </span>
+                            <button
+                              onClick={() => {
+                                onSelectCategory?.('all');
+                                setCurrentPage('products');
+                                setDesktopDropdownOpen(false);
+                              }}
+                              className="text-xs text-emerald-400 hover:text-emerald-300 font-semibold"
+                            >
+                              Xem tất cả 40 SP →
+                            </button>
+                          </div>
+                          <div className="grid grid-cols-2 gap-1.5">
+                            {STORE_CATEGORY_GROUPS.map((category) => (
+                              <button
+                                key={category.id}
+                                onClick={() => {
+                                  onSelectCategory?.(category.id);
+                                  setCurrentPage('products');
+                                  setDesktopDropdownOpen(false);
+                                }}
+                                className={`flex items-center gap-2.5 p-2 rounded-xl text-left transition-all ${
+                                  selectedCategory === category.id
+                                    ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                                    : 'hover:bg-slate-900 text-slate-300 hover:text-white border border-transparent'
+                                }`}
+                              >
+                                <div className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 ${category.bgColor || 'bg-slate-800'}`}>
+                                  {renderCategoryIcon(category.icon, category.color)}
+                                </div>
+                                <div className="min-w-0">
+                                  <div className="text-xs font-bold truncate">
+                                    {category.name}
+                                  </div>
+                                  <div className="text-[10px] text-slate-500">
+                                    {category.count} sản phẩm
+                                  </div>
+                                </div>
+                              </button>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              }
+
               return (
                 <motion.button
                   key={item.id}
