@@ -13,6 +13,7 @@ export interface Product {
   price: number;
   originalPrice?: number;
   isBestSeller?: boolean;
+  isTopBestSeller?: boolean;
   isNew?: boolean;
   isSale?: boolean;
   rating: number;

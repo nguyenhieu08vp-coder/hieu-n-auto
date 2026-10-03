@@ -17,12 +17,14 @@ interface ProductCardProps {
   product: Product;
   onAddToCart: (product: Product, selectedColor?: string) => void;
   onQuickView: (product: Product) => void;
+  badgeText?: string;
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({
   product,
   onAddToCart,
   onQuickView,
+  badgeText,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [addedAnimation, setAddedAnimation] = useState(false);
@@ -76,10 +78,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
         {/* Top Badges */}
         <div className="absolute top-3 left-3 flex flex-col gap-1.5 z-10">
-          {product.isBestSeller && (
+          {(badgeText || product.isBestSeller) && (
             <span className="px-2.5 py-1 rounded-md text-[11px] font-extrabold uppercase tracking-wide bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-md flex items-center gap-1">
               <Zap className="w-3 h-3 fill-current" />
-              Bán Chạy #1
+              {badgeText || (product.isTopBestSeller ? 'Bán chạy #1' : 'Bán chạy')}
             </span>
           )}
           {discountPercent > 0 && (

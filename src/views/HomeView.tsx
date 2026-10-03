@@ -295,6 +295,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
               product={product}
               onAddToCart={onAddToCart}
               onQuickView={onQuickView}
+              badgeText="Bán chạy #1"
             />
           ))}
         </div>

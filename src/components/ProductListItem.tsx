@@ -76,7 +76,7 @@ export const ProductListItem: React.FC<ProductListItemProps> = ({
           {product.isBestSeller && (
             <span className="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase tracking-wide bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow flex items-center gap-1">
               <Zap className="w-2.5 h-2.5 fill-current" />
-              Bán Chạy #1
+              {product.isTopBestSeller ? 'Bán chạy #1' : 'Bán chạy'}
             </span>
           )}
           {discountPercent > 0 && (

@@ -66,7 +66,7 @@ export const ProductTableView: React.FC<ProductTableViewProps> = ({
               />
               {product.isBestSeller && (
                 <span className="absolute top-0 left-0 px-1.5 py-0.5 rounded-br text-[8px] font-extrabold bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow">
-                  Bán Chạy #1
+                  {product.isTopBestSeller ? 'Bán chạy #1' : 'Bán chạy'}
                 </span>
               )}
             </div>
