@@ -306,6 +306,48 @@ export const PRODUCTS: Product[] = [
     installationTimeHours: 1
   },
   {
+    id: 'prod-41',
+    itemType: 'product',
+    name: 'Gương Điện Tử Ô Tô azcam G1 Series Thế Hệ Mới (G1 | G1 PRO | G1 MAX - Dual Digital Camera & Màn IPS 3000 Nit)',
+    category: 'cameras-360',
+    categoryName: 'Gương Điện Tử Thông Minh azcam G1 Series',
+    price: 11800000,
+    originalPrice: 13500000,
+    isBestSeller: true,
+    isNew: true,
+    isSale: true,
+    rating: 5.0,
+    reviewCount: 188,
+    primaryImage: '/images/tinhnang1.webp',
+    secondaryImage: '/images/basic-camera.jpg',
+    galleryImages: [
+      '/images/tinhnang1.webp',
+      '/images/basic-camera.jpg'
+    ],
+    description: 'azcam G1 Series (G1 / G1 PRO / G1 MAX) - Gương điện tử ô tô thế hệ mới đỉnh cao công nghệ với màn hình truyền hình ảnh trực tiếp (Streaming Rearview Mirror) thời gian thực độ trễ 0s và cụm camera trước tinh tế (Basic Front camera). Tích hợp cảm biến ảnh cao cấp SONY IMX 462 / IMX 335 ghi hình kép siêu nét, màn hình IPS độ sáng cực đại 3000 nit chống chói lóa đèn pha tuyệt đối, hiển thị tốc độ di chuyển và thời gian thực. Thi công cắm giắc Zin 100% kèm bộ Kits nguồn cao cấp miễn phí.',
+    features: [
+      'Gương điện tử thế hệ mới azcam G1 Series: Lựa chọn 3 cấu hình đẳng cấp G1 | G1 PRO | G1 MAX thay thế hoàn hảo gương cơ truyền thống',
+      'Màn hình Streaming Rearview Mirror siêu sáng 3000 nit: Chống chói lóa đèn pha phía sau tuyệt đối, góc nhìn siêu rộng loại bỏ 100% điểm mù',
+      'Dual Digital Camera: Cụm camera trước Basic Front camera đặt gọn gàng trên trần kính lái kết hợp camera sau góc rộng truyền hình trực tiếp',
+      'Hiển thị thông số hành trình trực tiếp: Vận tốc di chuyển GPS (70km/h), đồng hồ thời gian thực và cảnh báo an toàn',
+      'Cảm biến hình ảnh SONY STARVIS IMX 462 / IMX 335: Nhạy sáng siêu việt, bắt trọn biển số xe ban đêm và trời mưa bão lớn',
+      'Cáp truyền tín hiệu Digital chính hãng: Triệt tiêu độ trễ hình ảnh, không bị giật lag hay nhiễu từ',
+      'Dưỡng camera thiết kế chuẩn Zin theo từng dòng xe: Lắp đặt ăn khớp thẩm mỹ như trang bị nguyên bản nhà máy',
+      'Tặng kèm trọn bộ Kits nguồn thông minh cắm giắc Zin 100%: Tự ngắt bảo vệ bình ắc quy, không cắt trích dây điện',
+      'Chính sách bảo hành chính hãng azcam 18 tháng 1 đổi 1 tại Hieu N Auto'
+    ],
+    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
+    materials: ['Màn Hình Kính Cường Lực IPS 3000 Nit Chống Lóa', 'Thân Vỏ Hợp Kim Hàng Không Tản Nhiệt Đa Điểm', 'Cảm Biến Ảnh SONY STARVIS IMX 462/335'],
+    colors: [
+      { name: 'Phiên bản G1 MAX (Bản Cao Cấp Nhất - 3000 Nit)', hex: '#2563EB' },
+      { name: 'Phiên bản G1 PRO (Bản Tiêu Chuẩn Nâng Cao)', hex: '#0284C7' },
+      { name: 'Phiên bản G1 (Bản Cơ Bản Chuẩn Zin)', hex: '#1E293B' }
+    ],
+    warrantyMonths: 18,
+    inStock: true,
+    installationTimeHours: 1.5
+  },
+  {
     id: 'prod-16',
     itemType: 'product',
     name: 'Đèn Bi Gầm LED HCLightAuto G2 Plus 2.0 Inch (3 Chế Độ Màu Chuẩn Zin)',

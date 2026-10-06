@@ -39,7 +39,8 @@ import {
   Sun,
   Droplets,
   Wrench,
-  Cpu
+  Cpu,
+  Plus
 } from 'lucide-react';
 import { Product, ItemClassification } from '../types';
 import { PRODUCTS, CATEGORIES, CLASSIFICATIONS, FORMAT_CURRENCY } from '../data/mockData';
@@ -103,6 +104,85 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
   // Sort & View Modes
   const [sortBy, setSortBy] = useState<'featured' | 'price-asc' | 'price-desc' | 'rating' | 'discount' | 'installation'>('featured');
   const [viewMode, setViewMode] = useState<ViewMode>('grid-compact');
+
+  // Dynamic custom created products (stored locally)
+  const [customProducts, setCustomProducts] = useState<Product[]>(() => {
+    try {
+      const saved = localStorage.getItem('hieun_custom_products');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  const allProducts = useMemo(() => [...PRODUCTS, ...customProducts], [customProducts]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('hieun_custom_products', JSON.stringify(customProducts));
+    } catch (e) {
+      console.error(e);
+    }
+  }, [customProducts]);
+
+  // Modal to create product
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [newProdName, setNewProdName] = useState('');
+  const [newProdCategory, setNewProdCategory] = useState('cameras-360');
+  const [newProdCategoryName, setNewProdCategoryName] = useState('Camera Hành Trình');
+  const [newProdType, setNewProdType] = useState<'product' | 'service'>('product');
+  const [newProdPrice, setNewProdPrice] = useState('2850000');
+  const [newProdOrigPrice, setNewProdOrigPrice] = useState('3400000');
+  const [newProdImage, setNewProdImage] = useState('/images/camera_70mai_m500.jpg');
+  const [newProdDesc, setNewProdDesc] = useState('Sản phẩm nâng cấp chính hãng cao cấp, cắm giắc Zin 100%, bảo hành uy tín tại Hieu N Auto.');
+  const [newProdIsBestSeller, setNewProdIsBestSeller] = useState(false);
+  const [newProdIsSale, setNewProdIsSale] = useState(true);
+  const [newProdSuccessToast, setNewProdSuccessToast] = useState(false);
+
+  const handleCreateProduct = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newProdName.trim()) return;
+
+    const parsedPrice = parseInt(newProdPrice.replace(/\D/g, ''), 10) || 2850000;
+    const parsedOrigPrice = parseInt(newProdOrigPrice.replace(/\D/g, ''), 10) || Math.round(parsedPrice * 1.2);
+
+    const newProduct: Product = {
+      id: `prod-custom-${Date.now()}`,
+      itemType: newProdType,
+      name: newProdName.trim(),
+      category: newProdCategory,
+      categoryName: newProdCategoryName || 'Phụ Kiện Nâng Cấp Ô Tô',
+      price: parsedPrice,
+      originalPrice: parsedOrigPrice,
+      isSale: newProdIsSale,
+      isBestSeller: newProdIsBestSeller,
+      isNew: true,
+      rating: 5.0,
+      reviewCount: 88,
+      primaryImage: newProdImage || '/images/camera_70mai_m500.jpg',
+      secondaryImage: newProdImage || '/images/camera_70mai_m500.jpg',
+      description: newProdDesc.trim() || 'Sản phẩm nâng cấp chất lượng cao cắm giắc Zin 100%.',
+      features: [
+        'Thi công cắm giắc Zin 100% không cắt trích dây điện',
+        'Vận hành ổn định, tương thích chuẩn từng dòng xe',
+        'Bảo hành chính hãng uy tín tại Hieu N Auto'
+      ],
+      vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
+      materials: ['Vật Liệu Cao Cấp Chuẩn Hãng'],
+      colors: [{ name: 'Chuẩn Zin Theo Xe', hex: '#334155' }],
+      warrantyMonths: 24,
+      inStock: true,
+      installationTimeHours: 1
+    };
+
+    setCustomProducts(prev => [newProduct, ...prev]);
+    setIsAddModalOpen(false);
+    setNewProdSuccessToast(true);
+    setTimeout(() => setNewProdSuccessToast(false), 3500);
+
+    // Reset
+    setNewProdName('');
+  };
 
   // State to hide / collapse product items in each category section
   const [collapsedSections, setCollapsedSections] = useState<Record<string, boolean>>({});
@@ -348,7 +428,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
 
   // Filter and sort products
   const filteredProducts = useMemo(() => {
-    return PRODUCTS.filter((product) => {
+    return allProducts.filter((product) => {
       // Classification filter (Sản phẩm chính hãng vs Dịch vụ độ xe chính hãng)
       if (selectedClassification !== 'all' && product.itemType !== selectedClassification) {
         return false;
@@ -449,30 +529,31 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
     minWarranty, 
     usefulFilter, 
     colorFilter, 
-    sortBy
+    sortBy,
+    allProducts
   ]);
 
   // Calculate dynamic counts for filters (based on current category & search, or global)
   const filterCounts = useMemo(() => {
     return {
-      total: PRODUCTS.length,
-      productCount: PRODUCTS.filter(p => p.itemType === 'product').length,
-      serviceCount: PRODUCTS.filter(p => p.itemType === 'service').length,
-      sale: PRODUCTS.filter(p => p.isSale).length,
-      bestSeller: PRODUCTS.filter(p => p.isBestSeller).length,
-      inStock: PRODUCTS.filter(p => p.inStock).length,
-      sedan: PRODUCTS.filter(p => p.vehicleTypes.includes('sedan')).length,
-      suv: PRODUCTS.filter(p => p.vehicleTypes.includes('suv')).length,
-      mpv: PRODUCTS.filter(p => p.vehicleTypes.includes('mpv')).length,
-      luxury: PRODUCTS.filter(p => p.vehicleTypes.includes('luxury')).length,
-      under2m: PRODUCTS.filter(p => p.price < 2000000).length,
-      from2mTo5m: PRODUCTS.filter(p => p.price >= 2000000 && p.price < 5000000).length,
-      from5mTo15m: PRODUCTS.filter(p => p.price >= 5000000 && p.price < 15000000).length,
-      above15m: PRODUCTS.filter(p => p.price >= 15000000).length,
-      highRating: PRODUCTS.filter(p => p.rating >= 4.8).length,
-      warranty24: PRODUCTS.filter(p => p.warrantyMonths >= 24).length,
+      total: allProducts.length,
+      productCount: allProducts.filter(p => p.itemType === 'product').length,
+      serviceCount: allProducts.filter(p => p.itemType === 'service').length,
+      sale: allProducts.filter(p => p.isSale).length,
+      bestSeller: allProducts.filter(p => p.isBestSeller).length,
+      inStock: allProducts.filter(p => p.inStock).length,
+      sedan: allProducts.filter(p => p.vehicleTypes.includes('sedan')).length,
+      suv: allProducts.filter(p => p.vehicleTypes.includes('suv')).length,
+      mpv: allProducts.filter(p => p.vehicleTypes.includes('mpv')).length,
+      luxury: allProducts.filter(p => p.vehicleTypes.includes('luxury')).length,
+      under2m: allProducts.filter(p => p.price < 2000000).length,
+      from2mTo5m: allProducts.filter(p => p.price >= 2000000 && p.price < 5000000).length,
+      from5mTo15m: allProducts.filter(p => p.price >= 5000000 && p.price < 15000000).length,
+      above15m: allProducts.filter(p => p.price >= 15000000).length,
+      highRating: allProducts.filter(p => p.rating >= 4.8).length,
+      warranty24: allProducts.filter(p => p.warrantyMonths >= 24).length,
     };
-  }, []);
+  }, [allProducts]);
 
   // Nhóm Camera Hành Trình & Ghi Hình Chuyên Nghiệp (loại trừ camera 360)
   const camera360ProductIds = useMemo(() => new Set(['prod-2', 'prod-38', 'prod-39']), []);
@@ -592,9 +673,23 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
             Sản Phẩm &amp; Dịch Vụ Độ Xe Chính Hãng
           </h1>
           <p className="text-slate-400 text-xs sm:text-sm mt-1">
-            Hiển thị <strong className="text-emerald-400 font-bold">{filteredProducts.length}</strong> / {PRODUCTS.length} sản phẩm và gói nâng cấp tương thích hoàn hảo
+            Hiển thị <strong className="text-emerald-400 font-bold">{filteredProducts.length}</strong> / {allProducts.length} sản phẩm và gói nâng cấp tương thích hoàn hảo
           </p>
         </div>
+
+        <button
+          type="button"
+          id="btn-open-create-product-modal"
+          onClick={() => {
+            setNewProdCategory('cameras-360');
+            setNewProdCategoryName('Camera Hành Trình');
+            setIsAddModalOpen(true);
+          }}
+          className="self-start md:self-center flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white font-bold text-xs sm:text-sm shadow-lg shadow-emerald-950/40 hover:shadow-emerald-900/60 active:scale-95 transition-all cursor-pointer"
+        >
+          <Plus className="w-4 h-4 stroke-[3]" />
+          <span>Tạo Mục Sản Phẩm Mới</span>
+        </button>
       </motion.div>
 
       {/* Main Product Content */}
@@ -886,30 +981,49 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                             )}
                           </div>
                           <p className="text-[11px] text-slate-400 mt-0.5">
-                            Camera hành trình 4K HDR, camera 3 kênh trước - trong - sau, cảnh báo giao thông giọng nói Vietmap &amp; 70mai
+                            Camera hành trình 4K HDR, camera 3 kênh trước - trong - sau, cảnh báo giao thông Vietmap, 70mai &amp; gương điện tử thông minh azcam G1 Series
                           </p>
                         </div>
                       </div>
 
-                      <button
-                        type="button"
-                        id="toggle-collapse-dashcam-btn"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          toggleSectionCollapse('dashcam');
-                        }}
-                        className="self-start sm:self-center flex items-center gap-2 px-3 py-1.5 rounded-full border border-sky-500/40 bg-slate-900/90 hover:bg-slate-800 hover:border-sky-400 text-sky-200 hover:text-white text-xs font-semibold transition-all cursor-pointer shadow-sm active:scale-95 shrink-0"
-                        title={collapsedSections['dashcam'] ? 'Mở rộng sản phẩm' : 'Thu gọn sản phẩm'}
-                      >
-                        <span className="text-[11px] font-medium text-slate-300">
-                          {collapsedSections['dashcam'] ? 'Mở rộng' : 'Thu gọn'}
-                        </span>
-                        <ChevronDown
-                          className={`w-4 h-4 text-white transition-transform duration-300 ${
-                            collapsedSections['dashcam'] ? '-rotate-90' : 'rotate-0'
-                          }`}
-                        />
-                      </button>
+                      <div className="flex items-center gap-2 self-start sm:self-center shrink-0">
+                        <button
+                          type="button"
+                          id="btn-add-product-dashcam"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setNewProdCategory('cameras-360');
+                            setNewProdCategoryName('Camera Hành Trình');
+                            setNewProdImage('/images/camera_70mai_m500.jpg');
+                            setIsAddModalOpen(true);
+                          }}
+                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-sky-400/50 bg-sky-500/20 hover:bg-sky-500/30 text-sky-200 hover:text-white text-xs font-semibold transition-all cursor-pointer shadow-sm active:scale-95"
+                          title="Tạo thêm 1 mục sản phẩm trong danh mục này"
+                        >
+                          <Plus className="w-3.5 h-3.5" />
+                          <span>Tạo mục sản phẩm</span>
+                        </button>
+
+                        <button
+                          type="button"
+                          id="toggle-collapse-dashcam-btn"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleSectionCollapse('dashcam');
+                          }}
+                          className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-sky-500/40 bg-slate-900/90 hover:bg-slate-800 hover:border-sky-400 text-sky-200 hover:text-white text-xs font-semibold transition-all cursor-pointer shadow-sm active:scale-95 shrink-0"
+                          title={collapsedSections['dashcam'] ? 'Mở rộng sản phẩm' : 'Thu gọn sản phẩm'}
+                        >
+                          <span className="text-[11px] font-medium text-slate-300">
+                            {collapsedSections['dashcam'] ? 'Mở rộng' : 'Thu gọn'}
+                          </span>
+                          <ChevronDown
+                            className={`w-4 h-4 text-white transition-transform duration-300 ${
+                              collapsedSections['dashcam'] ? '-rotate-90' : 'rotate-0'
+                            }`}
+                          />
+                        </button>
+                      </div>
                     </div>
 
                     {!collapsedSections['dashcam'] && (
@@ -1663,6 +1777,265 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
             )}
           </AnimatePresence>
         </motion.main>
+
+        {/* Modal Tạo Mục Sản Phẩm Mới */}
+        <AnimatePresence>
+          {isAddModalOpen && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md overflow-y-auto">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 15 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 15 }}
+                transition={{ duration: 0.2 }}
+                className="relative w-full max-w-xl my-8 rounded-3xl bg-slate-900 border border-slate-800 shadow-2xl overflow-hidden p-6 sm:p-7 space-y-5"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Header */}
+                <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 flex items-center justify-center shadow-lg shadow-emerald-500/10">
+                      <Plus className="w-5 h-5 stroke-[2.5]" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-extrabold text-white">Tạo Mục Sản Phẩm Mới</h3>
+                      <p className="text-xs text-slate-400">Thêm sản phẩm / phụ kiện mới vào hệ thống Hieu N Auto</p>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setIsAddModalOpen(false)}
+                    className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+
+                {/* Form */}
+                <form onSubmit={handleCreateProduct} className="space-y-4">
+                  {/* Tên sản phẩm */}
+                  <div>
+                    <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                      Tên mục sản phẩm <span className="text-rose-400">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Ví dụ: Camera Hành Trình 70mai M500 2.7K HDR..."
+                      value={newProdName}
+                      onChange={(e) => setNewProdName(e.target.value)}
+                      className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition-colors"
+                    />
+                  </div>
+
+                  {/* Danh mục & Phân loại */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                        Chuyên mục hiển thị
+                      </label>
+                      <select
+                        value={newProdCategory}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setNewProdCategory(val);
+                          const matched = STORE_CATEGORY_GROUPS.find(g => g.id === val);
+                          setNewProdCategoryName(matched ? matched.name : 'Phụ Kiện Nâng Cấp');
+                        }}
+                        className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500 cursor-pointer"
+                      >
+                        <option value="cameras-360">📹 Camera Hành Trình</option>
+                        <option value="cameras-360">🌐 Camera 360 Độ Toàn Cảnh</option>
+                        <option value="ambient-lights">🔆 Bi LED &amp; Bi Gầm Tăng Sáng</option>
+                        <option value="ambient-lights">💡 Đèn LED Đa Sắc &amp; Nội Thất</option>
+                        <option value="car-audio">🔊 Âm Thanh &amp; Sub Điện Ô Tô</option>
+                        <option value="screens-displays">🖥️ Màn Hình &amp; Android Box</option>
+                        <option value="electric-automation">🪞 Gương Gập Điện Theo Xe</option>
+                        <option value="seat-interior">💺 Ghế Da &amp; Nội Thất Xe</option>
+                        <option value="safety-sensors">🛡️ Tiện Ích &amp; An Toàn Xe</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                        Hình thức cung cấp
+                      </label>
+                      <select
+                        value={newProdType}
+                        onChange={(e) => setNewProdType(e.target.value as any)}
+                        className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500 cursor-pointer"
+                      >
+                        <option value="product">📦 Sản phẩm chính hãng</option>
+                        <option value="service">🛠️ Gói dịch vụ thi công trọn gói</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Giá bán & Giá gốc */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                        Giá bán (VNĐ) <span className="text-rose-400">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="2.850.000"
+                        value={newProdPrice}
+                        onChange={(e) => setNewProdPrice(e.target.value)}
+                        className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-amber-400 font-bold focus:outline-none focus:border-emerald-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                        Giá niêm yết cũ (VNĐ)
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="3.400.000"
+                        value={newProdOrigPrice}
+                        onChange={(e) => setNewProdOrigPrice(e.target.value)}
+                        className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-slate-400 focus:outline-none focus:border-emerald-500"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Ảnh sản phẩm */}
+                  <div>
+                    <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                      Ảnh đại diện sản phẩm
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="/images/camera_70mai_m500.jpg"
+                      value={newProdImage}
+                      onChange={(e) => setNewProdImage(e.target.value)}
+                      className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-500 mb-2"
+                    />
+
+                    {/* Quick Pick Samples */}
+                    <div className="flex flex-wrap items-center gap-1.5 text-[11px] text-slate-400">
+                      <span className="font-semibold text-slate-300">Chọn nhanh ảnh:</span>
+                      <button
+                        type="button"
+                        onClick={() => setNewProdImage('/src/assets/images/regenerated_image_1791301200808.webp')}
+                        className="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-emerald-300 font-semibold cursor-pointer"
+                      >
+                        azcam G1 MAX
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setNewProdImage('/images/camera_70mai_m500.jpg')}
+                        className="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-sky-300 cursor-pointer"
+                      >
+                        70mai M500
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setNewProdImage('/images/camera_vietmap_s720.jpg')}
+                        className="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-sky-300 cursor-pointer"
+                      >
+                        Vietmap S720
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setNewProdImage('/images/aozoom_extra_sapphire.webp')}
+                        className="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-yellow-300 cursor-pointer"
+                      >
+                        Aozoom Sapphire
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setNewProdImage('/images/rebec_sub_vf3_kit.jpg')}
+                        className="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-purple-300 cursor-pointer"
+                      >
+                        Loa Sub Rebec
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Tùy chọn nhãn nổi bật */}
+                  <div className="flex flex-wrap items-center gap-4 pt-1">
+                    <label className="flex items-center gap-2 cursor-pointer select-none">
+                      <input
+                        type="checkbox"
+                        checked={newProdIsBestSeller}
+                        onChange={(e) => setNewProdIsBestSeller(e.target.checked)}
+                        className="rounded border-slate-700 text-amber-500 focus:ring-amber-500 w-4 h-4 bg-slate-950"
+                      />
+                      <span className="text-xs font-semibold text-amber-400 flex items-center gap-1">
+                        <Zap className="w-3.5 h-3.5 fill-current" />
+                        Gắn nhãn Bán chạy
+                      </span>
+                    </label>
+
+                    <label className="flex items-center gap-2 cursor-pointer select-none">
+                      <input
+                        type="checkbox"
+                        checked={newProdIsSale}
+                        onChange={(e) => setNewProdIsSale(e.target.checked)}
+                        className="rounded border-slate-700 text-rose-500 focus:ring-rose-500 w-4 h-4 bg-slate-950"
+                      />
+                      <span className="text-xs font-semibold text-rose-400">
+                        Ưu đãi giảm giá (%)
+                      </span>
+                    </label>
+                  </div>
+
+                  {/* Mô tả */}
+                  <div>
+                    <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                      Mô tả tóm tắt
+                    </label>
+                    <textarea
+                      rows={2}
+                      value={newProdDesc}
+                      onChange={(e) => setNewProdDesc(e.target.value)}
+                      placeholder="Mô tả công năng và ưu điểm nổi bật của sản phẩm..."
+                      className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-emerald-500 resize-none"
+                    />
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
+                    <button
+                      type="button"
+                      onClick={() => setIsAddModalOpen(false)}
+                      className="px-4 py-2 rounded-xl text-xs font-bold text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
+                    >
+                      Hủy bỏ
+                    </button>
+                    <button
+                      type="submit"
+                      className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white font-bold text-xs shadow-lg shadow-emerald-950/40 active:scale-95 transition-all cursor-pointer flex items-center gap-1.5"
+                    >
+                      <Plus className="w-4 h-4 stroke-[2.5]" />
+                      <span>Lưu &amp; Tạo Sản Phẩm</span>
+                    </button>
+                  </div>
+                </form>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
+
+        {/* Toast thông báo tạo thành công */}
+        <AnimatePresence>
+          {newProdSuccessToast && (
+            <motion.div
+              initial={{ opacity: 0, y: 30, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 20, scale: 0.95 }}
+              className="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-4 py-3 rounded-2xl bg-emerald-950 border border-emerald-500/50 text-white shadow-2xl backdrop-blur-md"
+            >
+              <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+                <Check className="w-4 h-4 stroke-[3]" />
+              </div>
+              <div>
+                <div className="text-xs font-extrabold text-emerald-300">Tạo Mục Sản Phẩm Thành Công!</div>
+                <div className="text-[11px] text-slate-300">Mục sản phẩm mới đã được đưa vào danh sách hiển thị.</div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
     </div>
   );
 };
