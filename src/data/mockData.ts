@@ -1,4 +1,5 @@
 import { Product, TeamMember, BlogPost, Testimonial } from '../types';
+import sonAvatar from '../assets/images/nguyen_duc_son_real_square.jpg';
 import buiDaiDuongAvatar from '../assets/images/regenerated_image_1788094605957.jpg';
 import hieuAvatar from '../assets/images/regenerated_image_1788094725524.jpg';
 import ducAvatar from '../assets/images/regenerated_image_1788098891785.jpg';
@@ -2121,10 +2122,10 @@ export const TEAM_MEMBERS: TeamMember[] = [
   },
   {
     id: 'team-2',
-    name: 'Bùi Đại Dương',
+    name: 'Nguyễn Đức Sơn',
     role: 'Giám Đốc Kỹ Thuật & Đồng Sáng Lập Hieu N Auto',
     experience: '9 năm kinh nghiệm',
-    image: buiDaiDuongAvatar,
+    image: sonAvatar,
     bio: 'Đồng sáng lập và chịu trách nhiệm cao nhất về chất lượng thi công tại Hieu N Auto. Phụ trách hoạch định tiêu chuẩn kỹ thuật và giám sát thi công các hạng mục tại Hieu N Auto.',
     specialty: 'Quản lý quy trình thi công tiêu chuẩn và kiểm soát chất lượng kỹ thuật thi công'
   },
