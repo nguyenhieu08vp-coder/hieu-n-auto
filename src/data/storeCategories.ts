@@ -14,7 +14,7 @@ export const STORE_CATEGORY_GROUPS: StoreCategoryItem[] = [
     id: 'all', 
     name: 'Tất Cả Danh Mục', 
     shortName: 'Tất Cả', 
-    count: 41, 
+    count: 48, 
     icon: 'LayoutGrid', 
     productIds: [],
     color: 'text-emerald-400',
@@ -54,9 +54,9 @@ export const STORE_CATEGORY_GROUPS: StoreCategoryItem[] = [
     id: 'led', 
     name: 'Đèn LED (Nội & Ngoại Thất)', 
     shortName: 'Đèn LED Đa Sắc', 
-    count: 4, 
+    count: 7, 
     icon: 'Sparkles', 
-    productIds: ['prod-3', 'prod-8', 'prod-24', 'prod-40'],
+    productIds: ['prod-3', 'prod-42', 'prod-43', 'prod-44', 'prod-8', 'prod-24', 'prod-40'],
     color: 'text-amber-400',
     bgColor: 'bg-amber-500/10 border-amber-500/30'
   },
@@ -74,9 +74,9 @@ export const STORE_CATEGORY_GROUPS: StoreCategoryItem[] = [
     id: 'display', 
     name: 'Màn Hình & Android Box', 
     shortName: 'Màn Hình & Box', 
-    count: 5, 
+    count: 6, 
     icon: 'Tv', 
-    productIds: ['prod-5', 'prod-10', 'prod-25', 'prod-12', 'prod-30'],
+    productIds: ['prod-5', 'prod-10', 'prod-25', 'prod-12', 'prod-30', 'prod-48'],
     color: 'text-blue-400',
     bgColor: 'bg-blue-500/10 border-blue-500/30'
   },
@@ -89,6 +89,16 @@ export const STORE_CATEGORY_GROUPS: StoreCategoryItem[] = [
     productIds: ['prod-15', 'prod-31', 'prod-32', 'prod-33'],
     color: 'text-amber-300',
     bgColor: 'bg-amber-500/10 border-amber-500/30'
+  },
+  { 
+    id: 'battery-shield', 
+    name: 'Bảo Vệ Pin & Giáp Gầm Xe Điện', 
+    shortName: 'Bảo Vệ Pin', 
+    count: 4, 
+    icon: 'Shield', 
+    productIds: ['prod-9', 'prod-45', 'prod-46', 'prod-47'],
+    color: 'text-teal-400',
+    bgColor: 'bg-teal-500/10 border-teal-500/30'
   },
   { 
     id: 'interior-seat', 
@@ -104,9 +114,9 @@ export const STORE_CATEGORY_GROUPS: StoreCategoryItem[] = [
     id: 'safety-utility', 
     name: 'Tiện Ích & An Toàn Xe', 
     shortName: 'Tiện Ích & An Toàn', 
-    count: 7, 
+    count: 6, 
     icon: 'ShieldCheck', 
-    productIds: ['prod-17', 'prod-20', 'prod-11', 'prod-27', 'prod-4', 'prod-9', 'prod-19'],
+    productIds: ['prod-17', 'prod-20', 'prod-11', 'prod-27', 'prod-4', 'prod-19'],
     color: 'text-emerald-400',
     bgColor: 'bg-emerald-500/10 border-emerald-500/30'
   },

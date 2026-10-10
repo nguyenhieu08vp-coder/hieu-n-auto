@@ -112,10 +112,20 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
       id: 'rev-4',
       name: 'Anh Phạm Quốc Đạt',
       carModel: 'Mazda CX-5 / Hyundai Tucson',
-      rating: product.rating < 5.0 ? 4 : 5,
+      rating: 4,
       date: '2 tuần trước',
       comment: 'Thi công nhanh chóng đúng hẹn, nhân viên hướng dẫn sử dụng rất kỹ. Sẽ tiếp tục ủng hộ xưởng các gói phụ kiện tiếp theo.',
       helpfulCount: 11,
+      isVerified: true,
+    },
+    {
+      id: 'rev-5',
+      name: 'Anh Hoàng Văn Nam',
+      carModel: 'VinFast VF6 / VF8',
+      rating: 5,
+      date: '3 tuần trước',
+      comment: 'Xưởng thi công rất tỉ mỉ và chuyên nghiệp, kiểm tra vận hành hoàn hảo trước khi bàn giao. Rất hài lòng với chất lượng dịch vụ!',
+      helpfulCount: 9,
       isVerified: true,
     }
   ]);
@@ -155,10 +165,10 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
     setTimeout(() => setSubmittedReview(false), 4000);
   };
 
-  // Rating percentage calculation matching product total rating
-  const totalReviews = product.reviewCount + (reviewsList.length - 4);
-  const fiveStarPct = product.rating >= 5.0 ? 96 : 88;
-  const fourStarPct = product.rating >= 5.0 ? 4 : 12;
+  // Rating percentage calculation matching product total rating (average 4.8)
+  const totalReviews = product.reviewCount + (reviewsList.length - 5);
+  const fiveStarPct = Math.min(95, Math.max(70, Math.round(((product.rating - 4.0) / 1.0) * 100)));
+  const fourStarPct = 100 - fiveStarPct;
   const fiveStarCount = Math.round((totalReviews * fiveStarPct) / 100);
   const fourStarCount = totalReviews - fiveStarCount;
 

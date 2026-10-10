@@ -1,8 +1,8 @@
 import { Product, TeamMember, BlogPost, Testimonial } from '../types';
-import sonAvatar from '../assets/images/regenerated_image_1788094605957.jpg';
+import buiDaiDuongAvatar from '../assets/images/regenerated_image_1788094605957.jpg';
 import hieuAvatar from '../assets/images/regenerated_image_1788094725524.jpg';
 import ducAvatar from '../assets/images/regenerated_image_1788098891785.jpg';
-import duongLeoAvatar from '../assets/images/regenerated_image_1788099036648.jpg';
+import tranTienAvatar from '../assets/images/regenerated_image_1788099036648.jpg';
 import thuHueAvatar from '../assets/images/regenerated_image_1788099350854.jpg';
 import hungAvatar from '../assets/images/regenerated_image_1788099573645.jpg';
 import techcam360SystemImg from '../assets/images/techcam_360_system_1790347430237.jpg';
@@ -14,14 +14,22 @@ import electricSideStepImg from '../assets/images/electric_side_step_17903489439
 import manHinhOdoGbaImg from '../assets/images/man_hinh_odo_gba_1790349551626.jpg';
 import odoGbaFeaturesImg from '../assets/images/odo_gba_features_1790349563223.jpg';
 import vf6BatteryShieldPlateImg from '../assets/images/images/vf6_battery_shield_plate.jpg';
+import bfactoryBatteryShieldImg from '../assets/images/regenerated_image_1791450800190.webp';
+import bfactoryBatteryShield2Img from '../assets/images/regenerated_image_1791450930594.webp';
+import carlinkitTBoxS2PImg from '../assets/images/carlinkit_tbox_s2p_1791611400819.jpg';
+import carlinkitTBoxPortsImg from '../assets/images/carlinkit_tbox_ports_1791611417208.jpg';
+import zestechDx165RegeneratedImg from '../assets/images/regenerated_image_1791613220044.webp';
+import zestechDx165PosterImg from '../assets/images/images/zestech_dx165_android_box_poster.jpg';
+import vietmapBs10MainImg from '../assets/images/regenerated_image_1791615199551.webp';
+import vietmapBs10FeaturesImg from '../assets/images/regenerated_image_1791614978782.webp';
 
 export const CLASSIFICATIONS = [
   { 
     id: 'all', 
     name: 'Tất Cả Hạng Mục', 
     shortName: 'Tất Cả',
-    count: 30, 
-    badge: '30 Mục',
+    count: 31, 
+    badge: '31 Mục',
     icon: 'LayoutGrid',
     description: 'Trọn bộ hệ sinh thái sản phẩm phụ kiện cao cấp & dịch vụ độ xe chính hãng tại Hieu N Auto'
   },
@@ -29,8 +37,8 @@ export const CLASSIFICATIONS = [
     id: 'product', 
     name: 'Sản Phẩm Chính Hãng', 
     shortName: 'Sản Phẩm',
-    count: 19, 
-    badge: '19 Sản phẩm',
+    count: 20, 
+    badge: '20 Sản phẩm',
     icon: 'PackageCheck',
     description: 'Phụ kiện công nghệ cao, camera 360, màn hình OLED, đèn LED, thảm TPE đúc 3D, Android Box chính hãng'
   },
@@ -49,7 +57,7 @@ export const CATEGORIES = [
   { id: 'all', name: 'Tất Cả Danh Mục', count: 40, icon: 'LayoutGrid', itemType: 'all' },
   // Nhóm Sản Phẩm Chính Hãng
   { id: 'cameras-360', name: 'Camera 360 & Camera Hành Trình', count: 7, icon: 'ShieldCheck', itemType: 'product' },
-  { id: 'screens-displays', name: 'Màn Hình Android & Android Box', count: 5, icon: 'Tv', itemType: 'product' },
+  { id: 'screens-displays', name: 'Màn Hình Android & Android Box', count: 6, icon: 'Tv', itemType: 'product' },
   { id: 'safety-sensors', name: 'Cảm Biến Áp Suất Lốp & An Toàn', count: 2, icon: 'ShieldAlert', itemType: 'product' },
   { id: 'ambient-lights', name: 'Đèn Bi LED & LED Nội Thất', count: 8, icon: 'Sparkles', itemType: 'product' },
   { id: 'floor-mats', name: 'Thảm Sàn Đúc Khuôn TPE 3D', count: 2, icon: 'Layers', itemType: 'product' },
@@ -58,189 +66,228 @@ export const CATEGORIES = [
   { id: 'seat-interior', name: 'Bọc Ghế Da Nappa & Ghế Chỉnh Điện', count: 3, icon: 'Armchair', itemType: 'service' },
   { id: 'electric-automation', name: 'Cửa Hít & Cốp Điện Tự Động', count: 6, icon: 'Sliders', itemType: 'service' },
   { id: 'heat-soundproofing', name: 'Dán Phim Cách Nhiệt & Chống Ồn SIP', count: 1, icon: 'Shield', itemType: 'service' },
-  { id: 'wheels-exterior', name: 'Phay Mâm CNC & Giáp Bảo Vệ Pin', count: 2, icon: 'Disc', itemType: 'service' },
+  { id: 'wheels-exterior', name: 'Phay Mâm CNC & Giáp Bảo Vệ Pin', count: 4, icon: 'Disc', itemType: 'service' },
 ];
 
 export const PRODUCTS: Product[] = [
   {
-    id: 'prod-1',
-    itemType: 'product',
-    name: 'Camera Hành Trình 70mai T400 Ghi Hình 3 Kênh Cao Cấp',
-    category: 'cameras-360',
-    categoryName: 'Camera Hành Trình 70mai',
+    id: "prod-1",
+    itemType: "product",
+    name: "Camera Hành Trình 70mai T400 Ghi Hình 3 Kênh Cao Cấp",
+    category: "cameras-360",
+    categoryName: "Camera Hành Trình 70mai",
     price: 3850000,
     originalPrice: 4500000,
     isBestSeller: true,
     isTopBestSeller: true,
     isSale: true,
-    rating: 4.9,
+    rating: 5.0,
     reviewCount: 186,
-    primaryImage: '/images/camera_70mai_t400.jpg',
-    secondaryImage: '/images/camera_70mai_t400_poster.jpg',
-    description: 'Camera hành trình 70mai T400 thế hệ mới ghi hình 3 kênh đồng thời (Trước - Trong khoang lái - Sau xe). Tích hợp mắt hồng ngoại IR quay đêm rõ nét, công nghệ siêu tụ điện an toàn tuyệt đối và điều khiển giọng nói tiện lợi.',
+    primaryImage: "/images/camera_70mai_t400.jpg",
+    secondaryImage: "/images/camera_70mai_t400_poster.jpg",
+    description: "Camera hành trình 70mai T400 thế hệ mới ghi hình 3 kênh đồng thời (Trước - Trong khoang lái - Sau xe). Tích hợp mắt hồng ngoại IR quay đêm rõ nét, công nghệ siêu tụ điện an toàn tuyệt đối và điều khiển giọng nói tiện lợi.",
     features: [
-      'Ghi hình 3 kênh đồng thời: Camera trước, camera cabin và camera sau',
-      'Công nghệ cân bằng sáng HDR sắc nét bất kể ngày đêm',
-      'Đèn hồng ngoại IR Lights soi sáng toàn diện trong khoang xe ban đêm',
-      'Giám sát đỗ xe thông minh 24/7 phát hiện va chạm tự động',
-      'Tích hợp GPS hiển thị tốc độ, tọa độ hành trình chính xác',
-      'Trang bị Siêu Tụ Điện (Super Capacitor) chịu nhiệt độ cao, bền bỉ',
-      'Kết nối Wifi & App 70mai trích xuất video trực tiếp siêu tốc',
-      'Hỗ trợ ra lệnh và điều khiển bằng giọng nói rảnh tay'
+      "Ghi hình 3 kênh đồng thời: Camera trước, camera cabin và camera sau",
+      "Công nghệ cân bằng sáng HDR sắc nét bất kể ngày đêm",
+      "Đèn hồng ngoại IR Lights soi sáng toàn diện trong khoang xe ban đêm",
+      "Giám sát đỗ xe thông minh 24/7 phát hiện va chạm tự động",
+      "Tích hợp GPS hiển thị tốc độ, tọa độ hành trình chính xác",
+      "Trang bị Siêu Tụ Điện (Super Capacitor) chịu nhiệt độ cao, bền bỉ",
+      "Kết nối Wifi & App 70mai trích xuất video trực tiếp siêu tốc",
+      "Hỗ trợ ra lệnh và điều khiển bằng giọng nói rảnh tay"
     ],
-    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
-    materials: ['Nhựa ABS Chịu Nhiệt', 'Kính Quang Học 6 Lớp'],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Nhựa ABS Chịu Nhiệt",
+      "Kính Quang Học 6 Lớp"
+    ],
     colors: [
-      { name: 'Đen Mờ Nhám (Matte Black)', hex: '#1E293B' }
+      {"name":"Đen Mờ Nhám (Matte Black)","hex":"#1E293B"}
     ],
     warrantyMonths: 24,
     inStock: true,
     installationTimeHours: 1
   },
   {
-    id: 'prod-2',
-    itemType: 'product',
-    name: 'Camera 360 Độ TECHCAM System Cao Cấp (Tích Hợp Màn Zin & Cắm Giắc Plug & Play)',
-    category: 'cameras-360',
-    categoryName: 'Camera 360 TECHCAM',
+    id: "prod-2",
+    itemType: "product",
+    name: "Camera 360 Độ TECHCAM System Cao Cấp (Tích Hợp Màn Zin & Cắm Giắc Plug & Play)",
+    category: "cameras-360",
+    categoryName: "Camera 360 TECHCAM",
     price: 13500000,
     originalPrice: 15800000,
     isBestSeller: false,
     isSale: true,
-    rating: 4.9,
+    rating: 4.8,
     reviewCount: 184,
     primaryImage: techcam360RegeneratedImg,
     secondaryImage: techcam360FeaturesImg,
-    description: 'Hệ thống Camera 360 độ TECHCAM System cao cấp — Your companion for safe driving. Giải pháp an toàn tối ưu tích hợp trực tiếp trên màn hình nguyên bản của xe, lắp đặt cắm giắc Zin 100% Plug & Play không cắt trích dây, đa dạng góc nhìn 2D & 3D siêu nét, giao diện tiếng Việt thân thiện và chế độ bảo hành chính hãng lên tới 2 năm.',
+    description: "Hệ thống Camera 360 độ TECHCAM System cao cấp — Your companion for safe driving. Giải pháp an toàn tối ưu tích hợp trực tiếp trên màn hình nguyên bản của xe, lắp đặt cắm giắc Zin 100% Plug & Play không cắt trích dây, đa dạng góc nhìn 2D & 3D siêu nét, giao diện tiếng Việt thân thiện và chế độ bảo hành chính hãng lên tới 2 năm.",
     features: [
-      'Tích hợp trực tiếp trên màn hình nguyên bản của xe, giữ trọn vẹn nét nguyên bản và tính thẩm mỹ nội thất',
-      'Cắm giắc zin Plug & Play 100% — Không cắt trích dây, bảo đảm an toàn hệ thống điện nguyên bản của xe',
-      'Đa dạng góc nhìn 2D & 3D linh hoạt, loại bỏ hoàn toàn các góc khuất và điểm mù nguy hiểm khi di chuyển',
-      'Giao diện hoàn toàn bằng Tiếng Việt trực quan, dễ thao tác cài đặt và chuyển đổi góc nhìn',
-      'Hệ thống 4 mắt camera độ phân giải cao, hỗ trợ quan sát ban đêm rõ nét và chống nước chuẩn IP68',
-      'Vạch đánh lái bẻ cong theo góc quay vô lăng chính xác, hỗ trợ lùi chuồng và căn lề đỗ xe dễ dàng',
-      'Căn chỉnh bạt chuyên dụng chuẩn xác từng centimet cho từng dòng xe',
-      'Chính sách bảo hành chính hãng 2 năm (24 tháng) an tâm tuyệt đối tại Hieu N Auto'
+      "Tích hợp trực tiếp trên màn hình nguyên bản của xe, giữ trọn vẹn nét nguyên bản và tính thẩm mỹ nội thất",
+      "Cắm giắc zin Plug & Play 100% — Không cắt trích dây, bảo đảm an toàn hệ thống điện nguyên bản của xe",
+      "Đa dạng góc nhìn 2D & 3D linh hoạt, loại bỏ hoàn toàn các góc khuất và điểm mù nguy hiểm khi di chuyển",
+      "Giao diện hoàn toàn bằng Tiếng Việt trực quan, dễ thao tác cài đặt và chuyển đổi góc nhìn",
+      "Hệ thống 4 mắt camera độ phân giải cao, hỗ trợ quan sát ban đêm rõ nét và chống nước chuẩn IP68",
+      "Vạch đánh lái bẻ cong theo góc quay vô lăng chính xác, hỗ trợ lùi chuồng và căn lề đỗ xe dễ dàng",
+      "Căn chỉnh bạt chuyên dụng chuẩn xác từng centimet cho từng dòng xe",
+      "Chính sách bảo hành chính hãng 2 năm (24 tháng) an tâm tuyệt đối tại Hieu N Auto"
     ],
-    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
-    materials: ['Mắt Cam Kính Quang Học Chống Nước IP68', 'Bộ Dây Giắc Cắm Zin Plug & Play Theo Xe'],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Mắt Cam Kính Quang Học Chống Nước IP68",
+      "Bộ Dây Giắc Cắm Zin Plug & Play Theo Xe"
+    ],
     colors: [
-      { name: 'Đen Sang Trọng OEM', hex: '#1E293B' }
+      {"name":"Đen Sang Trọng OEM","hex":"#1E293B"}
     ],
     warrantyMonths: 24,
     inStock: true,
     installationTimeHours: 2.5
   },
   {
-    id: 'prod-38',
-    itemType: 'product',
-    name: 'Hệ Thống Camera 360 Độ SETCAR AI 360 (Tích Hợp Màn Zin VF3 & Limo Green - Chip UIS7862 8 Nhân)',
-    category: 'cameras-360',
-    categoryName: 'Camera 360 SETCAR AI',
+    id: "prod-38",
+    itemType: "product",
+    name: "Hệ Thống Camera 360 Độ SETCAR AI 360 (Tích Hợp Màn Zin VF3 & Limo Green - Chip UIS7862 8 Nhân)",
+    category: "cameras-360",
+    categoryName: "Camera 360 SETCAR AI",
     price: 10500000,
     originalPrice: 12800000,
     isSale: true,
     isBestSeller: false,
-    rating: 4.9,
+    rating: 4.8,
     reviewCount: 198,
-    primaryImage: '/images/setcar_ai_360_main.jpg',
-    secondaryImage: '/images/setcar_ai_360_screen.jpg',
-    description: 'Hệ thống Camera 360 độ SETCAR AI 360 cao cấp — Giải trí trọn vẹn, dẫn đường chuẩn xác, quan sát an toàn. Tích hợp trực tiếp trên màn hình Zin của xe VinFast VF3 và Limo Green, vận hành cấu hình khủng Chip UIS7862 8 nhân, RAM 4GB + ROM 64GB mượt mà. Hỗ trợ trợ lý ảo giọng nói thông minh, tích hợp hiển thị thông tin tiến trình sạc của xe, cắm giắc Zin 100% Plug & Play và chế độ bảo hành 2 năm lỗi 1 đổi 1.',
+    primaryImage: "/images/setcar_ai_360_main.jpg",
+    secondaryImage: "/images/setcar_ai_360_screen.jpg",
+    description: "Hệ thống Camera 360 độ SETCAR AI 360 cao cấp — Giải trí trọn vẹn, dẫn đường chuẩn xác, quan sát an toàn. Tích hợp trực tiếp trên màn hình Zin của xe VinFast VF3 và Limo Green, vận hành cấu hình khủng Chip UIS7862 8 nhân, RAM 4GB + ROM 64GB mượt mà. Hỗ trợ trợ lý ảo giọng nói thông minh, tích hợp hiển thị thông tin tiến trình sạc của xe, cắm giắc Zin 100% Plug & Play và chế độ bảo hành 2 năm lỗi 1 đổi 1.",
     features: [
-      'Cấu hình phần cứng vượt trội: Vi xử lý UIS7862 8 nhân 2.0GHz, RAM 4GB + ROM 64GB chạy đa nhiệm cực mượt',
-      'Tích hợp Camera 360 độ toàn cảnh: Kiểm soát xe toàn thời gian, hỗ trợ lái xe và lùi chuồng đường hẹp an toàn',
-      'Lắp đặt cắm giắc Zin 100% Plug & Play chuẩn theo xe VinFast VF3 & Limo Green, giữ nguyên hệ thống điện hãng',
-      'Trợ lý ảo AI thông minh: Ra lệnh giọng nói dẫn đường bản đồ, mở Youtube, tìm kiếm bài hát và điều khiển sạc',
-      'Tích hợp tính năng hiển thị thông tin tiến trình sạc độc quyền trực tiếp trên màn hình xe khi cắm sạc',
-      'Giao diện tiếng Việt thân thiện, đồng bộ hiển thị cảm biến lùi và vạch đánh lái bẻ cong theo vô lăng',
-      'Chính sách bảo hành chính hãng SETCAR 2 năm (24 tháng) 1 đổi 1 lỗi từ nhà sản xuất'
+      "Cấu hình phần cứng vượt trội: Vi xử lý UIS7862 8 nhân 2.0GHz, RAM 4GB + ROM 64GB chạy đa nhiệm cực mượt",
+      "Tích hợp Camera 360 độ toàn cảnh: Kiểm soát xe toàn thời gian, hỗ trợ lái xe và lùi chuồng đường hẹp an toàn",
+      "Lắp đặt cắm giắc Zin 100% Plug & Play chuẩn theo xe VinFast VF3 & Limo Green, giữ nguyên hệ thống điện hãng",
+      "Trợ lý ảo AI thông minh: Ra lệnh giọng nói dẫn đường bản đồ, mở Youtube, tìm kiếm bài hát và điều khiển sạc",
+      "Tích hợp tính năng hiển thị thông tin tiến trình sạc độc quyền trực tiếp trên màn hình xe khi cắm sạc",
+      "Giao diện tiếng Việt thân thiện, đồng bộ hiển thị cảm biến lùi và vạch đánh lái bẻ cong theo vô lăng",
+      "Chính sách bảo hành chính hãng SETCAR 2 năm (24 tháng) 1 đổi 1 lỗi từ nhà sản xuất"
     ],
-    vehicleTypes: ['suv', 'sedan'],
-    materials: ['Mắt Cam Sony 4K Quang Học Chống Nước IP68', 'Bộ Jack Dây Cắm Zin 100% Theo Xe VF3'],
+    vehicleTypes: [
+      "suv",
+      "sedan"
+    ],
+    materials: [
+      "Mắt Cam Sony 4K Quang Học Chống Nước IP68",
+      "Bộ Jack Dây Cắm Zin 100% Theo Xe VF3"
+    ],
     colors: [
-      { name: 'Mắt Cam Đen Chuẩn Zin OEM', hex: '#0F172A' },
-      { name: 'Giao Diện SETCAR Red AI', hex: '#DC2626' }
+      {"name":"Mắt Cam Đen Chuẩn Zin OEM","hex":"#0F172A"},
+      {"name":"Giao Diện SETCAR Red AI","hex":"#DC2626"}
     ],
     warrantyMonths: 24,
     inStock: true,
-    installationTimeHours: 2.0
+    installationTimeHours: 2
   },
   {
-    id: 'prod-39',
-    itemType: 'product',
-    name: 'Camera 360 Độ Safeview S500 Cao Cấp (Hiển Thị 28 Góc Nhìn Toàn Cảnh & Giám Sát Tắt Máy)',
-    category: 'cameras-360',
-    categoryName: 'Camera 360 Toàn Cảnh',
+    id: "prod-39",
+    itemType: "product",
+    name: "Camera 360 Độ Safeview S500 Cao Cấp (Hiển Thị 28 Góc Nhìn Toàn Cảnh & Giám Sát Tắt Máy)",
+    category: "cameras-360",
+    categoryName: "Camera 360 Toàn Cảnh",
     price: 14900000,
     originalPrice: 17500000,
     isSale: true,
     isNew: true,
-    rating: 5.0,
+    rating: 4.9,
     reviewCount: 129,
-    primaryImage: '/images/camera_360_mhu_lux_compare.jpg',
-    secondaryImage: '/images/lux_cam360_1.webp',
-    description: 'Dòng camera 360 độ cao cấp thế hệ mới với 28 góc nhìn toàn diện độc quyền, loại bỏ 100% điểm mù xung quanh xe. Tích hợp núm xoay Bluetooth tiện lợi đổi góc siêu nhanh, tính năng ghi hình 4 hướng giám sát đỗ xe khi tắt máy, cắm giắc Zin tương thích mọi dòng xe phổ thông đến xe sang.',
+    primaryImage: "/images/camera_360_mhu_lux_compare.jpg",
+    secondaryImage: "/images/lux_cam360_1.webp",
+    description: "Dòng camera 360 độ cao cấp thế hệ mới với 28 góc nhìn toàn diện độc quyền, loại bỏ 100% điểm mù xung quanh xe. Tích hợp núm xoay Bluetooth tiện lợi đổi góc siêu nhanh, tính năng ghi hình 4 hướng giám sát đỗ xe khi tắt máy, cắm giắc Zin tương thích mọi dòng xe phổ thông đến xe sang.",
     features: [
-      'Cung cấp tới 28 góc nhìn 2D/3D đa dạng: quan sát 2 bên sườn, góc nhìn từ trên cao, góc rộng 180 độ',
-      'Trang bị núm xoay điều khiển Bluetooth thông minh đặt cạnh cần số chuyển đổi góc chỉ 0.1 giây',
-      'Tích hợp bộ nhớ trong tốc độ cao ghi hình vòng lặp 4 hướng khi xe đỗ tắt máy chống va quẹt',
-      'Cảm biến hình ảnh Sony độ phân giải Full HD đêm rõ như ban ngày',
-      'Cắm giắc Zin theo xe qua cổng video AV/HDMI/AHD không ảnh hưởng bảo hành hãng',
-      'Bảo hành chính hãng 24 tháng điện tử toàn quốc'
+      "Cung cấp tới 28 góc nhìn 2D/3D đa dạng: quan sát 2 bên sườn, góc nhìn từ trên cao, góc rộng 180 độ",
+      "Trang bị núm xoay điều khiển Bluetooth thông minh đặt cạnh cần số chuyển đổi góc chỉ 0.1 giây",
+      "Tích hợp bộ nhớ trong tốc độ cao ghi hình vòng lặp 4 hướng khi xe đỗ tắt máy chống va quẹt",
+      "Cảm biến hình ảnh Sony độ phân giải Full HD đêm rõ như ban ngày",
+      "Cắm giắc Zin theo xe qua cổng video AV/HDMI/AHD không ảnh hưởng bảo hành hãng",
+      "Bảo hành chính hãng 24 tháng điện tử toàn quốc"
     ],
-    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
-    materials: ['Hợp Kim Nhôm Tản Nhiệt Cực Tốt', 'Mắt Kính Quang Học 6 Lớp Chống Nước'],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Hợp Kim Nhôm Tản Nhiệt Cực Tốt",
+      "Mắt Kính Quang Học 6 Lớp Chống Nước"
+    ],
     colors: [
-      { name: 'Đen Sang Trọng OEM', hex: '#1E293B' },
-      { name: 'Núm Xoay Hợp Kim Titan', hex: '#475569' }
+      {"name":"Đen Sang Trọng OEM","hex":"#1E293B"},
+      {"name":"Núm Xoay Hợp Kim Titan","hex":"#475569"}
     ],
     warrantyMonths: 24,
     inStock: true,
     installationTimeHours: 2.5
   },
   {
-    id: 'prod-21',
-    itemType: 'product',
-    name: 'Camera Hành Trình 70mai 4K A810 Lite (Ghi Hình 2 Kênh 4K HDR & Điều Khiển Giọng Nói)',
-    category: 'cameras-360',
-    categoryName: 'Camera Hành Trình 70mai 4K',
+    id: "prod-21",
+    itemType: "product",
+    name: "Camera Hành Trình 70mai 4K A810 Lite (Ghi Hình 2 Kênh 4K HDR & Điều Khiển Giọng Nói)",
+    category: "cameras-360",
+    categoryName: "Camera Hành Trình 70mai 4K",
     price: 3200000,
     originalPrice: 3800000,
     isBestSeller: false,
     isNew: true,
     isSale: true,
-    rating: 5.0,
+    rating: 4.7,
     reviewCount: 238,
-    primaryImage: '/images/camera_70mai_a810lite.jpg',
-    secondaryImage: '/images/camera_70mai_a810lite_poster.jpg',
-    description: 'Camera hành trình 70mai 4K A810 Lite thế hệ mới - Nhỏ gọn tinh tế, sắc nét chuẩn 4K. Ghi hình đồng thời 2 kênh: Camera trước 4K HDR siêu sắc nét và camera sau 1080P. Tích hợp công nghệ 70mai Lumi Vision quay đêm chân thực, tính năng điều khiển bằng giọng nói thông minh (hỗ trợ tiếng Việt và tiếng Anh), trang bị siêu tụ điện an toàn tuyệt đối, ghi hình khẩn cấp có bộ đệm, GPS tích hợp, tương thích 4G và hỗ trợ thẻ nhớ dung lượng lên tới 512GB.',
+    primaryImage: "/images/camera_70mai_a810lite.jpg",
+    secondaryImage: "/images/camera_70mai_a810lite_poster.jpg",
+    description: "Camera hành trình 70mai 4K A810 Lite thế hệ mới - Nhỏ gọn tinh tế, sắc nét chuẩn 4K. Ghi hình đồng thời 2 kênh: Camera trước 4K HDR siêu sắc nét và camera sau 1080P. Tích hợp công nghệ 70mai Lumi Vision quay đêm chân thực, tính năng điều khiển bằng giọng nói thông minh (hỗ trợ tiếng Việt và tiếng Anh), trang bị siêu tụ điện an toàn tuyệt đối, ghi hình khẩn cấp có bộ đệm, GPS tích hợp, tương thích 4G và hỗ trợ thẻ nhớ dung lượng lên tới 512GB.",
     features: [
-      'Ghi hình 2 kênh 4K HDR & 1080P: Camera trước độ phân giải chuẩn 4K và camera sau 1080P siêu nét',
-      'Điều khiển bằng giọng nói thông minh: Hỗ trợ tiếng Việt (VN), tiếng Anh (EN) ra lệnh chụp ảnh, quay video rảnh tay an toàn',
-      'Công nghệ 70mai Lumi Vision độc quyền cho khả năng cân bằng sáng và ghi hình ban đêm chân thực',
-      'Trang bị Siêu Tụ Điện (Super Capacitor) bền bỉ, chịu nhiệt độ cao, an toàn tuyệt đối',
-      'Ghi hình khẩn cấp có bộ đệm: Tự động ghi lại cả đoạn video trước khi va chạm diễn ra',
-      'Chế độ giám sát đỗ xe 24H phát hiện va chạm và rung lắc tự động khi xe tắt máy',
-      'Tích hợp GPS hiển thị tốc độ di chuyển và tọa độ hành trình chính xác thời gian thực',
-      'Tương thích kết nối Module 4G giám sát xe từ xa và định vị vị trí xe qua smartphone',
-      'Hỗ trợ thẻ nhớ MicroSD dung lượng cực khủng lên tới 512GB không lo đầy bộ nhớ',
-      'Điều khiển, xem trực tiếp và trích xuất video siêu tốc qua ứng dụng di động App 70mai'
+      "Ghi hình 2 kênh 4K HDR & 1080P: Camera trước độ phân giải chuẩn 4K và camera sau 1080P siêu nét",
+      "Điều khiển bằng giọng nói thông minh: Hỗ trợ tiếng Việt (VN), tiếng Anh (EN) ra lệnh chụp ảnh, quay video rảnh tay an toàn",
+      "Công nghệ 70mai Lumi Vision độc quyền cho khả năng cân bằng sáng và ghi hình ban đêm chân thực",
+      "Trang bị Siêu Tụ Điện (Super Capacitor) bền bỉ, chịu nhiệt độ cao, an toàn tuyệt đối",
+      "Ghi hình khẩn cấp có bộ đệm: Tự động ghi lại cả đoạn video trước khi va chạm diễn ra",
+      "Chế độ giám sát đỗ xe 24H phát hiện va chạm và rung lắc tự động khi xe tắt máy",
+      "Tích hợp GPS hiển thị tốc độ di chuyển và tọa độ hành trình chính xác thời gian thực",
+      "Tương thích kết nối Module 4G giám sát xe từ xa và định vị vị trí xe qua smartphone",
+      "Hỗ trợ thẻ nhớ MicroSD dung lượng cực khủng lên tới 512GB không lo đầy bộ nhớ",
+      "Điều khiển, xem trực tiếp và trích xuất video siêu tốc qua ứng dụng di động App 70mai"
     ],
-    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
-    materials: ['Thân Vỏ Hợp Kim & Nhựa Chịu Nhiệt', 'Viền Vàng Kim Gold Accent', 'Kính Quang Học 70mai Lumi Vision'],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Thân Vỏ Hợp Kim & Nhựa Chịu Nhiệt",
+      "Viền Vàng Kim Gold Accent",
+      "Kính Quang Học 70mai Lumi Vision"
+    ],
     colors: [
-      { name: 'Đen Viền Vàng Kim (Gold Accent)', hex: '#D4AF37' }
+      {"name":"Đen Viền Vàng Kim (Gold Accent)","hex":"#D4AF37"}
     ],
     warrantyMonths: 24,
     inStock: true,
     installationTimeHours: 1
   },
   {
-    id: 'prod-22',
-    itemType: 'product',
-    name: 'Camera Hành Trình VIETMAP S720 Ghi Hình Kép 4K & Cảnh Báo Giao Thông Bằng Giọng Nói',
-    category: 'cameras-360',
-    categoryName: 'Camera Hành Trình VIETMAP',
+    id: "prod-22",
+    itemType: "product",
+    name: "Camera Hành Trình VIETMAP S720 Ghi Hình Kép 4K & Cảnh Báo Giao Thông Bằng Giọng Nói",
+    category: "cameras-360",
+    categoryName: "Camera Hành Trình VIETMAP",
     price: 3200000,
     originalPrice: 3800000,
     isBestSeller: false,
@@ -248,147 +295,181 @@ export const PRODUCTS: Product[] = [
     isSale: true,
     rating: 4.9,
     reviewCount: 195,
-    primaryImage: '/images/camera_vietmap_s720.webp',
-    secondaryImage: '/images/camera_vietmap_s720_poster.webp',
-    description: 'Camera hành trình VIETMAP S720 thế hệ mới - Ghi hình kép cực sắc nét với Camera trước độ phân giải 4K (3840x2160) và Camera sau Full HD (1920x1080), cảm biến Sony Starvis cao cấp bắt trọn mọi chi tiết dù là nhỏ nhất. Tích hợp tính năng độc quyền Cảnh báo biển báo giao thông bằng giọng nói tiếng Việt chuẩn xác trên toàn quốc: Cảnh báo tốc độ giới hạn, khu dân cư, cấm vượt và camera giao thông / phạt nguội. Màn hình hiển thị chi tiết khoảng cách và tốc độ thời gian thực.',
+    primaryImage: "/images/camera_vietmap_s720.webp",
+    secondaryImage: "/images/camera_vietmap_s720_poster.webp",
+    description: "Camera hành trình VIETMAP S720 thế hệ mới - Ghi hình kép cực sắc nét với Camera trước độ phân giải 4K (3840x2160) và Camera sau Full HD (1920x1080), cảm biến Sony Starvis cao cấp bắt trọn mọi chi tiết dù là nhỏ nhất. Tích hợp tính năng độc quyền Cảnh báo biển báo giao thông bằng giọng nói tiếng Việt chuẩn xác trên toàn quốc: Cảnh báo tốc độ giới hạn, khu dân cư, cấm vượt và camera giao thông / phạt nguội. Màn hình hiển thị chi tiết khoảng cách và tốc độ thời gian thực.",
     features: [
-      'Ghi hình kép 2 kênh: Camera trước độ phân giải chuẩn 4K (3840x2160P) & Camera sau Full HD (1920x1080P)',
-      'Cảnh báo biển báo giao thông bằng giọng nói tiếng Việt: Cảnh báo biển giới hạn tốc độ, biển vào/ra khu dân cư, biển cấm vượt',
-      'Cảnh báo camera giao thông: Cảnh báo khu vực có camera phạt nguội, camera giám sát tốc độ chuẩn xác',
-      'Màn hình LCD màu sắc nét hiển thị tốc độ giới hạn, tốc độ di chuyển hiện tại và khoảng cách tới biển báo',
-      'Cảm biến hình ảnh Sony Starvis siêu nhạy sáng ghi hình rõ nét biển số xe cả ngày lẫn đêm',
-      'Tích hợp GPS độ nhạy cao ghi lại chính xác tọa độ, tốc độ và lộ trình di chuyển của xe',
-      'Kết nối Wi-Fi 5GHz tốc độ cao giúp xem trực tiếp và tải video nhanh chóng qua App VIETMAP',
-      'Cảm biến G-Sensor khóa bảo vệ video khẩn cấp khi xảy ra va chạm và hỗ trợ giám sát đỗ xe 24H'
+      "Ghi hình kép 2 kênh: Camera trước độ phân giải chuẩn 4K (3840x2160P) & Camera sau Full HD (1920x1080P)",
+      "Cảnh báo biển báo giao thông bằng giọng nói tiếng Việt: Cảnh báo biển giới hạn tốc độ, biển vào/ra khu dân cư, biển cấm vượt",
+      "Cảnh báo camera giao thông: Cảnh báo khu vực có camera phạt nguội, camera giám sát tốc độ chuẩn xác",
+      "Màn hình LCD màu sắc nét hiển thị tốc độ giới hạn, tốc độ di chuyển hiện tại và khoảng cách tới biển báo",
+      "Cảm biến hình ảnh Sony Starvis siêu nhạy sáng ghi hình rõ nét biển số xe cả ngày lẫn đêm",
+      "Tích hợp GPS độ nhạy cao ghi lại chính xác tọa độ, tốc độ và lộ trình di chuyển của xe",
+      "Kết nối Wi-Fi 5GHz tốc độ cao giúp xem trực tiếp và tải video nhanh chóng qua App VIETMAP",
+      "Cảm biến G-Sensor khóa bảo vệ video khẩn cấp khi xảy ra va chạm và hỗ trợ giám sát đỗ xe 24H"
     ],
-    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
-    materials: ['Thân Vỏ Hợp Kim & Nhựa Chịu Nhiệt Cao Cấp', 'Ống Kính Kính Quang Học 6 Lớp 4K'],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Thân Vỏ Hợp Kim & Nhựa Chịu Nhiệt Cao Cấp",
+      "Ống Kính Kính Quang Học 6 Lớp 4K"
+    ],
     colors: [
-      { name: 'Đen Nhám Chống Chói', hex: '#1E293B' }
+      {"name":"Đen Nhám Chống Chói","hex":"#1E293B"}
     ],
     warrantyMonths: 24,
     inStock: true,
     installationTimeHours: 1
   },
   {
-    id: 'prod-28',
-    itemType: 'product',
-    name: 'Camera Hành Trình 70mai Dash Cam A510 HDR (Cảm Biến Sony STARVIS 2 IMX675, Độ Phân Giải 1944P 3K & Bản Quốc Tế)',
-    category: 'cameras-360',
-    categoryName: 'Camera Hành Trình 70mai A510 HDR',
+    id: "prod-28",
+    itemType: "product",
+    name: "Camera Hành Trình 70mai Dash Cam A510 HDR (Cảm Biến Sony STARVIS 2 IMX675, Độ Phân Giải 1944P 3K & Bản Quốc Tế)",
+    category: "cameras-360",
+    categoryName: "Camera Hành Trình 70mai A510 HDR",
     price: 2450000,
     originalPrice: 2950000,
     isBestSeller: false,
     isNew: true,
     isSale: true,
-    rating: 4.96,
+    rating: 4.8,
     reviewCount: 228,
-    primaryImage: '/images/camera_70mai_a510.jpg',
-    secondaryImage: '/images/camera_70mai_a510.jpg',
-    description: 'Camera hành trình 70mai Dash Cam A510 HDR thế hệ mới - Phiên bản Quốc tế (Global Version) chính hãng trang bị cảm biến ảnh đỉnh cao Sony STARVIS 2 IMX675 với độ phân giải siêu nét 1944P (3K Ultra HD). Tích hợp công nghệ xử lý hình ảnh MaiColor Vivid+ độc quyền cùng chế độ HDR chất lượng cao giúp tái tạo hình ảnh sống động, sắc nét rõ biển số xe cả ngày lẫn đêm. Hỗ trợ ghi hình vòng lặp liên tục, kết nối Wi-Fi tốc độ cao xem video mượt mà trên App 70mai và hệ thống hỗ trợ lái xe an toàn ADAS.',
+    primaryImage: "/images/camera_70mai_a510.jpg",
+    secondaryImage: "/images/camera_70mai_a510.jpg",
+    description: "Camera hành trình 70mai Dash Cam A510 HDR thế hệ mới - Phiên bản Quốc tế (Global Version) chính hãng trang bị cảm biến ảnh đỉnh cao Sony STARVIS 2 IMX675 với độ phân giải siêu nét 1944P (3K Ultra HD). Tích hợp công nghệ xử lý hình ảnh MaiColor Vivid+ độc quyền cùng chế độ HDR chất lượng cao giúp tái tạo hình ảnh sống động, sắc nét rõ biển số xe cả ngày lẫn đêm. Hỗ trợ ghi hình vòng lặp liên tục, kết nối Wi-Fi tốc độ cao xem video mượt mà trên App 70mai và hệ thống hỗ trợ lái xe an toàn ADAS.",
     features: [
-      'Cảm biến hình ảnh thế hệ mới Sony STARVIS 2 IMX675: Độ nhạy sáng siêu cao, khử nhiễu tối đa và ghi hình ban đêm cực rõ nét',
-      'Độ phân giải 1944P (3K Ultra HD) kết hợp công nghệ HDR: Tái tạo chi tiết sắc sảo và cân bằng sáng tối xuất sắc',
-      'Công nghệ xử lý màu sắc MaiColor Vivid+ Solution: Màu sắc sống động, độ tương phản chân thực nhất trong mọi điều kiện ánh sáng',
-      'Chế độ ghi hình vòng lặp (Loop Recording): Liên tục ghi đè lên các video cũ khi thẻ nhớ đầy, đảm bảo không bao giờ bị gián đoạn',
-      'Hệ thống cảnh báo an toàn lái xe ADAS thông minh: Cảnh báo lệch làn, cảnh báo va chạm sớm với xe phía trước',
-      'Tích hợp GPS độ chính xác cao: Đo tốc độ thời gian thực, lưu trữ tọa độ và lộ trình di chuyển của xe',
-      'Kết nối Wi-Fi qua ứng dụng 70mai: Xem trực tiếp, tải video độ phân giải cao nhanh chóng về điện thoại',
-      'Giám sát đỗ xe 24H thông minh: Tự động kích hoạt ghi hình khẩn cấp khi phát hiện rung lắc hoặc va chạm'
+      "Cảm biến hình ảnh thế hệ mới Sony STARVIS 2 IMX675: Độ nhạy sáng siêu cao, khử nhiễu tối đa và ghi hình ban đêm cực rõ nét",
+      "Độ phân giải 1944P (3K Ultra HD) kết hợp công nghệ HDR: Tái tạo chi tiết sắc sảo và cân bằng sáng tối xuất sắc",
+      "Công nghệ xử lý màu sắc MaiColor Vivid+ Solution: Màu sắc sống động, độ tương phản chân thực nhất trong mọi điều kiện ánh sáng",
+      "Chế độ ghi hình vòng lặp (Loop Recording): Liên tục ghi đè lên các video cũ khi thẻ nhớ đầy, đảm bảo không bao giờ bị gián đoạn",
+      "Hệ thống cảnh báo an toàn lái xe ADAS thông minh: Cảnh báo lệch làn, cảnh báo va chạm sớm với xe phía trước",
+      "Tích hợp GPS độ chính xác cao: Đo tốc độ thời gian thực, lưu trữ tọa độ và lộ trình di chuyển của xe",
+      "Kết nối Wi-Fi qua ứng dụng 70mai: Xem trực tiếp, tải video độ phân giải cao nhanh chóng về điện thoại",
+      "Giám sát đỗ xe 24H thông minh: Tự động kích hoạt ghi hình khẩn cấp khi phát hiện rung lắc hoặc va chạm"
     ],
-    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
-    materials: ['Thân Vỏ Hợp Kim & Nhựa Chịu Nhiệt Cao Cấp', 'Ống Kính Thủy Tinh Quang Học 6 Lớp F1.8 Khử Lóa'],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Thân Vỏ Hợp Kim & Nhựa Chịu Nhiệt Cao Cấp",
+      "Ống Kính Thủy Tinh Quang Học 6 Lớp F1.8 Khử Lóa"
+    ],
     colors: [
-      { name: 'Xám Đen Không Gian (Space Gray)', hex: '#334155' }
+      {"name":"Xám Đen Không Gian (Space Gray)","hex":"#334155"}
     ],
     warrantyMonths: 18,
     inStock: true,
     installationTimeHours: 1
   },
   {
-    id: 'prod-41',
-    itemType: 'product',
-    name: 'Gương Điện Tử Ô Tô azcam G1 Series Thế Hệ Mới (G1 | G1 PRO | G1 MAX - Dual Digital Camera & Màn IPS 3000 Nit)',
-    category: 'cameras-360',
-    categoryName: 'Gương Điện Tử Thông Minh azcam G1 Series',
+    id: "prod-41",
+    itemType: "product",
+    name: "Gương Điện Tử Ô Tô azcam G1 Series Thế Hệ Mới (G1 | G1 PRO | G1 MAX - Dual Digital Camera & Màn IPS 3000 Nit)",
+    category: "cameras-360",
+    categoryName: "Gương Điện Tử Thông Minh azcam G1 Series",
     price: 11800000,
     originalPrice: 13500000,
     isBestSeller: true,
     isNew: true,
     isSale: true,
-    rating: 5.0,
+    rating: 4.9,
     reviewCount: 188,
-    primaryImage: '/images/tinhnang1.webp',
-    secondaryImage: '/images/basic-camera.jpg',
+    primaryImage: "/images/tinhnang1.webp",
+    secondaryImage: "/images/basic-camera.jpg",
     galleryImages: [
-      '/images/tinhnang1.webp',
-      '/images/basic-camera.jpg'
+      "/images/tinhnang1.webp",
+      "/images/basic-camera.jpg"
     ],
-    description: 'azcam G1 Series (G1 / G1 PRO / G1 MAX) - Gương điện tử ô tô thế hệ mới đỉnh cao công nghệ với màn hình truyền hình ảnh trực tiếp (Streaming Rearview Mirror) thời gian thực độ trễ 0s và cụm camera trước tinh tế (Basic Front camera). Tích hợp cảm biến ảnh cao cấp SONY IMX 462 / IMX 335 ghi hình kép siêu nét, màn hình IPS độ sáng cực đại 3000 nit chống chói lóa đèn pha tuyệt đối, hiển thị tốc độ di chuyển và thời gian thực. Thi công cắm giắc Zin 100% kèm bộ Kits nguồn cao cấp miễn phí.',
+    description: "azcam G1 Series (G1 / G1 PRO / G1 MAX) - Gương điện tử ô tô thế hệ mới đỉnh cao công nghệ với màn hình truyền hình ảnh trực tiếp (Streaming Rearview Mirror) thời gian thực độ trễ 0s và cụm camera trước tinh tế (Basic Front camera). Tích hợp cảm biến ảnh cao cấp SONY IMX 462 / IMX 335 ghi hình kép siêu nét, màn hình IPS độ sáng cực đại 3000 nit chống chói lóa đèn pha tuyệt đối, hiển thị tốc độ di chuyển và thời gian thực. Thi công cắm giắc Zin 100% kèm bộ Kits nguồn cao cấp miễn phí.",
     features: [
-      'Gương điện tử thế hệ mới azcam G1 Series: Lựa chọn 3 cấu hình đẳng cấp G1 | G1 PRO | G1 MAX thay thế hoàn hảo gương cơ truyền thống',
-      'Màn hình Streaming Rearview Mirror siêu sáng 3000 nit: Chống chói lóa đèn pha phía sau tuyệt đối, góc nhìn siêu rộng loại bỏ 100% điểm mù',
-      'Dual Digital Camera: Cụm camera trước Basic Front camera đặt gọn gàng trên trần kính lái kết hợp camera sau góc rộng truyền hình trực tiếp',
-      'Hiển thị thông số hành trình trực tiếp: Vận tốc di chuyển GPS (70km/h), đồng hồ thời gian thực và cảnh báo an toàn',
-      'Cảm biến hình ảnh SONY STARVIS IMX 462 / IMX 335: Nhạy sáng siêu việt, bắt trọn biển số xe ban đêm và trời mưa bão lớn',
-      'Cáp truyền tín hiệu Digital chính hãng: Triệt tiêu độ trễ hình ảnh, không bị giật lag hay nhiễu từ',
-      'Dưỡng camera thiết kế chuẩn Zin theo từng dòng xe: Lắp đặt ăn khớp thẩm mỹ như trang bị nguyên bản nhà máy',
-      'Tặng kèm trọn bộ Kits nguồn thông minh cắm giắc Zin 100%: Tự ngắt bảo vệ bình ắc quy, không cắt trích dây điện',
-      'Chính sách bảo hành chính hãng azcam 18 tháng 1 đổi 1 tại Hieu N Auto'
+      "Gương điện tử thế hệ mới azcam G1 Series: Lựa chọn 3 cấu hình đẳng cấp G1 | G1 PRO | G1 MAX thay thế hoàn hảo gương cơ truyền thống",
+      "Màn hình Streaming Rearview Mirror siêu sáng 3000 nit: Chống chói lóa đèn pha phía sau tuyệt đối, góc nhìn siêu rộng loại bỏ 100% điểm mù",
+      "Dual Digital Camera: Cụm camera trước Basic Front camera đặt gọn gàng trên trần kính lái kết hợp camera sau góc rộng truyền hình trực tiếp",
+      "Hiển thị thông số hành trình trực tiếp: Vận tốc di chuyển GPS (70km/h), đồng hồ thời gian thực và cảnh báo an toàn",
+      "Cảm biến hình ảnh SONY STARVIS IMX 462 / IMX 335: Nhạy sáng siêu việt, bắt trọn biển số xe ban đêm và trời mưa bão lớn",
+      "Cáp truyền tín hiệu Digital chính hãng: Triệt tiêu độ trễ hình ảnh, không bị giật lag hay nhiễu từ",
+      "Dưỡng camera thiết kế chuẩn Zin theo từng dòng xe: Lắp đặt ăn khớp thẩm mỹ như trang bị nguyên bản nhà máy",
+      "Tặng kèm trọn bộ Kits nguồn thông minh cắm giắc Zin 100%: Tự ngắt bảo vệ bình ắc quy, không cắt trích dây điện",
+      "Chính sách bảo hành chính hãng azcam 18 tháng 1 đổi 1 tại Hieu N Auto"
     ],
-    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
-    materials: ['Màn Hình Kính Cường Lực IPS 3000 Nit Chống Lóa', 'Thân Vỏ Hợp Kim Hàng Không Tản Nhiệt Đa Điểm', 'Cảm Biến Ảnh SONY STARVIS IMX 462/335'],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Màn Hình Kính Cường Lực IPS 3000 Nit Chống Lóa",
+      "Thân Vỏ Hợp Kim Hàng Không Tản Nhiệt Đa Điểm",
+      "Cảm Biến Ảnh SONY STARVIS IMX 462/335"
+    ],
     colors: [
-      { name: 'Phiên bản G1 MAX (Bản Cao Cấp Nhất - 3000 Nit)', hex: '#2563EB' },
-      { name: 'Phiên bản G1 PRO (Bản Tiêu Chuẩn Nâng Cao)', hex: '#0284C7' },
-      { name: 'Phiên bản G1 (Bản Cơ Bản Chuẩn Zin)', hex: '#1E293B' }
+      {"name":"Phiên bản G1 MAX (Bản Cao Cấp Nhất - 3000 Nit)","hex":"#2563EB"},
+      {"name":"Phiên bản G1 PRO (Bản Tiêu Chuẩn Nâng Cao)","hex":"#0284C7"},
+      {"name":"Phiên bản G1 (Bản Cơ Bản Chuẩn Zin)","hex":"#1E293B"}
     ],
     warrantyMonths: 18,
     inStock: true,
     installationTimeHours: 1.5
   },
   {
-    id: 'prod-16',
-    itemType: 'product',
-    name: 'Đèn Bi Gầm LED HCLightAuto G2 Plus 2.0 Inch (3 Chế Độ Màu Chuẩn Zin)',
-    category: 'ambient-lights',
-    categoryName: 'Bi Gầm HCLightAuto G2 Plus',
+    id: "prod-16",
+    itemType: "product",
+    name: "Đèn Bi Gầm LED HCLightAuto G2 Plus 2.0 Inch (3 Chế Độ Màu Chuẩn Zin)",
+    category: "ambient-lights",
+    categoryName: "Bi Gầm HCLightAuto G2 Plus",
     price: 3600000,
     originalPrice: 4500000,
     isSale: true,
     isBestSeller: true,
     rating: 4.8,
     reviewCount: 142,
-    primaryImage: '/images/hcl_tsv3_projector.jpg',
-    secondaryImage: '/images/bi_gam_eagle_flight_spec.jpg',
-    description: 'Đèn Bi Gầm LED HCLightAuto G2 Plus (2.0 Inch) - "Thắp Sáng Mọi Cung Đường" với 3 chế độ nhiệt màu thông minh tích hợp trên cùng 1 thấu kính (Vàng phá sương 3000K, Vàng nắng bám đường 4300K, Trắng thời trang 6000K). Kích thước thấu kính 2.0 inch siêu gọn gàng, trang bị pát bắt Zin chuyên biệt theo từng dòng xe (Toyota, Ford, Nissan, Universal đa năng) cắm giắc Zin 100% không cắt trích dây, thấu kính Bi LED HCL Projector gom sáng cực mạnh và mặt cắt chống chói đạt chuẩn đăng kiểm.',
+    primaryImage: "/images/hcl_tsv3_projector.jpg",
+    secondaryImage: "/images/bi_gam_eagle_flight_spec.jpg",
+    description: "Đèn Bi Gầm LED HCLightAuto G2 Plus (2.0 Inch) - \"Thắp Sáng Mọi Cung Đường\" với 3 chế độ nhiệt màu thông minh tích hợp trên cùng 1 thấu kính (Vàng phá sương 3000K, Vàng nắng bám đường 4300K, Trắng thời trang 6000K). Kích thước thấu kính 2.0 inch siêu gọn gàng, trang bị pát bắt Zin chuyên biệt theo từng dòng xe (Toyota, Ford, Nissan, Universal đa năng) cắm giắc Zin 100% không cắt trích dây, thấu kính Bi LED HCL Projector gom sáng cực mạnh và mặt cắt chống chói đạt chuẩn đăng kiểm.",
     features: [
-      'Thương hiệu chính hãng HCLightAuto - Slogan "Thắp Sáng Mọi Cung Đường"',
-      '3 Chế độ nhiệt màu linh hoạt: 3000K (phá sương mù dày) - 4300K (mưa ẩm bám đường) - 6000K (trắng sáng đi phố)',
-      'Kích thước thấu kính 2.0 Inch (G2 2.0) nhỏ gọn, độ tương thích hoàn hảo cho hầu hết các dòng xe',
-      'Hệ thống pát chân bắt Zin theo xe: Pát Toyota, Pát Ford, Pát Nissan và Pát đa năng Universal cắm giắc 100%',
-      'Thân nhôm đúc nguyên khối tản nhiệt rãnh sâu, chống nước ngập sâu IP68 và chống rung giật tuyệt đối',
-      'Chùm sáng mặt cắt phẳng rộng sắc lẹm, bám đường cực tốt, an toàn văn minh không gây chói mắt xe đối diện',
-      'Bảo hành chính hãng HCLightAuto 24 tháng (2 năm) 1 đổi 1'
+      "Thương hiệu chính hãng HCLightAuto - Slogan \"Thắp Sáng Mọi Cung Đường\"",
+      "3 Chế độ nhiệt màu linh hoạt: 3000K (phá sương mù dày) - 4300K (mưa ẩm bám đường) - 6000K (trắng sáng đi phố)",
+      "Kích thước thấu kính 2.0 Inch (G2 2.0) nhỏ gọn, độ tương thích hoàn hảo cho hầu hết các dòng xe",
+      "Hệ thống pát chân bắt Zin theo xe: Pát Toyota, Pát Ford, Pát Nissan và Pát đa năng Universal cắm giắc 100%",
+      "Thân nhôm đúc nguyên khối tản nhiệt rãnh sâu, chống nước ngập sâu IP68 và chống rung giật tuyệt đối",
+      "Chùm sáng mặt cắt phẳng rộng sắc lẹm, bám đường cực tốt, an toàn văn minh không gây chói mắt xe đối diện",
+      "Bảo hành chính hãng HCLightAuto 24 tháng (2 năm) 1 đổi 1"
     ],
-    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
-    materials: ['Thấu Kính Quang Học Bi LED HCL Projector 2.0 Inch', 'Thân Hợp Kim Nhôm Đúc Tản Nhiệt CNC Nguyên Khối', 'Chip LED HCLightAuto 3 Nhiệt Màu Thế Hệ Mới'],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Thấu Kính Quang Học Bi LED HCL Projector 2.0 Inch",
+      "Thân Hợp Kim Nhôm Đúc Tản Nhiệt CNC Nguyên Khối",
+      "Chip LED HCLightAuto 3 Nhiệt Màu Thế Hệ Mới"
+    ],
     colors: [
-      { name: 'Pát Toyota Zin (3 Chế Độ Màu)', hex: '#16A34A' },
-      { name: 'Pát Ford Zin (3 Chế Độ Màu)', hex: '#0284C7' },
-      { name: 'Pát Nissan Zin (3 Chế Độ Màu)', hex: '#DC2626' },
-      { name: 'Pát Đa Năng Universal (3 Chế Độ Màu)', hex: '#475569' }
+      {"name":"Pát Toyota Zin (3 Chế Độ Màu)","hex":"#16A34A"},
+      {"name":"Pát Ford Zin (3 Chế Độ Màu)","hex":"#0284C7"},
+      {"name":"Pát Nissan Zin (3 Chế Độ Màu)","hex":"#DC2626"},
+      {"name":"Pát Đa Năng Universal (3 Chế Độ Màu)","hex":"#475569"}
     ],
     warrantyMonths: 24,
     inStock: true,
     installationTimeHours: 1.5
   },
   {
-    id: 'prod-23',
-    itemType: 'service',
-    name: 'Bi LED Aozoom EXTRA SAPPHIRE Uy Lực Siêu Pha 62W-98W (Nhiệt Màu 5000K Bám Đường & Chống Nước IP67)',
-    category: 'ambient-lights',
-    categoryName: 'Bi LED Tăng Sáng Aozoom',
+    id: "prod-23",
+    itemType: "service",
+    name: "Bi LED Aozoom EXTRA SAPPHIRE Uy Lực Siêu Pha 62W-98W (Nhiệt Màu 5000K Bám Đường & Chống Nước IP67)",
+    category: "ambient-lights",
+    categoryName: "Bi LED Tăng Sáng Aozoom",
     price: 3800000,
     originalPrice: 4500000,
     isBestSeller: true,
@@ -397,1050 +478,1634 @@ export const PRODUCTS: Product[] = [
     isSale: true,
     rating: 5.0,
     reviewCount: 228,
-    primaryImage: '/images/aozoom_extra_sapphire.webp',
-    secondaryImage: '/images/aozoom_extra_sapphire_poster.webp',
-    description: 'Bi LED Aozoom EXTRA SAPPHIRE New Standard LED Projectors thế hệ mới - "Ánh sáng dẫn lối, vị thế dẫn đầu". Sản phẩm đèn chiếu sáng công nghệ Đức (German Technology) đột phá với thiết kế đa thấu kính hội tụ độc bản: Tầng trên gồm 3 thấu kính ma trận siêu sáng, tầng dưới trang bị thấu kính trợ pha uy lực đưa tổng công suất pha đạt tới 98W (Cos 62W - Pha 98W). Nhiệt màu 5000K ngả vàng ấm cho khả năng bám đường tuyệt đỉnh, xuyên mưa và phá sương mù vượt trội. Toàn bộ thân vỏ chế tác từ hợp kim nhôm đúc nguyên khối với rãnh tản nhiệt CNC cao cấp, đạt tiêu chuẩn kháng nước bụi IP67.',
+    primaryImage: "/images/aozoom_extra_sapphire.webp",
+    secondaryImage: "/images/aozoom_extra_sapphire_poster.webp",
+    description: "Bi LED Aozoom EXTRA SAPPHIRE New Standard LED Projectors thế hệ mới - \"Ánh sáng dẫn lối, vị thế dẫn đầu\". Sản phẩm đèn chiếu sáng công nghệ Đức (German Technology) đột phá với thiết kế đa thấu kính hội tụ độc bản: Tầng trên gồm 3 thấu kính ma trận siêu sáng, tầng dưới trang bị thấu kính trợ pha uy lực đưa tổng công suất pha đạt tới 98W (Cos 62W - Pha 98W). Nhiệt màu 5000K ngả vàng ấm cho khả năng bám đường tuyệt đỉnh, xuyên mưa và phá sương mù vượt trội. Toàn bộ thân vỏ chế tác từ hợp kim nhôm đúc nguyên khối với rãnh tản nhiệt CNC cao cấp, đạt tiêu chuẩn kháng nước bụi IP67.",
     features: [
-      'Công nghệ Đức (German Technology): Cấu hình quang học đa thấu kính ma trận độc bản thế hệ mới',
-      'Uy lực siêu pha công suất khủng 62W (Cos) - 98W (Pha): Chùm sáng pha gom dày, chiếu xa hàng trăm mét bao quát toàn bộ tầm nhìn',
-      'Nhiệt màu 5000K ánh sáng tự nhiên ngả vàng ấm: Bám đường đỉnh cao, dịu mắt và khả năng xuyên mưa phá sương hoàn hảo',
-      'Dải điện áp hoạt động rộng 9V - 16V: Tương thích mượt mà, ổn định trên tất cả các dòng xe ô tô hiện đại',
-      'Tiêu chuẩn chống nước và bụi bẩn IP67: Vận hành bền bỉ tuyệt đối trong mọi điều kiện thời tiết khắc nghiệt',
-      'Hệ thống tản nhiệt CNC đa tầng: Thân vỏ hợp kim nhôm đúc rãnh sâu tản nhiệt siêu tốc, bảo vệ chip LED tối đa',
-      'Mặt cắt ánh sáng Cos văn minh: Đường cắt thẳng tắp, gom sáng chuẩn xác, không gây chói mắt người đi đối diện',
-      'Bảo hành chính hãng AOZOOM 2 năm (24 tháng) 1 đổi 1 tại Hieu N Auto'
+      "Công nghệ Đức (German Technology): Cấu hình quang học đa thấu kính ma trận độc bản thế hệ mới",
+      "Uy lực siêu pha công suất khủng 62W (Cos) - 98W (Pha): Chùm sáng pha gom dày, chiếu xa hàng trăm mét bao quát toàn bộ tầm nhìn",
+      "Nhiệt màu 5000K ánh sáng tự nhiên ngả vàng ấm: Bám đường đỉnh cao, dịu mắt và khả năng xuyên mưa phá sương hoàn hảo",
+      "Dải điện áp hoạt động rộng 9V - 16V: Tương thích mượt mà, ổn định trên tất cả các dòng xe ô tô hiện đại",
+      "Tiêu chuẩn chống nước và bụi bẩn IP67: Vận hành bền bỉ tuyệt đối trong mọi điều kiện thời tiết khắc nghiệt",
+      "Hệ thống tản nhiệt CNC đa tầng: Thân vỏ hợp kim nhôm đúc rãnh sâu tản nhiệt siêu tốc, bảo vệ chip LED tối đa",
+      "Mặt cắt ánh sáng Cos văn minh: Đường cắt thẳng tắp, gom sáng chuẩn xác, không gây chói mắt người đi đối diện",
+      "Bảo hành chính hãng AOZOOM 2 năm (24 tháng) 1 đổi 1 tại Hieu N Auto"
     ],
-    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
-    materials: ['Hợp Kim Nhôm Đúc Tản Nhiệt CNC Hàng Không', 'Thấu Kính Thủy Tinh Quang Học Sapphire HD', 'Chip LED Aozoom German Technology'],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Hợp Kim Nhôm Đúc Tản Nhiệt CNC Hàng Không",
+      "Thấu Kính Thủy Tinh Quang Học Sapphire HD",
+      "Chip LED Aozoom German Technology"
+    ],
     colors: [
-      { name: 'Đen Mờ Nhôm Hàng Không (5000K)', hex: '#1E293B' }
+      {"name":"Đen Mờ Nhôm Hàng Không (5000K)","hex":"#1E293B"}
     ],
     warrantyMonths: 24,
     inStock: true,
     installationTimeHours: 2
   },
   {
-    id: 'prod-35',
-    itemType: 'product',
-    name: 'Bi Gầm Aozoom LED WASP Fog Light 3.0 Inch (TIR Super LED - Hiệu Suất 105-115 Lm/W - Nhiệt Màu 4500K)',
-    category: 'ambient-lights',
-    categoryName: 'Đèn Bi Gầm Aozoom WASP',
+    id: "prod-35",
+    itemType: "product",
+    name: "Bi Gầm Aozoom LED WASP Fog Light 3.0 Inch (TIR Super LED - Hiệu Suất 105-115 Lm/W - Nhiệt Màu 4500K)",
+    category: "ambient-lights",
+    categoryName: "Đèn Bi Gầm Aozoom WASP",
     price: 5500000,
     originalPrice: 6500000,
     isSale: true,
     isNew: true,
-    rating: 5.0,
+    rating: 4.9,
     reviewCount: 168,
-    primaryImage: '/images/aozoom_wasp_fog_1.jpg',
-    secondaryImage: '/images/aozoom_wasp_fog_2.webp',
-    description: 'Bi Gầm Aozoom LED WASP Fog Light 3.0 Inch cao cấp ứng dụng công nghệ quang học TIR Super LED độc quyền từ Aozoom (German Technology). Hiệu suất phát quang cực khủng 105 - 115 LM/W, nhiệt màu vàng nắng 4500K và chỉ số hoàn màu CRI 85 cho khả năng bám đường, phá sương mưa vượt trội. Đường cắt ánh sáng phẳng rộng sắc lẹm, đạt chuẩn chống nước ngập sâu IP68 và tản nhiệt nhôm CNC bền bỉ.',
+    primaryImage: "/images/aozoom_wasp_fog_1.jpg",
+    secondaryImage: "/images/aozoom_wasp_fog_2.webp",
+    description: "Bi Gầm Aozoom LED WASP Fog Light 3.0 Inch cao cấp ứng dụng công nghệ quang học TIR Super LED độc quyền từ Aozoom (German Technology). Hiệu suất phát quang cực khủng 105 - 115 LM/W, nhiệt màu vàng nắng 4500K và chỉ số hoàn màu CRI 85 cho khả năng bám đường, phá sương mưa vượt trội. Đường cắt ánh sáng phẳng rộng sắc lẹm, đạt chuẩn chống nước ngập sâu IP68 và tản nhiệt nhôm CNC bền bỉ.",
     features: [
-      'Công nghệ TIR Super LED quang học tối tân: Hội tụ hơn 90% ánh sáng phát ra, tăng 30% hiệu suất quang thông so với bi thông thường',
-      'Hiệu suất phát quang đạt 105 - 115 LM/W với chỉ số hoàn màu vượt trội CIE RA (CRI) 85 phản ánh vật thể chân thực',
-      'Nhiệt màu 4500K (vàng nắng trung tính) bám đường cực kỳ xuất sắc trong mọi điều kiện mưa lớn, sương mù dày đặc và đường đèo',
-      'Đường cắt cos phẳng rộng sắc lẹm, không gây chói mắt xe đi ngược chiều, đạt chuẩn đăng kiểm Việt Nam',
-      'Chỉ số chống nước IP68 tuyệt đối kháng nước ngập sâu, chịu nhiệt khắc nghiệt từ -40°C đến 105°C',
-      'Kích thước chuẩn 3.0 Inch cắm giắc Zin và pát chuyên dụng theo xe không đục khoét chóa',
-      'Bảo hành chính hãng Aozoom Việt Nam 36 tháng (3 năm) 1 đổi 1'
+      "Công nghệ TIR Super LED quang học tối tân: Hội tụ hơn 90% ánh sáng phát ra, tăng 30% hiệu suất quang thông so với bi thông thường",
+      "Hiệu suất phát quang đạt 105 - 115 LM/W với chỉ số hoàn màu vượt trội CIE RA (CRI) 85 phản ánh vật thể chân thực",
+      "Nhiệt màu 4500K (vàng nắng trung tính) bám đường cực kỳ xuất sắc trong mọi điều kiện mưa lớn, sương mù dày đặc và đường đèo",
+      "Đường cắt cos phẳng rộng sắc lẹm, không gây chói mắt xe đi ngược chiều, đạt chuẩn đăng kiểm Việt Nam",
+      "Chỉ số chống nước IP68 tuyệt đối kháng nước ngập sâu, chịu nhiệt khắc nghiệt từ -40°C đến 105°C",
+      "Kích thước chuẩn 3.0 Inch cắm giắc Zin và pát chuyên dụng theo xe không đục khoét chóa",
+      "Bảo hành chính hãng Aozoom Việt Nam 36 tháng (3 năm) 1 đổi 1"
     ],
-    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
-    materials: ['Thấu Kính Quang Học TIR Super LED', 'Thân Nhôm Đúc Hàng Không Tản Nhiệt CNC'],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Thấu Kính Quang Học TIR Super LED",
+      "Thân Nhôm Đúc Hàng Không Tản Nhiệt CNC"
+    ],
     colors: [
-      { name: 'Nhiệt Màu 4500K Vàng Nắng Bám Đường', hex: '#F59E0B' },
-      { name: 'Thấu Kính 3.0 Inch Chống Nước IP68', hex: '#334155' }
+      {"name":"Nhiệt Màu 4500K Vàng Nắng Bám Đường","hex":"#F59E0B"},
+      {"name":"Thấu Kính 3.0 Inch Chống Nước IP68","hex":"#334155"}
     ],
     warrantyMonths: 36,
     inStock: true,
     installationTimeHours: 1.5
   },
   {
-    id: 'prod-34',
-    itemType: 'product',
-    name: 'Đèn Bi LED A50 Tăng Sáng Cao Cấp (Chuẩn Zin)',
-    category: 'ambient-lights',
-    categoryName: 'Đèn Bi LED A50',
+    id: "prod-34",
+    itemType: "product",
+    name: "Đèn Bi LED A50 Tăng Sáng Cao Cấp (Chuẩn Zin)",
+    category: "ambient-lights",
+    categoryName: "Đèn Bi LED A50",
     price: 4850000,
     originalPrice: 5800000,
     isSale: true,
     isBestSeller: true,
-    rating: 4.9,
+    rating: 4.8,
     reviewCount: 289,
-    primaryImage: '/images/bi_gam_aozoom_eagle_flight_real.jpg',
-    secondaryImage: '/images/hcl_g2plus_biled.jpg',
-    description: 'Đèn Bi LED A50 thế hệ mới công suất 55W-65W siêu sáng với luồng pha gom dày, mặt cắt cos phẳng rộng sắc lẹm chuẩn đăng kiểm không gây chói mắt xe đối diện. Thiết kế chuẩn Zin cắm giắc 100% không cắt trích dây điện, thấu kính Projector phủ lớp Polarized chống lóa tăng cường độ nét và độ bám đường.',
+    primaryImage: "/images/bi_gam_aozoom_eagle_flight_real.jpg",
+    secondaryImage: "/images/hcl_g2plus_biled.jpg",
+    description: "Đèn Bi LED A50 thế hệ mới công suất 55W-65W siêu sáng với luồng pha gom dày, mặt cắt cos phẳng rộng sắc lẹm chuẩn đăng kiểm không gây chói mắt xe đối diện. Thiết kế chuẩn Zin cắm giắc 100% không cắt trích dây điện, thấu kính Projector phủ lớp Polarized chống lóa tăng cường độ nét và độ bám đường.",
     features: [
-      'Công suất thực 55W Cos / 65W Pha, chiếu xa và bao quát tầm nhìn vượt trội',
-      'Đường cắt ánh sáng Cos phẳng rộng sắc lẹm, gom sáng chuẩn không chói mắt xe ngược chiều',
-      'Thấu kính Projector HD công nghệ mới phủ Polarized tăng cường độ nét và bám đường',
-      'Lắp đặt cắm giắc Zin 100% chuyên dụng theo từng dòng xe, không đục khoét chóa',
-      'Hệ thống quạt tản nhiệt nhôm CNC hàng không siêu bền, hoạt động êm ái',
-      'Bảo hành chính hãng 36 tháng đổi mới tại Hieu N Auto'
+      "Công suất thực 55W Cos / 65W Pha, chiếu xa và bao quát tầm nhìn vượt trội",
+      "Đường cắt ánh sáng Cos phẳng rộng sắc lẹm, gom sáng chuẩn không chói mắt xe ngược chiều",
+      "Thấu kính Projector HD công nghệ mới phủ Polarized tăng cường độ nét và bám đường",
+      "Lắp đặt cắm giắc Zin 100% chuyên dụng theo từng dòng xe, không đục khoét chóa",
+      "Hệ thống quạt tản nhiệt nhôm CNC hàng không siêu bền, hoạt động êm ái",
+      "Bảo hành chính hãng 36 tháng đổi mới tại Hieu N Auto"
     ],
-    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
-    materials: ['Nhôm Hàng Không 6063 CNC', 'Thấu Kính Thủy Tinh Projector HD Polarized'],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Nhôm Hàng Không 6063 CNC",
+      "Thấu Kính Thủy Tinh Projector HD Polarized"
+    ],
     colors: [
-      { name: 'Nhiệt Màu 5500K Trắng Thời Trang Bám Đường', hex: '#F8FAFC' },
-      { name: 'Nhiệt Màu 4500K Vàng Nắng', hex: '#EAB308' }
+      {"name":"Nhiệt Màu 5500K Trắng Thời Trang Bám Đường","hex":"#F8FAFC"},
+      {"name":"Nhiệt Màu 4500K Vàng Nắng","hex":"#EAB308"}
     ],
     warrantyMonths: 36,
     inStock: true,
     installationTimeHours: 1.5
   },
   {
-    id: 'prod-6',
-    itemType: 'service',
-    name: 'Gói Nâng Cấp Loa Sub Điện Gầm Ghế Rebec U10 Cao Cấp (Bổ Sung Âm Trầm Siêu Sâu)',
-    category: 'car-audio',
-    categoryName: 'Loa Sub Điện Gầm Ghế Ô Tô',
+    id: "prod-6",
+    itemType: "service",
+    name: "Gói Nâng Cấp Loa Sub Điện Gầm Ghế Rebec U10 Cao Cấp (Bổ Sung Âm Trầm Siêu Sâu)",
+    category: "car-audio",
+    categoryName: "Loa Sub Điện Gầm Ghế Ô Tô",
     price: 5600000,
     originalPrice: 6800000,
     isBestSeller: true,
     isTopBestSeller: true,
     isSale: true,
-    rating: 4.9,
+    rating: 5.0,
     reviewCount: 196,
-    primaryImage: '/images/rebec_sub_vf3_kit.jpg',
-    secondaryImage: '/images/rebec_sub_closeup.jpg',
-    description: 'Loa Sub điện gầm ghế Rebec U10 (10 inch) chính hãng cao cấp cắm giắc Zin 100%, bổ sung dải âm bass siêu trầm mạnh mẽ và uy lực cho hệ thống âm thanh ô tô. Kích thước siêu mỏng nhỏ gọn dễ dàng đặt vừa vặn dưới gầm ghế các dòng xe VinFast VF3, Sedan, SUV, MPV mà không chiếm diện tích khoang nội thất.',
+    primaryImage: "/images/rebec_sub_vf3_kit.jpg",
+    secondaryImage: "/images/rebec_sub_closeup.jpg",
+    description: "Loa Sub điện gầm ghế Rebec U10 (10 inch) chính hãng cao cấp cắm giắc Zin 100%, bổ sung dải âm bass siêu trầm mạnh mẽ và uy lực cho hệ thống âm thanh ô tô. Kích thước siêu mỏng nhỏ gọn dễ dàng đặt vừa vặn dưới gầm ghế các dòng xe VinFast VF3, Sedan, SUV, MPV mà không chiếm diện tích khoang nội thất.",
     features: [
-      'Loa Sub điện Rebec U10 kích thước 10 inch, công suất 160W RMS / 400W MAX tái tạo dải trầm 150Hz - 20Hz sâu thẳm, gọn gàng',
-      'Khung nhôm đúc nguyên khối tản nhiệt cực tốt, chống rung chấn hiệu quả khi đánh dải bass cao độ',
-      'Tích hợp bộ điều chỉnh âm lượng Bass Remote Controller đặt tại vị trí lái xe tiện lợi',
-      'Bộ dây cắm giắc Zin 100% theo xe, có cầu chì ngắt nguồn độc lập bảo vệ an toàn hệ thống điện',
-      'Tặng kèm pát và ốc đôn ghế chuyên dụng vừa khít gầm ghế VinFast VF3 và nhiều dòng xe',
-      'Bảo hành chính hãng Rebec 24 tháng đổi mới'
+      "Loa Sub điện Rebec U10 kích thước 10 inch, công suất 160W RMS / 400W MAX tái tạo dải trầm 150Hz - 20Hz sâu thẳm, gọn gàng",
+      "Khung nhôm đúc nguyên khối tản nhiệt cực tốt, chống rung chấn hiệu quả khi đánh dải bass cao độ",
+      "Tích hợp bộ điều chỉnh âm lượng Bass Remote Controller đặt tại vị trí lái xe tiện lợi",
+      "Bộ dây cắm giắc Zin 100% theo xe, có cầu chì ngắt nguồn độc lập bảo vệ an toàn hệ thống điện",
+      "Tặng kèm pát và ốc đôn ghế chuyên dụng vừa khít gầm ghế VinFast VF3 và nhiều dòng xe",
+      "Bảo hành chính hãng Rebec 24 tháng đổi mới"
     ],
-    vehicleTypes: ['suv', 'sedan', 'mpv'],
-    materials: ['Khung Nhôm Đúc Liền Khối Rebec U10', 'Màng Loa Cao Cấp Sợi Thủy Tinh & Hợp Kim'],
+    vehicleTypes: [
+      "suv",
+      "sedan",
+      "mpv"
+    ],
+    materials: [
+      "Khung Nhôm Đúc Liền Khối Rebec U10",
+      "Màng Loa Cao Cấp Sợi Thủy Tinh & Hợp Kim"
+    ],
     colors: [
-      { name: 'Đen Mờ Nhôm Phay Rebec', hex: '#18181B' }
+      {"name":"Đen Mờ Nhôm Phay Rebec","hex":"#18181B"}
     ],
     warrantyMonths: 24,
     inStock: true,
     installationTimeHours: 2
   },
   {
-    id: 'prod-37',
-    itemType: 'product',
-    name: 'Loa Sub Điện Gầm Ghế Cao Cấp STEG SA-8W (Thương Hiệu STEG Italy - Chuẩn Âm Thanh Châu Âu)',
-    category: 'car-audio',
-    categoryName: 'Loa Sub Điện Gầm Ghế STEG',
+    id: "prod-37",
+    itemType: "product",
+    name: "Loa Sub Điện Gầm Ghế Cao Cấp STEG SA-8W (Thương Hiệu STEG Italy - Chuẩn Âm Thanh Châu Âu)",
+    category: "car-audio",
+    categoryName: "Loa Sub Điện Gầm Ghế STEG",
     price: 6200000,
     originalPrice: 7500000,
     isSale: true,
     isNew: true,
     isBestSeller: false,
-    rating: 4.95,
+    rating: 4.9,
     reviewCount: 182,
-    primaryImage: '/images/steg_sa_8w_subwoofer.jpg',
-    secondaryImage: '/images/steg_sa_8w_secondary.png',
-    description: 'Loa Sub điện gầm ghế cao cấp STEG SA-8W chính hãng đến từ thương hiệu âm thanh xe hơi hàng đầu nước Ý (STEG Italy). Thiết kế nhôm đúc nguyên khối siêu mỏng gọn gàng, trang bị củ loa bass 8 inch công suất cực mạnh, dải tần trầm 20Hz - 150Hz uy lực, sâu lắng và sạch tiếng. Tích hợp mạch công suất Class D hiệu suất cao, cắm giắc Zin 100% không cắt dây và tối ưu hoàn hảo cho VinFast VF3, Sedan, SUV, MPV.',
+    primaryImage: "/images/steg_sa_8w_subwoofer.jpg",
+    secondaryImage: "/images/steg_sa_8w_secondary.png",
+    description: "Loa Sub điện gầm ghế cao cấp STEG SA-8W chính hãng đến từ thương hiệu âm thanh xe hơi hàng đầu nước Ý (STEG Italy). Thiết kế nhôm đúc nguyên khối siêu mỏng gọn gàng, trang bị củ loa bass 8 inch công suất cực mạnh, dải tần trầm 20Hz - 150Hz uy lực, sâu lắng và sạch tiếng. Tích hợp mạch công suất Class D hiệu suất cao, cắm giắc Zin 100% không cắt dây và tối ưu hoàn hảo cho VinFast VF3, Sedan, SUV, MPV.",
     features: [
-      'Thương hiệu âm thanh cao cấp STEG Italy: Đẳng cấp chất âm Châu Âu trầm ấm, uy lực và không bị ù rền',
-      'Củ loa siêu trầm 8 inch màng nón hợp kim nhôm, công suất cực đại 250W Max / 140W RMS đánh bass cực chắc',
-      'Dải tần số đáp ứng siêu trầm 20Hz - 150Hz, độ nhạy cao 90dB cho âm bass mềm sâu và sạch tiếng',
-      'Thiết kế nhôm đúc nguyên khối tản nhiệt tuyệt hảo, kích thước siêu mỏng dễ dàng đặt vừa gầm ghế lái hoặc phụ',
-      'Tích hợp bộ điều khiển âm lượng Bass Controller độc lập đặt gần vị trí lái xe tiện lợi',
-      'Lắp đặt cắm giắc Zin 100% theo xe, kèm cầu chì chống quá tải bảo vệ tuyệt đối hệ thống điện xe',
-      'Bảo hành chính hãng STEG 24 tháng (2 năm) 1 đổi 1'
+      "Thương hiệu âm thanh cao cấp STEG Italy: Đẳng cấp chất âm Châu Âu trầm ấm, uy lực và không bị ù rền",
+      "Củ loa siêu trầm 8 inch màng nón hợp kim nhôm, công suất cực đại 250W Max / 140W RMS đánh bass cực chắc",
+      "Dải tần số đáp ứng siêu trầm 20Hz - 150Hz, độ nhạy cao 90dB cho âm bass mềm sâu và sạch tiếng",
+      "Thiết kế nhôm đúc nguyên khối tản nhiệt tuyệt hảo, kích thước siêu mỏng dễ dàng đặt vừa gầm ghế lái hoặc phụ",
+      "Tích hợp bộ điều khiển âm lượng Bass Controller độc lập đặt gần vị trí lái xe tiện lợi",
+      "Lắp đặt cắm giắc Zin 100% theo xe, kèm cầu chì chống quá tải bảo vệ tuyệt đối hệ thống điện xe",
+      "Bảo hành chính hãng STEG 24 tháng (2 năm) 1 đổi 1"
     ],
-    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
-    materials: ['Khung Nhôm Đúc Liền Khối STEG Italy', 'Màng Loa Hợp Kim Nhôm Anodized'],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Khung Nhôm Đúc Liền Khối STEG Italy",
+      "Màng Loa Hợp Kim Nhôm Anodized"
+    ],
     colors: [
-      { name: 'Đen Nhám Logo STEG Italy Flag', hex: '#1E293B' }
+      {"name":"Đen Nhám Logo STEG Italy Flag","hex":"#1E293B"}
     ],
     warrantyMonths: 24,
     inStock: true,
     installationTimeHours: 1.5
   },
   {
-    id: 'prod-26',
-    itemType: 'service',
-    name: 'Cặp Loa Toàn Dải Ô Tô Rebec BL80 Đặt Taplo Cao Cấp (Cắm Giắc Zin 100%)',
-    category: 'car-audio',
-    categoryName: 'Nâng Cấp Âm Thanh Ô Tô',
+    id: "prod-26",
+    itemType: "service",
+    name: "Cặp Loa Toàn Dải Ô Tô Rebec BL80 Đặt Taplo Cao Cấp (Cắm Giắc Zin 100%)",
+    category: "car-audio",
+    categoryName: "Nâng Cấp Âm Thanh Ô Tô",
     price: 2850000,
     originalPrice: 3500000,
     isBestSeller: false,
     isSale: true,
-    rating: 4.9,
+    rating: 4.8,
     reviewCount: 195,
-    primaryImage: '/images/rebec_bl80_taplo_speaker.png',
-    secondaryImage: '/images/rebec_bl80_speaker.jpg',
-    description: 'Cặp loa toàn dải Rebec BL80 (Mid-Treble 80mm/3 inch) cao cấp chuyên đặt Taplo hoặc góc cột A ô tô, giải pháp nâng cấp âm thanh bổ sung cho hệ thống loa zin cực nhanh và hiệu quả. Tái hiện trọn vẹn dải tần số 250Hz - 15KHz ngọt ngào, âm trường rộng mở, giọng ca sĩ và nhạc cụ chân thực, cắm giắc Zin 100% không cắt trích dây.',
+    primaryImage: "/images/rebec_bl80_taplo_speaker.png",
+    secondaryImage: "/images/rebec_bl80_speaker.jpg",
+    description: "Cặp loa toàn dải Rebec BL80 (Mid-Treble 80mm/3 inch) cao cấp chuyên đặt Taplo hoặc góc cột A ô tô, giải pháp nâng cấp âm thanh bổ sung cho hệ thống loa zin cực nhanh và hiệu quả. Tái hiện trọn vẹn dải tần số 250Hz - 15KHz ngọt ngào, âm trường rộng mở, giọng ca sĩ và nhạc cụ chân thực, cắm giắc Zin 100% không cắt trích dây.",
     features: [
-      'Cặp loa toàn dải Rebec BL80 (80mm / 3 inch) tái tạo hoàn hảo dải âm trung (Mid) ấm áp và dải cao (Treble) trong trẻo',
-      'Thông số chuẩn: Dải tần 250Hz - 15KHz, công suất 15W RMS / 30W Peak, độ nhạy cao 89dB, trở kháng 4Ω',
-      'Màng loa gia công phay CNC hoa văn tinh xảo, chống cộng hưởng và tăng vẻ sang trọng nội thất khoang lái',
-      'Giải pháp cắm giắc Zin 100% bổ sung trực tiếp cho hệ thống loa nguyên bản của xe, không cắt trích dây',
-      'Thiết kế đế đặt Taplo hoặc góc cột A chuẩn xác, tương thích VinFast VF3, SUV, Sedan, MPV',
-      'Trang bị tụ lọc âm thanh chuyên dụng và bảo hành chính hãng Rebec 24 tháng đổi mới'
+      "Cặp loa toàn dải Rebec BL80 (80mm / 3 inch) tái tạo hoàn hảo dải âm trung (Mid) ấm áp và dải cao (Treble) trong trẻo",
+      "Thông số chuẩn: Dải tần 250Hz - 15KHz, công suất 15W RMS / 30W Peak, độ nhạy cao 89dB, trở kháng 4Ω",
+      "Màng loa gia công phay CNC hoa văn tinh xảo, chống cộng hưởng và tăng vẻ sang trọng nội thất khoang lái",
+      "Giải pháp cắm giắc Zin 100% bổ sung trực tiếp cho hệ thống loa nguyên bản của xe, không cắt trích dây",
+      "Thiết kế đế đặt Taplo hoặc góc cột A chuẩn xác, tương thích VinFast VF3, SUV, Sedan, MPV",
+      "Trang bị tụ lọc âm thanh chuyên dụng và bảo hành chính hãng Rebec 24 tháng đổi mới"
     ],
-    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
-    materials: ['Khung Nhôm Phay CNC Rebec BL80', 'Màng Loa Hợp Kim Cao Cấp'],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Khung Nhôm Phay CNC Rebec BL80",
+      "Màng Loa Hợp Kim Cao Cấp"
+    ],
     colors: [
-      { name: 'Bạc Kim Loại CNC (Mặt Lưới Hoa Văn Rebec)', hex: '#CBD5E1' },
-      { name: 'Đen Mờ Nhôm Phay Rebec', hex: '#1E293B' }
+      {"name":"Bạc Kim Loại CNC (Mặt Lưới Hoa Văn Rebec)","hex":"#CBD5E1"},
+      {"name":"Đen Mờ Nhôm Phay Rebec","hex":"#1E293B"}
     ],
     warrantyMonths: 24,
     inStock: true,
     installationTimeHours: 1
   },
   {
-    id: 'prod-36',
-    itemType: 'product',
-    name: 'Cặp Loa Bầu Dục Ô Tô PERTORS QP-4603 (4x6 Inch - 4-Way Đồng Trục 450W Max)',
-    category: 'car-audio',
-    categoryName: 'Loa Đồng Trục Ô Tô',
+    id: "prod-36",
+    itemType: "product",
+    name: "Cặp Loa Bầu Dục Ô Tô PERTORS QP-4603 (4x6 Inch - 4-Way Đồng Trục 450W Max)",
+    category: "car-audio",
+    categoryName: "Loa Đồng Trục Ô Tô",
     price: 1500000,
     originalPrice: 1950000,
     isSale: true,
     isBestSeller: true,
     isNew: true,
-    rating: 4.9,
-    reviewCount: 156,
-    primaryImage: '/images/pertors_qp4603_2.jpg',
-    secondaryImage: '/images/pertors_qp4603_1.jpg',
-    description: 'Cặp loa bầu dục ô tô PERTORS QP-4603 kích thước 4x6 inch (10.2cm x 15.2cm) đồng trục 4 đường tiếng (4-Way Coaxial) công suất cực đại 450W Max / 36W Nom, trở kháng 4 Ohm. Thiết kế chuẩn kích thước thay thế trực tiếp vào vị trí loa zin cánh cửa, cốp sau hoặc khoang nội thất nhiều dòng xe hơi, mang lại âm thanh sống động, chi tiết và dải âm rộng.',
-    features: [
-      'Cấu hình loa đồng trục 4 đường tiếng (4-Ways Coaxial) phân bổ chi tiết âm trầm, trung và dải cao',
-      'Kích thước tiêu chuẩn 4x6 inch (10.2cm x 15.2cm), 4 tai ốc bắt chuẩn vị trí loa zin nhiều dòng xe',
-      'Công suất cực đại 450W Max (36W Nom), độ nhạy cao kéo khỏe với đầu phát màn hình Zin nguyên bản',
-      'Màng loa Polypropylene siêu bền kháng ẩm, gân loa đàn hồi cho dải âm trầm nảy gọn gàng',
-      'Tích hợp 2 củ loa Treble Dome & Super Tweeter trên trụ đồng trục mở rộng âm trường',
-      'Bảo hành chính hãng 12 tháng lỗi 1 đổi 1'
-    ],
-    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
-    materials: ['Khung Thép Dập PERTORS', 'Màng Loa Polypropylene & Treble Dome'],
-    colors: [
-      { name: 'Đen Bạc Titan PERTORS', hex: '#1E293B' },
-      { name: 'Mặt Bầu Dục 4x6 Inch', hex: '#64748B' }
-    ],
-    warrantyMonths: 12,
-    inStock: true,
-    installationTimeHours: 1.0
-  },
-
-
-
-  {
-    id: 'prod-3',
-    itemType: 'product',
-    name: 'Bộ Đèn LED Nội Thất Ambient Light 24 Chi Tiết 64 Màu Cảm Biến Đổi Theo Nhạc (Cắm Giắc Zin 100%)',
-    category: 'ambient-lights',
-    categoryName: 'Đèn LED Nội Thất 64 Màu',
-    price: 3500000,
-    originalPrice: 4800000,
-    isBestSeller: true,
-    isSale: true,
-    rating: 4.9,
-    reviewCount: 178,
-    primaryImage: '/images/led_raipow_toyota_cross.jpg',
-    secondaryImage: '/images/led_ambient_interior.jpg',
-    description: 'Bộ LED nội thất Ambient Light cao cấp với trọn bộ 18 - 24 chi tiết đồng bộ: thanh đèn viền taplo điều khiển trung tâm, hộp vi điều khiển thông minh, đèn viền 4 cánh cửa, đèn hộc để đồ, đèn soi chân gầm ghế, LED vành loa và bộ dây nguồn cắm giắc Zin 100%. Tùy chỉnh 64 triệu dải màu mượt mà, hiệu ứng chuyển màu ma trận cảm biến theo giai điệu bài hát qua App điện thoại.',
-    features: [
-      'Trọn bộ 24 chi tiết cao cấp: Thanh LED viền Taplo trung tâm, đèn viền 4 cánh cửa, đèn hộc tay nắm, đèn gác chân, LED vành loa',
-      'Dải LED đa sắc RGB 64 triệu màu với hiệu ứng đổi màu đa vùng và chuyển động mượt mà theo nhịp điệu âm nhạc',
-      'Hộp điều khiển vi mạch thông minh, kết nối Bluetooth tùy chỉnh hàng trăm chế độ qua App điện thoại',
-      'Lắp đặt cắm giắc Zin 100%, không cắt trích một sợi dây điện nào của xe, an toàn tuyệt đối',
-      'Ánh sáng đồng đều dịu mắt không gây chói, kiến tạo không gian khoang lái sang trọng đẳng cấp'
-    ],
-    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
-    materials: ['Thanh LED Quang Học Raipow', 'Dây Nguồn Jack Cắm Zin Chống Cháy'],
-    colors: [
-      { name: 'RGB 64 Màu Matrix', hex: '#6366F1' },
-      { name: 'Tím Neon Cyberpunk', hex: '#A855F7' },
-      { name: 'Xanh Băng Ice Blue', hex: '#38BDF8' }
-    ],
-    warrantyMonths: 24,
-    inStock: true,
-    installationTimeHours: 2
-  },
-  {
-    id: 'prod-8',
-    itemType: 'product',
-    name: 'Cụm Đèn LED Cánh Chim Định Vị & LED Cốp VinFast (LED Ma Trận Hiệu Ứng RGB / Chạy Khởi Động Quét LED)',
-    category: 'ambient-lights',
-    categoryName: 'Đèn LED & Đồ Chơi Ánh Sáng',
-    price: 4500000,
-    originalPrice: 5500000,
-    isSale: true,
     rating: 4.8,
-    reviewCount: 42,
-    primaryImage: '/images/led_canhchim_vinfast_kit.jpg',
-    secondaryImage: '/images/led_canhchim_vinfast_on.jpg',
-    description: 'Cụm đèn LED cánh chim định vị mặt ca-lăng và LED cốp sau chuyên dụng chuẩn form xe VinFast. Tích hợp hiệu ứng quét LED chào mừng khi khởi động xe, dải chuyển màu mượt mà Cyan Ice-Blue sang tím hồng neon cùng chức năng xi nhan chạy đuổi Audi đẳng cấp.',
+    reviewCount: 156,
+    primaryImage: "/images/pertors_qp4603_2.jpg",
+    secondaryImage: "/images/pertors_qp4603_1.jpg",
+    description: "Cặp loa bầu dục ô tô PERTORS QP-4603 kích thước 4x6 inch (10.2cm x 15.2cm) đồng trục 4 đường tiếng (4-Way Coaxial) công suất cực đại 450W Max / 36W Nom, trở kháng 4 Ohm. Thiết kế chuẩn kích thước thay thế trực tiếp vào vị trí loa zin cánh cửa, cốp sau hoặc khoang nội thất nhiều dòng xe hơi, mang lại âm thanh sống động, chi tiết và dải âm rộng.",
     features: [
-      'Thiết kế chuẩn form dáng chữ V cánh chim đặc trưng thương hiệu VinFast',
-      'Hiệu ứng LED ma trận quét chạy chào mừng thể thao khi mở khóa xe',
-      'Dải chuyển sắc ánh sáng mượt mà Ice-Blue chuyển tím hồng thời thượng',
-      'Tích hợp hiệu ứng xi-nhan chạy đuổi và đèn phanh cảnh báo an toàn',
-      'Chất liệu mica quang học kết hợp khung viền mạ Chrome bóng bẩy',
-      'Lắp đặt cắm giắc Zin 100%, chống nước chuẩn IP67 an toàn trong mọi điều kiện thời tiết'
+      "Cấu hình loa đồng trục 4 đường tiếng (4-Ways Coaxial) phân bổ chi tiết âm trầm, trung và dải cao",
+      "Kích thước tiêu chuẩn 4x6 inch (10.2cm x 15.2cm), 4 tai ốc bắt chuẩn vị trí loa zin nhiều dòng xe",
+      "Công suất cực đại 450W Max (36W Nom), độ nhạy cao kéo khỏe với đầu phát màn hình Zin nguyên bản",
+      "Màng loa Polypropylene siêu bền kháng ẩm, gân loa đàn hồi cho dải âm trầm nảy gọn gàng",
+      "Tích hợp 2 củ loa Treble Dome & Super Tweeter trên trụ đồng trục mở rộng âm trường",
+      "Bảo hành chính hãng 12 tháng lỗi 1 đổi 1"
     ],
-    vehicleTypes: ['suv', 'sedan', 'luxury'],
-    materials: ['Mica Quang Học Chống Ố Vàng', 'Khung Viền Mạ Chrome Chống Ăn Mòn'],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Khung Thép Dập PERTORS",
+      "Màng Loa Polypropylene & Treble Dome"
+    ],
     colors: [
-      { name: 'LED Đổi Màu Gradient Ice-Blue / Tím', hex: '#06B6D4' },
-      { name: 'LED Đỏ Thể Thao Kèm Khởi Động', hex: '#EF4444' }
-    ],
-    warrantyMonths: 24,
-    inStock: true,
-    installationTimeHours: 2
-  },
-  {
-    id: 'prod-24',
-    itemType: 'product',
-    name: 'Module Mạch VINIK Đa Năng Cho VinFast Limo Green & MPV7 (Mở Rộng Xi Nhan, Phanh LED Demi & Cắm Giắc Zin 100%)',
-    category: 'ambient-lights',
-    categoryName: 'Module Đèn Xi Nhan Cắm Zin',
-    price: 850000,
-    originalPrice: 1200000,
-    isSale: true,
-    isBestSeller: true,
-    rating: 4.9,
-    reviewCount: 146,
-    primaryImage: '/images/mach_vinik_primary.jpg',
-    secondaryImage: '/images/mach_vinik_poster.jpg',
-    description: 'Module mạch bán dẫn VINIK đa năng thế hệ mới thiết kế chuyên biệt cho xe điện VinFast Limo Green và MPV7. Giải pháp thông minh giúp mở rộng xi nhan phía sau sáng rõ đồng bộ dải LED demi (tăng nhận diện khi chuyển làn, rẽ hướng), mở rộng tín hiệu phanh lên dải LED demi tạo dải phanh rộng an toàn và thẩm mỹ. Thiết kế cắm jack Zin 100% không cắt dây, mạch bán dẫn không nóng, không lỗi và đặc biệt không bị chớp đèn lùi.',
-    features: [
-      'Mở rộng xi nhan phía sau: Giúp xi nhan phía sau sáng rõ, đồng bộ dải demi, tăng nhận diện khi chuyển làn, rẽ hướng',
-      'Mở rộng phanh (Mới): Đưa tín hiệu phanh lên dải LED demi, tạo dải phanh rộng, an toàn và thẩm mỹ',
-      'Đặc biệt không bị chớp đèn lùi: Hoạt động độc lập, không gây nhiễu, đảm bảo đèn lùi hoạt động bình thường',
-      'Cắm Jack Zin 100%: Thiết kế giắc chuẩn zin cho Limo Green và MPV7, lắp đặt nhanh gọn, không cắt dây',
-      'Mạch bán dẫn VINIK chất lượng cao: Tản nhiệt tối ưu, không nóng mạch, không báo lỗi hệ thống',
-      'An toàn tuyệt đối cho hệ thống điện xe: Giữ nguyên chế độ bảo hành chính hãng và thuận tiện đăng kiểm',
-      'Hàng Việt Nam chất lượng cao: Tối ưu chuẩn xác cho xe dịch vụ taxi và xe gia đình',
-      'Chính sách bảo hành vàng 12 tháng 1 đổi 1 chính hãng tại xưởng Hieu N Auto'
-    ],
-    vehicleTypes: ['mpv', 'suv'],
-    materials: ['Mạch Bán Dẫn VINIK Chống Nóng', 'Vỏ Hộp Nhựa Chống Cháy & Giắc Cắm Tiêu Chuẩn Ô Tô'],
-    colors: [
-      { name: 'Cụm Giắc Zin Tiêu Chuẩn', hex: '#0F172A' }
+      {"name":"Đen Bạc Titan PERTORS","hex":"#1E293B"},
+      {"name":"Mặt Bầu Dục 4x6 Inch","hex":"#64748B"}
     ],
     warrantyMonths: 12,
     inStock: true,
     installationTimeHours: 1
   },
   {
-    id: 'prod-40',
-    itemType: 'product',
-    name: 'Bộ Đèn LED Cản Sau VinFast Limo Green (Hiệu Ứng Audi DMX Ma Trận, Xi Nhan Chạy & Cắm Giắc Zin 100%)',
-    category: 'ambient-lights',
-    categoryName: 'Đèn LED Cản Sau Limo Green',
+    id: "prod-42",
+    itemType: "product",
+    name: "Bộ Đèn LED Nội Thất Raipow 18 Chi Tiết (Thanh LED 1.1m + 4 Thanh 75cm + 1 Thanh 25cm, Đèn Gác Chân, Hộp Đồ & Tay Nắm)",
+    category: "ambient-lights",
+    categoryName: "LED Nội Thất Raipow 18 Chi Tiết",
+    price: 2800000,
+    originalPrice: 3600000,
+    isBestSeller: false,
+    isNew: true,
+    isSale: true,
+    rating: 4.8,
+    reviewCount: 162,
+    primaryImage: "/images/raipow_led_18chitiet.jpg",
+    secondaryImage: "/images/led_raipow_toyota_cross.jpg",
+    galleryImages: [
+      "/images/raipow_led_18chitiet.jpg",
+      "/images/led_raipow_toyota_cross.jpg"
+    ],
+    description: "Bộ đèn LED nội thất Raipow cao cấp trọn bộ 18 chi tiết đồng bộ chuyên dụng: 1 thanh LED viền taplo 1m1, 4 thanh LED viền cánh cửa 75cm, 1 thanh LED phụ 25cm, 4 đèn gác chân gầm ghế, 4 đèn hộc đựng đồ, 4 đèn tay nắm cửa, hộp điều khiển trung tâm Raipow Host / Assist thông minh kèm bộ mũi khoan chuyên dụng và dây nguồn cắm giắc Zin 100%. Tùy chỉnh màu sắc đa vùng, hiệu ứng đổi màu ma trận theo nhạc qua ứng dụng điện thoại.",
+    features: [
+      "Trọn bộ 18 chi tiết chính hãng Raipow: 1 thanh LED 1.1m taplo + 4 thanh LED 75cm viền cửa + 1 thanh 25cm + 4 đèn gác chân + 4 đèn hộc đồ + 4 đèn tay nắm cửa",
+      "Thanh LED quang học thế hệ mới: Ánh sáng siêu mịn, không lộ hạt LED, uốn lượn ôm khít từng đường nét nội thất xe",
+      "Hộp điều khiển Raipow Host & Assist thông minh: Điều khiển vi xử lý đồng bộ, hỗ trợ kết nối Bluetooth qua App tiếng Việt",
+      "Hàng trăm hiệu ứng đổi màu ma trận đa vùng, tự động nhấp nháy cảm biến theo giai điệu âm nhạc",
+      "Tặng kèm mũi khoan chuyên dụng và hệ thống dây giắc cắm Zin 100%, không cắt trích dây nguyên bản",
+      "Chính sách bảo hành chính hãng Raipow 24 tháng tại Hieu N Auto"
+    ],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Thanh LED Quang Học Raipow Dẻo",
+      "Hộp Vi Xử Lý Raipow Host/Assist",
+      "Dây Nguồn Cắm Giắc Zin Chống Cháy"
+    ],
+    colors: [
+      {"name":"Raipow RGB Matrix","hex":"#6366F1"},
+      {"name":"Neon Hồng Tím Vibe","hex":"#EC4899"},
+      {"name":"Xanh Băng Ice Blue","hex":"#38BDF8"}
+    ],
+    warrantyMonths: 24,
+    inStock: true,
+    installationTimeHours: 1.5
+  },
+  {
+    id: "prod-43",
+    itemType: "product",
+    name: "Bộ Đèn LED Nội Thất Raipow 22 Chi Tiết (Tích Hợp 4 Vành Loa Phát Sáng, Dải LED 1m1 + 75cm + 25cm & Đổi Màu Theo Nhạc)",
+    category: "ambient-lights",
+    categoryName: "LED Nội Thất Raipow 22 Chi Tiết",
+    price: 3200000,
+    originalPrice: 4200000,
+    isBestSeller: false,
+    isNew: true,
+    isSale: true,
+    rating: 4.8,
+    reviewCount: 138,
+    primaryImage: "/images/raipow_led_22chitiet.jpg",
+    secondaryImage: "/images/raipow_22_interior.jpg",
+    galleryImages: [
+      "/images/raipow_led_22chitiet.jpg",
+      "/images/raipow_22_interior.jpg"
+    ],
+    description: "Bộ đèn LED nội thất Raipow cao cấp phiên bản đặc biệt 22 chi tiết: Bổ sung 4 vòng đèn LED phát sáng vành loa cửa cực kỳ nổi bật, kết hợp 1 thanh LED taplo 1m1, 4 thanh LED viền cửa 75cm, 1 thanh LED phụ 25cm, 4 đèn gác chân, 4 đèn hộc đựng đồ, 4 đèn tay nắm cửa và 5 hộp điều khiển thông minh Raipow Host & Assist. Đổi 64 triệu màu mượt mà, cảm biến nhấp nháy theo giai điệu âm nhạc, lắp cắm giắc Zin 100% không cắt trích dây.",
+    features: [
+      "Trọn bộ 22 chi tiết cao cấp chính hãng Raipow: 1 thanh 1.1m taplo + 4 thanh 75cm viền cửa + 1 thanh 25cm + 4 đèn gác chân + 4 đèn hộc đồ + 4 đèn tay nắm cửa + 4 vòng LED vành loa phát sáng",
+      "4 vòng LED vành loa phát sáng độc quyền: Tôn lên vẻ đẹp sang trọng như dàn âm thanh Burmester trên các dòng xe sang",
+      "Dải LED quang học Symphony thế hệ mới: Chuyển màu ma trận cầu vồng mượt mà, ánh sáng tỏa đều không chói mắt",
+      "Hệ thống 5 hộp điều khiển Raipow Host & Assist thông minh: Xử lý độc lập và đồng bộ không độ trễ, kết nối Bluetooth qua App",
+      "Tự động cảm biến nhấp nháy chuyển màu theo nhịp điệu bài hát trên xe",
+      "Tặng kèm mũi khoan chuyên dụng và bộ dây cắm giắc Zin 100%, an toàn điện tuyệt đối và bảo hành chính hãng 24 tháng tại Hieu N Auto"
+    ],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Thanh LED Quang Học Raipow Dẻo",
+      "Vòng LED Vành Loa Hợp Kim",
+      "Hộp Vi Xử Lý Raipow Host/Assist",
+      "Dây Nguồn Jack Zin Chống Cháy"
+    ],
+    colors: [
+      {"name":"Raipow RGB Matrix 22 Chi Tiết","hex":"#6366F1"},
+      {"name":"Xanh Băng Ice Blue Maybach","hex":"#38BDF8"},
+      {"name":"Tím Neon Cyberpunk","hex":"#A855F7"}
+    ],
+    warrantyMonths: 24,
+    inStock: true,
+    installationTimeHours: 2
+  },
+  {
+    id: "prod-3",
+    itemType: "product",
+    name: "Bộ Đèn LED Nội Thất Raipow 24 Chi Tiết (Thanh LED 1.1m + 6 Thanh 75cm + 1 Thanh 25cm, 4 Vành Loa, Đèn Gác Chân, Hộp Đồ & Tay Nắm)",
+    category: "ambient-lights",
+    categoryName: "LED Nội Thất Raipow 24 Chi Tiết",
+    price: 3500000,
+    originalPrice: 4800000,
+    isBestSeller: true,
+    isSale: true,
+    rating: 4.7,
+    reviewCount: 185,
+    primaryImage: "/images/raipow_led_24chitiet.jpg",
+    secondaryImage: "/images/raipow_22_interior.jpg",
+    galleryImages: [
+      "/images/raipow_led_24chitiet.jpg",
+      "/images/raipow_22_interior.jpg"
+    ],
+    description: "Bộ đèn LED nội thất Raipow cao cấp phiên bản đỉnh cao nhất 24 chi tiết: Trang bị tới 6 thanh LED 75cm (thêm 2 thanh LED sườn ghế/viền taplo phụ), 1 thanh LED 1m1 taplo, 1 thanh LED 25cm, 4 vòng LED vành loa phát sáng, 4 đèn gác chân, 4 đèn hộc đồ, 4 đèn tay nắm cửa và 5 hộp vi xử lý Raipow Host & Assist thông minh. Hiệu ứng đổi màu Symphony đa sắc cực kỳ sống động cảm biến theo nhịp nhạc, cắm giắc Zin 100% không cắt trích dây nguyên bản.",
+    features: [
+      "Trọn bộ 24 chi tiết đầy đủ nhất chính hãng Raipow: 1 thanh 1.1m taplo + 6 thanh 75cm viền cửa & sườn ghế + 1 thanh 25cm + 4 đèn gác chân + 4 đèn hộc đồ + 4 đèn tay nắm cửa + 4 vòng LED vành loa phát sáng",
+      "Cấu hình 6 thanh LED 75cm cao cấp: Bao phủ ánh sáng toàn diện khoang lái cả hàng ghế trước và hàng ghế sau",
+      "4 vòng LED vành loa phát sáng đẳng cấp: Tạo điểm nhấn thời thượng như dòng xe siêu sang Mercedes Maybach",
+      "Dải LED quang học dẻo thế hệ mới: Uốn lượn ôm sát rãnh viền nội thất, ánh sáng tỏa đều mịn màng không chói mắt",
+      "Hệ thống 5 hộp điều khiển Raipow Host & Assist kết nối Bluetooth qua App: Tùy chỉnh 256 dải màu và hàng trăm hiệu ứng chuyển động theo nhạc",
+      "Tặng kèm mũi khoan chuyên dụng và hệ thống dây cắm giắc Zin 100% bảo đảm an toàn điện xe, bảo hành 24 tháng tại Hieu N Auto"
+    ],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Thanh LED Quang Học Raipow Dẻo",
+      "Vòng LED Vành Loa Hợp Kim",
+      "Hộp Vi Xử Lý Raipow Host/Assist",
+      "Dây Nguồn Jack Zin Chống Cháy"
+    ],
+    colors: [
+      {"name":"Raipow RGB Matrix 24 Chi Tiết","hex":"#6366F1"},
+      {"name":"Tím Neon Cyberpunk","hex":"#A855F7"},
+      {"name":"Xanh Băng Ice Blue","hex":"#38BDF8"}
+    ],
+    warrantyMonths: 24,
+    inStock: true,
+    installationTimeHours: 2
+  },
+  {
+    id: "prod-44",
+    itemType: "product",
+    name: "Gói Độ Trần Sao Rơi Rolls-Royce LED Sợi Quang Học (500 - 800 Điểm Sao Lấp Lánh Kèm Hiệu Ứng Sao Băng)",
+    category: "ambient-lights",
+    categoryName: "Trần Sao Rơi Rolls-Royce",
+    price: 5500000,
+    originalPrice: 7200000,
+    isBestSeller: true,
+    isNew: true,
+    isSale: true,
+    rating: 4.8,
+    reviewCount: 94,
+    primaryImage: "/images/starlight_headliner.jpg",
+    secondaryImage: "/images/led_ambient_interior.png",
+    galleryImages: [
+      "/images/starlight_headliner.jpg",
+      "/images/led_ambient_interior.png"
+    ],
+    description: "Gói nâng cấp trần sao rơi nghệ thuật đỉnh cao phong cách Rolls-Royce với 500 đến 800 sợi quang học phát sáng phân bổ tự nhiên trên trần xe. Tích hợp hiệu ứng sao băng lấp lánh băng qua bầu trời đêm, đổi màu đa sắc và điều chỉnh tốc độ, độ sáng qua App điện thoại hoặc remote. Thi công thủ công tỉ mỉ, không làm chùng trần nguyên bản.",
+    features: [
+      "Từ 500 - 800 điểm sợi quang học nhập khẩu cao cấp, ánh sáng mịn không sinh nhiệt và bền bỉ trọn đời",
+      "Tích hợp tính năng sao băng lướt qua bầu trời đêm cực kỳ lãng mạn và đẳng cấp",
+      "Hộp phát quang công suất cao, đổi hàng triệu màu và nhấp nháy theo giai điệu bài hát qua App điện thoại",
+      "Thi công thủ công bởi kỹ thuật viên tay nghề cao, giữ nguyên độ căng phẳng và thẩm mỹ trần nỉ/da xe",
+      "Bảo hành chính hãng 24 tháng tại xưởng dịch vụ Hieu N Auto"
+    ],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Sợi Quang Học PMMA Chống Gãy",
+      "Hộp Nguồn LED RGB Siêu Sáng",
+      "Bộ Dây Điện Chống Cháy Chuẩn Hãng"
+    ],
+    colors: [
+      {"name":"Trắng Sao Tự Nhiên & RGB","hex":"#F8FAFC"},
+      {"name":"Xanh Băng Thiên Hà Ice Blue","hex":"#38BDF8"}
+    ],
+    warrantyMonths: 24,
+    inStock: true,
+    installationTimeHours: 3.5
+  },
+  {
+    id: "prod-8",
+    itemType: "product",
+    name: "Cụm Đèn LED Cánh Chim Định Vị & LED Cốp VinFast (LED Ma Trận Hiệu Ứng RGB / Chạy Khởi Động Quét LED)",
+    category: "ambient-lights",
+    categoryName: "Đèn LED & Đồ Chơi Ánh Sáng",
+    price: 4500000,
+    originalPrice: 5500000,
+    isSale: true,
+    rating: 4.7,
+    reviewCount: 42,
+    primaryImage: "/images/led_canhchim_vinfast_kit.jpg",
+    secondaryImage: "/images/led_canhchim_vinfast_on.jpg",
+    description: "Cụm đèn LED cánh chim định vị mặt ca-lăng và LED cốp sau chuyên dụng chuẩn form xe VinFast. Tích hợp hiệu ứng quét LED chào mừng khi khởi động xe, dải chuyển màu mượt mà Cyan Ice-Blue sang tím hồng neon cùng chức năng xi nhan chạy đuổi Audi đẳng cấp.",
+    features: [
+      "Thiết kế chuẩn form dáng chữ V cánh chim đặc trưng thương hiệu VinFast",
+      "Hiệu ứng LED ma trận quét chạy chào mừng thể thao khi mở khóa xe",
+      "Dải chuyển sắc ánh sáng mượt mà Ice-Blue chuyển tím hồng thời thượng",
+      "Tích hợp hiệu ứng xi-nhan chạy đuổi và đèn phanh cảnh báo an toàn",
+      "Chất liệu mica quang học kết hợp khung viền mạ Chrome bóng bẩy",
+      "Lắp đặt cắm giắc Zin 100%, chống nước chuẩn IP67 an toàn trong mọi điều kiện thời tiết"
+    ],
+    vehicleTypes: [
+      "suv",
+      "sedan",
+      "luxury"
+    ],
+    materials: [
+      "Mica Quang Học Chống Ố Vàng",
+      "Khung Viền Mạ Chrome Chống Ăn Mòn"
+    ],
+    colors: [
+      {"name":"LED Đổi Màu Gradient Ice-Blue / Tím","hex":"#06B6D4"},
+      {"name":"LED Đỏ Thể Thao Kèm Khởi Động","hex":"#EF4444"}
+    ],
+    warrantyMonths: 24,
+    inStock: true,
+    installationTimeHours: 2
+  },
+  {
+    id: "prod-24",
+    itemType: "product",
+    name: "Module Mạch VINIK Đa Năng Cho VinFast Limo Green & MPV7 (Mở Rộng Xi Nhan, Phanh LED Demi & Cắm Giắc Zin 100%)",
+    category: "ambient-lights",
+    categoryName: "Module Đèn Xi Nhan Cắm Zin",
+    price: 850000,
+    originalPrice: 1200000,
+    isSale: true,
+    isBestSeller: true,
+    rating: 4.6,
+    reviewCount: 146,
+    primaryImage: "/images/mach_vinik_primary.jpg",
+    secondaryImage: "/images/mach_vinik_poster.jpg",
+    description: "Module mạch bán dẫn VINIK đa năng thế hệ mới thiết kế chuyên biệt cho xe điện VinFast Limo Green và MPV7. Giải pháp thông minh giúp mở rộng xi nhan phía sau sáng rõ đồng bộ dải LED demi (tăng nhận diện khi chuyển làn, rẽ hướng), mở rộng tín hiệu phanh lên dải LED demi tạo dải phanh rộng an toàn và thẩm mỹ. Thiết kế cắm jack Zin 100% không cắt dây, mạch bán dẫn không nóng, không lỗi và đặc biệt không bị chớp đèn lùi.",
+    features: [
+      "Mở rộng xi nhan phía sau: Giúp xi nhan phía sau sáng rõ, đồng bộ dải demi, tăng nhận diện khi chuyển làn, rẽ hướng",
+      "Mở rộng phanh (Mới): Đưa tín hiệu phanh lên dải LED demi, tạo dải phanh rộng, an toàn và thẩm mỹ",
+      "Đặc biệt không bị chớp đèn lùi: Hoạt động độc lập, không gây nhiễu, đảm bảo đèn lùi hoạt động bình thường",
+      "Cắm Jack Zin 100%: Thiết kế giắc chuẩn zin cho Limo Green và MPV7, lắp đặt nhanh gọn, không cắt dây",
+      "Mạch bán dẫn VINIK chất lượng cao: Tản nhiệt tối ưu, không nóng mạch, không báo lỗi hệ thống",
+      "An toàn tuyệt đối cho hệ thống điện xe: Giữ nguyên chế độ bảo hành chính hãng và thuận tiện đăng kiểm",
+      "Hàng Việt Nam chất lượng cao: Tối ưu chuẩn xác cho xe dịch vụ taxi và xe gia đình",
+      "Chính sách bảo hành vàng 12 tháng 1 đổi 1 chính hãng tại xưởng Hieu N Auto"
+    ],
+    vehicleTypes: [
+      "mpv",
+      "suv"
+    ],
+    materials: [
+      "Mạch Bán Dẫn VINIK Chống Nóng",
+      "Vỏ Hộp Nhựa Chống Cháy & Giắc Cắm Tiêu Chuẩn Ô Tô"
+    ],
+    colors: [
+      {"name":"Cụm Giắc Zin Tiêu Chuẩn","hex":"#0F172A"}
+    ],
+    warrantyMonths: 12,
+    inStock: true,
+    installationTimeHours: 1
+  },
+  {
+    id: "prod-40",
+    itemType: "product",
+    name: "Bộ Đèn LED Cản Sau VinFast Limo Green (Hiệu Ứng Audi DMX Ma Trận, Xi Nhan Chạy & Cắm Giắc Zin 100%)",
+    category: "ambient-lights",
+    categoryName: "Đèn LED Cản Sau Limo Green",
     price: 1650000,
     originalPrice: 2300000,
     isSale: true,
     isNew: true,
-    rating: 4.95,
+    rating: 4.7,
     reviewCount: 158,
-    primaryImage: '/images/led_can_sau_limo_green_on.webp',
-    secondaryImage: '/images/led_can_sau_limo_green_kit.webp',
-    description: 'Bộ đèn LED cản sau cao cấp chuyên biệt cho dòng xe điện VinFast Limo Green (Tương lai di chuyển xanh). Tích hợp module điều khiển Audi DMX thông minh tạo hiệu ứng quét ma trận chào mừng khi mở khóa xe, dải LED demi dạ quang rực rỡ ban đêm, đèn phanh cảnh báo siêu sáng và xi-nhan chạy đuổi Audi thể thao. Thiết kế chuẩn phom cản zin 100%, cắm giắc Plug & Play không cắt trích dây điện.',
+    primaryImage: "/images/led_can_sau_limo_green_on.webp",
+    secondaryImage: "/images/led_can_sau_limo_green_kit.webp",
+    description: "Bộ đèn LED cản sau cao cấp chuyên biệt cho dòng xe điện VinFast Limo Green (Tương lai di chuyển xanh). Tích hợp module điều khiển Audi DMX thông minh tạo hiệu ứng quét ma trận chào mừng khi mở khóa xe, dải LED demi dạ quang rực rỡ ban đêm, đèn phanh cảnh báo siêu sáng và xi-nhan chạy đuổi Audi thể thao. Thiết kế chuẩn phom cản zin 100%, cắm giắc Plug & Play không cắt trích dây điện.",
     features: [
-      'Thiết kế chuẩn form cản sau VinFast Limo Green thay thế miếng phản quang zin nguyên bản',
-      'Trang bị module Audi DMX thông minh: Tích hợp hiệu ứng quét ma trận Welcome Light cực kỳ ấn tượng khi mở khóa xe',
-      '3 Chế độ sáng thông minh: Dải LED Demi dạ quang ban đêm, Đèn phanh siêu sáng chống tông đuôi & Xi-nhan LED chạy đuổi thể thao',
-      'Thiết kế cắm giắc Zin 100% Plug & Play, không đấu nối, không cắt trích một sợi dây điện nào của xe',
-      'Chất liệu vỏ nhựa ABS quang học chống ố vàng, tiêu chuẩn chống nước IP68 chịu rửa xe xịt áp lực cao',
-      'Bảo hành chính hãng 12 tháng 1 đổi 1 tại hệ thống Hieu N Auto'
+      "Thiết kế chuẩn form cản sau VinFast Limo Green thay thế miếng phản quang zin nguyên bản",
+      "Trang bị module Audi DMX thông minh: Tích hợp hiệu ứng quét ma trận Welcome Light cực kỳ ấn tượng khi mở khóa xe",
+      "3 Chế độ sáng thông minh: Dải LED Demi dạ quang ban đêm, Đèn phanh siêu sáng chống tông đuôi & Xi-nhan LED chạy đuổi thể thao",
+      "Thiết kế cắm giắc Zin 100% Plug & Play, không đấu nối, không cắt trích một sợi dây điện nào của xe",
+      "Chất liệu vỏ nhựa ABS quang học chống ố vàng, tiêu chuẩn chống nước IP68 chịu rửa xe xịt áp lực cao",
+      "Bảo hành chính hãng 12 tháng 1 đổi 1 tại hệ thống Hieu N Auto"
     ],
-    vehicleTypes: ['mpv', 'suv'],
-    materials: ['Nhựa ABS Kỹ Thuật Quang Học Chống Lóa', 'Hộp Điều Khiển Mạch Audi DMX Tiêu Chuẩn Ô Tô'],
+    vehicleTypes: [
+      "mpv",
+      "suv"
+    ],
+    materials: [
+      "Nhựa ABS Kỹ Thuật Quang Học Chống Lóa",
+      "Hộp Điều Khiển Mạch Audi DMX Tiêu Chuẩn Ô Tô"
+    ],
     colors: [
-      { name: 'Hiệu Ứng Audi DMX Đa Sắc', hex: '#EC4899' },
-      { name: 'Dải Đỏ Demi Thể Thao', hex: '#EF4444' }
+      {"name":"Hiệu Ứng Audi DMX Đa Sắc","hex":"#EC4899"},
+      {"name":"Dải Đỏ Demi Thể Thao","hex":"#EF4444"}
     ],
     warrantyMonths: 12,
     inStock: true,
-    installationTimeHours: 1.0
+    installationTimeHours: 1
   },
   {
-    id: 'prod-4',
-    itemType: 'service',
-    name: 'Phim Cách Nhiệt Cao Cấp 3M Crystalline 200 Lớp Chính Hãng',
-    category: 'heat-soundproofing',
-    categoryName: 'Dán Phim Cách Nhiệt 3M',
+    id: "prod-4",
+    itemType: "service",
+    name: "Phim Cách Nhiệt Cao Cấp 3M Crystalline 200 Lớp Chính Hãng",
+    category: "heat-soundproofing",
+    categoryName: "Dán Phim Cách Nhiệt 3M",
     price: 14500000,
     originalPrice: 16800000,
     isBestSeller: true,
     isTopBestSeller: true,
     isSale: true,
-    rating: 4.9,
+    rating: 5.0,
     reviewCount: 215,
-    primaryImage: '/images/film_3m_crystalline_poster.jpg',
-    secondaryImage: '/images/film_3m_crystalline_optical.jpg',
-    description: 'Phim cách nhiệt 3M Crystalline công nghệ quang học 200 lớp độc quyền từ 3M Mỹ. Khả năng loại bỏ đến 99% tia hồng ngoại và cản 99.9% tia cực tím UV (SPF 1000+), giảm lóa tới 80% mà không cản trở tầm nhìn hoặc gây nhiễu sóng điện thoại, GPS, thẻ từ thu phí tự động.',
+    primaryImage: "/images/film_3m_crystalline_poster.jpg",
+    secondaryImage: "/images/film_3m_crystalline_optical.jpg",
+    description: "Phim cách nhiệt 3M Crystalline công nghệ quang học 200 lớp độc quyền từ 3M Mỹ. Khả năng loại bỏ đến 99% tia hồng ngoại và cản 99.9% tia cực tím UV (SPF 1000+), giảm lóa tới 80% mà không cản trở tầm nhìn hoặc gây nhiễu sóng điện thoại, GPS, thẻ từ thu phí tự động.",
     features: [
-      'Công nghệ quang học đa lớp 200 lớp nano siêu mỏng độc quyền của 3M',
-      'Chỉ số chống nắng SPF 1000+, ngăn chặn 99.9% tia cực tím UV gây hại da & nội thất',
-      'Loại bỏ 99% tia hồng ngoại (IR), cách nhiệt và làm mát khoang xe vượt trội',
-      'Giảm độ chói lóa lên tới 80%, tăng cường an toàn khi di chuyển ngược sáng',
-      '100% không chứa kim loại, không gây nhiễu sóng điện thoại, 4G/5G, GPS và thẻ ETC/VETC',
-      'Bảo hành điện tử chính hãng 3M lên đến 10 năm'
+      "Công nghệ quang học đa lớp 200 lớp nano siêu mỏng độc quyền của 3M",
+      "Chỉ số chống nắng SPF 1000+, ngăn chặn 99.9% tia cực tím UV gây hại da & nội thất",
+      "Loại bỏ 99% tia hồng ngoại (IR), cách nhiệt và làm mát khoang xe vượt trội",
+      "Giảm độ chói lóa lên tới 80%, tăng cường an toàn khi di chuyển ngược sáng",
+      "100% không chứa kim loại, không gây nhiễu sóng điện thoại, 4G/5G, GPS và thẻ ETC/VETC",
+      "Bảo hành điện tử chính hãng 3M lên đến 10 năm"
     ],
-    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
-    materials: ['Màng Quang Học 200 Lớp 3M Crystalline', 'Keo Acrylic Chống Thoái Hóa'],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Màng Quang Học 200 Lớp 3M Crystalline",
+      "Keo Acrylic Chống Thoái Hóa"
+    ],
     colors: [
-      { name: 'Kính Lái CR60 / CR70', hex: '#64748B' },
-      { name: 'Kính Sườn Hậu CR20 / CR40', hex: '#0F172A' }
+      {"name":"Kính Lái CR60 / CR70","hex":"#64748B"},
+      {"name":"Kính Sườn Hậu CR20 / CR40","hex":"#0F172A"}
     ],
     warrantyMonths: 120,
     inStock: true,
     installationTimeHours: 3
   },
   {
-    id: 'prod-5',
-    itemType: 'product',
-    name: 'Màn Hình Đôi 20.8 Inch Liền Khối Chạy Song Song Hai Hệ Điều Hành (Màn ODO & Màn Android)',
-    category: 'screens-displays',
-    categoryName: 'Màn Hình Android & ODO',
+    id: "prod-5",
+    itemType: "product",
+    name: "Màn Hình Đôi 20.8 Inch Liền Khối Chạy Song Song Hai Hệ Điều Hành (Màn ODO & Màn Android)",
+    category: "screens-displays",
+    categoryName: "Màn Hình Android & ODO",
     price: 18500000,
     originalPrice: 21500000,
-    rating: 4.8,
+    rating: 4.9,
     reviewCount: 94,
-    primaryImage: '/images/screen_dual_20inch_size.jpg',
-    secondaryImage: '/images/screen_dual_20inch_os.jpg',
-    description: 'Hệ thống màn hình đôi 20.8 inch liền khối cao cấp chạy song song 2 hệ điều hành độc lập: Giữ nguyên vẹn hệ điều hành Zin của xe (đồng hồ ODO, thông số pin, cài đặt xe) song song với hệ điều hành Android giải trí đỉnh cao (Youtube, dẫn đường Vietmap Live, tích hợp Camera 360, camera lùi, DVR, TPMS...).',
+    primaryImage: "/images/screen_dual_20inch_size.jpg",
+    secondaryImage: "/images/screen_dual_20inch_os.jpg",
+    description: "Hệ thống màn hình đôi 20.8 inch liền khối cao cấp chạy song song 2 hệ điều hành độc lập: Giữ nguyên vẹn hệ điều hành Zin của xe (đồng hồ ODO, thông số pin, cài đặt xe) song song với hệ điều hành Android giải trí đỉnh cao (Youtube, dẫn đường Vietmap Live, tích hợp Camera 360, camera lùi, DVR, TPMS...).",
     features: [
-      'Màn hình đôi kích thước cực đại 20.8 inch liền mạch sang trọng đẳng cấp',
-      'Chạy song song 2 hệ điều hành độc lập: Giữ nguyên HĐH Zin & HĐH Android',
-      'Giữ nguyên 100% cài đặt thông tin xe, ODO, cảnh báo an toàn và nâng cấp phần mềm thuận tiện',
-      'Mở rộng thế giới giải trí Android đa nhiệm siêu mượt mà',
-      'Tích hợp hoàn hảo các tính năng an toàn: Camera 360, Camera lùi, Cảm biến áp suất lốp TPMS, DVR',
-      'Độ phân giải 2K sắc nét, tấm nền IPS chống chói góc nhìn siêu rộng',
-      'Lắp đặt cắm giắc Zin 100% không cắt trích dây, an toàn điện tuyệt đối'
+      "Màn hình đôi kích thước cực đại 20.8 inch liền mạch sang trọng đẳng cấp",
+      "Chạy song song 2 hệ điều hành độc lập: Giữ nguyên HĐH Zin & HĐH Android",
+      "Giữ nguyên 100% cài đặt thông tin xe, ODO, cảnh báo an toàn và nâng cấp phần mềm thuận tiện",
+      "Mở rộng thế giới giải trí Android đa nhiệm siêu mượt mà",
+      "Tích hợp hoàn hảo các tính năng an toàn: Camera 360, Camera lùi, Cảm biến áp suất lốp TPMS, DVR",
+      "Độ phân giải 2K sắc nét, tấm nền IPS chống chói góc nhìn siêu rộng",
+      "Lắp đặt cắm giắc Zin 100% không cắt trích dây, an toàn điện tuyệt đối"
     ],
-    vehicleTypes: ['sedan', 'suv', 'luxury'],
-    materials: ['Kính Cường Lực 2.5D Chống Chói', 'Khung Hợp Kim Tản Nhiệt Nhôm'],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "luxury"
+    ],
+    materials: [
+      "Kính Cường Lực 2.5D Chống Chói",
+      "Khung Hợp Kim Tản Nhiệt Nhôm"
+    ],
     colors: [
-      { name: 'Đen Mờ Liền Khối', hex: '#0F172A' }
+      {"name":"Đen Mờ Liền Khối","hex":"#0F172A"}
     ],
     warrantyMonths: 24,
     inStock: true,
     installationTimeHours: 3
   },
   {
-    id: 'prod-7',
-    itemType: 'product',
-    name: 'Bệ Tỳ Tay Trung Tâm May Da Cao Cấp Thiết Kế Riêng Cho VinFast VF3 (LED Cốc, Sạc Nhanh & Hộc Chứa Đồ Xuyên)',
-    category: 'seat-interior',
-    categoryName: 'Phụ Kiện Tiện Ích Nội Thất',
+    id: "prod-7",
+    itemType: "product",
+    name: "Bệ Tỳ Tay Trung Tâm May Da Cao Cấp Thiết Kế Riêng Cho VinFast VF3 (LED Cốc, Sạc Nhanh & Hộc Chứa Đồ Xuyên)",
+    category: "seat-interior",
+    categoryName: "Phụ Kiện Tiện Ích Nội Thất",
     price: 3200000,
     originalPrice: 3900000,
     isSale: true,
     rating: 4.7,
     reviewCount: 78,
-    primaryImage: '/images/armrest_vf3_interior_led.jpg',
-    secondaryImage: '/images/armrest_vf3_custom_box.jpg',
-    description: 'Bệ tỳ tay trung tâm thiết kế may đo độc quyền 100% chuẩn form xe điện VinFast VF3. Tích hợp đèn LED viền khay để cốc phát sáng ice-blue sang trọng, cổng sạc nhanh Type-C/USB, khe để chìa khóa thông minh, nắp tỳ tay bọc da mở cánh đôi sang trọng và khoang chứa đồ rỗng thông xuyên tầng tiện lợi.',
+    primaryImage: "/images/armrest_vf3_interior_led.jpg",
+    secondaryImage: "/images/armrest_vf3_custom_box.jpg",
+    description: "Bệ tỳ tay trung tâm thiết kế may đo độc quyền 100% chuẩn form xe điện VinFast VF3. Tích hợp đèn LED viền khay để cốc phát sáng ice-blue sang trọng, cổng sạc nhanh Type-C/USB, khe để chìa khóa thông minh, nắp tỳ tay bọc da mở cánh đôi sang trọng và khoang chứa đồ rỗng thông xuyên tầng tiện lợi.",
     features: [
-      'Thiết kế may đo chuẩn xác form dáng sàn và ghế xe VinFast VF3',
-      'Đèn LED viền khay cốc và khe sạc phát sáng xanh Ice-Blue thời thượng',
-      'Nắp tỳ tay đệm mút cao cấp bọc da êm ái, cơ chế mở đôi bằng nút bấm tròn tiện lợi',
-      'Khoang rỗng thông xuyên tầng phía dưới tối ưu không gian để túi xách, vật dụng',
-      'Tích hợp cụm cổng sạc nhanh USB + Type-C an toàn và tiện lợi',
-      'Lắp đặt cắm giắc Zin hoàn toàn không khoan đục hay ảnh hưởng kết cấu xe'
+      "Thiết kế may đo chuẩn xác form dáng sàn và ghế xe VinFast VF3",
+      "Đèn LED viền khay cốc và khe sạc phát sáng xanh Ice-Blue thời thượng",
+      "Nắp tỳ tay đệm mút cao cấp bọc da êm ái, cơ chế mở đôi bằng nút bấm tròn tiện lợi",
+      "Khoang rỗng thông xuyên tầng phía dưới tối ưu không gian để túi xách, vật dụng",
+      "Tích hợp cụm cổng sạc nhanh USB + Type-C an toàn và tiện lợi",
+      "Lắp đặt cắm giắc Zin hoàn toàn không khoan đục hay ảnh hưởng kết cấu xe"
     ],
-    vehicleTypes: ['suv', 'sedan', 'mpv'],
-    materials: ['Khung Gỗ MDF Bọc Da Nappa Cao Cấp', 'Khay Để Cốc Mạ Chrome LED Ice-Blue'],
+    vehicleTypes: [
+      "suv",
+      "sedan",
+      "mpv"
+    ],
+    materials: [
+      "Khung Gỗ MDF Bọc Da Nappa Cao Cấp",
+      "Khay Để Cốc Mạ Chrome LED Ice-Blue"
+    ],
     colors: [
-      { name: 'Hồng Pastel Nữ Tính', hex: '#F472B6' },
-      { name: 'Đen May Chỉ Đỏ Thể Thao', hex: '#18181B' },
-      { name: 'Cam Hermes Nổi Bật', hex: '#EA580C' }
+      {"name":"Hồng Pastel Nữ Tính","hex":"#F472B6"},
+      {"name":"Đen May Chỉ Đỏ Thể Thao","hex":"#18181B"},
+      {"name":"Cam Hermes Nổi Bật","hex":"#EA580C"}
     ],
     warrantyMonths: 24,
     inStock: true,
     installationTimeHours: 1
   },
   {
-    id: 'prod-9',
-    itemType: 'service',
-    name: 'SICHER - Tấm Chắn Cáp & Tấm Bảo Vệ Pin VinFast VF6 (Bộ Giáp Gầm Bảo Vệ Pin Xe Điện Cao Cấp)',
-    category: 'wheels-exterior',
-    categoryName: 'Giáp Gầm Bảo Vệ Pin Xe Điện',
-    price: 2500000,
-    originalPrice: 3200000,
+    id: "prod-9",
+    itemType: "service",
+    name: "KATA - Tấm Giáp Gầm Bảo Vệ Pin Xe Điện Dập Nguyên Khối (Lắp Chuẩn Ốc Gầm Zin 100%, Hệ Thống Lỗ Thoát Khí Làm Mát)",
+    category: "wheels-exterior",
+    categoryName: "Giáp Gầm Bảo Vệ Pin Xe Điện",
+    price: 2600000,
+    originalPrice: 3400000,
     isSale: true,
-    rating: 4.7,
-    reviewCount: 58,
-    primaryImage: '/images/vf6_battery_shield_poster.jpg',
-    secondaryImage: vf6BatteryShieldPlateImg,
-    description: 'Sản phẩm chính hãng SICHER: Combo Tấm Chắn Cáp & Tấm Bảo Vệ Pin chuyên dụng cho xe điện VinFast VF6. Được gia công dập gân định hình với hàng lỗ tản nhiệt khí động học, bảo vệ toàn diện khối pin và hệ thống dây cáp điện cao áp khỏi đá văng, cạ gầm, dị vật trên mặt đường.',
-    features: [
-      'Thương hiệu SICHER chính hãng chuyên biệt bảo vệ hệ thống pin xe điện VinFast',
-      'Bao gồm trọn bộ: Tấm chắn cáp cao áp và Tấm giáp bảo vệ pin gầm VF6',
-      'Gia công từ hợp kim thép chịu lực dập gân tăng cứng, chống va đập và chống móp méo',
-      'Hàng lỗ thoáng khí tản nhiệt thông minh giúp lưu thông gió làm mát cụm pin liên tục',
-      'Lắp đặt chuẩn xác 100% theo các điểm bắt ốc chờ sẵn của khung gầm xe, không độ chế',
-      'Sơn tĩnh điện chống rỉ sét, chịu nước, bùn đất và kháng oxy hóa bền bỉ theo thời gian'
+    isBestSeller: false,
+    rating: 4.6,
+    reviewCount: 142,
+    primaryImage: "/images/kata_giap_pin_hero.jpg",
+    secondaryImage: "/images/kata_giap_pin_cooling.jpg",
+    galleryImages: [
+      "/images/kata_giap_pin_hero.jpg",
+      "/images/kata_giap_pin_cooling.jpg",
+      "/images/kata_giap_pin_bolts.jpg"
     ],
-    vehicleTypes: ['suv'],
-    materials: ['Hợp Kim Thép Cường Lực Dập Gân SICHER', 'Sơn Phủ Tĩnh Điện Chống Ăn Mòn'],
+    description: "Tấm giáp gầm bảo vệ pin xe điện chính hãng KATA công nghệ dập nguyên khối không mối hàn — loại bỏ hoàn toàn nguy cơ bung nứt mối hàn khi va chạm hay cạ gầm. Tích hợp hệ thống lỗ thoát khí và thoát nước thiết kế khoa học chuẩn khí động học, tăng cường đối lưu giải nhiệt tối đa cho khối pin. Lắp đặt chuẩn xác 100% theo các lỗ ốc gầm nguyên bản của xe, giữ trọn vẹn chính sách bảo hành chính hãng của nhà sản xuất.",
+    features: [
+      "Công nghệ dập nguyên khối không mối hàn độc quyền từ KATA: Độ bền cơ học vượt trội, loại bỏ hoàn toàn rủi ro bung mối hàn khi gặp va chạm mạnh hay cạ gầm",
+      "Hệ thống lỗ thoát khí và thoát nước được thiết kế khoa học: Tối ưu luồng gió khí động học làm mát cụm pin liên tục và giải phóng nước đọng nhanh chóng khi đi mưa/ngập lụt",
+      "Vị trí lắp đặt chuẩn 100% theo ốc gầm nguyên bản: Giữ nguyên zin 100% kết cấu khung gầm và bảo lưu nguyên vẹn chế độ bảo hành chính hãng của xe",
+      "Gân tăng cứng hình thoi dập sâu chịu lực: Chống móp méo, chống dị vật và đá văng tác động trực tiếp vào các cell pin cao áp",
+      "Sơn tĩnh điện công nghệ cao: Kháng hóa chất, chống ăn mòn muối biển, chống rỉ sét và bền bỉ trọn đời xe",
+      "Phù hợp hoàn hảo cho các dòng xe điện VinFast VF3, VF5, VF6, VF7, VF8, VF9, Limo Green..."
+    ],
+    vehicleTypes: [
+      "suv",
+      "sedan",
+      "mpv"
+    ],
+    materials: [
+      "Hợp Kim Thép Cường Lực Dập Nguyên Khối KATA",
+      "Sơn Phủ Tĩnh Điện Chống Ăn Mòn Đa Lớp"
+    ],
     colors: [
-      { name: 'Xám Titan Kim Loại', hex: '#64748B' },
-      { name: 'Đen Nhám Chống Xước', hex: '#1E293B' }
+      {"name":"Đen Nhám Nguyên Khối KATA","hex":"#1E293B"},
+      {"name":"Xám Titan Armor","hex":"#475569"}
     ],
     warrantyMonths: 36,
     inStock: true,
     installationTimeHours: 1
   },
   {
-    id: 'prod-10',
-    itemType: 'product',
-    name: 'MCD91 - Màn Hình Hiển Thị Kính Lái HUD Dành Riêng Cho Xe Điện VinFast (Đa Dạng 8 Chế Độ Chuyển Đổi Linh Hoạt)',
-    category: 'screens-displays',
-    categoryName: 'Màn Hình HUD Kính Lái',
+    id: "prod-45",
+    itemType: "service",
+    name: "SICHËR - Bộ Tấm Chắn Cáp & Tấm Bảo Vệ Pin Xe Điện VinFast (Hợp Kim Dập Gân Tản Nhiệt & Lắp Chuẩn Ốc Zin 100%)",
+    category: "wheels-exterior",
+    categoryName: "Giáp Gầm Bảo Vệ Pin Xe Điện",
     price: 1850000,
     originalPrice: 2450000,
     isSale: true,
-    rating: 4.8,
-    reviewCount: 86,
-    primaryImage: '/images/hud_mcd91_vinfast_poster.jpg',
-    secondaryImage: '/images/hud_mcd91_modes_grid.jpg',
-    description: 'Màn hình hiển thị trên kính lái HUD MCD91 thiết kế chuyên biệt dành riêng cho các dòng ô tô điện VinFast (VF3, VF5, VF6, VF7, VF8, VF9, VF e34). Hiển thị trực tiếp thông số lái xe sắc nét lên kính lái với 8 chế độ hiển thị linh hoạt: Tốc độ xe, Phần trăm Pin %, Xi-nhan rẽ, Thời gian thực, Chế độ lái (ECO/Normal/Sport), Quãng đường di chuyển Range, Vị trí Hộp số và Cảnh báo an toàn thông minh.',
-    features: [
-      'Thương hiệu MCD91 HUD cao cấp chuyên dụng cho xe điện VinFast',
-      'Đa dạng 8 chế độ hiển thị kỹ thuật số chuyển đổi linh hoạt theo nhu cầu người lái',
-      'Chiếu thông tin sắc nét lên kính lái: Tốc độ (km/h), Dung lượng Pin (%), Quãng đường còn lại (Range km)',
-      'Đồng bộ tín hiệu tức thì: Xi-nhan trái/phải, Đèn phanh, Báo thắt dây an toàn, Cảnh báo cửa mở, Cảnh báo áp suất lốp',
-      'Tự động điều chỉnh độ sáng thông minh theo môi trường (Ban ngày rõ nét không chói, ban đêm dịu mắt)',
-      'Lắp đặt cắm giắc cổng OBD2 / CAN-Bus Zin 100% không cắt trích dây, an toàn điện tuyệt đối'
+    isBestSeller: false,
+    isNew: true,
+    rating: 4.9,
+    reviewCount: 96,
+    primaryImage: "/images/sicher_giap_pin_vf6.webp",
+    secondaryImage: "/images/sicher_giap_pin_vf5.jpg",
+    galleryImages: [
+      "/images/sicher_giap_pin_vf6.webp",
+      "/images/sicher_giap_pin_vf5.jpg"
     ],
-    vehicleTypes: ['suv', 'sedan', 'mpv'],
-    materials: ['Thấu Kính Quang Học Phản Xạ Cao Cấp', 'Khung Hợp Kim ABS Tản Nhiệt Nhanh'],
+    description: "Trọn bộ tấm chắn cáp và tấm giáp gầm bảo vệ cụm pin cao áp xe điện VinFast VF5, VF6 chính hãng SICHËR. Chế tạo từ hợp kim cường lực dập sóng định hình chịu tải cao, bảo vệ tối ưu khối pin và các giắc cắm cáp cao áp gầm xe khỏi đá văng, cạ gầm khi leo lề hoặc sụp ổ gà. Tích hợp ma trận khe tản nhiệt và lỗ thoát nước đối lưu chuẩn khí động học, lắp đặt bắt ốc nguyên bản 100% không khoan cắt khung gầm.",
+    features: [
+      "Bảo vệ kép toàn diện từ SICHËR: Tấm giáp bảo vệ cụm cell pin cao áp + Tấm chắn bảo vệ hệ thống dây cáp điện cao áp gầm xe",
+      "Hệ thống khe tản nhiệt và thoát nước đa điểm chuẩn khí động học: Đảm bảo giải nhiệt khối pin liên tục và thoát bùn đất nhanh chóng",
+      "Chất liệu hợp kim cao cấp dập sóng gân tăng cứng: Chống biến dạng móp méo khi va chạm gầm, chống đá văng tốc độ cao",
+      "Lắp đặt chuẩn 100% theo các vị trí ốc gầm nguyên bản: Không đục khoét hay cắt trích sườn xe, bảo toàn nguyên vẹn bảo hành hãng VinFast",
+      "Sơn phủ tĩnh điện chống ăn mòn đa lớp: Kháng hóa chất, nước mưa ngập và muối biển bền bỉ theo thời gian",
+      "Chuyên biệt cho các dòng xe điện VinFast VF5, VF6 (và VF3), lắp đặt hoàn thiện nhanh chóng chỉ từ 30-45 phút"
+    ],
+    vehicleTypes: [
+      "sedan",
+      "suv"
+    ],
+    materials: [
+      "Hợp Kim Cường Lực Dập Sóng SICHËR",
+      "Sơn Tĩnh Điện Chống Ăn Mòn"
+    ],
     colors: [
-      { name: 'Đen Mờ Thể Thao', hex: '#0F172A' },
-      { name: 'Xám Titan Kim Loại', hex: '#475569' }
+      {"name":"Xám Titan Kim Loại SICHËR","hex":"#64748B"},
+      {"name":"Đen Nhám Chống Xước","hex":"#1E293B"}
+    ],
+    warrantyMonths: 36,
+    inStock: true,
+    installationTimeHours: 0.75
+  },
+  {
+    id: "prod-46",
+    itemType: "service",
+    name: "B-FACTORY - Tấm Bảo Vệ Pin Xe Điện (Cấu Trúc 2 Lớp Thép Mạ Kẽm & Nhôm Hộp Hấp Thụ Xung Lực, Trọng Lượng ~22kg)",
+    category: "wheels-exterior",
+    categoryName: "Giáp Gầm Bảo Vệ Pin Xe Điện",
+    price: 2850000,
+    originalPrice: 3600000,
+    isSale: true,
+    isBestSeller: false,
+    isNew: true,
+    rating: 4.9,
+    reviewCount: 96,
+    primaryImage: bfactoryBatteryShieldImg,
+    secondaryImage: bfactoryBatteryShield2Img,
+    galleryImages: [
+      bfactoryBatteryShieldImg,
+      bfactoryBatteryShield2Img
+    ],
+    description: "Tấm bảo vệ pin xe điện cao cấp chính hãng B-Factory (An Tâm Hơn). Đột phá với cấu trúc 2 lớp kết hợp giữa thép mạ kẽm cường lực siêu bền và khung nhôm hộp đa khoang rỗng hấp thụ xung lực đa tầng khi xảy ra va chạm hoặc cạ gầm. Trọng lượng tiêu chuẩn ~22kg mang lại độ cứng vững tối đa mà không gây xệ gầm xe. Thiết kế đo đạc theo chuẩn khung gầm nguyên bản, thi công lắp đặt dễ dàng, nhanh chóng qua các vị trí ốc chờ zin 100%, tuyệt đối không khoan cắt đục khoét sườn xe.",
+    features: [
+      "Thương hiệu B-FACTORY (An Tâm Hơn) - Tấm Bảo Vệ Pin Xe Điện Cấu Trúc 2 Lớp",
+      "Cấu trúc 2 lớp hấp thụ xung lực khi va chạm gầm, bảo vệ khối pin tuyệt đối",
+      "Chất liệu cao cấp: Thép mạ kẽm kết hợp nhôm hộp đa khoang giảm chấn",
+      "Trọng lượng tối ưu ~22kg, đầm chắc và không làm xệ gầm xe",
+      "Lắp đặt dễ dàng, nhanh chóng (chỉ từ 30-45 phút)",
+      "Không khoan cắt đục khoét, bắt ốc zin 100% bảo toàn bảo hành hãng"
+    ],
+    vehicleTypes: [
+      "suv",
+      "sedan"
+    ],
+    materials: [
+      "Thép Mạ Kẽm Kết Hợp Nhôm Hộp 2 Lớp",
+      "Sơn Tĩnh Điện Chống Ăn Mòn B-Factory"
+    ],
+    colors: [
+      {"name":"Đen Nhám Chống Xước B-Factory","hex":"#1E293B"},
+      {"name":"Thép Mạ Kẽm Kim Loại","hex":"#64748B"}
+    ],
+    warrantyMonths: 36,
+    inStock: true,
+    installationTimeHours: 0.75
+  },
+  {
+    id: "prod-47",
+    itemType: "service",
+    name: "Tấm Giáp Gầm Hợp Kim Nhôm Magie Bảo Vệ Pin Cao Áp VinFast VF8 / VF9 (Siêu Nhẹ, Tản Nhiệt Đối Lưu Khí Động Học)",
+    category: "wheels-exterior",
+    categoryName: "Giáp Gầm Bảo Vệ Pin Xe Điện",
+    price: 3200000,
+    originalPrice: 4200000,
+    isSale: true,
+    isBestSeller: false,
+    isNew: true,
+    rating: 4.7,
+    reviewCount: 64,
+    primaryImage: "/images/vf8_battery_shield.jpg",
+    secondaryImage: "/images/vf8_battery_shield.webp",
+    galleryImages: [
+      "/images/vf8_battery_shield.jpg",
+      "/images/vf_cable_shield_kit.jpg"
+    ],
+    description: "Bộ tấm giáp gầm cao cấp bảo vệ pin xe điện VinFast VF8 và VF9 chế tạo từ hợp kim nhôm - magie hàng không siêu bền, siêu nhẹ. Khả năng chịu lực uốn nén vượt trội, giảm trọng lượng so với thép truyền thống, giải nhiệt cực nhanh nhờ ma trận lỗ thông gió khí động học, chống đá dăm văng tốc độ cao trên cao tốc và bảo vệ tuyệt đối hệ thống cell pin cùng đầu nối điện gầm.",
+    features: [
+      "Hợp kim Nhôm - Magie 5052 hàng không siêu nhẹ, không gia tăng trọng tải xe",
+      "Dày 3.5mm với hệ gân dập gia cường chịu tải va đập và chống móp méo",
+      "Hệ thống khe gió khí động học đối lưu tản nhiệt pin liên tục khi xe chạy tốc độ cao",
+      "Bắt chuẩn 100% ốc gầm khung sườn zin xe VinFast VF8 và VF9, không khoan cắt",
+      "Không bị oxy hóa, gỉ sét trong môi trường ẩm ướt hoặc sình lầy",
+      "Thi công lắp đặt chuẩn quy trình kỹ thuật xe điện trong 45 phút"
+    ],
+    vehicleTypes: [
+      "suv"
+    ],
+    materials: [
+      "Hợp Kim Nhôm Magie Hàng Không",
+      "Anodized Chống Oxy Hóa"
+    ],
+    colors: [
+      {"name":"Bạc Ánh Kim Hàng Không","hex":"#94A3B8"},
+      {"name":"Đen Nhám Chống Xước","hex":"#1E293B"}
+    ],
+    warrantyMonths: 60,
+    inStock: true,
+    installationTimeHours: 0.75
+  },
+  {
+    id: "prod-10",
+    itemType: "product",
+    name: "MCD91 - Màn Hình Hiển Thị Kính Lái HUD Dành Riêng Cho Xe Điện VinFast (Đa Dạng 8 Chế Độ Chuyển Đổi Linh Hoạt)",
+    category: "screens-displays",
+    categoryName: "Màn Hình HUD Kính Lái",
+    price: 1850000,
+    originalPrice: 2450000,
+    isSale: true,
+    rating: 4.6,
+    reviewCount: 86,
+    primaryImage: "/images/hud_mcd91_vinfast_poster.jpg",
+    secondaryImage: "/images/hud_mcd91_modes_grid.jpg",
+    description: "Màn hình hiển thị trên kính lái HUD MCD91 thiết kế chuyên biệt dành riêng cho các dòng ô tô điện VinFast (VF3, VF5, VF6, VF7, VF8, VF9, VF e34). Hiển thị trực tiếp thông số lái xe sắc nét lên kính lái với 8 chế độ hiển thị linh hoạt: Tốc độ xe, Phần trăm Pin %, Xi-nhan rẽ, Thời gian thực, Chế độ lái (ECO/Normal/Sport), Quãng đường di chuyển Range, Vị trí Hộp số và Cảnh báo an toàn thông minh.",
+    features: [
+      "Thương hiệu MCD91 HUD cao cấp chuyên dụng cho xe điện VinFast",
+      "Đa dạng 8 chế độ hiển thị kỹ thuật số chuyển đổi linh hoạt theo nhu cầu người lái",
+      "Chiếu thông tin sắc nét lên kính lái: Tốc độ (km/h), Dung lượng Pin (%), Quãng đường còn lại (Range km)",
+      "Đồng bộ tín hiệu tức thì: Xi-nhan trái/phải, Đèn phanh, Báo thắt dây an toàn, Cảnh báo cửa mở, Cảnh báo áp suất lốp",
+      "Tự động điều chỉnh độ sáng thông minh theo môi trường (Ban ngày rõ nét không chói, ban đêm dịu mắt)",
+      "Lắp đặt cắm giắc cổng OBD2 / CAN-Bus Zin 100% không cắt trích dây, an toàn điện tuyệt đối"
+    ],
+    vehicleTypes: [
+      "suv",
+      "sedan",
+      "mpv"
+    ],
+    materials: [
+      "Thấu Kính Quang Học Phản Xạ Cao Cấp",
+      "Khung Hợp Kim ABS Tản Nhiệt Nhanh"
+    ],
+    colors: [
+      {"name":"Đen Mờ Thể Thao","hex":"#0F172A"},
+      {"name":"Xám Titan Kim Loại","hex":"#475569"}
     ],
     warrantyMonths: 24,
     inStock: true,
     installationTimeHours: 1
   },
   {
-    id: 'prod-11',
-    itemType: 'service',
-    name: 'ICAR ELLIGATE - Cốp Điện Tự Động Thông Minh Dành Riêng Cho VinFast VF3 (Ti Cốp Chắc Chắn, Đóng Mở Nhẹ Nhàng & Chống Kẹt)',
-    category: 'electric-automation',
-    categoryName: 'Cốp Điện Tự Động Thông Minh',
+    id: "prod-11",
+    itemType: "service",
+    name: "ICAR ELLIGATE - Cốp Điện Tự Động Thông Minh Dành Riêng Cho VinFast VF3 (Ti Cốp Chắc Chắn, Đóng Mở Nhẹ Nhàng & Chống Kẹt)",
+    category: "electric-automation",
+    categoryName: "Cốp Điện Tự Động Thông Minh",
     price: 8500000,
     originalPrice: 9900000,
     isSale: true,
-    rating: 4.8,
+    rating: 4.7,
     reviewCount: 64,
-    primaryImage: '/images/cop_dien_icar_vf3_poster.jpg',
-    secondaryImage: '/images/cop_dien_icar_vf3_tech.jpg',
-    description: 'Cốp điện tự động thông minh ICAR ELLIGATE thiết kế chuẩn form riêng cho xe điện VinFast VF3. Hệ thống ti cốp điện đôi trợ lực mạnh mẽ, vận hành êm ái nhẹ nhàng với 4 công nghệ tối ưu: Ổ trục đôi ổn định, giảm xóc sợi carbon, thoát nước không đọng nước và chống thấm chống nước tuyệt đối.',
+    primaryImage: "/images/cop_dien_icar_vf3_poster.jpg",
+    secondaryImage: "/images/cop_dien_icar_vf3_tech.jpg",
+    description: "Cốp điện tự động thông minh ICAR ELLIGATE thiết kế chuẩn form riêng cho xe điện VinFast VF3. Hệ thống ti cốp điện đôi trợ lực mạnh mẽ, vận hành êm ái nhẹ nhàng với 4 công nghệ tối ưu: Ổ trục đôi ổn định, giảm xóc sợi carbon, thoát nước không đọng nước và chống thấm chống nước tuyệt đối.",
     features: [
-      'Thương hiệu ICAR chính hãng - Công nghệ thông minh cho xe bạn',
-      'Ti cốp đôi chắc chắn, đóng mở êm ái mượt mà không gây giật cục',
-      'Cấu trúc duy trì ổn định ổ trục đôi tăng cường tuổi thọ ti nâng',
-      'Thiết kế giảm xóc bằng sợi carbon triệt tiêu rung động và tiếng ồn',
-      'Công nghệ thoát nước tiên tiến \'Không đọng nước\' và chống thấm \'Không xâm nhập\'',
-      'Tích hợp cảm biến chống kẹt an toàn thông minh khi gặp vật cản',
-      'Nhiều phương thức đóng mở: Nút bấm trên cốp, nút bấm vị trí lái, chìa khóa Smartkey và đá cốp (tùy chọn)',
-      'Lắp đặt cắm giắc Zin 100% chuẩn theo hệ thống điện xe VinFast VF3'
+      "Thương hiệu ICAR chính hãng - Công nghệ thông minh cho xe bạn",
+      "Ti cốp đôi chắc chắn, đóng mở êm ái mượt mà không gây giật cục",
+      "Cấu trúc duy trì ổn định ổ trục đôi tăng cường tuổi thọ ti nâng",
+      "Thiết kế giảm xóc bằng sợi carbon triệt tiêu rung động và tiếng ồn",
+      "Công nghệ thoát nước tiên tiến 'Không đọng nước' và chống thấm 'Không xâm nhập'",
+      "Tích hợp cảm biến chống kẹt an toàn thông minh khi gặp vật cản",
+      "Nhiều phương thức đóng mở: Nút bấm trên cốp, nút bấm vị trí lái, chìa khóa Smartkey và đá cốp (tùy chọn)",
+      "Lắp đặt cắm giắc Zin 100% chuẩn theo hệ thống điện xe VinFast VF3"
     ],
-    vehicleTypes: ['suv'],
-    materials: ['Thép Hợp Kim Cường Lực', 'Lõi Giảm Xóc Sợi Carbon', 'Mô Tơ Điện Êm Ái'],
+    vehicleTypes: [
+      "suv"
+    ],
+    materials: [
+      "Thép Hợp Kim Cường Lực",
+      "Lõi Giảm Xóc Sợi Carbon",
+      "Mô Tơ Điện Êm Ái"
+    ],
     colors: [
-      { name: 'Đen Nhám Thể Thao', hex: '#0F172A' }
+      {"name":"Đen Nhám Thể Thao","hex":"#0F172A"}
     ],
     warrantyMonths: 24,
     inStock: true,
     installationTimeHours: 2
   },
   {
-    id: 'prod-12',
-    itemType: 'product',
-    name: 'Android Box Zestech DX165 Thế Hệ 2 Chuyển Đổi Màn Zin Thông Minh (Bản Quyền Vietmap Live & Kiki AI)',
-    category: 'screens-displays',
-    categoryName: 'Android Box Zestech',
+    id: "prod-12",
+    itemType: "product",
+    name: "Android Box Zestech DX165 Thế Hệ 2 Chuyển Đổi Màn Zin Thông Minh (Bản Quyền Vietmap Live & Kiki AI)",
+    category: "screens-displays",
+    categoryName: "Android Box Zestech",
     price: 3500000,
     originalPrice: 4500000,
     isBestSeller: false,
     isSale: true,
-    rating: 4.8,
+    rating: 4.6,
     reviewCount: 168,
-    primaryImage: '/images/zestech_dx165_android_box_poster.jpg',
-    secondaryImage: '/images/caska_android_box_x01_poster.jpg',
-    description: 'Bộ thiết bị Android Box Zestech DX165 thế hệ 2 cao cấp giải pháp tối ưu chuyển đổi màn hình Zin xe ô tô thành màn hình Android thông minh chỉ sau 1 thao tác cắm cổng USB/Type-C Apple CarPlay. Cấu hình mạnh mẽ: CPU 8 nhân, RAM 4GB, ROM 64GB, tích hợp bản quyền Vietmap Live dẫn đường cảnh báo phạt nguội, trợ lý giọng nói Kiki tiếng Việt và hỗ trợ khe cắm SIM 4G phát WiFi.',
-    features: [
-      'Giải pháp chuyển đổi màn hình Zin thành Android cắm cổng USB/Type-C Zin 100% không ảnh hưởng bảo hành xe',
-      'Cấu hình mạnh mẽ: CPU 8 Core, RAM 4GB, ROM 64GB, hệ điều hành Android đa nhiệm chia đôi màn hình siêu mượt',
-      'Tích hợp bản đồ dẫn đường thông minh: Vietmap Live bản quyền, Google Maps cảnh báo camera phạt nguội và tốc độ',
-      'Hỗ trợ khay cắm SIM 4G tốc độ cao, phát WiFi cho mọi thiết bị trên xe',
-      'Kho ứng dụng giải trí đỉnh cao: Xem Youtube không quảng cáo, VTV Go, Netflix, Spotify',
-      'Ra lệnh giọng nói tiếng Việt rảnh tay thông minh bằng nút bấm tích hợp trên vô lăng xe',
-      'Tự động đồng bộ giao diện và độ phân giải màn hình nguyên bản theo xe',
-      'Chế độ bảo hành chính hãng Zestech 24 tháng 1 đổi 1'
+    primaryImage: zestechDx165PosterImg,
+    secondaryImage: zestechDx165RegeneratedImg,
+    galleryImages: [
+      zestechDx165PosterImg,
+      zestechDx165RegeneratedImg
     ],
-    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
-    materials: ['Vỏ Nhôm Hàng Không Tản Nhiệt Cao Cấp', 'Chip Qualcomm Snapdragon 8 Nhân'],
+    description: "Bộ thiết bị Android Box Zestech DX165 thế hệ 2 cao cấp giải pháp tối ưu chuyển đổi màn hình Zin xe ô tô thành màn hình Android thông minh chỉ sau 1 thao tác cắm cổng USB/Type-C Apple CarPlay. Cấu hình mạnh mẽ: CPU 8 nhân, RAM 4GB, ROM 64GB, tích hợp bản quyền Vietmap Live dẫn đường cảnh báo phạt nguội, trợ lý giọng nói Kiki tiếng Việt và hỗ trợ khe cắm SIM 4G phát WiFi.",
+    features: [
+      "Giải pháp chuyển đổi màn hình Zin thành Android cắm cổng USB/Type-C Zin 100% không ảnh hưởng bảo hành xe",
+      "Cấu hình mạnh mẽ: CPU 8 Core, RAM 4GB, ROM 64GB, hệ điều hành Android đa nhiệm chia đôi màn hình siêu mượt",
+      "Tích hợp bản đồ dẫn đường thông minh: Vietmap Live bản quyền, Google Maps cảnh báo camera phạt nguội và tốc độ",
+      "Hỗ trợ khay cắm SIM 4G tốc độ cao, phát WiFi cho mọi thiết bị trên xe",
+      "Kho ứng dụng giải trí đỉnh cao: Xem Youtube không quảng cáo, VTV Go, Netflix, Spotify",
+      "Ra lệnh giọng nói tiếng Việt rảnh tay thông minh bằng nút bấm tích hợp trên vô lăng xe",
+      "Tự động đồng bộ giao diện và độ phân giải màn hình nguyên bản theo xe",
+      "Chế độ bảo hành chính hãng Zestech 24 tháng 1 đổi 1"
+    ],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Vỏ Nhôm Hàng Không Tản Nhiệt Cao Cấp",
+      "Chip Qualcomm Snapdragon 8 Nhân"
+    ],
     colors: [
-      { name: 'Đen Bóng Zestech DX165', hex: '#0A0A0A' }
+      {"name":"Đen Bóng Zestech DX165","hex":"#0A0A0A"}
     ],
     warrantyMonths: 24,
     inStock: true,
     installationTimeHours: 0.2
   },
   {
-    id: 'prod-13',
-    itemType: 'service',
-    name: 'Áo Ghế Da Nappa 9D Cao Cấp (Siêu Mềm Mịn - Thoáng Khí - Sang Trọng)',
-    category: 'seat-interior',
-    categoryName: 'Bọc Ghế Da Nappa Cao Cấp',
+    id: "prod-13",
+    itemType: "service",
+    name: "Áo Ghế Da Nappa 9D Cao Cấp (Siêu Mềm Mịn - Thoáng Khí - Sang Trọng)",
+    category: "seat-interior",
+    categoryName: "Bọc Ghế Da Nappa Cao Cấp",
     price: 7000000,
     originalPrice: 8500000,
     isSale: true,
     isBestSeller: true,
-    rating: 4.9,
+    rating: 4.8,
     reviewCount: 142,
-    primaryImage: '/images/nappa_seat_poster.webp',
-    secondaryImage: '/images/nappa_seat_interior.jpg',
-    description: 'Dịch vụ bọc ghế da Nappa Ý nhập khẩu chính ngạch 100% may đo chuẩn phom dáng từng dòng xe. Bề mặt da dập lỗ thông hơi CNC thoáng khí kết hợp quạt làm mát đệm mút cao cấp, đường chỉ đôi dập đều tinh xảo mang lại trải nghiệm ngồi êm ái, chống nóng bí lưng trong thời tiết oi bức.',
+    primaryImage: "/images/nappa_seat_poster.webp",
+    secondaryImage: "/images/nappa_seat_interior.jpg",
+    description: "Dịch vụ bọc ghế da Nappa Ý nhập khẩu chính ngạch 100% may đo chuẩn phom dáng từng dòng xe. Bề mặt da dập lỗ thông hơi CNC thoáng khí kết hợp quạt làm mát đệm mút cao cấp, đường chỉ đôi dập đều tinh xảo mang lại trải nghiệm ngồi êm ái, chống nóng bí lưng trong thời tiết oi bức.",
     features: [
-      'Chất liệu da Nappa bò Ý tự nhiên 100% mềm mịn, thoáng khí và siêu bền bỉ',
-      'Kỹ thuật dập lỗ thông khí CNC chuẩn xác, tản nhiệt và chống tích tụ mồ hôi',
-      'Đường may chỉ đôi kép thủ công tăm tắp, phom ghế ôm sát cơ thể theo chuẩn công thái học',
-      'Tùy chọn tích hợp hệ thống quạt gió làm mát lưng và đệm túi khí massage',
-      'Không mùi hóa chất độc hại, thân thiện với sức khỏe và an toàn cho trẻ nhỏ',
-      'Bảo hành độ bền da và đường may lên tới 5 năm'
+      "Chất liệu da Nappa bò Ý tự nhiên 100% mềm mịn, thoáng khí và siêu bền bỉ",
+      "Kỹ thuật dập lỗ thông khí CNC chuẩn xác, tản nhiệt và chống tích tụ mồ hôi",
+      "Đường may chỉ đôi kép thủ công tăm tắp, phom ghế ôm sát cơ thể theo chuẩn công thái học",
+      "Tùy chọn tích hợp hệ thống quạt gió làm mát lưng và đệm túi khí massage",
+      "Không mùi hóa chất độc hại, thân thiện với sức khỏe và an toàn cho trẻ nhỏ",
+      "Bảo hành độ bền da và đường may lên tới 5 năm"
     ],
-    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
-    materials: ['Da Bò Nappa Ý Tự Nhiên', 'Đệm Mút Kháng Khuẩn Cao Cấp'],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Da Bò Nappa Ý Tự Nhiên",
+      "Đệm Mút Kháng Khuẩn Cao Cấp"
+    ],
     colors: [
-      { name: 'Nâu Hermes Sang Trọng', hex: '#8B4513' },
-      { name: 'Đen Maybach Chỉ Đỏ', hex: '#18181B' },
-      { name: 'Kem Sữa Sandstone', hex: '#F5F5DC' },
-      { name: 'Cam Đỏ Thể Thao Porsche', hex: '#EA580C' }
+      {"name":"Nâu Hermes Sang Trọng","hex":"#8B4513"},
+      {"name":"Đen Maybach Chỉ Đỏ","hex":"#18181B"},
+      {"name":"Kem Sữa Sandstone","hex":"#F5F5DC"},
+      {"name":"Cam Đỏ Thể Thao Porsche","hex":"#EA580C"}
     ],
     warrantyMonths: 60,
     inStock: true,
     installationTimeHours: 6
   },
   {
-    id: 'prod-14',
-    itemType: 'product',
-    name: 'Thảm Lót Sàn Ô Tô TPE CARSEN Đúc Khuôn 3D Tràn Viền Cao Cấp Chuẩn Form Xe',
-    category: 'floor-mats',
-    categoryName: 'Thảm Lót Sàn CARSEN TPE',
+    id: "prod-14",
+    itemType: "product",
+    name: "Thảm Lót Sàn Ô Tô TPE CARSEN Đúc Khuôn 3D Tràn Viền Cao Cấp Chuẩn Form Xe",
+    category: "floor-mats",
+    categoryName: "Thảm Lót Sàn CARSEN TPE",
     price: 1500000,
     originalPrice: 1900000,
     isBestSeller: false,
     isSale: true,
-    rating: 4.9,
+    rating: 4.7,
     reviewCount: 280,
-    primaryImage: '/images/carsen_tpe_mat_vf7.jpg',
-    secondaryImage: '/images/huvi_tpe_mat_mgzs.jpg',
-    description: 'Thảm lót sàn ô tô CARSEN nhựa TPE nguyên sinh cao cấp đúc khuôn 3D công nghệ quét Laser scan sàn xe chính xác từng milimet cho mọi dòng xe (VinFast VF3, VF5, VF6, VF7, VF8, VF9, Toyota, Hyundai, Mazda, Kia, Ford...). Thiết kế tràn viền cao che kín bệ bước chống trầy xước, ngăn nước và bùn đất tràn xuống sàn nỉ Zin, không mùi hôi dù đỗ nắng hè, chống trượt an toàn tuyệt đối.',
+    primaryImage: "/images/carsen_tpe_mat_vf7.jpg",
+    secondaryImage: "/images/huvi_tpe_mat_mgzs.jpg",
+    description: "Thảm lót sàn ô tô CARSEN nhựa TPE nguyên sinh cao cấp đúc khuôn 3D công nghệ quét Laser scan sàn xe chính xác từng milimet cho mọi dòng xe (VinFast VF3, VF5, VF6, VF7, VF8, VF9, Toyota, Hyundai, Mazda, Kia, Ford...). Thiết kế tràn viền cao che kín bệ bước chống trầy xước, ngăn nước và bùn đất tràn xuống sàn nỉ Zin, không mùi hôi dù đỗ nắng hè, chống trượt an toàn tuyệt đối.",
     features: [
-      'Nhựa TPE nguyên sinh 100% không mùi độc hại, chịu nhiệt độ cao không biến dạng hay sinh mùi khó chịu',
-      'Đúc khuôn 3D theo công nghệ Laser Scan ôm khít sàn từng dòng xe: VinFast VF3, VF7, Cross, CX5, SantaFe...',
-      'Thiết kế tràn viền cao che kín toàn bộ bệ bước chống trầy xước, ngăn nước và bùn đất tràn xuống sàn nỉ Zin',
-      'Cố định chuẩn chốt Zin theo xe, chống xô lệch kẹt chân ga chân phanh an toàn',
-      'Tùy chọn kết hợp thảm rối cước nỉ chống trơn trượt gài khóa bấm tháo lắp nhanh',
-      'Vệ sinh xịt rửa siêu tiện lợi bằng vòi nước chỉ mất 2 phút nhanh khô',
-      'Bảo hành chính hãng 5 năm (60 tháng) không gãy nứt cong vênh'
+      "Nhựa TPE nguyên sinh 100% không mùi độc hại, chịu nhiệt độ cao không biến dạng hay sinh mùi khó chịu",
+      "Đúc khuôn 3D theo công nghệ Laser Scan ôm khít sàn từng dòng xe: VinFast VF3, VF7, Cross, CX5, SantaFe...",
+      "Thiết kế tràn viền cao che kín toàn bộ bệ bước chống trầy xước, ngăn nước và bùn đất tràn xuống sàn nỉ Zin",
+      "Cố định chuẩn chốt Zin theo xe, chống xô lệch kẹt chân ga chân phanh an toàn",
+      "Tùy chọn kết hợp thảm rối cước nỉ chống trơn trượt gài khóa bấm tháo lắp nhanh",
+      "Vệ sinh xịt rửa siêu tiện lợi bằng vòi nước chỉ mất 2 phút nhanh khô",
+      "Bảo hành chính hãng 5 năm (60 tháng) không gãy nứt cong vênh"
     ],
-    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
-    materials: ['Nhựa TPE Nguyên Sinh Đúc Nguyên Khối', 'Tùy Chọn Lót Rối Cước Kháng Khuẩn'],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Nhựa TPE Nguyên Sinh Đúc Nguyên Khối",
+      "Tùy Chọn Lót Rối Cước Kháng Khuẩn"
+    ],
     colors: [
-      { name: 'Đen Tràn Viền Cao Cấp CARSEN', hex: '#18181B' }
+      {"name":"Đen Tràn Viền Cao Cấp CARSEN","hex":"#18181B"}
     ],
     warrantyMonths: 60,
     inStock: true,
     installationTimeHours: 0.5
   },
   {
-    id: 'prod-15',
-    itemType: 'service',
-    name: 'Gập Gương VF5 - Gương Gập Điện Tự Động (Cắm Giắc Zin 100%)',
-    category: 'electric-automation',
-    categoryName: 'Gương Gập Điện Tự Động',
-    price: 2400000,
-    originalPrice: 3200000,
+    id: "prod-15",
+    itemType: "service",
+    name: "Gập Gương VF5 - Gương Gập Điện Tự Động (Cắm Giắc Zin 100%)",
+    category: "electric-automation",
+    categoryName: "Gương Gập Điện Tự Động",
+    price: 1850000,
+    originalPrice: 2400000,
     isSale: true,
-    rating: 4.7,
+    rating: 4.9,
     reviewCount: 188,
-    primaryImage: '/images/guong_gap_dien_vf5_kit_v2.webp',
-    secondaryImage: '/images/mcd91_guong_gap_dien_poster.jpg',
-    description: 'Bộ nâng cấp gương gập điện tự động MCD91 & HUVI Auto Accessories cắm giắc Zin 100% không cắt trích dây điện cho các dòng xe VinFast VF3, VF5, VF6, Limo... Tự động cụp gương khi bấm khóa cửa xe và xòe gương khi mở khóa, tích hợp phím bấm công tắc gập gương cơ động trong xe.',
+    primaryImage: "/images/guong_gap_dien_vf5_kit_v2.webp",
+    secondaryImage: "/images/mcd91_guong_gap_dien_poster.jpg",
+    description: "Bộ nâng cấp gương gập điện tự động MCD91 & HUVI Auto Accessories cắm giắc Zin 100% không cắt trích dây điện cho các dòng xe VinFast VF3, VF5, VF6, Limo... Tự động cụp gương khi bấm khóa cửa xe và xòe gương khi mở khóa, tích hợp phím bấm công tắc gập gương cơ động trong xe.",
     features: [
-      'Cắm giắc Zin 100% theo xe, giữ nguyên bản hệ thống điện, không cắt nối dây, an toàn tuyệt đối',
-      'Tự động cụp gương khi bấm khóa cửa xe trên chìa khóa Smartkey và mở gương khi mở khóa',
-      'Tích hợp nút gập/mở gương điện tiện lợi gắn vào vị trí nút chờ nguyên bản trên xe',
-      'Mô tơ bánh răng kim loại chịu lực cao, hoạt động êm ái bền bỉ, chống kẹt tay và chống chập điện',
-      'Đạt tiêu chuẩn quản lý chất lượng ISO 9001:2015, sản phẩm chính hãng',
-      'Bảo hành chính hãng từ 24 đến 36 tháng 1 đổi 1'
+      "Cắm giắc Zin 100% theo xe, giữ nguyên bản hệ thống điện, không cắt nối dây, an toàn tuyệt đối",
+      "Tự động cụp gương khi bấm khóa cửa xe trên chìa khóa Smartkey và mở gương khi mở khóa",
+      "Tích hợp nút gập/mở gương điện tiện lợi gắn vào vị trí nút chờ nguyên bản trên xe",
+      "Mô tơ bánh răng kim loại chịu lực cao, hoạt động êm ái bền bỉ, chống kẹt tay và chống chập điện",
+      "Đạt tiêu chuẩn quản lý chất lượng ISO 9001:2015, sản phẩm chính hãng",
+      "Bảo hành chính hãng từ 24 đến 36 tháng 1 đổi 1"
     ],
-    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
-    materials: ['Mô Tơ Xương Nhôm Hợp Kim Đúc', 'Dây Giắc Cắm Zin OEM Chịu Nhiệt'],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Mô Tơ Xương Nhôm Hợp Kim Đúc",
+      "Dây Giắc Cắm Zin OEM Chịu Nhiệt"
+    ],
     colors: [
-      { name: 'Bộ Giắc Zin MCD91 VinFast', hex: '#DC2626' },
-      { name: 'Bộ Gương HUVI Limo Green', hex: '#16A34A' }
+      {"name":"Bộ Giắc Zin MCD91 VinFast","hex":"#DC2626"},
+      {"name":"Bộ Gương HUVI Limo Green","hex":"#16A34A"}
     ],
     warrantyMonths: 36,
     inStock: true,
     installationTimeHours: 1.5
   },
   {
-    id: 'prod-31',
-    itemType: 'service',
-    name: 'Gập Gương VF6 - Gương Gập Điện Tự Động Theo Xe (Cắm Giắc Zin 100%)',
-    category: 'electric-automation',
-    categoryName: 'Gương Gập Điện Tự Động',
-    price: 2450000,
-    originalPrice: 3200000,
+    id: "prod-31",
+    itemType: "service",
+    name: "Gập Gương VF6 - Gương Gập Điện Tự Động Theo Xe (Cắm Giắc Zin 100%)",
+    category: "electric-automation",
+    categoryName: "Gương Gập Điện Tự Động",
+    price: 2050000,
+    originalPrice: 2800000,
     isSale: true,
     isBestSeller: false,
-    rating: 4.9,
+    rating: 4.8,
     reviewCount: 242,
-    primaryImage: '/images/guong_gap_dien_vf6_kit.jpg',
-    secondaryImage: '/images/mcd91_guong_gap_dien_poster.jpg',
-    description: 'Bộ nâng cấp gương gập điện tự động chuyên biệt cho VinFast VF6 cắm giắc Zin 100% không cắt nối dây điện. Tự động cụp tai gương sát thân xe khi bấm khóa trên chìa khóa Smartkey và mở gương khi mở khóa, tích hợp nút bấm công tắc gập gương cơ động trong cabin.',
+    primaryImage: "/images/guong_gap_dien_vf6_kit.jpg",
+    secondaryImage: "/images/mcd91_guong_gap_dien_poster.jpg",
+    description: "Bộ nâng cấp gương gập điện tự động chuyên biệt cho VinFast VF6 cắm giắc Zin 100% không cắt nối dây điện. Tự động cụp tai gương sát thân xe khi bấm khóa trên chìa khóa Smartkey và mở gương khi mở khóa, tích hợp nút bấm công tắc gập gương cơ động trong cabin.",
     features: [
-      'Thiết kế cụm xương mô tơ chuẩn khít theo tai gương nguyên bản VinFast VF6',
-      'Cắm giắc Zin 100%, giữ nguyên vẹn chính sách bảo hành chính hãng của xe',
-      'Tự động cụp gương khi khóa xe, mở gương khi mở cửa hoặc bấm nút Smartkey',
-      'Tích hợp công tắc gập/mở gương chủ động vị trí chờ trong cabin khi đi ngõ hẹp',
-      'Mô tơ nhông kim loại chịu tải cao, vận hành êm ái chống kẹt và chịu nước IP67',
-      'Bảo hành chính hãng 36 tháng 1 đổi 1'
+      "Thiết kế cụm xương mô tơ chuẩn khít theo tai gương nguyên bản VinFast VF6",
+      "Cắm giắc Zin 100%, giữ nguyên vẹn chính sách bảo hành chính hãng của xe",
+      "Tự động cụp gương khi khóa xe, mở gương khi mở cửa hoặc bấm nút Smartkey",
+      "Tích hợp công tắc gập/mở gương chủ động vị trí chờ trong cabin khi đi ngõ hẹp",
+      "Mô tơ nhông kim loại chịu tải cao, vận hành êm ái chống kẹt và chịu nước IP67",
+      "Bảo hành chính hãng 36 tháng 1 đổi 1"
     ],
-    vehicleTypes: ['suv'],
-    materials: ['Mô Tơ Xương Nhôm Hợp Kim Đúc', 'Dây Giắc Cắm Zin OEM Chịu Nhiệt'],
+    vehicleTypes: [
+      "suv"
+    ],
+    materials: [
+      "Mô Tơ Xương Nhôm Hợp Kim Đúc",
+      "Dây Giắc Cắm Zin OEM Chịu Nhiệt"
+    ],
     colors: [
-      { name: 'Bộ Giắc Zin MCD91 VF6', hex: '#DC2626' },
-      { name: 'Bộ Gương Tiêu Chuẩn OEM', hex: '#2563EB' }
+      {"name":"Bộ Giắc Zin MCD91 VF6","hex":"#DC2626"},
+      {"name":"Bộ Gương Tiêu Chuẩn OEM","hex":"#2563EB"}
     ],
     warrantyMonths: 24,
     inStock: true,
     installationTimeHours: 1.5
   },
   {
-    id: 'prod-32',
-    itemType: 'service',
-    name: 'LimoGreen - Gương Gập Điện Tự Động Bản Tiêu Chuẩn (Cắm Giắc Zin 100%)',
-    category: 'electric-automation',
-    categoryName: 'Gương Gập Điện Tự Động',
-    price: 2350000,
-    originalPrice: 3100000,
+    id: "prod-32",
+    itemType: "service",
+    name: "LimoGreen - Gương Gập Điện Tự Động Bản Tiêu Chuẩn (Cắm Giắc Zin 100%)",
+    category: "electric-automation",
+    categoryName: "Gương Gập Điện Tự Động",
+    price: 2050000,
+    originalPrice: 2800000,
     isSale: true,
     isBestSeller: true,
     isNew: true,
-    rating: 4.8,
+    rating: 4.9,
     reviewCount: 165,
-    primaryImage: '/images/limo_green_guong_gap_dien_standard.jpg',
-    secondaryImage: '/images/mcd91_guong_gap_dien_poster.jpg',
-    description: 'Bộ nâng cấp gương gập điện tự động LimoGreen (Bản Tiêu Chuẩn) cắm giắc Zin 100% không cắt nối dây. Tự động cụp mở gương theo Smartkey và phím cơ động trong cabin, thiết kế chuyên biệt chịu tải cao cho dòng xe Limo Green / MPV.',
+    primaryImage: "/images/limo_green_guong_gap_dien_standard.jpg",
+    secondaryImage: "/images/mcd91_guong_gap_dien_poster.jpg",
+    description: "Bộ nâng cấp gương gập điện tự động LimoGreen (Bản Tiêu Chuẩn) cắm giắc Zin 100% không cắt nối dây. Tự động cụp mở gương theo Smartkey và phím cơ động trong cabin, thiết kế chuyên biệt chịu tải cao cho dòng xe Limo Green / MPV.",
     features: [
-      'Thiết kế chuẩn Zin theo tai gương xe Limo Green, cắm giắc 100% an toàn điện',
-      'Tự động cụp gương khi khóa xe, mở gương khi mở cửa hoặc bấm nút Smartkey',
-      'Tích hợp công tắc gập/mở gương chủ động trong cabin khi đi ngõ hẹp',
-      'Mô tơ nhông kim loại chịu lực, vận hành êm ái chống kẹt và chịu nước IP67',
-      'Bảo hành chính hãng 36 tháng 1 đổi 1'
+      "Thiết kế chuẩn Zin theo tai gương xe Limo Green, cắm giắc 100% an toàn điện",
+      "Tự động cụp gương khi khóa xe, mở gương khi mở cửa hoặc bấm nút Smartkey",
+      "Tích hợp công tắc gập/mở gương chủ động trong cabin khi đi ngõ hẹp",
+      "Mô tơ nhông kim loại chịu lực, vận hành êm ái chống kẹt và chịu nước IP67",
+      "Bảo hành chính hãng 36 tháng 1 đổi 1"
     ],
-    vehicleTypes: ['mpv', 'suv', 'sedan'],
-    materials: ['Mô Tơ Xương Hợp Kim Nhôm Đúc', 'Dây Giắc Cắm Zin OEM Chịu Nhiệt'],
+    vehicleTypes: [
+      "mpv",
+      "suv",
+      "sedan"
+    ],
+    materials: [
+      "Mô Tơ Xương Hợp Kim Nhôm Đúc",
+      "Dây Giắc Cắm Zin OEM Chịu Nhiệt"
+    ],
     colors: [
-      { name: 'Bản Tiêu Chuẩn Limo Green', hex: '#16A34A' },
-      { name: 'Bộ Giắc Zin MCD91', hex: '#DC2626' }
+      {"name":"Bản Tiêu Chuẩn Limo Green","hex":"#16A34A"},
+      {"name":"Bộ Giắc Zin MCD91","hex":"#DC2626"}
     ],
     warrantyMonths: 36,
     inStock: true,
-    installationTimeHours: 2.0
+    installationTimeHours: 2
   },
   {
-    id: 'prod-33',
-    itemType: 'service',
-    name: 'LimoGreen - Gương Gập Điện Tự Động Bản LED Xi Nhan (Cắm Giắc Zin 100%)',
-    category: 'electric-automation',
-    categoryName: 'Gương Gập Điện Tự Động',
+    id: "prod-33",
+    itemType: "service",
+    name: "LimoGreen - Gương Gập Điện Tự Động Bản LED Xi Nhan (Cắm Giắc Zin 100%)",
+    category: "electric-automation",
+    categoryName: "Gương Gập Điện Tự Động",
     price: 2550000,
     originalPrice: 3400000,
     isSale: true,
     isBestSeller: true,
-    rating: 4.9,
+    rating: 4.8,
     reviewCount: 176,
-    primaryImage: '/images/limo_green_guong_gap_dien_led_xinhan.jpg',
-    secondaryImage: '/images/mcd91_guong_gap_dien_poster.jpg',
-    description: 'Bộ nâng cấp gương gập điện tự động LimoGreen Bản Tích Hợp Dải LED Xi Nhan Đuổi cao cấp cắm giắc Zin 100% không cắt nối dây. Tự động cụp mở gương theo Smartkey, tăng tính an toàn và thẩm mỹ nhận diện xe khi chuyển làn.',
+    primaryImage: "/images/limo_green_guong_gap_dien_led_xinhan.jpg",
+    secondaryImage: "/images/mcd91_guong_gap_dien_poster.jpg",
+    description: "Bộ nâng cấp gương gập điện tự động LimoGreen Bản Tích Hợp Dải LED Xi Nhan Đuổi cao cấp cắm giắc Zin 100% không cắt nối dây. Tự động cụp mở gương theo Smartkey, tăng tính an toàn và thẩm mỹ nhận diện xe khi chuyển làn.",
     features: [
-      'Tích hợp dải LED xi nhan đuổi chạy hiệu ứng sang trọng trên ốp gương',
-      'Cắm giắc Zin 100% theo xe Limo Green & MPV7, bảo vệ toàn diện hệ thống điện',
-      'Tự động cụp tai gương khi khóa xe từ xa, mở gương khi mở cửa xe',
-      'Công tắc nút bấm gập mở gương chủ động lắp vị trí chờ trong cabin',
-      'Mô tơ bánh răng kim loại chịu tải va quẹt tốt, độ bền cao vượt trội',
-      'Bảo hành chính hãng 36 tháng 1 đổi 1'
+      "Tích hợp dải LED xi nhan đuổi chạy hiệu ứng sang trọng trên ốp gương",
+      "Cắm giắc Zin 100% theo xe Limo Green & MPV7, bảo vệ toàn diện hệ thống điện",
+      "Tự động cụp tai gương khi khóa xe từ xa, mở gương khi mở cửa xe",
+      "Công tắc nút bấm gập mở gương chủ động lắp vị trí chờ trong cabin",
+      "Mô tơ bánh răng kim loại chịu tải va quẹt tốt, độ bền cao vượt trội",
+      "Bảo hành chính hãng 36 tháng 1 đổi 1"
     ],
-    vehicleTypes: ['mpv', 'suv', 'sedan'],
-    materials: ['Mô Tơ Xương Thép & Nhôm Hợp Kim', 'Dây Giắc Cắm Zin OEM Chịu Nhiệt'],
+    vehicleTypes: [
+      "mpv",
+      "suv",
+      "sedan"
+    ],
+    materials: [
+      "Mô Tơ Xương Thép & Nhôm Hợp Kim",
+      "Dây Giắc Cắm Zin OEM Chịu Nhiệt"
+    ],
     colors: [
-      { name: 'Bộ Gương HUVI Limo Green', hex: '#16A34A' },
-      { name: 'Bộ Giắc Zin OEM Chịu Tải', hex: '#0284C7' }
+      {"name":"Bộ Gương HUVI Limo Green","hex":"#16A34A"},
+      {"name":"Bộ Giắc Zin OEM Chịu Tải","hex":"#0284C7"}
     ],
     warrantyMonths: 36,
     inStock: true,
     installationTimeHours: 1.5
   },
   {
-    id: 'prod-17',
-    itemType: 'product',
-    name: 'Cảm Biến Áp Suất Lốp Năng Lượng Mặt Trời ICAR Ellisafe TN405 (Van Trong / Hiển Thị Đa Màu Sắc)',
-    category: 'safety-sensors',
-    categoryName: 'Cảm Biến Áp Suất Lốp TPMS',
+    id: "prod-17",
+    itemType: "product",
+    name: "Cảm Biến Áp Suất Lốp Năng Lượng Mặt Trời ICAR Ellisafe TN405 (Van Trong / Hiển Thị Đa Màu Sắc)",
+    category: "safety-sensors",
+    categoryName: "Cảm Biến Áp Suất Lốp TPMS",
     price: 2500000,
     originalPrice: 3200000,
     isSale: true,
     rating: 4.8,
     reviewCount: 215,
-    primaryImage: '/images/icar_ellisafe_tn405_display.jpg',
-    secondaryImage: '/images/icar_ellisafe_tn405_box.jpg',
-    description: 'Bộ cảm biến áp suất lốp ICAR Ellisafe TN405 thế hệ mới tích hợp màn hình màu đa sắc đặt taplo tự sạc pin bằng năng lượng mặt trời. Giám sát chính xác từng 0.1 Bar áp suất và nhiệt độ 4 bánh xe thời gian thực, phát cảnh báo âm thanh và hình ảnh ngay lập tức khi lốp bị non hơi, quá nhiệt hoặc rò rỉ khí.',
+    primaryImage: "/images/icar_ellisafe_tn405_display.jpg",
+    secondaryImage: "/images/icar_ellisafe_tn405_box.jpg",
+    description: "Bộ cảm biến áp suất lốp ICAR Ellisafe TN405 thế hệ mới tích hợp màn hình màu đa sắc đặt taplo tự sạc pin bằng năng lượng mặt trời. Giám sát chính xác từng 0.1 Bar áp suất và nhiệt độ 4 bánh xe thời gian thực, phát cảnh báo âm thanh và hình ảnh ngay lập tức khi lốp bị non hơi, quá nhiệt hoặc rò rỉ khí.",
     features: [
-      'Màn hình LCD màu đặt taplo công nghệ tấm sạc Solar năng lượng mặt trời tự động kích hoạt',
-      '4 van cảm biến gắn trong bằng hợp kim chống rỉ, chống trộm và chịu áp lực cực cao',
-      'Đo đạc siêu nhạy và hiển thị đồng thời cả áp suất lốp (Bar/Psi) và nhiệt độ (°C) của 4 bánh',
-      'Cảnh báo tức thì bằng âm thanh bíp và nhấp nháy màn hình khi áp suất thay đổi đột ngột',
-      'Tự động ngủ khi xe dừng đỗ và tự động thức dậy hiển thị khi xe rung chuyển chuyển động',
-      'Bảo hành chính hãng ICAR Việt Nam 24 tháng 1 đổi 1'
+      "Màn hình LCD màu đặt taplo công nghệ tấm sạc Solar năng lượng mặt trời tự động kích hoạt",
+      "4 van cảm biến gắn trong bằng hợp kim chống rỉ, chống trộm và chịu áp lực cực cao",
+      "Đo đạc siêu nhạy và hiển thị đồng thời cả áp suất lốp (Bar/Psi) và nhiệt độ (°C) của 4 bánh",
+      "Cảnh báo tức thì bằng âm thanh bíp và nhấp nháy màn hình khi áp suất thay đổi đột ngột",
+      "Tự động ngủ khi xe dừng đỗ và tự động thức dậy hiển thị khi xe rung chuyển chuyển động",
+      "Bảo hành chính hãng ICAR Việt Nam 24 tháng 1 đổi 1"
     ],
-    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
-    materials: ['Màn Hình Sạc Năng Lượng Mặt Trời Solar', 'Van Gắn Trong Hợp Kim Cao Cấp'],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Màn Hình Sạc Năng Lượng Mặt Trời Solar",
+      "Van Gắn Trong Hợp Kim Cao Cấp"
+    ],
     colors: [
-      { name: 'Màn Hình Năng Lượng Mặt Trời + 4 Van Trong', hex: '#0F172A' }
+      {"name":"Màn Hình Năng Lượng Mặt Trời + 4 Van Trong","hex":"#0F172A"}
     ],
     warrantyMonths: 24,
     inStock: true,
     installationTimeHours: 0.5
   },
   {
-    id: 'prod-18',
-    itemType: 'service',
-    name: 'Combo Độ Ghế Điện Limo Green / UNISEAT Phụ Kiện Nâng Cấp Ghế Chỉnh Điện Theo Xe',
-    category: 'seat-interior',
-    categoryName: 'Độ Ghế Chỉnh Điện UNISEAT',
+    id: "prod-18",
+    itemType: "service",
+    name: "Combo Độ Ghế Điện Limo Green / UNISEAT Phụ Kiện Nâng Cấp Ghế Chỉnh Điện Theo Xe",
+    category: "seat-interior",
+    categoryName: "Độ Ghế Chỉnh Điện UNISEAT",
     price: 6500000,
     originalPrice: 8000000,
     isSale: true,
-    rating: 4.7,
+    rating: 4.9,
     reviewCount: 98,
-    primaryImage: '/images/uniseat_ghe_dien_limo_green.jpg',
-    secondaryImage: '/images/gba_combo_ghe_dien_limo_green.jpg',
-    description: 'Bộ phụ kiện nâng cấp ghế chỉnh điện UNISEAT Limo Green & GBA Car Accessories chuẩn theo xe VinFast và các dòng SUV. Trang bị mô-tơ điện êm ái, thanh ray trượt mượt mà, khung xương ghế chịu lực và ốp phím điều khiển điện tử mạ viền sang trọng, cho phép chỉnh tiến - lùi, ngả lưng, nâng hạ đệm ghế đa hướng thuận tiện.',
+    primaryImage: "/images/uniseat_ghe_dien_limo_green.jpg",
+    secondaryImage: "/images/gba_combo_ghe_dien_limo_green.jpg",
+    description: "Bộ phụ kiện nâng cấp ghế chỉnh điện UNISEAT Limo Green & GBA Car Accessories chuẩn theo xe VinFast và các dòng SUV. Trang bị mô-tơ điện êm ái, thanh ray trượt mượt mà, khung xương ghế chịu lực và ốp phím điều khiển điện tử mạ viền sang trọng, cho phép chỉnh tiến - lùi, ngả lưng, nâng hạ đệm ghế đa hướng thuận tiện.",
     features: [
-      'Bộ khung ghế chỉnh điện và phụ kiện nâng cấp thiết kế Zin 100% theo xe VinFast Limo Green',
-      'Mô-tơ điện thế hệ mới hoạt động êm ái, không gây tiếng ồn, độ bền bỉ vượt trội',
-      'Ốp công tắc điều chỉnh điện sắc nét tích hợp nút bấm chỉnh đa hướng mạ chrome cao cấp',
-      'Thanh ray trượt thép carbon cường lực chịu tải cao, trượt êm mượt và chống rơ lắc',
-      'Cắm giắc Zin theo xe có cầu chì bảo vệ riêng biệt, không cắt trích hệ thống điện nguyên bản',
-      'Bảo hành chính hãng 24 tháng đối với toàn bộ hệ thống mô tơ và ray trượt'
+      "Bộ khung ghế chỉnh điện và phụ kiện nâng cấp thiết kế Zin 100% theo xe VinFast Limo Green",
+      "Mô-tơ điện thế hệ mới hoạt động êm ái, không gây tiếng ồn, độ bền bỉ vượt trội",
+      "Ốp công tắc điều chỉnh điện sắc nét tích hợp nút bấm chỉnh đa hướng mạ chrome cao cấp",
+      "Thanh ray trượt thép carbon cường lực chịu tải cao, trượt êm mượt và chống rơ lắc",
+      "Cắm giắc Zin theo xe có cầu chì bảo vệ riêng biệt, không cắt trích hệ thống điện nguyên bản",
+      "Bảo hành chính hãng 24 tháng đối với toàn bộ hệ thống mô tơ và ray trượt"
     ],
-    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
-    materials: ['Khung Thép Cường Lực Sơn Tĩnh Điện', 'Mô-tơ Điện Lõi Đồng Nguyên Chất', 'Ốp Công Tắc Nhựa ABS & Chrome'],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Khung Thép Cường Lực Sơn Tĩnh Điện",
+      "Mô-tơ Điện Lõi Đồng Nguyên Chất",
+      "Ốp Công Tắc Nhựa ABS & Chrome"
+    ],
     colors: [
-      { name: 'UNISEAT Ghế Điện Limo Green', hex: '#DC2626' },
-      { name: 'GBA Combo Ghế Chỉnh Điện', hex: '#0F172A' }
+      {"name":"UNISEAT Ghế Điện Limo Green","hex":"#DC2626"},
+      {"name":"GBA Combo Ghế Chỉnh Điện","hex":"#0F172A"}
     ],
     warrantyMonths: 24,
     inStock: true,
     installationTimeHours: 3
   },
   {
-    id: 'prod-19',
-    itemType: 'service',
-    name: 'Dịch Vụ Phay Phục Hồi Lazang Ô Tô CNC Chuyên Nghiệp & Sơn Đổi Màu Mâm Thể Thao',
-    category: 'wheels-exterior',
-    categoryName: 'Phay Lazang CNC & Mâm Xe',
+    id: "prod-19",
+    itemType: "service",
+    name: "Dịch Vụ Phay Phục Hồi Lazang Ô Tô CNC Chuyên Nghiệp & Sơn Đổi Màu Mâm Thể Thao",
+    category: "wheels-exterior",
+    categoryName: "Phay Lazang CNC & Mâm Xe",
     price: 1800000,
     originalPrice: 2400000,
     isSale: true,
-    rating: 4.8,
+    rating: 4.7,
     reviewCount: 116,
-    primaryImage: '/images/phay_lazang_honda_wheel.jpg',
-    secondaryImage: '/images/tst_phay_lazang_vinfast.jpg',
-    description: 'Dịch vụ phay phục hồi lazang mâm xe ô tô bằng công nghệ máy tiện phay CNC Diamond Cut chuyên dụng độ chính xác từng micron. Xóa sạch 100% các vết trầy xước, cấn lề, biến dạng, tái tạo bề mặt phay xước ánh kim đa chiều sắc nét như mâm đúc xuất xưởng. Hỗ trợ sơn phối màu 2 tông (Two-tone Black & Diamond Cut) thể thao cho VinFast Lux A/SA, Honda, Mazda, Toyota, Hyundai...',
+    primaryImage: "/images/phay_lazang_honda_wheel.jpg",
+    secondaryImage: "/images/tst_phay_lazang_vinfast.jpg",
+    description: "Dịch vụ phay phục hồi lazang mâm xe ô tô bằng công nghệ máy tiện phay CNC Diamond Cut chuyên dụng độ chính xác từng micron. Xóa sạch 100% các vết trầy xước, cấn lề, biến dạng, tái tạo bề mặt phay xước ánh kim đa chiều sắc nét như mâm đúc xuất xưởng. Hỗ trợ sơn phối màu 2 tông (Two-tone Black & Diamond Cut) thể thao cho VinFast Lux A/SA, Honda, Mazda, Toyota, Hyundai...",
     features: [
-      'Công nghệ máy tiện phay CNC vi tính lập trình biên dạng chấu tự động chuẩn xác từng nan mâm',
-      'Phục hồi triệt để lazang trầy xước vỉa hè, ố màu rỉ sét, trả lại bề mặt kim loại sáng bóng',
-      'Sơn lót sấy tĩnh điện công nghệ cao chống bong tróc, phủ bóng Ceramic bảo vệ bề mặt chống ố',
-      'Cân bằng động bấm chì lại toàn bộ 4 bánh xe miễn phí sau khi hoàn thiện gia công',
-      'Thời gian thi công nhanh chóng, có sẵn mâm lốp sơ cua cho khách hàng mượn lăn bánh tạm',
-      'Bảo hành nước sơn và bề mặt phay CNC 24 tháng không bong tróc ố vàng'
+      "Công nghệ máy tiện phay CNC vi tính lập trình biên dạng chấu tự động chuẩn xác từng nan mâm",
+      "Phục hồi triệt để lazang trầy xước vỉa hè, ố màu rỉ sét, trả lại bề mặt kim loại sáng bóng",
+      "Sơn lót sấy tĩnh điện công nghệ cao chống bong tróc, phủ bóng Ceramic bảo vệ bề mặt chống ố",
+      "Cân bằng động bấm chì lại toàn bộ 4 bánh xe miễn phí sau khi hoàn thiện gia công",
+      "Thời gian thi công nhanh chóng, có sẵn mâm lốp sơ cua cho khách hàng mượn lăn bánh tạm",
+      "Bảo hành nước sơn và bề mặt phay CNC 24 tháng không bong tróc ố vàng"
     ],
-    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
-    materials: ['Hợp Kim Nhôm Đúc / Rèn Forged', 'Lớp Sơn Tĩnh Điện & Phủ Bóng Men Gốm Diamond Ceramic'],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Hợp Kim Nhôm Đúc / Rèn Forged",
+      "Lớp Sơn Tĩnh Điện & Phủ Bóng Men Gốm Diamond Ceramic"
+    ],
     colors: [
-      { name: 'Phay Xước Ánh Kim Diamond Cut Phối Đen Bóng', hex: '#E2E8F0' },
-      { name: 'Sơn Đen Mờ Xước Kim Loại Thể Thao', hex: '#1E293B' }
+      {"name":"Phay Xước Ánh Kim Diamond Cut Phối Đen Bóng","hex":"#E2E8F0"},
+      {"name":"Sơn Đen Mờ Xước Kim Loại Thể Thao","hex":"#1E293B"}
     ],
     warrantyMonths: 24,
     inStock: true,
     installationTimeHours: 4
   },
   {
-    id: 'prod-20',
-    itemType: 'product',
-    name: 'Cảm Biến Đỗ Xe Ô Tô ICAR Ellisen S40 / E48 (Hiển Thị Màn ODO Zin / Màn Liền Cam 360 / Android)',
-    category: 'safety-sensors',
-    categoryName: 'Cảm Biến Đỗ Xe Siêu Âm',
+    id: "prod-20",
+    itemType: "product",
+    name: "Cảm Biến Đỗ Xe Ô Tô ICAR Ellisen S40 / E48 (Hiển Thị Màn ODO Zin / Màn Liền Cam 360 / Android)",
+    category: "safety-sensors",
+    categoryName: "Cảm Biến Đỗ Xe Siêu Âm",
     price: 2800000,
     originalPrice: 3500000,
     isSale: true,
-    rating: 4.8,
+    rating: 4.7,
     reviewCount: 148,
-    primaryImage: '/images/icar_ellisen_s40_poster.jpg',
-    secondaryImage: '/images/icar_ellisen_e48_poster.jpg',
-    description: 'Hệ thống cảm biến đỗ xe thông minh ICAR Ellisen S40 & E48 cao cấp. Giúp người lái xóa tan nỗi lo va chạm khi ghép xe, lùi chuồng hẹp với công nghệ sóng siêu âm cực nhạy, hiển thị trực quan khoảng cách chướng ngại vật lên màn hình công tơ mét ODO Zin, màn DVD Zin, màn hình Android hoặc tích hợp liền mạch vào hệ thống Camera 360.',
+    primaryImage: "/images/icar_ellisen_s40_poster.jpg",
+    secondaryImage: "/images/icar_ellisen_e48_poster.jpg",
+    description: "Hệ thống cảm biến đỗ xe thông minh ICAR Ellisen S40 & E48 cao cấp. Giúp người lái xóa tan nỗi lo va chạm khi ghép xe, lùi chuồng hẹp với công nghệ sóng siêu âm cực nhạy, hiển thị trực quan khoảng cách chướng ngại vật lên màn hình công tơ mét ODO Zin, màn DVD Zin, màn hình Android hoặc tích hợp liền mạch vào hệ thống Camera 360.",
     features: [
-      'Mắt cảm biến siêu âm công nghệ mới chống nước IP68, phát hiện vật cản từ cự ly 0.3m đến 2.0m',
-      'Hỗ trợ tùy chọn mắt cảm biến Zin phẳng như xe nguyên bản hoặc mắt thường thẩm mỹ cao',
-      'Hiển thị vạch khoảng cách và cảnh báo vật cản trực tiếp trên màn ODO, màn Zin hoặc màn Android',
-      'Tích hợp tính năng tự động kích hoạt cảm biến lùi khi vào số R và cảm biến tiến khi đạp phanh',
-      'Phát cảnh báo âm thanh bíp thông minh tăng dần tần số khi khoảng cách tiến sát chướng ngại vật',
-      'Bảo hành chính hãng ICAR Việt Nam 24 tháng 1 đổi 1'
+      "Mắt cảm biến siêu âm công nghệ mới chống nước IP68, phát hiện vật cản từ cự ly 0.3m đến 2.0m",
+      "Hỗ trợ tùy chọn mắt cảm biến Zin phẳng như xe nguyên bản hoặc mắt thường thẩm mỹ cao",
+      "Hiển thị vạch khoảng cách và cảnh báo vật cản trực tiếp trên màn ODO, màn Zin hoặc màn Android",
+      "Tích hợp tính năng tự động kích hoạt cảm biến lùi khi vào số R và cảm biến tiến khi đạp phanh",
+      "Phát cảnh báo âm thanh bíp thông minh tăng dần tần số khi khoảng cách tiến sát chướng ngại vật",
+      "Bảo hành chính hãng ICAR Việt Nam 24 tháng 1 đổi 1"
     ],
-    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
-    materials: ['Mắt Cảm Biến Siêu Âm Chống Nước IP68', 'Hộp Xử Lý Vi Điều Khiển ICAR Canbus'],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Mắt Cảm Biến Siêu Âm Chống Nước IP68",
+      "Hộp Xử Lý Vi Điều Khiển ICAR Canbus"
+    ],
     colors: [
-      { name: 'Ellisen S40 Cảm Biến Mắt Zin', hex: '#E2E8F0' },
-      { name: 'Ellisen E48 Cảm Biến Đa Năng 8 Mắt', hex: '#0F172A' }
+      {"name":"Ellisen S40 Cảm Biến Mắt Zin","hex":"#E2E8F0"},
+      {"name":"Ellisen E48 Cảm Biến Đa Năng 8 Mắt","hex":"#0F172A"}
     ],
     warrantyMonths: 24,
     inStock: true,
     installationTimeHours: 1.5
   },
   {
-    id: 'prod-25',
-    itemType: 'product',
-    name: 'Màn Hình ODO GBA 10.3 Inch OLED Siêu Rộng Cho Limo Green / MPV7 (Hỗ Trợ Apple CarPlay & Android Auto)',
-    category: 'screens-displays',
-    categoryName: 'Màn Hình ODO Kỹ Thuật Số',
+    id: "prod-25",
+    itemType: "product",
+    name: "Màn Hình ODO GBA 10.3 Inch OLED Siêu Rộng Cho Limo Green / MPV7 (Hỗ Trợ Apple CarPlay & Android Auto)",
+    category: "screens-displays",
+    categoryName: "Màn Hình ODO Kỹ Thuật Số",
     price: 8900000,
     originalPrice: 10500000,
     isBestSeller: false,
     isSale: true,
-    rating: 4.95,
+    rating: 4.7,
     reviewCount: 189,
     primaryImage: manHinhOdoGbaImg,
     secondaryImage: odoGbaFeaturesImg,
-    description: 'Màn hình ODO GBA 10.3 inch OLED siêu rộng thiết kế thông minh, hiển thị trực quan chuyên biệt dành riêng cho VinFast Limo Green và MPV7. Tích hợp đồng bộ hiển thị tốc độ, vị trí hộp số (D, P, N, R), trạng thái mức pin %, hệ thống cảnh báo áp suất lốp TPMS 4 bánh xe (Bar), tín hiệu xi nhan và đèn chiếu sáng. Đặc biệt hỗ trợ kết nối không dây Apple CarPlay & Android Auto chia đôi màn hình bản đồ dẫn đường thông minh và hiển thị camera quan sát an toàn.',
+    description: "Màn hình ODO GBA 10.3 inch OLED siêu rộng thiết kế thông minh, hiển thị trực quan chuyên biệt dành riêng cho VinFast Limo Green và MPV7. Tích hợp đồng bộ hiển thị tốc độ, vị trí hộp số (D, P, N, R), trạng thái mức pin %, hệ thống cảnh báo áp suất lốp TPMS 4 bánh xe (Bar), tín hiệu xi nhan và đèn chiếu sáng. Đặc biệt hỗ trợ kết nối không dây Apple CarPlay & Android Auto chia đôi màn hình bản đồ dẫn đường thông minh và hiển thị camera quan sát an toàn.",
     features: [
-      'Màn hình 10.3 inch tấm nền OLED siêu rộng, độ tương phản cao, chống lóa mắt dưới nắng gắt',
-      'Thiết kế thông minh hiển thị trực quan chuyên dụng chuẩn phom xe điện Limo Green / MPV7',
-      'Hỗ trợ kết nối Apple CarPlay & Android Auto không dây tiện lợi, chia đôi màn hình bản đồ dẫn đường',
-      'Hiển thị trực tiếp tốc độ di chuyển và vị trí hộp số điện tử (D - P - N - R)',
-      'Theo dõi trạng thái mức Pin % chính xác và tổng quãng đường đã đi (công tơ mét ODO)',
-      'Tích hợp cảm biến hiển thị áp suất lốp (Bar) và nhiệt độ 4 bánh xe trực quan',
-      'Đồng bộ đầy đủ tín hiệu đèn pha/cos, đèn demi và xi nhan trái/phải',
-      'Hỗ trợ hiển thị camera quan sát góc rộng khi rẽ hoặc lùi xe',
-      'Lắp đặt cắm giắc Zin 100% Plug & Play, dưỡng phom ôm khít taplo xe nguyên bản không cắt trích dây',
-      'Chính sách bảo hành chính hãng GBA Car Accessories 2 năm (24 tháng) 1 đổi 1'
+      "Màn hình 10.3 inch tấm nền OLED siêu rộng, độ tương phản cao, chống lóa mắt dưới nắng gắt",
+      "Thiết kế thông minh hiển thị trực quan chuyên dụng chuẩn phom xe điện Limo Green / MPV7",
+      "Hỗ trợ kết nối Apple CarPlay & Android Auto không dây tiện lợi, chia đôi màn hình bản đồ dẫn đường",
+      "Hiển thị trực tiếp tốc độ di chuyển và vị trí hộp số điện tử (D - P - N - R)",
+      "Theo dõi trạng thái mức Pin % chính xác và tổng quãng đường đã đi (công tơ mét ODO)",
+      "Tích hợp cảm biến hiển thị áp suất lốp (Bar) và nhiệt độ 4 bánh xe trực quan",
+      "Đồng bộ đầy đủ tín hiệu đèn pha/cos, đèn demi và xi nhan trái/phải",
+      "Hỗ trợ hiển thị camera quan sát góc rộng khi rẽ hoặc lùi xe",
+      "Lắp đặt cắm giắc Zin 100% Plug & Play, dưỡng phom ôm khít taplo xe nguyên bản không cắt trích dây",
+      "Chính sách bảo hành chính hãng GBA Car Accessories 2 năm (24 tháng) 1 đổi 1"
     ],
-    vehicleTypes: ['mpv', 'suv'],
-    materials: ['Màn Hình Tấm Nền OLED 10.3 Inch Cao Cấp', 'Khung Dưỡng ABS Chuẩn Phom Limo Green MPV7', 'Dây Giắc Cắm Zin 100% Plug & Play'],
+    vehicleTypes: [
+      "mpv",
+      "suv"
+    ],
+    materials: [
+      "Màn Hình Tấm Nền OLED 10.3 Inch Cao Cấp",
+      "Khung Dưỡng ABS Chuẩn Phom Limo Green MPV7",
+      "Dây Giắc Cắm Zin 100% Plug & Play"
+    ],
     colors: [
-      { name: 'Đen Taplo OEM Liền Khối', hex: '#0F172A' }
+      {"name":"Đen Taplo OEM Liền Khối","hex":"#0F172A"}
     ],
     warrantyMonths: 24,
     inStock: true,
     installationTimeHours: 1.5
   },
   {
-    id: 'prod-27',
-    itemType: 'service',
-    name: 'Bệ Bước Chân Điện Tự Động Thò Thụt Thông Minh Chống Nước IP68 (Chịu Tải 300kg & Tích Hợp Đèn LED)',
-    category: 'electric-automation',
-    categoryName: 'Bệ Bước Chân Điện Tự Động',
+    id: "prod-27",
+    itemType: "service",
+    name: "Bệ Bước Chân Điện Tự Động Thò Thụt Thông Minh Chống Nước IP68 (Chịu Tải 300kg & Tích Hợp Đèn LED)",
+    category: "electric-automation",
+    categoryName: "Bệ Bước Chân Điện Tự Động",
     price: 16500000,
     originalPrice: 19500000,
     isBestSeller: false,
     isSale: true,
-    rating: 4.9,
+    rating: 4.8,
     reviewCount: 128,
     primaryImage: electricSideStepImg,
-    secondaryImage: '/images/cop_dien_icar_vf3_poster.jpg',
-    description: 'Bệ bước chân điện tự động thông minh dành riêng cho các dòng xe gầm cao SUV/MPV (VinFast VF8, VF9, Carnival, Everest, SantaFe, Fortuner, Land Cruiser...). Tự động mở ra khi mở cửa xe và gập giấu gọn sát lườn gầm khi đóng cửa, tích hợp dải LED soi bước chân sang trọng trong đêm, chịu tải trọng ấn tượng lên đến 300kg mỗi bên.',
+    secondaryImage: "/images/cop_dien_icar_vf3_poster.jpg",
+    description: "Bệ bước chân điện tự động thông minh dành riêng cho các dòng xe gầm cao SUV/MPV (VinFast VF8, VF9, Carnival, Everest, SantaFe, Fortuner, Land Cruiser...). Tự động mở ra khi mở cửa xe và gập giấu gọn sát lườn gầm khi đóng cửa, tích hợp dải LED soi bước chân sang trọng trong đêm, chịu tải trọng ấn tượng lên đến 300kg mỗi bên.",
     features: [
-      'Động cơ kép truyền động đồng tốc êm ái, đóng mở chỉ trong 1.5 giây',
-      'Cảm biến an toàn tự động dừng khi gặp vật cản, chống kẹt chân tối đa',
-      'Mặt bệ hợp kim nhôm đúc nguyên khối gia cố vân cao su chống trượt cao cấp',
-      'Chịu tải trọng thử nghiệm lên tới 300kg, an toàn cho cả người lớn tuổi và trẻ nhỏ',
-      'Tích hợp dải đèn LED soi sáng mặt đường khi mở cửa ban đêm',
-      'Chuẩn chống nước và bùn đất ngập gầm xe IP68, bảo hành 2 năm đổi mới'
+      "Động cơ kép truyền động đồng tốc êm ái, đóng mở chỉ trong 1.5 giây",
+      "Cảm biến an toàn tự động dừng khi gặp vật cản, chống kẹt chân tối đa",
+      "Mặt bệ hợp kim nhôm đúc nguyên khối gia cố vân cao su chống trượt cao cấp",
+      "Chịu tải trọng thử nghiệm lên tới 300kg, an toàn cho cả người lớn tuổi và trẻ nhỏ",
+      "Tích hợp dải đèn LED soi sáng mặt đường khi mở cửa ban đêm",
+      "Chuẩn chống nước và bùn đất ngập gầm xe IP68, bảo hành 2 năm đổi mới"
     ],
-    vehicleTypes: ['suv', 'mpv', 'luxury'],
-    materials: ['Hợp Kim Nhôm Đúc Hàng Không Siêu Nhẹ', 'Mô-tơ Điện Kháng Nước IP68', 'Cao Su Chống Trượt Cao Cấp'],
+    vehicleTypes: [
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Hợp Kim Nhôm Đúc Hàng Không Siêu Nhẹ",
+      "Mô-tơ Điện Kháng Nước IP68",
+      "Cao Su Chống Trượt Cao Cấp"
+    ],
     colors: [
-      { name: 'Đen Nhôm Anodized Thể Thao', hex: '#0F172A' }
+      {"name":"Đen Nhôm Anodized Thể Thao","hex":"#0F172A"}
     ],
     warrantyMonths: 24,
     inStock: true,
     installationTimeHours: 3
   },
   {
-    id: 'prod-29',
-    itemType: 'product',
-    name: 'Thảm Lót Sàn Ô Tô TPE HUVI Đúc Khuôn Khóa Nước 3D Cao Cấp (Bảo Hành 5 Năm)',
-    category: 'floor-mats',
-    categoryName: 'Thảm Lót Sàn HUVI TPE',
+    id: "prod-29",
+    itemType: "product",
+    name: "Thảm Lót Sàn Ô Tô TPE HUVI Đúc Khuôn Khóa Nước 3D Cao Cấp (Bảo Hành 5 Năm)",
+    category: "floor-mats",
+    categoryName: "Thảm Lót Sàn HUVI TPE",
     price: 1650000,
     originalPrice: 2100000,
     isBestSeller: false,
     isSale: true,
-    rating: 4.9,
+    rating: 4.7,
     reviewCount: 196,
-    primaryImage: '/images/huvi_tpe_mat_mgzs.jpg',
-    secondaryImage: '/images/carsen_tpe_mat_vf7.jpg',
-    description: 'Thảm lót sàn ô tô HUVI chất liệu nhựa TPE nguyên sinh đúc khuôn 3D theo form xe, thiết kế vách chống tràn khóa nước độc quyền, không mùi khó chịu, kháng khuẩn, chống trơn trượt an toàn tuyệt đối cho mọi dòng xe VinFast, Toyota, Honda, Hyundai, Kia, Ford...',
+    primaryImage: "/images/huvi_tpe_mat_mgzs.jpg",
+    secondaryImage: "/images/carsen_tpe_mat_vf7.jpg",
+    description: "Thảm lót sàn ô tô HUVI chất liệu nhựa TPE nguyên sinh đúc khuôn 3D theo form xe, thiết kế vách chống tràn khóa nước độc quyền, không mùi khó chịu, kháng khuẩn, chống trơn trượt an toàn tuyệt đối cho mọi dòng xe VinFast, Toyota, Honda, Hyundai, Kia, Ford...",
     features: [
-      'Vách dựng cao thông minh khóa nước, giữ trọn cát bụi và chất lỏng không thấm xuống sàn nỉ',
-      'Vật liệu nhựa TPE nguyên sinh cao cấp chịu nhiệt tốt, tuyệt đối không mùi hôi dù đỗ xe dưới nắng hè',
-      'Đúc khuôn nguyên khối chuẩn xác từng góc cạnh theo thông số kỹ thuật sàn từng đời xe',
-      'Chốt định vị cài chốt sàn nguyên bản, tháo lắp vệ sinh và xịt rửa khô ráo cực nhanh',
-      'Chứng nhận an toàn cho sức khỏe RoHs, thân thiện môi trường',
-      'Bảo hành chính hãng HUVI 5 năm chống gãy gập, nứt vỡ'
+      "Vách dựng cao thông minh khóa nước, giữ trọn cát bụi và chất lỏng không thấm xuống sàn nỉ",
+      "Vật liệu nhựa TPE nguyên sinh cao cấp chịu nhiệt tốt, tuyệt đối không mùi hôi dù đỗ xe dưới nắng hè",
+      "Đúc khuôn nguyên khối chuẩn xác từng góc cạnh theo thông số kỹ thuật sàn từng đời xe",
+      "Chốt định vị cài chốt sàn nguyên bản, tháo lắp vệ sinh và xịt rửa khô ráo cực nhanh",
+      "Chứng nhận an toàn cho sức khỏe RoHs, thân thiện môi trường",
+      "Bảo hành chính hãng HUVI 5 năm chống gãy gập, nứt vỡ"
     ],
-    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
-    materials: ['Nhựa TPE Nguyên Sinh 100%', 'Chốt Định Vị Khóa Chống Trượt'],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Nhựa TPE Nguyên Sinh 100%",
+      "Chốt Định Vị Khóa Chống Trượt"
+    ],
     colors: [
-      { name: 'Đen Mờ Đúc Khuôn 3D HUVI', hex: '#1E293B' }
+      {"name":"Đen Mờ Đúc Khuôn 3D HUVI","hex":"#1E293B"}
     ],
     warrantyMonths: 60,
     inStock: true,
     installationTimeHours: 0.5
   },
   {
-    id: 'prod-30',
-    itemType: 'product',
-    name: 'Android Box Ô Tô CASKA Smart USB 8 Nhân Chuyển Đổi Màn Zin Siêu Mượt',
-    category: 'screens-displays',
-    categoryName: 'Android Box CASKA',
-    price: 2800000,
-    originalPrice: 3500000,
+    id: "prod-30",
+    itemType: "product",
+    name: "Android Box Ô Tô VIETMAP BS10 Đẳng Cấp Thế Hệ Mới (Chip Qualcomm Snapdragon 6125, Bản Quyền Vietmap Live 3 Năm & LED Ambient Pha Lê)",
+    category: "screens-displays",
+    categoryName: "Android Box VIETMAP",
+    price: 5490000,
+    originalPrice: 6490000,
     isBestSeller: false,
     isSale: true,
-    rating: 4.8,
-    reviewCount: 112,
-    primaryImage: '/images/caska_android_box_x01_poster.jpg',
-    secondaryImage: '/images/zestech_dx165_android_box_poster.jpg',
-    description: 'Bộ thiết bị Android Box CASKA Smart USB 8 nhân nhỏ gọn, kết nối qua cổng USB Apple CarPlay biến màn hình zin thành màn hình Android thông minh tức thì. Cấu hình mạnh mẽ, tản nhiệt tốt, tích hợp dẫn đường Vietmap Live và trợ lý giọng nói Kiki.',
-    features: [
-      'Thiết kế dạng USB nhỏ gọn tinh tế, cắm là chạy Plug & Play giữ zin màn hình 100%',
-      'Bộ vi xử lý 8 nhân xử lý tác vụ mượt mà, mở ứng dụng nhanh chóng',
-      'Dẫn đường thông minh Vietmap Live cảnh báo tốc độ, phạt nguội chuẩn xác',
-      'Tích hợp trợ lý ảo giọng nói Kiki nghe hiểu giọng nói 3 miền Bắc - Trung - Nam',
-      'Kết nối Bluetooth 5.0 đàm thoại rảnh tay và nghe nhạc chất lượng cao',
-      'Bảo hành chính hãng CASKA 24 tháng 1 đổi 1'
+    rating: 4.9,
+    reviewCount: 142,
+    primaryImage: vietmapBs10MainImg,
+    secondaryImage: vietmapBs10FeaturesImg,
+    galleryImages: [
+      vietmapBs10MainImg,
+      vietmapBs10FeaturesImg
     ],
-    vehicleTypes: ['sedan', 'suv', 'mpv', 'luxury'],
-    materials: ['Vỏ Nhôm CNC Tản Nhiệt', 'Chip Xử Lý 8 Nhân'],
+    description: "Bộ thiết bị Android Box ô tô cao cấp VIETMAP BS10 đẳng cấp thế hệ mới, biến mọi màn hình Zin nguyên bản thành màn hình Android thông minh vượt trội. Trang bị chip cao cấp Qualcomm Snapdragon 6125 8 nhân 2.0GHz mạnh mẽ, thiết kế đĩa tròn độc đáo với dải LED Ambient đổi màu pha lê thời thượng. Tích hợp độc quyền bản quyền dẫn đường VIETMAP LIVE 3 năm và dẫn đường ô tô chuyên dụng S2 cảnh báo tốc độ, biển báo, camera phạt nguội độc quyền. Hỗ trợ khe cắm Nano SIM 4G phát WiFi, định vị trực tuyến giám sát xe từ xa qua App và kết nối không dây Wireless Apple CarPlay / Android Auto mượt mà.",
+    features: [
+      "Vi xử lý cao cấp Qualcomm Snapdragon 6125 8 nhân 2.0GHz hiệu năng vượt trội, xử lý đa nhiệm mượt mà",
+      "Thiết kế đĩa tròn nhỏ gọn sang trọng, dải đèn LED Ambient đổi màu công nghệ phát sáng pha lê độc đáo",
+      "Tích hợp bản quyền VIETMAP LIVE 3 năm cập nhật giao thông trực tuyến & VIETMAP S2 chuyên dụng cho tài xế Việt",
+      "Cảnh báo giao thông độc quyền: Tốc độ giới hạn, biển báo cấm, camera giám sát phạt nguội và khu vực đông dân cư",
+      "Ứng dụng giám sát định vị xe trực tuyến Online mọi lúc mọi nơi qua điện thoại",
+      "Tặng kèm SIM 4G Vinaphone tốc độ cao phát WiFi Hotspot không giới hạn trên xe",
+      "Cắm giắc Type-C Plug & Play tương thích mọi dòng xe, giữ zin 100% không ảnh hưởng bảo hành hãng",
+      "Chính sách kích hoạt điện tử bảo hành chính hãng VIETMAP 12 tháng 1 đổi 1 an tâm tuyệt đối"
+    ],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Nhôm Tản Nhiệt Cao Cấp",
+      "Vỏ Nhựa ABS Kháng Cháy",
+      "Viền LED Pha Lê Đổi Màu"
+    ],
     colors: [
-      { name: 'Xám Titan CASKA Smart USB', hex: '#334155' }
+      {"name":"Đen Viền LED Pha Lê VIETMAP","hex":"#1E293B"}
+    ],
+    warrantyMonths: 12,
+    inStock: true,
+    installationTimeHours: 0.2
+  },
+  {
+    id: "prod-48",
+    itemType: "product",
+    name: "Android Box Ô Tô Carlinkit TBox S2P (Qualcomm CPU 6115, RAM 8GB / ROM 128GB, LED Ambient RGB & Khe SIM 4G)",
+    category: "screens-displays",
+    categoryName: "Android Box Carlinkit",
+    price: 2500000,
+    originalPrice: 3200000,
+    isSale: true,
+    isBestSeller: false,
+    isNew: true,
+    rating: 4.8,
+    reviewCount: 98,
+    primaryImage: carlinkitTBoxS2PImg,
+    secondaryImage: carlinkitTBoxPortsImg,
+    galleryImages: [
+      carlinkitTBoxS2PImg,
+      carlinkitTBoxPortsImg
+    ],
+    description: "Android Box ô tô cao cấp Carlinkit TBox S2P thế hệ mới trang bị vi xử lý Qualcomm Snapdragon CPU 6115 (8 nhân 2.0GHz) cùng RAM 8GB và ROM 128GB siêu mượt mà. Điểm nhấn vòng LED Ambient RGB đổi màu thời thượng, tích hợp khe cắm Nano SIM 4G LTE độc lập và khe thẻ nhớ Micro SD hỗ trợ mở rộng tới 512GB. Hỗ trợ chuyển đổi nhanh không dây Wireless Apple CarPlay và Android Auto chỉ với 1 nút bấm (2-3 giây). Cắm giắc Type-C Plug & Play giữ zin màn hình 100%, cài sẵn bản quyền Vietmap Live cảnh báo tốc độ phạt nguội, YouTube chặn quảng cáo và kho ứng dụng giải trí đỉnh cao.",
+    features: [
+      "Trang bị chip Qualcomm Snapdragon 6115 8 nhân 2.0GHz mạnh mẽ, đa nhiệm mượt mà không độ trễ",
+      "Cấu hình khủng RAM 8GB LPDDR4X + Bộ nhớ trong ROM 128GB UFS tốc độ đọc ghi cực nhanh",
+      "Vòng đèn LED Ambient RGB chuyển màu thông minh tạo điểm nhấn công nghệ đẳng cấp cho khoang lái",
+      "Tích hợp khe cắm Nano SIM 4G LTE độc lập thu phát sóng internet tốc độ cao & phát WiFi Hotspot trên xe",
+      "Hỗ trợ khe cắm thẻ nhớ Micro SD mở rộng dung lượng lên đến 512GB lưu trữ phim ảnh nhạc lossless",
+      "Nút bấm vật lý thông minh: Nhấn giữ 2-3 giây để chuyển đổi linh hoạt giữa CarPlay và Android Auto",
+      "Kết nối Type-C cắm là chạy (Plug & Play) giữ nguyên bản màn hình zin và hệ thống điện của xe 100%",
+      "Tặng kèm trọn bộ ứng dụng bản quyền: Vietmap Live cảnh báo giao thông, YouTube Premium không quảng cáo, Kiki ra lệnh giọng nói 3 miền",
+      "Bảo hành chính hãng Carlinkit 24 tháng (1 đổi 1) an tâm tuyệt đối tại Hieu N Auto"
+    ],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Vỏ Hợp Kim & Nhựa ABS Nhám Cao Cấp",
+      "Vòng LED RGB Chống Chói",
+      "Chip Qualcomm Snapdragon 6115"
+    ],
+    colors: [
+      {"name":"Đen Nhám LED Ambient RGB","hex":"#1E293B"}
     ],
     warrantyMonths: 24,
     inStock: true,
-    installationTimeHours: 0.2
+    installationTimeHours: 0.25
   }
 ];
 
@@ -1456,10 +2121,10 @@ export const TEAM_MEMBERS: TeamMember[] = [
   },
   {
     id: 'team-2',
-    name: 'Nguyễn Đức Sơn',
+    name: 'Bùi Đại Dương',
     role: 'Giám Đốc Kỹ Thuật & Đồng Sáng Lập Hieu N Auto',
     experience: '9 năm kinh nghiệm',
-    image: sonAvatar,
+    image: buiDaiDuongAvatar,
     bio: 'Đồng sáng lập và chịu trách nhiệm cao nhất về chất lượng thi công tại Hieu N Auto. Phụ trách hoạch định tiêu chuẩn kỹ thuật và giám sát thi công các hạng mục tại Hieu N Auto.',
     specialty: 'Quản lý quy trình thi công tiêu chuẩn và kiểm soát chất lượng kỹ thuật thi công'
   },
@@ -2028,12 +2693,12 @@ Sau khi phay CNC, mâm xe được sấy nhiệt và phủ lớp men gốm Ceram
 export const TESTIMONIALS: Testimonial[] = [
   {
     id: 'test-1',
-    customerName: 'Anh Dương Leo',
+    customerName: 'Anh Trần Tiến',
     carModel: 'Mercedes-Benz E300 AMG',
     serviceUsed: 'Camera 360 & MHU',
     rating: 5,
     comment: 'Cực kỳ hài lòng với tay nghề của xưởng Hieu N Auto! Độ nét của Camera 360 trên màn hình cực đỉnh, căn lề và lùi xe chuẩn xác 100%. Đội ngũ anh Hiếu tư vấn rất nhiệt tình và chu đáo.',
-    avatar: duongLeoAvatar,
+    avatar: tranTienAvatar,
     date: '15/08/2026',
     verified: true
   },
@@ -2064,10 +2729,21 @@ export const TESTIMONIALS: Testimonial[] = [
     customerName: 'Anh Hưng',
     carModel: 'Hyundai SantaFe Calligraphy',
     serviceUsed: 'SUB Gầm Ghế',
-    rating: 5,
+    rating: 4,
     comment: 'Lắp thêm quả SUB Gầm Ghế âm bass đánh chắc nịch, nghe nhạc EDM hay Bolero đều đượm và có lực hơn hẳn dàn zin. Thi công giấu dây gọn gàng, không chiếm diện tích xe.',
     avatar: hungAvatar,
     date: '10/07/2026',
+    verified: true
+  },
+  {
+    id: 'test-5',
+    customerName: 'Anh Bùi Đại Dương',
+    carModel: 'VinFast VF6 Plus',
+    serviceUsed: 'Tấm Bảo Vệ Pin Xe Điện B-Factory',
+    rating: 5,
+    comment: 'Lắp tấm bảo vệ pin xe điện rất đầm chắc, bắt ốc zin 100% không khoan đục. Đi qua gờ giảm tốc hay đường xấu hoàn toàn an tâm không lo đá văng cạ pin.',
+    avatar: buiDaiDuongAvatar,
+    date: '05/08/2026',
     verified: true
   }
 ];
