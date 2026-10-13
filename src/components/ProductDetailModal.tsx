@@ -19,13 +19,15 @@ import {
   CheckCircle2,
   ThumbsUp,
   Send,
-  User
+  User,
+  Edit3
 } from 'lucide-react';
 import { Product } from '../types';
 import { COMPANY_INFO, FORMAT_CURRENCY } from '../data/mockData';
 
 interface ProductDetailModalProps {
   product: Product | null;
+  initialTab?: 'overview' | 'reviews' | 'write-review';
   onClose: () => void;
   onAddToCart: (product: Product, selectedColor?: string, quantity?: number) => void;
   openConsultation: () => void;
@@ -44,6 +46,7 @@ interface UserReview {
 
 export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   product,
+  initialTab = 'overview',
   onClose,
   onAddToCart,
   openConsultation,
@@ -54,12 +57,19 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
     new Set([product.primaryImage, product.secondaryImage, ...(product.galleryImages || [])])
   ).filter(Boolean);
 
+  const [activeTab, setActiveTab] = useState<'overview' | 'reviews' | 'write-review'>(initialTab);
   const [activeImage, setActiveImage] = useState<string>(product.primaryImage);
   const [selectedColor, setSelectedColor] = useState<string>(product.colors[0]?.name || '');
   const [quantity, setQuantity] = useState<number>(1);
   const [added, setAdded] = useState(false);
   const [selectedStarFilter, setSelectedStarFilter] = useState<number | 'all'>('all');
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+
+  useEffect(() => {
+    if (initialTab) {
+      setActiveTab(initialTab);
+    }
+  }, [initialTab]);
 
   useEffect(() => {
     if (product) {
@@ -74,20 +84,12 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   const [userName, setUserName] = useState<string>('');
   const [userCar, setUserCar] = useState<string>('');
   const [userComment, setUserComment] = useState<string>('');
+  const [selectedReviewTags, setSelectedReviewTags] = useState<string[]>([]);
   const [submittedReview, setSubmittedReview] = useState<boolean>(false);
+  const [votedHelpful, setVotedHelpful] = useState<Record<string, boolean>>({});
 
   // Dynamic sample reviews tailored to this product
-  const [reviewsList, setReviewsList] = useState<UserReview[]>([
-    {
-      id: 'rev-1',
-      name: 'Anh Trần Tuấn Anh',
-      carModel: 'VinFast VF3 / VF5',
-      rating: 5,
-      date: '2 ngày trước',
-      comment: `Lắp đặt tại xưởng cực kỳ hài lòng! Sản phẩm ${product.name} chuẩn Zin 100%, kỹ thuật viên thi công cẩn thận, test kỹ từng chi tiết trước khi bàn giao xe. Rất đáng đồng tiền bát gạo!`,
-      helpfulCount: 24,
-      isVerified: true,
-    },
+  const defaultReviews: UserReview[] = useMemo(() => [
     {
       id: 'rev-2',
       name: 'Anh Nguyễn Minh Hải',
@@ -128,7 +130,30 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
       helpfulCount: 9,
       isVerified: true,
     }
-  ]);
+  ], []);
+
+  const [reviewsList, setReviewsList] = useState<UserReview[]>(defaultReviews);
+
+  // Load persisted reviews from localStorage
+  useEffect(() => {
+    try {
+      const storageKey = `hieunauto_reviews_${product.id}`;
+      const saved = localStorage.getItem(storageKey);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          const cleanParsed = parsed.filter((r: any) => r.id !== 'rev-1');
+          const customIds = new Set(cleanParsed.map((r: any) => r.id));
+          const restDefaults = defaultReviews.filter((d) => !customIds.has(d.id) && d.id !== 'rev-1');
+          setReviewsList([...cleanParsed, ...restDefaults]);
+          return;
+        }
+      }
+    } catch {
+      // ignore
+    }
+    setReviewsList(defaultReviews);
+  }, [product.id, defaultReviews]);
 
   const discountPercent = product.originalPrice 
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) 
@@ -146,27 +171,49 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
     e.preventDefault();
     if (!userName.trim() || !userComment.trim()) return;
 
+    const fullText = selectedReviewTags.length > 0
+      ? `${userComment.trim()}\n\n[Ưu điểm: ${selectedReviewTags.join(', ')}]`
+      : userComment.trim();
+
     const newRev: UserReview = {
       id: `rev-${Date.now()}`,
       name: userName.trim(),
       carModel: userCar.trim() || 'Xe ô tô',
       rating: userRating,
       date: 'Vừa xong',
-      comment: userComment.trim(),
+      comment: fullText,
       helpfulCount: 1,
       isVerified: true,
     };
 
-    setReviewsList([newRev, ...reviewsList]);
+    const updated = [newRev, ...reviewsList];
+    setReviewsList(updated);
     setSubmittedReview(true);
     setUserName('');
     setUserCar('');
     setUserComment('');
-    setTimeout(() => setSubmittedReview(false), 4000);
+    setSelectedReviewTags([]);
+
+    try {
+      const storageKey = `hieunauto_reviews_${product.id}`;
+      localStorage.setItem(storageKey, JSON.stringify(updated.filter(r => r.id.startsWith('rev-'))));
+    } catch {
+      // ignore
+    }
+
+    setTimeout(() => setSubmittedReview(false), 5000);
+  };
+
+  const handleHelpful = (revId: string) => {
+    if (votedHelpful[revId]) return;
+    setVotedHelpful((prev) => ({ ...prev, [revId]: true }));
+    setReviewsList((prev) =>
+      prev.map((r) => (r.id === revId ? { ...r, helpfulCount: r.helpfulCount + 1 } : r))
+    );
   };
 
   // Rating percentage calculation matching product total rating (average 4.8)
-  const totalReviews = product.reviewCount + (reviewsList.length - 5);
+  const totalReviews = Math.max(1, product.reviewCount + (reviewsList.length - 4));
   const fiveStarPct = Math.min(95, Math.max(70, Math.round(((product.rating - 4.0) / 1.0) * 100)));
   const fourStarPct = 100 - fiveStarPct;
   const fiveStarCount = Math.round((totalReviews * fiveStarPct) / 100);
@@ -194,16 +241,18 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
         className="relative bg-slate-900 border border-slate-700/80 rounded-3xl w-full max-w-5xl overflow-hidden shadow-2xl my-8 max-h-[90vh] flex flex-col z-10"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close Button */}
+        {/* Close Button - Floating seamlessly on the top right */}
         <button
           id="close-product-modal-btn"
           onClick={onClose}
-          className="absolute top-4 right-4 z-20 p-2.5 rounded-full bg-slate-950/80 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700 transition-colors cursor-pointer"
+          className="absolute top-4 right-4 sm:top-5 sm:right-5 z-40 p-2 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/80 backdrop-blur-md shadow-xl transition-all cursor-pointer"
+          title="Đóng"
         >
           <X className="w-5 h-5" />
         </button>
 
-        <div className="overflow-y-auto p-6 sm:p-8 space-y-8">
+        {/* Unified Single Layer Content */}
+        <div className="overflow-y-auto p-6 sm:p-8 space-y-8 flex-1">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
             {/* Gallery Column - Expanded Space */}
@@ -216,8 +265,12 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   src={activeImage}
                   alt={product.name}
                   referrerPolicy="no-referrer"
-                  className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105 contrast-[1.03] select-none rounded-xl"
-                  style={{ imageRendering: '-webkit-optimize-contrast' }}
+                  className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105 contrast-[1.05] brightness-[1.01] select-none rounded-xl"
+                  style={{
+                    imageRendering: '-webkit-optimize-contrast',
+                    backfaceVisibility: 'hidden',
+                    transform: 'translateZ(0)',
+                  }}
                 />
                 
                 {/* Previous & Next Buttons */}
@@ -317,10 +370,20 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                       className={`relative flex-shrink-0 w-24 sm:w-28 h-20 sm:h-22 rounded-xl overflow-hidden border-2 transition-all cursor-pointer shadow-md ${
                         activeImage === img
                           ? 'border-emerald-500 ring-2 ring-emerald-500/40 scale-[1.02]'
-                          : 'border-slate-800 opacity-70 hover:opacity-100 hover:border-slate-600'
+                          : 'border-slate-800 opacity-85 hover:opacity-100 hover:border-slate-600'
                       }`}
                     >
-                      <img src={img} alt={`thumbnail-${idx + 1}`} referrerPolicy="no-referrer" className="w-full h-full object-cover" />
+                      <img
+                        src={img}
+                        alt={`thumbnail-${idx + 1}`}
+                        referrerPolicy="no-referrer"
+                        className="w-full h-full object-cover contrast-[1.05] brightness-[1.01] select-none"
+                        style={{
+                          imageRendering: '-webkit-optimize-contrast',
+                          backfaceVisibility: 'hidden',
+                          transform: 'translateZ(0)',
+                        }}
+                      />
                       <span className="absolute bottom-1 right-1 px-1.5 py-0.5 rounded text-[9px] font-extrabold bg-slate-950/90 text-emerald-400 border border-emerald-500/30">
                         Ảnh {idx + 1}
                       </span>
@@ -361,7 +424,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
 
             {/* Product Details Column */}
             <div className="lg:col-span-6 space-y-5">
-              <div>
+              <div className="pr-8 sm:pr-10">
                 <div className="flex flex-wrap items-center gap-2 mb-1.5">
                   {product.itemType === 'service' ? (
                     <span className="px-2.5 py-0.5 rounded-md text-xs font-bold bg-purple-950/80 text-purple-300 border border-purple-500/30 flex items-center gap-1">
@@ -378,14 +441,29 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                     {product.categoryName}
                   </span>
                   
-                  {/* Accurate Star Rating Badge */}
-                  <div className="flex items-center gap-1.5 bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-800 text-xs">
+                  {/* Accurate Star Rating Badge with Click to Jump */}
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('reviews')}
+                    className="flex items-center gap-1.5 bg-slate-950 hover:bg-slate-800 px-2.5 py-1 rounded-lg border border-slate-800 hover:border-amber-400/40 text-xs transition-colors cursor-pointer"
+                    title="Bấm để xem tất cả đánh giá"
+                  >
                     <div className="flex items-center gap-1 text-amber-400">
                       <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
                       <span className="font-extrabold text-amber-400">{product.rating.toFixed(1)}</span>
                     </div>
                     <span className="text-slate-400">({totalReviews} đánh giá)</span>
-                  </div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('write-review')}
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold bg-amber-400/10 hover:bg-amber-400/20 text-amber-400 border border-amber-400/30 transition-all cursor-pointer"
+                    title="Viết đánh giá cho sản phẩm này"
+                  >
+                    <Edit3 className="w-3 h-3" />
+                    <span>+ Viết đánh giá</span>
+                  </button>
                 </div>
 
                 <h2 className="text-xl sm:text-2xl font-extrabold text-white leading-snug">
@@ -506,6 +584,17 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   >
                     <span>Hotline: {COMPANY_INFO.hotline}</span>
                   </a>
+                </div>
+
+                <div className="pt-1">
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('write-review')}
+                    className="w-full py-3 px-4 rounded-xl font-bold text-xs bg-gradient-to-r from-amber-500/10 to-orange-500/10 hover:from-amber-500/20 hover:to-orange-500/20 text-amber-300 border border-amber-500/30 hover:border-amber-400 flex items-center justify-center gap-2 transition-all cursor-pointer shadow-sm"
+                  >
+                    <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+                    <span>Viết Đánh Giá Cho Sản Phẩm Này ({totalReviews} Đánh Giá)</span>
+                  </button>
                 </div>
               </div>
             </div>
@@ -731,21 +820,44 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   </p>
 
                   <div className="flex items-center gap-4 text-[11px] text-slate-500 sm:pl-13 pt-1">
-                    <span className="flex items-center gap-1 hover:text-emerald-400 cursor-pointer">
-                      <ThumbsUp className="w-3.5 h-3.5" />
-                      Hữu ích ({rev.helpfulCount})
-                    </span>
+                    <button
+                      type="button"
+                      onClick={() => handleHelpful(rev.id)}
+                      className={`flex items-center gap-1.5 transition-colors cursor-pointer py-1 px-2 rounded-lg ${
+                        votedHelpful[rev.id]
+                          ? 'bg-emerald-500/10 text-emerald-400 font-bold'
+                          : 'hover:text-emerald-400 hover:bg-slate-900'
+                      }`}
+                      title="Bình chọn đánh giá này hữu ích"
+                    >
+                      <ThumbsUp className={`w-3.5 h-3.5 ${votedHelpful[rev.id] ? 'fill-emerald-400' : ''}`} />
+                      <span>{votedHelpful[rev.id] ? 'Đã cảm ơn' : 'Hữu ích'} ({rev.helpfulCount})</span>
+                    </button>
                   </div>
                 </div>
               ))}
             </div>
 
             {/* Interactive Write Review Form */}
-            <div className="p-6 rounded-2xl bg-slate-950 border border-slate-800 space-y-4">
-              <h4 className="font-bold text-white text-sm flex items-center gap-2">
-                <Send className="w-4 h-4 text-emerald-400" />
-                Gửi Đánh Giá Của Bạn Cho Sản Phẩm Này
-              </h4>
+            <div 
+              id="product-write-review-box"
+              className={`p-6 rounded-2xl bg-slate-950 border transition-all space-y-4 ${
+                activeTab === 'write-review'
+                  ? 'border-amber-500/80 ring-2 ring-amber-500/30 shadow-2xl shadow-amber-500/10'
+                  : 'border-slate-800'
+              }`}
+            >
+              <div className="flex items-center justify-between gap-3">
+                <h4 className="font-bold text-white text-sm flex items-center gap-2">
+                  <Send className="w-4 h-4 text-emerald-400" />
+                  <span>Gửi Đánh Giá Của Bạn Cho Sản Phẩm Này</span>
+                </h4>
+                {activeTab === 'write-review' && (
+                  <span className="text-[10px] font-bold text-amber-400 bg-amber-400/10 px-2.5 py-0.5 rounded-full border border-amber-400/30">
+                    Chế độ viết đánh giá
+                  </span>
+                )}
+              </div>
 
               {submittedReview && (
                 <div className="p-4 rounded-xl bg-emerald-950/40 border border-emerald-500/40 text-emerald-300 text-xs flex items-center gap-2">
@@ -781,6 +893,47 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   <span className="text-xs font-bold text-amber-400">
                     {(hoverRating || userRating)} / 5.0 Sao
                   </span>
+                </div>
+
+                {/* Quick Compliment Tag Chips */}
+                <div className="space-y-1.5">
+                  <span className="text-[11px] font-semibold text-slate-400 block">
+                    Gợi ý ưu điểm (bấm chọn nhanh để thêm vào nội dung):
+                  </span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {[
+                      'Cắm giắc Zin 100%',
+                      'Kỹ thuật viên cẩn thận',
+                      'Độ nét camera cực đỉnh',
+                      'Âm thanh đầm chắc',
+                      'Giáp gầm rất đầm chắc',
+                      'Bảo hành chính hãng uy tín',
+                      'Rất đáng tiền'
+                    ].map((tag) => {
+                      const isSel = selectedReviewTags.includes(tag);
+                      return (
+                        <button
+                          key={tag}
+                          type="button"
+                          onClick={() => {
+                            if (isSel) {
+                              setSelectedReviewTags(selectedReviewTags.filter((t) => t !== tag));
+                            } else {
+                              setSelectedReviewTags([...selectedReviewTags, tag]);
+                            }
+                          }}
+                          className={`px-2.5 py-1 rounded-lg text-[11px] font-medium border transition-all cursor-pointer ${
+                            isSel
+                              ? 'bg-emerald-500/20 border-emerald-500 text-emerald-300 shadow-sm'
+                              : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+                          }`}
+                        >
+                          {isSel ? '✓ ' : '+ '}
+                          {tag}
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -883,7 +1036,13 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               <img
                 src={activeImage}
                 alt={product.name}
-                className="max-w-full max-h-[75vh] object-contain rounded-2xl shadow-2xl border border-slate-800"
+                referrerPolicy="no-referrer"
+                className="max-w-full max-h-[75vh] object-contain rounded-2xl shadow-2xl border border-slate-800 contrast-[1.05]"
+                style={{
+                  imageRendering: '-webkit-optimize-contrast',
+                  backfaceVisibility: 'hidden',
+                  transform: 'translateZ(0)',
+                }}
               />
               <div className="mt-4 flex items-center gap-2">
                 {allImages.map((img, idx) => (
@@ -892,10 +1051,20 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                     type="button"
                     onClick={() => setActiveImage(img)}
                     className={`w-16 h-12 rounded-lg overflow-hidden border-2 transition-all cursor-pointer ${
-                      activeImage === img ? 'border-emerald-500 scale-105' : 'border-slate-800 opacity-60'
+                      activeImage === img ? 'border-emerald-500 scale-105' : 'border-slate-800 opacity-80'
                     }`}
                   >
-                    <img src={img} alt="thumb" className="w-full h-full object-cover" />
+                    <img
+                      src={img}
+                      alt="thumb"
+                      referrerPolicy="no-referrer"
+                      className="w-full h-full object-cover contrast-[1.05]"
+                      style={{
+                        imageRendering: '-webkit-optimize-contrast',
+                        backfaceVisibility: 'hidden',
+                        transform: 'translateZ(0)',
+                      }}
+                    />
                   </button>
                 ))}
               </div>

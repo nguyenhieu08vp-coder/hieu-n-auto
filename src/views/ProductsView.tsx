@@ -40,7 +40,8 @@ import {
   Droplets,
   Wrench,
   Cpu,
-  Plus
+  Plus,
+  Radio
 } from 'lucide-react';
 import { Product, ItemClassification } from '../types';
 import { PRODUCTS, CATEGORIES, CLASSIFICATIONS, FORMAT_CURRENCY } from '../data/mockData';
@@ -584,17 +585,21 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
     return ledOrderedIds.map((id) => map.get(id)).filter((p): p is Product => Boolean(p));
   }, [filteredProducts, ledOrderedIds]);
 
-  // Nhóm Nâng Cấp Âm Thanh Ô Tô (prod-6: Sub Rebec U10, prod-37: Sub STEG SA-8W, prod-26: Loa toàn dải Rebec BL80, prod-36: Loa bầu dục)
-  const audioProductIds = useMemo(() => new Set(['prod-6', 'prod-37', 'prod-26', 'prod-36']), []);
+  // Nhóm Nâng Cấp Âm Thanh Ô Tô (gồm Bộ Nâng Cấp Âm Thanh Setcar Setaudio: prod-50; Loa Sub: prod-6, prod-37; Loa toàn dải/bầu dục: prod-26, prod-36; Loa Treble Danty Q5: prod-49)
+  const audioOrderedIds = useMemo(() => ['prod-50', 'prod-6', 'prod-37', 'prod-26', 'prod-36', 'prod-49'], []);
+  const audioProductIds = useMemo(() => new Set(audioOrderedIds), [audioOrderedIds]);
   const audioProducts = useMemo(() => {
-    return filteredProducts.filter((p) => audioProductIds.has(p.id) || p.category === 'car-audio');
-  }, [filteredProducts, audioProductIds]);
+    const map = new Map(filteredProducts.map((p) => [p.id, p]));
+    return audioOrderedIds.map((id) => map.get(id)).filter((p): p is Product => Boolean(p));
+  }, [filteredProducts, audioOrderedIds]);
 
-  // Nhóm Màn Hình Liền Khối, Màn ODO, HUD & Android Box: prod-5 (Màn đôi 20.8"), prod-10 (HUD MCD91), prod-25 (Màn ODO GBA OLED), prod-12 (Zestech DX165), prod-30 (VIETMAP BS10), prod-48 (Carlinkit TBox S2P)
-  const displayProductIds = useMemo(() => new Set(['prod-5', 'prod-10', 'prod-25', 'prod-12', 'prod-30', 'prod-48']), []);
+  // Nhóm Màn Hình Liền Khối, Màn ODO, HUD & Android Box: prod-51 (Setcar Vision Pro), prod-5 (Màn đôi 20.8"), prod-10 (HUD MCD91), prod-25 (Màn ODO GBA OLED), prod-12 (Zestech DX165), prod-30 (VIETMAP BS10), prod-48 (Carlinkit TBox S2P), prod-54 (Màn ODO SETCAR VF6 & VF7)
+  const displayOrderedIds = useMemo(() => ['prod-51', 'prod-5', 'prod-10', 'prod-25', 'prod-12', 'prod-30', 'prod-48', 'prod-54'], []);
+  const displayProductIds = useMemo(() => new Set(displayOrderedIds), [displayOrderedIds]);
   const displayProducts = useMemo(() => {
-    return filteredProducts.filter((p) => displayProductIds.has(p.id));
-  }, [filteredProducts, displayProductIds]);
+    const map = new Map(filteredProducts.map((p) => [p.id, p]));
+    return displayOrderedIds.map((id) => map.get(id)).filter((p): p is Product => Boolean(p));
+  }, [filteredProducts, displayOrderedIds]);
 
   // Nhóm Gương Gập Điện Tự Động Theo Xe: prod-15 (VF5), prod-31 (VF3), prod-32 (VF6/VF7), prod-33 (HUVI Limo Green)
   const mirrorProductIds = useMemo(() => new Set(['prod-15', 'prod-31', 'prod-32', 'prod-33']), []);
@@ -602,12 +607,16 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
     return filteredProducts.filter((p) => mirrorProductIds.has(p.id));
   }, [filteredProducts, mirrorProductIds]);
 
-  // 8. Nhóm Nội Thất & Ghế Xe (gồm ghế chỉnh điện, áo ghế nappa, bệ tỳ tay, thảm sàn TPE):
-  // prod-7 (Bệ tỳ tay), prod-13 (Áo ghế Nappa 9D), prod-18 (Độ ghế điện Limo Green), prod-14 (Thảm sàn Carsen), prod-29 (Thảm sàn HUVI)
-  const interiorSeatProductIds = useMemo(() => new Set(['prod-7', 'prod-13', 'prod-18', 'prod-14', 'prod-29']), []);
+  // 8. Nhóm Nội Thất & Ghế Xe (gồm phím vô lăng MCD91 Limo Green, ghế chỉnh điện, áo ghế nappa, bệ tỳ tay, thảm sàn TPE):
+  // prod-52 (Phím vô lăng MCD91 Limo Green), prod-7 (Bệ tỳ tay), prod-13 (Áo ghế Nappa 9D), prod-18 (Độ ghế điện Limo Green), prod-14 (Thảm sàn Carsen), prod-29 (Thảm sàn HUVI)
+  const interiorSeatOrderedIds = useMemo(() => ['prod-52', 'prod-7', 'prod-13', 'prod-18', 'prod-14', 'prod-29'], []);
+  const interiorSeatProductIds = useMemo(() => new Set(interiorSeatOrderedIds), [interiorSeatOrderedIds]);
   const interiorSeatProducts = useMemo(() => {
-    return filteredProducts.filter((p) => interiorSeatProductIds.has(p.id));
-  }, [filteredProducts, interiorSeatProductIds]);
+    const map = new Map(filteredProducts.map((p) => [p.id, p]));
+    const standard = interiorSeatOrderedIds.map((id) => map.get(id)).filter((p): p is Product => Boolean(p));
+    const customInSeat = filteredProducts.filter((p) => (p.category === 'seat-interior' || p.category === 'interior-seat') && !interiorSeatProductIds.has(p.id));
+    return [...standard, ...customInSeat];
+  }, [filteredProducts, interiorSeatOrderedIds, interiorSeatProductIds]);
 
   // 9. Nhóm Tiện Ích & An Toàn Xe (Gộp: Cảm Biến An Toàn, Cốp Điện & Bệ Bước, Bảo Vệ & Chăm Sóc Xe):
   // prod-17, prod-20, prod-11, prod-27, prod-4, prod-19
@@ -618,8 +627,8 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
     return filteredProducts.filter((p) => safetyUtilityProductIds.has(p.id));
   }, [filteredProducts, safetyUtilityProductIds]);
 
-  // 8. Nhóm Bảo Vệ Pin & Giáp Gầm Xe Điện (Vị trí ngay sau Gập Gương Điện): prod-9, prod-45, prod-46, prod-47
-  const batteryShieldProductIds = useMemo(() => new Set(['prod-9', 'prod-45', 'prod-46', 'prod-47']), []);
+  // 8. Nhóm Bảo Vệ Pin & Giáp Gầm Xe Điện (Vị trí ngay sau Gập Gương Điện): prod-9, prod-45, prod-46
+  const batteryShieldProductIds = useMemo(() => new Set(['prod-9', 'prod-45', 'prod-46']), []);
   const batteryShieldProducts = useMemo(() => {
     return filteredProducts.filter((p) => batteryShieldProductIds.has(p.id));
   }, [filteredProducts, batteryShieldProductIds]);
@@ -1060,7 +1069,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                             )}
                           </div>
                           <p className="text-[11px] text-slate-400 mt-0.5">
-                            Hệ thống Camera 360 độ TECHCAM, SETCAR AI 360 &amp; Safeview cao cấp hiển thị 2D/3D siêu nét, mô phỏng xe thực tế, cắm giắc Zin 100%
+                            Hệ thống Camera 360 độ TECHCAM, SETCAR AI 360 &amp; MCD 91 cao cấp hiển thị 2D/3D siêu nét, mô phỏng xe thực tế, cắm giắc Zin 100%
                           </p>
                         </div>
                       </div>
@@ -1114,7 +1123,87 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                   </div>
                 )}
 
-                {/* 🔆 3. MỤC ÁNH SÁNG (BI LED, BI GẦM TĂNG SÁNG) - BÊN DƯỚI CAMERA VÀ TÁCH RIÊNG VỚI ĐÈN LED */}
+                {/* 🔊 3. NHÓM NÂNG CẤP ÂM THANH Ô TÔ & LOA SUB ĐIỆN */}
+                {audioProducts.length > 0 && (
+                  <div className="rounded-2xl border border-purple-500/30 bg-gradient-to-b from-purple-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
+                    <div 
+                      onClick={() => toggleSectionCollapse('audio')}
+                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-purple-500/20 cursor-pointer select-none"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-purple-500/20 border border-purple-400/40 text-purple-400 flex items-center justify-center flex-shrink-0 shadow-lg shadow-purple-500/10">
+                          <Volume2 className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h2 className="text-sm sm:text-base font-extrabold text-white tracking-tight">
+                              Cá Nhân Hóa Âm Thanh
+                            </h2>
+                            <span className="px-2.5 py-0.5 rounded-full bg-purple-500/20 border border-purple-400/30 text-purple-300 text-[11px] font-extrabold">
+                              {audioProducts.length} Sản phẩm
+                            </span>
+                            {collapsedSections['audio'] && (
+                              <span className="text-[11px] text-slate-400 font-medium">
+                                (Đã thu gọn)
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-[11px] text-slate-400 mt-0.5">
+                            Bộ Nâng Cấp Âm Thanh Setcar Setaudio Cho VinFast LimoGreen MPV7 (Chuẩn Zin 100%), Loa Sub gầm ghế Rebec U10, STEG SA-8W, Loa toàn dải BL80, Loa bầu dục PERTORS &amp; Loa Treble Cho Ô Tô Danty Q5 (120W Max)
+                          </p>
+                        </div>
+                      </div>
+
+                      <button
+                        type="button"
+                        id="toggle-collapse-audio-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleSectionCollapse('audio');
+                        }}
+                        className="self-start sm:self-center flex items-center gap-2 px-3 py-1.5 rounded-full border border-purple-500/40 bg-slate-900/90 hover:bg-slate-800 hover:border-purple-400 text-purple-200 hover:text-white text-xs font-semibold transition-all cursor-pointer shadow-sm active:scale-95 shrink-0"
+                        title={collapsedSections['audio'] ? 'Mở rộng sản phẩm' : 'Thu gọn sản phẩm'}
+                      >
+                        <span className="text-[11px] font-medium text-slate-300">
+                          {collapsedSections['audio'] ? 'Mở rộng' : 'Thu gọn'}
+                        </span>
+                        <ChevronDown
+                          className={`w-4 h-4 text-white transition-transform duration-300 ${
+                            collapsedSections['audio'] ? '-rotate-90' : 'rotate-0'
+                          }`}
+                        />
+                      </button>
+                    </div>
+
+                    {!collapsedSections['audio'] && (
+                      viewMode === 'list' ? (
+                        <div className="space-y-3.5">
+                          {audioProducts.map((product) => (
+                            <ProductListItem
+                              key={product.id}
+                              product={product}
+                              onAddToCart={onAddToCart}
+                              onQuickView={onQuickView}
+                            />
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
+                          {audioProducts.map((product) => (
+                            <ProductCompactCard
+                              key={product.id}
+                              product={product}
+                              onAddToCart={onAddToCart}
+                              onQuickView={onQuickView}
+                            />
+                          ))}
+                        </div>
+                      )
+                    )}
+                  </div>
+                )}
+
+                {/* 🔆 4. MỤC ÁNH SÁNG (BI LED, BI GẦM TĂNG SÁNG) */}
                 {lightingProducts.length > 0 && (
                   <div className="rounded-2xl border border-yellow-500/30 bg-gradient-to-b from-yellow-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
                     <div 
@@ -1194,7 +1283,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                   </div>
                 )}
 
-                {/* 💡 4. NHÓM ĐÈN LED (TÁCH RIÊNG VỚI MỤC ÁNH SÁNG) */}
+                {/* 💡 5. NHÓM ĐÈN LED (TÁCH RIÊNG VỚI MỤC ÁNH SÁNG) */}
                 {ledProducts.length > 0 && (
                   <div className="rounded-2xl border border-amber-500/30 bg-gradient-to-b from-amber-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
                     <div 
@@ -1274,86 +1363,6 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                   </div>
                 )}
 
-                {/* 🔊 5. NHÓM NÂNG CẤP ÂM THANH Ô TÔ & LOA SUB ĐIỆN (BÊN DƯỚI CÁC SẢN PHẨM ÁNH SÁNG) */}
-                {audioProducts.length > 0 && (
-                  <div className="rounded-2xl border border-purple-500/30 bg-gradient-to-b from-purple-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
-                    <div 
-                      onClick={() => toggleSectionCollapse('audio')}
-                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-purple-500/20 cursor-pointer select-none"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-purple-500/20 border border-purple-400/40 text-purple-400 flex items-center justify-center flex-shrink-0 shadow-lg shadow-purple-500/10">
-                          <Volume2 className="w-5 h-5" />
-                        </div>
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <h2 className="text-sm sm:text-base font-extrabold text-white tracking-tight">
-                              Cá Nhân Hóa Âm Thanh
-                            </h2>
-                            <span className="px-2.5 py-0.5 rounded-full bg-purple-500/20 border border-purple-400/30 text-purple-300 text-[11px] font-extrabold">
-                              {audioProducts.length} Sản phẩm
-                            </span>
-                            {collapsedSections['audio'] && (
-                              <span className="text-[11px] text-slate-400 font-medium">
-                                (Đã thu gọn)
-                              </span>
-                            )}
-                          </div>
-                          <p className="text-[11px] text-slate-400 mt-0.5">
-                            Loa Sub gầm ghế Rebec U10, Loa Sub STEG SA-8W (Italy), Cặp loa toàn dải BL80 &amp; Loa bầu dục PERTORS QP-4603
-                          </p>
-                        </div>
-                      </div>
-
-                      <button
-                        type="button"
-                        id="toggle-collapse-audio-btn"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          toggleSectionCollapse('audio');
-                        }}
-                        className="self-start sm:self-center flex items-center gap-2 px-3 py-1.5 rounded-full border border-purple-500/40 bg-slate-900/90 hover:bg-slate-800 hover:border-purple-400 text-purple-200 hover:text-white text-xs font-semibold transition-all cursor-pointer shadow-sm active:scale-95 shrink-0"
-                        title={collapsedSections['audio'] ? 'Mở rộng sản phẩm' : 'Thu gọn sản phẩm'}
-                      >
-                        <span className="text-[11px] font-medium text-slate-300">
-                          {collapsedSections['audio'] ? 'Mở rộng' : 'Thu gọn'}
-                        </span>
-                        <ChevronDown
-                          className={`w-4 h-4 text-white transition-transform duration-300 ${
-                            collapsedSections['audio'] ? '-rotate-90' : 'rotate-0'
-                          }`}
-                        />
-                      </button>
-                    </div>
-
-                    {!collapsedSections['audio'] && (
-                      viewMode === 'list' ? (
-                        <div className="space-y-3.5">
-                          {audioProducts.map((product) => (
-                            <ProductListItem
-                              key={product.id}
-                              product={product}
-                              onAddToCart={onAddToCart}
-                              onQuickView={onQuickView}
-                            />
-                          ))}
-                        </div>
-                      ) : (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
-                          {audioProducts.map((product) => (
-                            <ProductCompactCard
-                              key={product.id}
-                              product={product}
-                              onAddToCart={onAddToCart}
-                              onQuickView={onQuickView}
-                            />
-                          ))}
-                        </div>
-                      )
-                    )}
-                  </div>
-                )}
-
                 {/* 🖥️ 6. NHÓM MÀN HÌNH LIỀN KHỐI, MÀN ODO & ANDROID BOX */}
                 {displayProducts.length > 0 && (
                   <div className="rounded-2xl border border-cyan-500/30 bg-gradient-to-b from-cyan-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
@@ -1380,7 +1389,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                             )}
                           </div>
                           <p className="text-[11px] text-slate-400 mt-0.5">
-                            Màn hình đôi 20.8" liền khối ODO &amp; Android, HUD kính lái MCD91, Màn ODO OLED &amp; Android Box Zestech DX165 / CASKA cắm cổng USB zin siêu mượt
+                            Màn hình đôi 24.6" Setcar Vision Pro LimoGreen, Màn đôi 20.8", HUD kính lái MCD91, Màn ODO OLED, Android Box Carlinkit, Zestech, VIETMAP &amp; Màn ODO SETCAR VF6/VF7 (Zin 100%)
                           </p>
                         </div>
                       </div>
@@ -1448,7 +1457,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                         <div>
                           <div className="flex items-center gap-2">
                             <h2 className="text-sm sm:text-base font-extrabold text-white tracking-tight">
-                              Gập Gương
+                              Gập Gương MCD 91
                             </h2>
                             <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 text-[11px] font-extrabold">
                               {mirrorProducts.length} Sản phẩm
@@ -1460,7 +1469,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                             )}
                           </div>
                           <p className="text-[11px] text-slate-400 mt-0.5">
-                            Mô tơ gập gương tự động theo chìa khóa Smartkey và công tắc trong cabin cho VinFast VF5, VF6 &amp; Limo Green (Bản Tiêu Chuẩn / Bản LED Xi Nhan)
+                            Mô tơ gập gương điện tự động MCD 91 theo chìa khóa Smartkey và công tắc trong cabin cho VinFast VF5, VF6 &amp; Limo Green (Bản Tiêu Chuẩn / Bản LED Xi Nhan)
                           </p>
                         </div>
                       </div>
@@ -1620,30 +1629,48 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                             )}
                           </div>
                           <p className="text-[11px] text-slate-400 mt-0.5">
-                            Độ ghế chỉnh điện UNISEAT / Limo Green, Áo ghế da Nappa 9D, Thảm sàn TPE CARSEN / HUVI &amp; Bệ tỳ tay trung tâm
+                            Phím vô lăng MCD91 Limo Green, Độ ghế chỉnh điện UNISEAT / Limo Green, Áo ghế da Nappa 9D, Thảm sàn TPE CARSEN / HUVI &amp; Bệ tỳ tay trung tâm
                           </p>
                         </div>
                       </div>
 
-                      <button
-                        type="button"
-                        id="toggle-collapse-interior-seat-btn"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          toggleSectionCollapse('interior-seat');
-                        }}
-                        className="self-start sm:self-center flex items-center gap-2 px-3 py-1.5 rounded-full border border-indigo-500/40 bg-slate-900/90 hover:bg-slate-800 hover:border-indigo-400 text-indigo-200 hover:text-white text-xs font-semibold transition-all cursor-pointer shadow-sm active:scale-95 shrink-0"
-                        title={collapsedSections['interior-seat'] ? 'Mở rộng sản phẩm' : 'Thu gọn sản phẩm'}
-                      >
-                        <span className="text-[11px] font-medium text-slate-300">
-                          {collapsedSections['interior-seat'] ? 'Mở rộng' : 'Thu gọn'}
-                        </span>
-                        <ChevronDown
-                          className={`w-4 h-4 text-white transition-transform duration-300 ${
-                            collapsedSections['interior-seat'] ? '-rotate-90' : 'rotate-0'
-                          }`}
-                        />
-                      </button>
+                      <div className="flex items-center gap-2 self-start sm:self-center shrink-0">
+                        <button
+                          type="button"
+                          id="add-product-interior-btn"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setNewProdCategory('seat-interior');
+                            setNewProdCategoryName('Ghế Da & Nội Thất Xe');
+                            setIsAddModalOpen(true);
+                          }}
+                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-indigo-500/50 bg-indigo-500/15 hover:bg-indigo-500/25 text-indigo-200 hover:text-white text-xs font-semibold transition-all cursor-pointer shadow-sm active:scale-95"
+                          title="Tạo thêm mục sản phẩm mới cho danh mục Nội Thất & Ghế Xe"
+                        >
+                          <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
+                          <span className="text-[11px] font-bold">Tạo mục sản phẩm</span>
+                        </button>
+
+                        <button
+                          type="button"
+                          id="toggle-collapse-interior-seat-btn"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleSectionCollapse('interior-seat');
+                          }}
+                          className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-indigo-500/40 bg-slate-900/90 hover:bg-slate-800 hover:border-indigo-400 text-indigo-200 hover:text-white text-xs font-semibold transition-all cursor-pointer shadow-sm active:scale-95 shrink-0"
+                          title={collapsedSections['interior-seat'] ? 'Mở rộng sản phẩm' : 'Thu gọn sản phẩm'}
+                        >
+                          <span className="text-[11px] font-medium text-slate-300">
+                            {collapsedSections['interior-seat'] ? 'Mở rộng' : 'Thu gọn'}
+                          </span>
+                          <ChevronDown
+                            className={`w-4 h-4 text-white transition-transform duration-300 ${
+                              collapsedSections['interior-seat'] ? '-rotate-90' : 'rotate-0'
+                            }`}
+                          />
+                        </button>
+                      </div>
                     </div>
 
                     {!collapsedSections['interior-seat'] && (

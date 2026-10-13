@@ -131,7 +131,6 @@ export const ProductListItem: React.FC<ProductListItemProps> = ({
             <div className="flex items-center gap-1 bg-slate-950/80 px-2 py-0.5 rounded-md border border-slate-800">
               <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
               <span className="text-amber-400 font-extrabold text-xs">{product.rating.toFixed(1)}</span>
-              <span className="text-slate-500 font-medium text-[10px]">({product.reviewCount} đánh giá)</span>
             </div>
           </div>
 

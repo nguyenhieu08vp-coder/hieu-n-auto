@@ -14,7 +14,7 @@ export const STORE_CATEGORY_GROUPS: StoreCategoryItem[] = [
     id: 'all', 
     name: 'Tất Cả Danh Mục', 
     shortName: 'Tất Cả', 
-    count: 48, 
+    count: 53, 
     icon: 'LayoutGrid', 
     productIds: [],
     color: 'text-emerald-400',
@@ -41,6 +41,16 @@ export const STORE_CATEGORY_GROUPS: StoreCategoryItem[] = [
     bgColor: 'bg-indigo-500/10 border-indigo-500/30'
   },
   { 
+    id: 'audio', 
+    name: 'Cá Nhân Hóa Âm Thanh', 
+    shortName: 'Âm Thanh Ô Tô', 
+    count: 6, 
+    icon: 'Volume2', 
+    productIds: ['prod-50', 'prod-6', 'prod-37', 'prod-26', 'prod-36', 'prod-49'],
+    color: 'text-purple-400',
+    bgColor: 'bg-purple-500/10 border-purple-500/30'
+  },
+  { 
     id: 'lighting', 
     name: 'Cá Nhân Hóa Ánh Sáng', 
     shortName: 'Nâng Cấp Ánh Sáng', 
@@ -61,29 +71,19 @@ export const STORE_CATEGORY_GROUPS: StoreCategoryItem[] = [
     bgColor: 'bg-amber-500/10 border-amber-500/30'
   },
   { 
-    id: 'audio', 
-    name: 'Cá Nhân Hóa Âm Thanh', 
-    shortName: 'Âm Thanh Ô Tô', 
-    count: 4, 
-    icon: 'Volume2', 
-    productIds: ['prod-6', 'prod-37', 'prod-26', 'prod-36'],
-    color: 'text-purple-400',
-    bgColor: 'bg-purple-500/10 border-purple-500/30'
-  },
-  { 
     id: 'display', 
     name: 'Màn Hình & Android Box', 
     shortName: 'Màn Hình & Box', 
-    count: 6, 
+    count: 8, 
     icon: 'Tv', 
-    productIds: ['prod-5', 'prod-10', 'prod-25', 'prod-12', 'prod-30', 'prod-48'],
+    productIds: ['prod-51', 'prod-5', 'prod-10', 'prod-25', 'prod-12', 'prod-30', 'prod-48', 'prod-54'],
     color: 'text-blue-400',
     bgColor: 'bg-blue-500/10 border-blue-500/30'
   },
   { 
     id: 'mirror', 
-    name: 'Gập Gương Tự Động', 
-    shortName: 'Gập Gương Tự Động', 
+    name: 'Gập Gương MCD 91 Tự Động', 
+    shortName: 'Gập Gương MCD 91', 
     count: 4, 
     icon: 'Sliders', 
     productIds: ['prod-15', 'prod-31', 'prod-32', 'prod-33'],
@@ -94,9 +94,9 @@ export const STORE_CATEGORY_GROUPS: StoreCategoryItem[] = [
     id: 'battery-shield', 
     name: 'Bảo Vệ Pin & Giáp Gầm Xe Điện', 
     shortName: 'Bảo Vệ Pin', 
-    count: 4, 
+    count: 3, 
     icon: 'Shield', 
-    productIds: ['prod-9', 'prod-45', 'prod-46', 'prod-47'],
+    productIds: ['prod-9', 'prod-45', 'prod-46'],
     color: 'text-teal-400',
     bgColor: 'bg-teal-500/10 border-teal-500/30'
   },
@@ -104,9 +104,9 @@ export const STORE_CATEGORY_GROUPS: StoreCategoryItem[] = [
     id: 'interior-seat', 
     name: 'Nội Thất & Ghế Xe', 
     shortName: 'Nội Thất & Ghế', 
-    count: 5, 
+    count: 6, 
     icon: 'Armchair', 
-    productIds: ['prod-7', 'prod-13', 'prod-18', 'prod-14', 'prod-29'],
+    productIds: ['prod-52', 'prod-7', 'prod-13', 'prod-18', 'prod-14', 'prod-29'],
     color: 'text-rose-400',
     bgColor: 'bg-rose-500/10 border-rose-500/30'
   },

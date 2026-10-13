@@ -17,6 +17,7 @@ interface ProductCardProps {
   product: Product;
   onAddToCart: (product: Product, selectedColor?: string) => void;
   onQuickView: (product: Product) => void;
+  onOpenReviews?: (product: Product) => void;
   badgeText?: string;
 }
 
@@ -24,6 +25,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   product,
   onAddToCart,
   onQuickView,
+  onOpenReviews,
   badgeText,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -134,11 +136,22 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 {product.categoryName}
               </span>
             </div>
-            <div className="flex items-center gap-1 flex-shrink-0 bg-slate-950/80 px-2 py-0.5 rounded-md border border-slate-800">
-              <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                if (onOpenReviews) {
+                  onOpenReviews(product);
+                } else {
+                  onQuickView(product);
+                }
+              }}
+              className="flex items-center gap-1 flex-shrink-0 bg-slate-950/80 hover:bg-amber-400/10 hover:border-amber-400/40 px-2 py-0.5 rounded-md border border-slate-800 transition-colors cursor-pointer group/rating"
+              title="Bấm để xem và viết đánh giá sản phẩm"
+            >
+              <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400 group-hover/rating:scale-110 transition-transform" />
               <span className="text-amber-400 font-extrabold text-xs">{product.rating.toFixed(1)}</span>
-              <span className="text-slate-500 font-medium text-[10px]">({product.reviewCount})</span>
-            </div>
+            </button>
           </div>
 
           {/* Product Name */}

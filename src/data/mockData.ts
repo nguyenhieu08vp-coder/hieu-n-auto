@@ -23,6 +23,18 @@ import zestechDx165RegeneratedImg from '../assets/images/regenerated_image_17916
 import zestechDx165PosterImg from '../assets/images/images/zestech_dx165_android_box_poster.jpg';
 import vietmapBs10MainImg from '../assets/images/regenerated_image_1791615199551.webp';
 import vietmapBs10FeaturesImg from '../assets/images/regenerated_image_1791614978782.webp';
+import dantyQ5Image1 from '../assets/images/regenerated_image_1791718910745.png';
+import dantyQ5Image2 from '../assets/images/regenerated_image_1791719844638.png';
+import setcarVisionProImg from '../assets/images/setcar_vision_pro_1791720451761.jpg';
+import eud91VolangMainImg from '../assets/images/eud91_volang_main_1791721282947.jpg';
+import eud91VolangMediaImg from '../assets/images/eud91_volang_media_1791721328277.jpg';
+import eud91VolangCruiseImg from '../assets/images/eud91_volang_cruise_1791721381856.jpg';
+import eud91Camera360BoxImg from '../assets/images/mcd91_camera360_box.jpg';
+import eud91Camera360AnglesImg from '../assets/images/mcd91_camera360_angles.jpg';
+import setaudioLimoGreenHeroImg from '../assets/images/setaudio_limogreen_hero_1791807108477.jpg';
+import setaudioLimoGreenSpecsImg from '../assets/images/setaudio_limogreen_specs_1791807179946.jpg';
+import setcarOdoVf6Vf7HeroImg from '../assets/images/setcar_odo_vf6_vf7_hero_1791904349475.jpg';
+import setcarOdoVf6Vf7SpecsImg from '../assets/images/setcar_odo_vf6_vf7_specs_1791904366743.jpg';
 
 export const CLASSIFICATIONS = [
   { 
@@ -199,41 +211,48 @@ export const PRODUCTS: Product[] = [
   {
     id: "prod-39",
     itemType: "product",
-    name: "Camera 360 Độ Safeview S500 Cao Cấp (Hiển Thị 28 Góc Nhìn Toàn Cảnh & Giám Sát Tắt Máy)",
+    name: "Camera 360 Độ MCD 91 Xe VinFast (24 Góc Nhìn Siêu Nét, Cảm Ứng Màn Zin, Tích Hợp Phím Vô Lăng & Cắm Giắc Zin 100%)",
     category: "cameras-360",
-    categoryName: "Camera 360 Toàn Cảnh",
-    price: 14900000,
-    originalPrice: 17500000,
+    categoryName: "Camera 360 MCD 91",
+    price: 13500000,
+    originalPrice: 15900000,
     isSale: true,
     isNew: true,
+    isBestSeller: false,
     rating: 4.9,
-    reviewCount: 129,
-    primaryImage: "/images/camera_360_mhu_lux_compare.jpg",
-    secondaryImage: "/images/lux_cam360_1.webp",
-    description: "Dòng camera 360 độ cao cấp thế hệ mới với 28 góc nhìn toàn diện độc quyền, loại bỏ 100% điểm mù xung quanh xe. Tích hợp núm xoay Bluetooth tiện lợi đổi góc siêu nhanh, tính năng ghi hình 4 hướng giám sát đỗ xe khi tắt máy, cắm giắc Zin tương thích mọi dòng xe phổ thông đến xe sang.",
+    reviewCount: 136,
+    primaryImage: eud91Camera360BoxImg,
+    secondaryImage: eud91Camera360AnglesImg,
+    galleryImages: [
+      eud91Camera360BoxImg,
+      eud91Camera360AnglesImg
+    ],
+    description: "Hệ thống Camera 360 độ chính hãng MCD 91 cao cấp chuyên biệt cho các dòng xe điện VinFast (VF3, VF5, VF e34, VF6, VF7, VF8, VF9). Cung cấp 24 góc quan sát quanh xe ghi hình siêu nét, tương thích mượt mà với cảm ứng nguyên bản trên màn hình xe, hỗ trợ bật/tắt camera ngay trên phím vô lăng tiện lợi, tích hợp lưu trữ video hành trình 4 hướng, cắm giắc Zin 100% không cắt trích dây và chính sách bảo hành chính hãng lên tới 3 năm (36 tháng). Đặc biệt hỗ trợ kích hoạt phanh tái sinh & chế độ lái trên vô lăng cho dòng xe VF5.",
     features: [
-      "Cung cấp tới 28 góc nhìn 2D/3D đa dạng: quan sát 2 bên sườn, góc nhìn từ trên cao, góc rộng 180 độ",
-      "Trang bị núm xoay điều khiển Bluetooth thông minh đặt cạnh cần số chuyển đổi góc chỉ 0.1 giây",
-      "Tích hợp bộ nhớ trong tốc độ cao ghi hình vòng lặp 4 hướng khi xe đỗ tắt máy chống va quẹt",
-      "Cảm biến hình ảnh Sony độ phân giải Full HD đêm rõ như ban ngày",
-      "Cắm giắc Zin theo xe qua cổng video AV/HDMI/AHD không ảnh hưởng bảo hành hãng",
-      "Bảo hành chính hãng 24 tháng điện tử toàn quốc"
+      "24 góc quan sát quanh xe ghi hình siêu nét mô phỏng 3D/2D chuẩn xác xóa tan 100% điểm mù",
+      "Điều khiển cảm ứng mượt mà trực tiếp trên màn hình zin nguyên bản của xe",
+      "Tích hợp bật/tắt nhanh camera 360 ngay trên cụm phím điều khiển vô lăng",
+      "Hiển thị thông tin xe trực quan: Tốc độ xe, hệ thống cảnh báo, vạch đánh lái bẻ cong theo góc vô lăng",
+      "Tích hợp hệ thống lưu trữ video hành trình 4 hướng xung quanh xe liên tục",
+      "Tính năng độc quyền: Hỗ trợ tích hợp phanh tái sinh và chuyển chế độ lái trên vô lăng (Áp dụng xe VF5)",
+      "Thi công cắm giắc Zin 100% theo xe (Plug & Play), tuyệt đối không cắt trích dây, giữ nguyên bảo hành hãng",
+      "Chính sách bảo hành điện tử chính hãng MCD 91 lên tới 3 năm (36 tháng) 1 đổi 1"
     ],
     vehicleTypes: [
-      "sedan",
       "suv",
-      "mpv",
-      "luxury"
+      "sedan",
+      "mpv"
     ],
     materials: [
-      "Hợp Kim Nhôm Tản Nhiệt Cực Tốt",
-      "Mắt Kính Quang Học 6 Lớp Chống Nước"
+      "Mắt Cam Sony Night Vision Chống Nước IP68",
+      "Bộ Box Xử Lý MCD 91 Hợp Kim Nhôm Tản Nhiệt Cao Cấp",
+      "Hệ Thống Dây Cáp & Jack Cắm Zin OEM 100%"
     ],
     colors: [
-      {"name":"Đen Sang Trọng OEM","hex":"#1E293B"},
-      {"name":"Núm Xoay Hợp Kim Titan","hex":"#475569"}
+      {"name":"Mắt Cam Đen Chuẩn Zin OEM","hex":"#0F172A"},
+      {"name":"Giao Diện MCD 91 Red Edition","hex":"#DC2626"}
     ],
-    warrantyMonths: 24,
+    warrantyMonths: 36,
     inStock: true,
     installationTimeHours: 2.5
   },
@@ -377,7 +396,7 @@ export const PRODUCTS: Product[] = [
     categoryName: "Gương Điện Tử Thông Minh azcam G1 Series",
     price: 11800000,
     originalPrice: 13500000,
-    isBestSeller: true,
+    isBestSeller: false,
     isNew: true,
     isSale: true,
     rating: 4.9,
@@ -644,7 +663,7 @@ export const PRODUCTS: Product[] = [
     isSale: true,
     isNew: true,
     isBestSeller: false,
-    rating: 4.9,
+    rating: 4.8,
     reviewCount: 182,
     primaryImage: "/images/steg_sa_8w_subwoofer.jpg",
     secondaryImage: "/images/steg_sa_8w_secondary.png",
@@ -911,7 +930,7 @@ export const PRODUCTS: Product[] = [
     categoryName: "Trần Sao Rơi Rolls-Royce",
     price: 5500000,
     originalPrice: 7200000,
-    isBestSeller: true,
+    isBestSeller: false,
     isNew: true,
     isSale: true,
     rating: 4.8,
@@ -1287,7 +1306,7 @@ export const PRODUCTS: Product[] = [
     isSale: true,
     isBestSeller: false,
     isNew: true,
-    rating: 4.9,
+    rating: 4.8,
     reviewCount: 96,
     primaryImage: bfactoryBatteryShieldImg,
     secondaryImage: bfactoryBatteryShield2Img,
@@ -1317,49 +1336,6 @@ export const PRODUCTS: Product[] = [
       {"name":"Thép Mạ Kẽm Kim Loại","hex":"#64748B"}
     ],
     warrantyMonths: 36,
-    inStock: true,
-    installationTimeHours: 0.75
-  },
-  {
-    id: "prod-47",
-    itemType: "service",
-    name: "Tấm Giáp Gầm Hợp Kim Nhôm Magie Bảo Vệ Pin Cao Áp VinFast VF8 / VF9 (Siêu Nhẹ, Tản Nhiệt Đối Lưu Khí Động Học)",
-    category: "wheels-exterior",
-    categoryName: "Giáp Gầm Bảo Vệ Pin Xe Điện",
-    price: 3200000,
-    originalPrice: 4200000,
-    isSale: true,
-    isBestSeller: false,
-    isNew: true,
-    rating: 4.7,
-    reviewCount: 64,
-    primaryImage: "/images/vf8_battery_shield.jpg",
-    secondaryImage: "/images/vf8_battery_shield.webp",
-    galleryImages: [
-      "/images/vf8_battery_shield.jpg",
-      "/images/vf_cable_shield_kit.jpg"
-    ],
-    description: "Bộ tấm giáp gầm cao cấp bảo vệ pin xe điện VinFast VF8 và VF9 chế tạo từ hợp kim nhôm - magie hàng không siêu bền, siêu nhẹ. Khả năng chịu lực uốn nén vượt trội, giảm trọng lượng so với thép truyền thống, giải nhiệt cực nhanh nhờ ma trận lỗ thông gió khí động học, chống đá dăm văng tốc độ cao trên cao tốc và bảo vệ tuyệt đối hệ thống cell pin cùng đầu nối điện gầm.",
-    features: [
-      "Hợp kim Nhôm - Magie 5052 hàng không siêu nhẹ, không gia tăng trọng tải xe",
-      "Dày 3.5mm với hệ gân dập gia cường chịu tải va đập và chống móp méo",
-      "Hệ thống khe gió khí động học đối lưu tản nhiệt pin liên tục khi xe chạy tốc độ cao",
-      "Bắt chuẩn 100% ốc gầm khung sườn zin xe VinFast VF8 và VF9, không khoan cắt",
-      "Không bị oxy hóa, gỉ sét trong môi trường ẩm ướt hoặc sình lầy",
-      "Thi công lắp đặt chuẩn quy trình kỹ thuật xe điện trong 45 phút"
-    ],
-    vehicleTypes: [
-      "suv"
-    ],
-    materials: [
-      "Hợp Kim Nhôm Magie Hàng Không",
-      "Anodized Chống Oxy Hóa"
-    ],
-    colors: [
-      {"name":"Bạc Ánh Kim Hàng Không","hex":"#94A3B8"},
-      {"name":"Đen Nhám Chống Xước","hex":"#1E293B"}
-    ],
-    warrantyMonths: 60,
     inStock: true,
     installationTimeHours: 0.75
   },
@@ -1574,9 +1550,9 @@ export const PRODUCTS: Product[] = [
   {
     id: "prod-15",
     itemType: "service",
-    name: "Gập Gương VF5 - Gương Gập Điện Tự Động (Cắm Giắc Zin 100%)",
+    name: "Gập Gương MCD 91 Xe VinFast VF5 - Gương Gập Điện Tự Động (Cắm Giắc Zin 100%)",
     category: "electric-automation",
-    categoryName: "Gương Gập Điện Tự Động",
+    categoryName: "Gập Gương MCD 91",
     price: 1850000,
     originalPrice: 2400000,
     isSale: true,
@@ -1584,7 +1560,7 @@ export const PRODUCTS: Product[] = [
     reviewCount: 188,
     primaryImage: "/images/guong_gap_dien_vf5_kit_v2.webp",
     secondaryImage: "/images/mcd91_guong_gap_dien_poster.jpg",
-    description: "Bộ nâng cấp gương gập điện tự động MCD91 & HUVI Auto Accessories cắm giắc Zin 100% không cắt trích dây điện cho các dòng xe VinFast VF3, VF5, VF6, Limo... Tự động cụp gương khi bấm khóa cửa xe và xòe gương khi mở khóa, tích hợp phím bấm công tắc gập gương cơ động trong xe.",
+    description: "Bộ nâng cấp gương gập điện tự động MCD 91 & HUVI Auto Accessories cắm giắc Zin 100% không cắt trích dây điện cho các dòng xe VinFast VF3, VF5, VF6, Limo... Tự động cụp gương khi bấm khóa cửa xe và xòe gương khi mở khóa, tích hợp phím bấm công tắc gập gương cơ động trong xe.",
     features: [
       "Cắm giắc Zin 100% theo xe, giữ nguyên bản hệ thống điện, không cắt nối dây, an toàn tuyệt đối",
       "Tự động cụp gương khi bấm khóa cửa xe trên chìa khóa Smartkey và mở gương khi mở khóa",
@@ -1614,9 +1590,9 @@ export const PRODUCTS: Product[] = [
   {
     id: "prod-31",
     itemType: "service",
-    name: "Gập Gương VF6 - Gương Gập Điện Tự Động Theo Xe (Cắm Giắc Zin 100%)",
+    name: "Gập Gương MCD 91 Xe VinFast VF6 - Gương Gập Điện Tự Động Theo Xe (Cắm Giắc Zin 100%)",
     category: "electric-automation",
-    categoryName: "Gương Gập Điện Tự Động",
+    categoryName: "Gập Gương MCD 91",
     price: 2050000,
     originalPrice: 2800000,
     isSale: true,
@@ -1625,7 +1601,7 @@ export const PRODUCTS: Product[] = [
     reviewCount: 242,
     primaryImage: "/images/guong_gap_dien_vf6_kit.jpg",
     secondaryImage: "/images/mcd91_guong_gap_dien_poster.jpg",
-    description: "Bộ nâng cấp gương gập điện tự động chuyên biệt cho VinFast VF6 cắm giắc Zin 100% không cắt nối dây điện. Tự động cụp tai gương sát thân xe khi bấm khóa trên chìa khóa Smartkey và mở gương khi mở khóa, tích hợp nút bấm công tắc gập gương cơ động trong cabin.",
+    description: "Bộ nâng cấp gương gập điện tự động MCD 91 chuyên biệt cho VinFast VF6 cắm giắc Zin 100% không cắt nối dây điện. Tự động cụp tai gương sát thân xe khi bấm khóa trên chìa khóa Smartkey và mở gương khi mở khóa, tích hợp nút bấm công tắc gập gương cơ động trong cabin.",
     features: [
       "Thiết kế cụm xương mô tơ chuẩn khít theo tai gương nguyên bản VinFast VF6",
       "Cắm giắc Zin 100%, giữ nguyên vẹn chính sách bảo hành chính hãng của xe",
@@ -1652,9 +1628,9 @@ export const PRODUCTS: Product[] = [
   {
     id: "prod-32",
     itemType: "service",
-    name: "LimoGreen - Gương Gập Điện Tự Động Bản Tiêu Chuẩn (Cắm Giắc Zin 100%)",
+    name: "Gập Gương MCD 91 Xe VinFast Limo Green - Bản Tiêu Chuẩn (Cắm Giắc Zin 100%)",
     category: "electric-automation",
-    categoryName: "Gương Gập Điện Tự Động",
+    categoryName: "Gập Gương MCD 91",
     price: 2050000,
     originalPrice: 2800000,
     isSale: true,
@@ -1664,7 +1640,7 @@ export const PRODUCTS: Product[] = [
     reviewCount: 165,
     primaryImage: "/images/limo_green_guong_gap_dien_standard.jpg",
     secondaryImage: "/images/mcd91_guong_gap_dien_poster.jpg",
-    description: "Bộ nâng cấp gương gập điện tự động LimoGreen (Bản Tiêu Chuẩn) cắm giắc Zin 100% không cắt nối dây. Tự động cụp mở gương theo Smartkey và phím cơ động trong cabin, thiết kế chuyên biệt chịu tải cao cho dòng xe Limo Green / MPV.",
+    description: "Bộ nâng cấp gương gập điện tự động MCD 91 cho xe VinFast Limo Green (Bản Tiêu Chuẩn) cắm giắc Zin 100% không cắt nối dây. Tự động cụp mở gương theo Smartkey và phím cơ động trong cabin, thiết kế chuyên biệt chịu tải cao cho dòng xe Limo Green / MPV.",
     features: [
       "Thiết kế chuẩn Zin theo tai gương xe Limo Green, cắm giắc 100% an toàn điện",
       "Tự động cụp gương khi khóa xe, mở gương khi mở cửa hoặc bấm nút Smartkey",
@@ -1692,9 +1668,9 @@ export const PRODUCTS: Product[] = [
   {
     id: "prod-33",
     itemType: "service",
-    name: "LimoGreen - Gương Gập Điện Tự Động Bản LED Xi Nhan (Cắm Giắc Zin 100%)",
+    name: "Gập Gương MCD 91 Xe VinFast Limo Green - Bản LED Xi Nhan Đuổi (Cắm Giắc Zin 100%)",
     category: "electric-automation",
-    categoryName: "Gương Gập Điện Tự Động",
+    categoryName: "Gập Gương MCD 91",
     price: 2550000,
     originalPrice: 3400000,
     isSale: true,
@@ -2107,6 +2083,243 @@ export const PRODUCTS: Product[] = [
     warrantyMonths: 24,
     inStock: true,
     installationTimeHours: 0.25
+  },
+  {
+    id: "prod-49",
+    itemType: "product",
+    name: "Cặp Loa Treble Cho Ô Tô Danty Q5 (120W Max - Âm Tép Sắc Bén, Tơi Xốp, Kèm Tụ Lọc Cắm Giắc Zin)",
+    category: "car-audio",
+    categoryName: "Loa Treble Danty Q5",
+    price: 850000,
+    originalPrice: 1250000,
+    isSale: true,
+    isBestSeller: true,
+    isNew: true,
+    rating: 5.0,
+    reviewCount: 186,
+    primaryImage: dantyQ5Image1,
+    secondaryImage: dantyQ5Image2,
+    galleryImages: [
+      dantyQ5Image1,
+      dantyQ5Image2
+    ],
+    description: "Loa Treble cho ô tô Danty Q5 chính hãng mang đến chất âm sắc bén, thanh thoát, bay bổng và tơi xốp. Thiết kế củ loa vòm cao cấp kích thước 25 x 20 x 10mm kèm đế chân gắn taplo / cột A tinh tế, viền kim loại sáng bóng và màng lưới tổ ong bảo vệ màng loa. Công suất ra tối đa 120W, trở kháng 4 Ohm, cuộn coil VC 25mm và dải tần phản hồi rộng từ 2 - 22 KHz. Tích hợp sẵn tụ lọc Crossover chuyên dụng bảo vệ củ loa chống cháy và cắm giắc Zin 100% không ảnh hưởng hệ thống điện xe.",
+    features: [
+      "Chất âm sắc bén, thanh thoát, bay bổng, tơi xốp, cải thiện dải cao cho mọi dàn loa zin",
+      "Công suất ra tối đa: 120W Max mạnh mẽ, âm treble vang xa và rõ nét",
+      "Kích thước Voice Coil (VC): 25 mm cuộn dây đồng nguyên chất chịu nhiệt cao",
+      "Điện trở tiêu chuẩn: 4 Ohm tương thích hoàn hảo mọi dòng xe và màn hình Android / màn zin",
+      "Tần số phản hồi: 2 - 22 KHz (2.000Hz - 22.000Hz) tái tạo trọn vẹn chi tiết dải âm cao",
+      "Kích thước củ loa siêu gọn: 25 x 20 x 10 mm, thiết kế đế gá dán góc taplo hoặc ốp chân gương cột A",
+      "Tích hợp sẵn tụ lọc Crossover chống cháy và dây giắc cắm Zin an toàn tuyệt đối",
+      "Sản phẩm chính hãng Danty Q5, tư vấn tận tâm và bảo hành 12 tháng đổi mới"
+    ],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Vỏ Nhựa ABS Đen Nhám Danty Q5",
+      "Viền Kim Loại Bạc Sáng Bóng",
+      "Lưới Kim Loại Tổ Ong Hexagon",
+      "Cuộn Dây Đồng VC 25mm"
+    ],
+    colors: [
+      {"name":"Đen Viền Kim Loại Bạc (Danty Q5)","hex":"#1E293B"}
+    ],
+    warrantyMonths: 12,
+    inStock: true,
+    installationTimeHours: 0.5
+  },
+  {
+    id: "prod-50",
+    itemType: "product",
+    name: "Hệ Thống Nâng Cấp Âm Thanh Setcar Setaudio Cho VinFast LimoGreen MPV7 (Chuẩn Zin 100%, Công Suất Vượt Trội, Bảo Hành 2 Năm)",
+    category: "car-audio",
+    categoryName: "Nâng Cấp Âm Thanh Setcar Setaudio Cho LimoGreen",
+    price: 13500000,
+    originalPrice: 15500000,
+    isSale: true,
+    isBestSeller: false,
+    isNew: true,
+    rating: 4.8,
+    reviewCount: 168,
+    primaryImage: setaudioLimoGreenHeroImg,
+    secondaryImage: setaudioLimoGreenSpecsImg,
+    galleryImages: [
+      setaudioLimoGreenHeroImg,
+      setaudioLimoGreenSpecsImg
+    ],
+    description: "Hệ thống nâng cấp âm thanh chuyên biệt Setcar Setaudio thiết kế 'đo ni đóng giày' độc quyền cho dòng xe điện VinFast LimoGreen MPV7. Giải pháp tối ưu hóa chất lượng trải nghiệm âm thanh toàn dải mà vẫn đảm bảo giữ trọn vẹn 100% tính thẩm mỹ nội thất nguyên bản của xe. Trang bị củ loa công suất vượt trội với màng sợi tổng hợp carbon composite cao cấp cùng nón loa dập nổi logo Setcar màu cam sắc sảo, dải trầm sâu chắc uy lực, âm trung ngọt ngào và âm cao tơi xốp. Hệ thống thi công chuẩn Zin 100% bằng cụm giắc cắm chuyên dụng cho VinFast, không cắt trích dây, an toàn tuyệt đối cho hệ thống điện xe, kèm bảo hành chính hãng Setcar 2 năm (24 tháng).",
+    features: [
+      "SETAUDIO FOR LIMOGREEN - MPV7: Bộ âm thanh chuyên biệt thiết kế độc quyền tối ưu khoang xe điện VinFast LimoGreen",
+      "Đảm bảo tính thẩm mỹ cho xe: Giữ nguyên bản 100% thiết kế nội thất zin, không đục khoét hay can thiệp kết cấu xe",
+      "Công suất vượt trội: Củ loa màng dệt cao cấp, nón loa logo S màu cam thể thao, âm bass lực chắc & âm dải trung sáng rõ",
+      "Cắm giắc zin 100%: Bộ dây jack cắm OEM chuyên dụng VinFast cắm trực tiếp, an toàn tuyệt đối cho hệ thống điện cao áp",
+      "Không ảnh hưởng bảo hành xe VinFast: Mạch bảo vệ độc lập tích hợp cầu chì chống quá tải tiêu chuẩn an toàn cao",
+      "Đồng bộ giải pháp nội thất Setcar: Phối hợp hoàn hảo cùng Màn hình liền khối Setcar Vision Pro cho trải nghiệm rạp hát di động",
+      "Kỹ thuật viên Hieu N Auto căn chỉnh âm học chuyên sâu theo thể tích cabin rộng rãi của dòng xe 7 chỗ LimoGreen",
+      "Bảo hành chính hãng Setcar 2 năm (24 tháng) 1 đổi 1 tận tâm & hỗ trợ kỹ thuật trọn đời"
+    ],
+    vehicleTypes: [
+      "mpv",
+      "suv"
+    ],
+    materials: [
+      "Khung Xương Loa Hợp Kim Đúc Triệt Tiêu Rung Chấn Setcar",
+      "Màng Loa Carbon Composite & Nón Loa Logo S Độc Quyền",
+      "Mạch Khuếch Đại & Bộ Phân Tần Tối Ưu Âm Thanh Châu Âu",
+      "Bộ Cáp Dây Nguồn & Giắc Cắm Zin OEM VinFast Chống Cháy"
+    ],
+    colors: [
+      {"name":"Đen Satin Khắc Logo S Màu Cam Đậm Chất Setcar","hex":"#F97316"}
+    ],
+    warrantyMonths: 24,
+    inStock: true,
+    installationTimeHours: 1.5
+  },
+  {
+    id: "prod-51",
+    itemType: "product",
+    name: "Màn Hình Đôi Liền Khối Setcar Vision Pro 24.6 Inch Dành Cho Limo Green (Chip Unisoc T7870, Tích Hợp Camera 360 & Cắm Giắc Zin 100%)",
+    category: "screens-displays",
+    categoryName: "Màn Hình Liền Khối Setcar Vision Pro",
+    price: 18500000,
+    originalPrice: 22000000,
+    isSale: true,
+    isBestSeller: false,
+    isNew: true,
+    rating: 4.8,
+    reviewCount: 148,
+    primaryImage: setcarVisionProImg,
+    secondaryImage: "/images/setcar_ai_360_main.jpg",
+    galleryImages: [
+      setcarVisionProImg,
+      "/images/setcar_ai_360_main.jpg"
+    ],
+    description: "Màn hình liền khối Setcar Vision Pro thế hệ mới dành riêng cho xe Limo Green (VinFast) mang đến không gian buồng lái kỹ thuật số tương lai. Thiết kế màn hình đôi siêu rộng 24.6 inch độ phân giải cao 1900 x 720px hiển thị sắc nét mượt mà, trang bị chip xử lý Unisoc T7870 thế hệ mới hiệu năng vượt trội. Tích hợp hệ thống Camera 360 độ góc nhìn toàn cảnh theo không gian thực tế hỗ trợ lái xe an toàn, trợ lý ảo thông minh ra lệnh giọng nói điều khiển đa phương tiện và thi công cắm giắc Plug & Play 100% nguyên bản chuẩn Zin không cắt trích dây.",
+    features: [
+      "Màn hình đôi kích thước cực lớn 24.6 inch, độ phân giải sắc nét 1900 x 720px vuốt chạm mượt mà",
+      "Trang bị chip vi xử lý Unisoc T7870 thế hệ mới, đa nhiệm hiệu năng cao, phản hồi tức thì",
+      "Tích hợp hệ thống Camera 360 góc nhìn toàn cảnh mô phỏng 2D/3D theo không gian thực tế",
+      "Trợ lý ảo thông minh AI hỗ trợ ra lệnh giọng nói điều khiển bản đồ, âm nhạc và giải trí rảnh tay",
+      "Thi công lắp đặt Plug & Play cắm giắc nguyên bản 100%, thẩm mỹ chuẩn form xe và an toàn tuyệt đối",
+      "Hỗ trợ kết nối Apple CarPlay và Android Auto không dây tiện lợi",
+      "Hệ thống liên tục nhận các bản cập nhật phần mềm OTA mới nhất từ Setcar",
+      "Bảo hành chính hãng Setcar 24 tháng (1 đổi 1) tại xưởng Hieu N Auto"
+    ],
+    vehicleTypes: [
+      "suv",
+      "sedan",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Khung Hợp Kim Nhôm & Kính Cường Lực 2.5D",
+      "Tấm Nền IPS Siêu Sáng Chống Chói",
+      "Chip Unisoc T7870"
+    ],
+    colors: [
+      {"name":"Đen Sang Trọng (Viền Đen Nguyên Khối)","hex":"#0F172A"}
+    ],
+    warrantyMonths: 24,
+    inStock: true,
+    installationTimeHours: 2
+  },
+  {
+    id: "prod-52",
+    itemType: "product",
+    name: "Bộ Phím Điều Khiển Vô Lăng MCD91 Xe VinFast Limo Green (Cruise Control, Media, Đàm Thoại & Voice AI - Cắm Giắc Zin 100%)",
+    category: "seat-interior",
+    categoryName: "Phím Vô Lăng MCD91 Limo Green",
+    price: 3500000,
+    originalPrice: 4200000,
+    isSale: true,
+    isBestSeller: false,
+    isNew: true,
+    rating: 4.7,
+    reviewCount: 112,
+    primaryImage: eud91VolangMainImg,
+    secondaryImage: eud91VolangMediaImg,
+    galleryImages: [
+      eud91VolangMainImg,
+      eud91VolangMediaImg,
+      eud91VolangCruiseImg
+    ],
+    description: "Bộ phím điều khiển vô lăng tích hợp đa chức năng MCD91 chuyên dụng dành riêng cho dòng xe điện VinFast Limo Green. Bổ sung cụm phím điều khiển thể thao hai bên chấu vô lăng với LED viền màu đỏ thể thao nổi bật. Cụm phím bên trái tích hợp tính năng ga tự động Cruise Control (RES+ / SET-) và nút kích hoạt trợ lý ảo ra lệnh giọng nói Voice AI. Cụm phím bên phải tích hợp phím nghe gọi điện thoại Phone, con lăn chuyển kênh bài hát Media, tăng giảm âm lượng và nút tắt tiếng Mute. Lắp đặt chuẩn xác cắm giắc Zin 100% Plug & Play không cắt trích dây, tương thích hoàn hảo với hệ thống điện và màn hình xe.",
+    features: [
+      "Cụm phím bên trái: Tích hợp hệ thống ga tự động Cruise Control (RES+, SET-, On/Off) và nút Voice ra lệnh giọng nói",
+      "Cụm phím bên phải: Đầy đủ cụm phím đàm thoại rảnh tay Phone, con lăn chuyển kênh Media, tăng giảm âm lượng & Mute",
+      "LED viền thể thao màu đỏ cá tính chạy viền quanh cụm phím vô lăng tạo điểm nhấn công nghệ cho khoang lái",
+      "Thi công cắm giắc Zin 100% Plug & Play không cắt trích hay độ chế bất kỳ đường dây điện nguyên bản nào của xe",
+      "Phím bấm có độ nảy tốt, phản hồi xúc giác êm ái, bề mặt sơn tĩnh điện nhám mịn chống bám vân tay",
+      "Tương thích hoàn hảo với hệ thống hiển thị đồng hồ ODO và màn hình giải trí xe VinFast Limo Green",
+      "Bảo hành chính hãng MCD91 lên đến 24 tháng (1 đổi 1) tại xưởng Hieu N Auto"
+    ],
+    vehicleTypes: [
+      "suv",
+      "sedan",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Nhựa ABS Chịu Nhiệt Cao Cấp",
+      "Phím Bấm Sơn Nhám Chống Trầy",
+      "Bo Mạch Điện Tử Chuẩn CAN-Bus"
+    ],
+    colors: [
+      {"name":"Đen Nhám LED Viền Đỏ (MCD91 Limo Green)","hex":"#1E293B"}
+    ],
+    warrantyMonths: 24,
+    inStock: true,
+    installationTimeHours: 1
+  },
+  {
+    id: "prod-54",
+    itemType: "product",
+    name: "Màn Hình ODO SETCAR Điện Tử Kỹ Thuật Số Cho VinFast VF6 & VF7 (Thiết Kế Cắm Giắc Zin 100%, Tích Hợp TPMS, % Pin, Hộp Số & Camera)",
+    category: "screens-displays",
+    categoryName: "Màn Hình ODO Kỹ Thuật Số",
+    price: 3900000,
+    originalPrice: 4800000,
+    isNew: true,
+    rating: 4.8,
+    reviewCount: 96,
+    primaryImage: setcarOdoVf6Vf7HeroImg,
+    secondaryImage: setcarOdoVf6Vf7SpecsImg,
+    galleryImages: [
+      setcarOdoVf6Vf7HeroImg,
+      setcarOdoVf6Vf7SpecsImg
+    ],
+    description: "Màn hình đồng hồ ODO kỹ thuật số SETCAR chuyên biệt dành riêng cho dòng xe điện VinFast VF6 và VinFast VF7. Thiết kế chuẩn form táp lô cắm giắc Zin 100% Plug & Play không cắt trích dây, bảo đảm an toàn điện và chính sách bảo hành chính hãng. Màn hình IPS độ nét cao chống chói, đồng bộ dữ liệu chuẩn giao tiếp CAN-Bus của xe, hiển thị toàn bộ thông số vận hành trực quan ngay trước tầm mắt người lái: Tốc độ xe (0-260 km/h), vị trí hộp số P-R-N-D, trạng thái dung lượng % Pin và quãng đường còn lại, tình trạng đóng/mở từng cửa xe, tích hợp hiển thị cảm biến áp suất lốp TPMS 4 bánh theo thời gian thực, tín hiệu đèn xi nhan, đèn chiếu sáng và hỗ trợ hiển thị góc camera (Trái - Phải - Lùi) xóa tan điểm mù nguy hiểm.",
+    features: [
+      "Thiết kế Zin 100% Plug & Play theo từng đường nét táp lô của VinFast VF6 và VF7, không đục khoét hay cắt trích dây",
+      "Tích hợp hiển thị toàn bộ thông số vận hành theo thời gian thực: Tốc độ xe (0-260 km/h) & cấp số (P, R, N, D)",
+      "Hiển thị trạng thái dung lượng % Pin chính xác cùng quãng đường Range ước tính còn lại của xe điện",
+      "Cảnh báo trực quan tình trạng đóng - mở của từng cánh cửa xe và cốp sau",
+      "Tích hợp hiển thị thông số cảm biến áp suất lốp TPMS trực tiếp trên 4 bánh xe theo thời gian thực",
+      "Đồng bộ tín hiệu đèn xi nhan, đèn chiếu sáng pha/cốt và các cảnh báo an toàn xe",
+      "Hỗ trợ hiển thị hình ảnh camera quan sát góc hẹp (Trái - Phải - Lùi) tăng độ an toàn khi chuyển làn hoặc đỗ xe",
+      "Màn hình chống chói góc nhìn rộng IPS, hiển thị rõ nét dưới trời nắng gắt và dịu mắt vào ban đêm",
+      "Bảo hành chính hãng SETCAR 24 tháng (1 đổi 1) tại hệ thống xưởng Hieu N Auto"
+    ],
+    vehicleTypes: [
+      "suv",
+      "luxury"
+    ],
+    materials: [
+      "Màn Hình IPS Độ Phân Giải Cao Chống Chói",
+      "Khung Viền Nhựa ABS Chịu Nhiệt Chống Rung",
+      "Bo Mạch Giải Mã CAN-Bus Cao Cấp"
+    ],
+    colors: [
+      {"name":"Đen Nguyên Bản Zin Xe (SETCAR VF6 & VF7)","hex":"#18181B"}
+    ],
+    warrantyMonths: 24,
+    inStock: true,
+    installationTimeHours: 0.75
   }
 ];
 
