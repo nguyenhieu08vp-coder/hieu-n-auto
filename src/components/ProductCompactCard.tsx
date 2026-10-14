@@ -5,10 +5,7 @@ import {
   Eye, 
   Star, 
   Check, 
-  ShieldCheck, 
-  Zap,
-  Wrench,
-  PackageCheck 
+  Zap 
 } from 'lucide-react';
 import { Product } from '../types';
 import { FORMAT_CURRENCY } from '../data/mockData';
@@ -72,20 +69,7 @@ export const ProductCompactCard: React.FC<ProductCompactCardProps> = ({
           )}
         </div>
 
-        {/* Top Right Classification Badge */}
-        <div className="absolute top-2 right-2 z-10">
-          {product.itemType === 'service' ? (
-            <span className="px-1.5 py-0.5 rounded text-[8px] font-extrabold uppercase tracking-wide bg-purple-950/90 text-purple-300 border border-purple-500/40 backdrop-blur-sm flex items-center gap-0.5 shadow">
-              <Wrench className="w-2 h-2" />
-              Dịch Vụ
-            </span>
-          ) : (
-            <span className="px-1.5 py-0.5 rounded text-[8px] font-extrabold uppercase tracking-wide bg-sky-950/90 text-sky-300 border border-sky-500/40 backdrop-blur-sm flex items-center gap-0.5 shadow">
-              <PackageCheck className="w-2 h-2" />
-              Chính Hãng
-            </span>
-          )}
-        </div>
+
 
         {/* Quick View Button */}
         <button
