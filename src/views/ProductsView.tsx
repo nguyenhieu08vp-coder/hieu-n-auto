@@ -561,9 +561,15 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
 
   // Nhóm Camera Hành Trình & Ghi Hình Chuyên Nghiệp (loại trừ camera 360)
   const camera360ProductIds = useMemo(() => new Set(['prod-2', 'prod-38', 'prod-39']), []);
+  const dashcamOrderedIds = useMemo(() => ['prod-1', 'prod-21', 'prod-28', 'prod-55', 'prod-22', 'prod-41'], []);
   const dashcamProducts = useMemo(() => {
-    return filteredProducts.filter((p) => p.category === 'cameras-360' && !camera360ProductIds.has(p.id));
-  }, [filteredProducts, camera360ProductIds]);
+    const list = filteredProducts.filter((p) => p.category === 'cameras-360' && !camera360ProductIds.has(p.id));
+    const map = new Map(list.map((p) => [p.id, p]));
+    const ordered = dashcamOrderedIds.map((id) => map.get(id)).filter((p): p is Product => Boolean(p));
+    const seen = new Set(ordered.map((p) => p.id));
+    const rest = list.filter((p) => !seen.has(p.id));
+    return [...ordered, ...rest];
+  }, [filteredProducts, camera360ProductIds, dashcamOrderedIds]);
 
   // Mục Camera 360 Độ Toàn Cảnh (prod-2: Hệ thống Camera 360 độ TECHCAM System cắm giắc Zin 100%)
   // camera360ProductIds declared above
@@ -585,16 +591,18 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
     return ledOrderedIds.map((id) => map.get(id)).filter((p): p is Product => Boolean(p));
   }, [filteredProducts, ledOrderedIds]);
 
-  // Nhóm Nâng Cấp Âm Thanh Ô Tô (gồm Bộ Nâng Cấp Âm Thanh Setcar Setaudio: prod-50; Loa Sub: prod-6, prod-37; Loa toàn dải/bầu dục: prod-26, prod-36; Loa Treble Danty Q5: prod-49)
-  const audioOrderedIds = useMemo(() => ['prod-50', 'prod-6', 'prod-37', 'prod-26', 'prod-36', 'prod-49'], []);
+  // Nhóm Nâng Cấp Âm Thanh Ô Tô (gồm Loa Sub Điện VINSUB VS8-PRO: prod-57; Bộ Nâng Cấp Âm Thanh Setcar Setaudio: prod-50; Loa Sub: prod-6, prod-37; Loa toàn dải/bầu dục: prod-26, prod-36; Loa Treble Danty Q5: prod-49)
+  const audioOrderedIds = useMemo(() => ['prod-57', 'prod-50', 'prod-6', 'prod-37', 'prod-26', 'prod-36', 'prod-49'], []);
   const audioProductIds = useMemo(() => new Set(audioOrderedIds), [audioOrderedIds]);
   const audioProducts = useMemo(() => {
     const map = new Map(filteredProducts.map((p) => [p.id, p]));
-    return audioOrderedIds.map((id) => map.get(id)).filter((p): p is Product => Boolean(p));
-  }, [filteredProducts, audioOrderedIds]);
+    const standard = audioOrderedIds.map((id) => map.get(id)).filter((p): p is Product => Boolean(p));
+    const customInAudio = filteredProducts.filter((p) => (p.category === 'car-audio' || p.category === 'audio') && !audioProductIds.has(p.id));
+    return [...standard, ...customInAudio];
+  }, [filteredProducts, audioOrderedIds, audioProductIds]);
 
-  // Nhóm Màn Hình Liền Khối, Màn ODO, HUD & Android Box: prod-51 (Setcar Vision Pro), prod-5 (Màn đôi 20.8"), prod-10 (HUD MCD91), prod-25 (Màn ODO GBA OLED), prod-12 (Zestech DX165), prod-30 (VIETMAP BS10), prod-48 (Carlinkit TBox S2P), prod-54 (Màn ODO SETCAR VF6 & VF7)
-  const displayOrderedIds = useMemo(() => ['prod-51', 'prod-5', 'prod-10', 'prod-25', 'prod-12', 'prod-30', 'prod-48', 'prod-54'], []);
+  // Nhóm Màn Hình Android Ô Tô, Màn Liền Khối, Màn ODO, HUD & Android Box: prod-56 (Màn Hình Android TexPad TX8 Limited), prod-51 (Setcar Vision Pro), prod-5 (Màn đôi 20.8"), prod-10 (HUD MCD91), prod-25 (Màn ODO GBA OLED), prod-12 (Zestech DX165), prod-30 (VIETMAP BS10), prod-48 (Carlinkit TBox S2P), prod-54 (Màn ODO SETCAR VF6 & VF7)
+  const displayOrderedIds = useMemo(() => ['prod-56', 'prod-51', 'prod-5', 'prod-10', 'prod-25', 'prod-12', 'prod-30', 'prod-48', 'prod-54'], []);
   const displayProductIds = useMemo(() => new Set(displayOrderedIds), [displayOrderedIds]);
   const displayProducts = useMemo(() => {
     const map = new Map(filteredProducts.map((p) => [p.id, p]));
@@ -635,7 +643,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
 
   const otherProducts = useMemo(() => {
     const allCategorizedIds = new Set([
-      'prod-1', 'prod-21', 'prod-22', 'prod-28', 'prod-41',
+      'prod-1', 'prod-21', 'prod-22', 'prod-28', 'prod-55', 'prod-41',
       ...camera360ProductIds,
       ...lightingProductIds,
       ...ledProductIds,
@@ -1149,7 +1157,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                             )}
                           </div>
                           <p className="text-[11px] text-slate-400 mt-0.5">
-                            Bộ Nâng Cấp Âm Thanh Setcar Setaudio Cho VinFast LimoGreen MPV7 (Chuẩn Zin 100%), Loa Sub gầm ghế Rebec U10, STEG SA-8W, Loa toàn dải BL80, Loa bầu dục PERTORS &amp; Loa Treble Cho Ô Tô Danty Q5 (120W Max)
+                            Loa Sub Điện Ô Tô VINSUB VS8-PRO (8 inch nhôm nguyên khối), Bộ Nâng Cấp Âm Thanh Setcar Setaudio Cho VinFast LimoGreen MPV7 (Chuẩn Zin 100%), Loa Sub gầm ghế Rebec U10, STEG SA-8W, Loa toàn dải BL80, Loa bầu dục PERTORS &amp; Loa Treble Cho Ô Tô Danty Q5 (120W Max)
                           </p>
                         </div>
                       </div>
@@ -1283,7 +1291,87 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                   </div>
                 )}
 
-                {/* 💡 5. NHÓM ĐÈN LED (TÁCH RIÊNG VỚI MỤC ÁNH SÁNG) */}
+                {/* 🖥️ 5. NHÓM MÀN HÌNH LIỀN KHỐI, MÀN ODO & ANDROID BOX (VỊ TRÍ DƯỚI CÁ NHÂN HÓA ÁNH SÁNG) */}
+                {displayProducts.length > 0 && (
+                  <div className="rounded-2xl border border-cyan-500/30 bg-gradient-to-b from-cyan-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
+                    <div 
+                      onClick={() => toggleSectionCollapse('display')}
+                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-cyan-500/20 cursor-pointer select-none"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-cyan-500/20 border border-cyan-400/40 text-cyan-400 flex items-center justify-center flex-shrink-0 shadow-lg shadow-cyan-500/10">
+                          <Tv className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h2 className="text-sm sm:text-base font-extrabold text-white tracking-tight">
+                              Màn Hình &amp; Android Box
+                            </h2>
+                            <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/20 border border-cyan-400/30 text-cyan-300 text-[11px] font-extrabold">
+                              {displayProducts.length} Sản phẩm
+                            </span>
+                            {collapsedSections['display'] && (
+                              <span className="text-[11px] text-slate-400 font-medium">
+                                (Đã thu gọn)
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-[11px] text-slate-400 mt-0.5">
+                            Màn hình Android 2K QLED 9-10", Màn đôi 24.6" Setcar Vision Pro LimoGreen, Màn đôi 20.8", HUD kính lái MCD91, Màn ODO OLED, Android Box Carlinkit, Zestech, VIETMAP &amp; Màn ODO SETCAR VF6/VF7 (Zin 100%)
+                          </p>
+                        </div>
+                      </div>
+
+                      <button
+                        type="button"
+                        id="toggle-collapse-display-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleSectionCollapse('display');
+                        }}
+                        className="self-start sm:self-center flex items-center gap-2 px-3 py-1.5 rounded-full border border-cyan-500/40 bg-slate-900/90 hover:bg-slate-800 hover:border-cyan-400 text-cyan-200 hover:text-white text-xs font-semibold transition-all cursor-pointer shadow-sm active:scale-95 shrink-0"
+                        title={collapsedSections['display'] ? 'Mở rộng sản phẩm' : 'Thu gọn sản phẩm'}
+                      >
+                        <span className="text-[11px] font-medium text-slate-300">
+                          {collapsedSections['display'] ? 'Mở rộng' : 'Thu gọn'}
+                        </span>
+                        <ChevronDown
+                          className={`w-4 h-4 text-white transition-transform duration-300 ${
+                            collapsedSections['display'] ? '-rotate-90' : 'rotate-0'
+                          }`}
+                        />
+                      </button>
+                    </div>
+
+                    {!collapsedSections['display'] && (
+                      viewMode === 'list' ? (
+                        <div className="space-y-3.5">
+                          {displayProducts.map((product) => (
+                            <ProductListItem
+                              key={product.id}
+                              product={product}
+                              onAddToCart={onAddToCart}
+                              onQuickView={onQuickView}
+                            />
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
+                          {displayProducts.map((product) => (
+                            <ProductCompactCard
+                              key={product.id}
+                              product={product}
+                              onAddToCart={onAddToCart}
+                              onQuickView={onQuickView}
+                            />
+                          ))}
+                        </div>
+                      )
+                    )}
+                  </div>
+                )}
+
+                {/* 💡 6. NHÓM ĐÈN LED (TÁCH RIÊNG VỚI MỤC ÁNH SÁNG) */}
                 {ledProducts.length > 0 && (
                   <div className="rounded-2xl border border-amber-500/30 bg-gradient-to-b from-amber-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
                     <div 
@@ -1350,86 +1438,6 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                       ) : (
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
                           {ledProducts.map((product) => (
-                            <ProductCompactCard
-                              key={product.id}
-                              product={product}
-                              onAddToCart={onAddToCart}
-                              onQuickView={onQuickView}
-                            />
-                          ))}
-                        </div>
-                      )
-                    )}
-                  </div>
-                )}
-
-                {/* 🖥️ 6. NHÓM MÀN HÌNH LIỀN KHỐI, MÀN ODO & ANDROID BOX */}
-                {displayProducts.length > 0 && (
-                  <div className="rounded-2xl border border-cyan-500/30 bg-gradient-to-b from-cyan-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
-                    <div 
-                      onClick={() => toggleSectionCollapse('display')}
-                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-cyan-500/20 cursor-pointer select-none"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-cyan-500/20 border border-cyan-400/40 text-cyan-400 flex items-center justify-center flex-shrink-0 shadow-lg shadow-cyan-500/10">
-                          <Tv className="w-5 h-5" />
-                        </div>
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <h2 className="text-sm sm:text-base font-extrabold text-white tracking-tight">
-                              Màn Hình &amp; Android Box
-                            </h2>
-                            <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/20 border border-cyan-400/30 text-cyan-300 text-[11px] font-extrabold">
-                              {displayProducts.length} Sản phẩm
-                            </span>
-                            {collapsedSections['display'] && (
-                              <span className="text-[11px] text-slate-400 font-medium">
-                                (Đã thu gọn)
-                              </span>
-                            )}
-                          </div>
-                          <p className="text-[11px] text-slate-400 mt-0.5">
-                            Màn hình đôi 24.6" Setcar Vision Pro LimoGreen, Màn đôi 20.8", HUD kính lái MCD91, Màn ODO OLED, Android Box Carlinkit, Zestech, VIETMAP &amp; Màn ODO SETCAR VF6/VF7 (Zin 100%)
-                          </p>
-                        </div>
-                      </div>
-
-                      <button
-                        type="button"
-                        id="toggle-collapse-display-btn"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          toggleSectionCollapse('display');
-                        }}
-                        className="self-start sm:self-center flex items-center gap-2 px-3 py-1.5 rounded-full border border-cyan-500/40 bg-slate-900/90 hover:bg-slate-800 hover:border-cyan-400 text-cyan-200 hover:text-white text-xs font-semibold transition-all cursor-pointer shadow-sm active:scale-95 shrink-0"
-                        title={collapsedSections['display'] ? 'Mở rộng sản phẩm' : 'Thu gọn sản phẩm'}
-                      >
-                        <span className="text-[11px] font-medium text-slate-300">
-                          {collapsedSections['display'] ? 'Mở rộng' : 'Thu gọn'}
-                        </span>
-                        <ChevronDown
-                          className={`w-4 h-4 text-white transition-transform duration-300 ${
-                            collapsedSections['display'] ? '-rotate-90' : 'rotate-0'
-                          }`}
-                        />
-                      </button>
-                    </div>
-
-                    {!collapsedSections['display'] && (
-                      viewMode === 'list' ? (
-                        <div className="space-y-3.5">
-                          {displayProducts.map((product) => (
-                            <ProductListItem
-                              key={product.id}
-                              product={product}
-                              onAddToCart={onAddToCart}
-                              onQuickView={onQuickView}
-                            />
-                          ))}
-                        </div>
-                      ) : (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
-                          {displayProducts.map((product) => (
                             <ProductCompactCard
                               key={product.id}
                               product={product}

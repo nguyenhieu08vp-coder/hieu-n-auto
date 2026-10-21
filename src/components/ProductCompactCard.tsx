@@ -49,10 +49,22 @@ export const ProductCompactCard: React.FC<ProductCompactCardProps> = ({
           src={product.primaryImage}
           alt={product.name}
           referrerPolicy="no-referrer"
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 contrast-[1.02]"
+          className={`w-full h-full object-cover transition-all duration-300 contrast-[1.02] ${
+            product.secondaryImage ? 'group-hover:opacity-0' : 'group-hover:scale-105'
+          }`}
           style={{ imageRendering: '-webkit-optimize-contrast' }}
           loading="lazy"
         />
+        {product.secondaryImage && (
+          <img
+            src={product.secondaryImage}
+            alt={`${product.name} ảnh thay thế`}
+            referrerPolicy="no-referrer"
+            className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300 contrast-[1.02]"
+            style={{ imageRendering: '-webkit-optimize-contrast' }}
+            loading="lazy"
+          />
+        )}
 
         {/* Top Badges */}
         <div className="absolute top-2 left-2 flex flex-col gap-1 z-10">

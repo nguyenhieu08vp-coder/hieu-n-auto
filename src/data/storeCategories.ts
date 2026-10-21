@@ -14,7 +14,7 @@ export const STORE_CATEGORY_GROUPS: StoreCategoryItem[] = [
     id: 'all', 
     name: 'Tất Cả Danh Mục', 
     shortName: 'Tất Cả', 
-    count: 53, 
+    count: 56, 
     icon: 'LayoutGrid', 
     productIds: [],
     color: 'text-emerald-400',
@@ -24,9 +24,9 @@ export const STORE_CATEGORY_GROUPS: StoreCategoryItem[] = [
     id: 'dashcam', 
     name: 'Camera Hành Trình', 
     shortName: 'Camera Hành Trình', 
-    count: 5, 
+    count: 6, 
     icon: 'Video', 
-    productIds: ['prod-1', 'prod-21', 'prod-22', 'prod-28', 'prod-41'],
+    productIds: ['prod-1', 'prod-21', 'prod-28', 'prod-55', 'prod-22', 'prod-41'],
     color: 'text-sky-400',
     bgColor: 'bg-sky-500/10 border-sky-500/30'
   },
@@ -44,9 +44,9 @@ export const STORE_CATEGORY_GROUPS: StoreCategoryItem[] = [
     id: 'audio', 
     name: 'Cá Nhân Hóa Âm Thanh', 
     shortName: 'Âm Thanh Ô Tô', 
-    count: 6, 
+    count: 7, 
     icon: 'Volume2', 
-    productIds: ['prod-50', 'prod-6', 'prod-37', 'prod-26', 'prod-36', 'prod-49'],
+    productIds: ['prod-57', 'prod-50', 'prod-6', 'prod-37', 'prod-26', 'prod-36', 'prod-49'],
     color: 'text-purple-400',
     bgColor: 'bg-purple-500/10 border-purple-500/30'
   },
@@ -61,6 +61,16 @@ export const STORE_CATEGORY_GROUPS: StoreCategoryItem[] = [
     bgColor: 'bg-yellow-500/10 border-yellow-500/30'
   },
   { 
+    id: 'display', 
+    name: 'Màn Hình & Android Box', 
+    shortName: 'Màn Hình & Box', 
+    count: 9, 
+    icon: 'Tv', 
+    productIds: ['prod-56', 'prod-51', 'prod-5', 'prod-10', 'prod-25', 'prod-12', 'prod-30', 'prod-48', 'prod-54'],
+    color: 'text-blue-400',
+    bgColor: 'bg-blue-500/10 border-blue-500/30'
+  },
+  { 
     id: 'led', 
     name: 'Đèn LED (Nội & Ngoại Thất)', 
     shortName: 'Đèn LED Đa Sắc', 
@@ -69,16 +79,6 @@ export const STORE_CATEGORY_GROUPS: StoreCategoryItem[] = [
     productIds: ['prod-3', 'prod-42', 'prod-43', 'prod-44', 'prod-8', 'prod-24', 'prod-40'],
     color: 'text-amber-400',
     bgColor: 'bg-amber-500/10 border-amber-500/30'
-  },
-  { 
-    id: 'display', 
-    name: 'Màn Hình & Android Box', 
-    shortName: 'Màn Hình & Box', 
-    count: 8, 
-    icon: 'Tv', 
-    productIds: ['prod-51', 'prod-5', 'prod-10', 'prod-25', 'prod-12', 'prod-30', 'prod-48', 'prod-54'],
-    color: 'text-blue-400',
-    bgColor: 'bg-blue-500/10 border-blue-500/30'
   },
   { 
     id: 'mirror', 

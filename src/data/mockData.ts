@@ -35,14 +35,15 @@ import setaudioLimoGreenHeroImg from '../assets/images/setaudio_limogreen_hero_1
 import setaudioLimoGreenSpecsImg from '../assets/images/setaudio_limogreen_specs_1791807179946.jpg';
 import setcarOdoVf6Vf7HeroImg from '../assets/images/setcar_odo_vf6_vf7_hero_1791904349475.jpg';
 import setcarOdoVf6Vf7SpecsImg from '../assets/images/setcar_odo_vf6_vf7_specs_1791904366743.jpg';
+import a210DeviceImg2 from '../assets/images/regenerated_image_1792238332717.webp';
 
 export const CLASSIFICATIONS = [
   { 
     id: 'all', 
     name: 'Tất Cả Hạng Mục', 
     shortName: 'Tất Cả',
-    count: 31, 
-    badge: '31 Mục',
+    count: 34, 
+    badge: '34 Mục',
     icon: 'LayoutGrid',
     description: 'Trọn bộ hệ sinh thái sản phẩm phụ kiện cao cấp & dịch vụ độ xe chính hãng tại Hieu N Auto'
   },
@@ -50,8 +51,8 @@ export const CLASSIFICATIONS = [
     id: 'product', 
     name: 'Sản Phẩm Chính Hãng', 
     shortName: 'Sản Phẩm',
-    count: 20, 
-    badge: '20 Sản phẩm',
+    count: 23, 
+    badge: '23 Sản phẩm',
     icon: 'PackageCheck',
     description: 'Phụ kiện công nghệ cao, camera 360, màn hình OLED, đèn LED, thảm TPE đúc 3D, Android Box chính hãng'
   },
@@ -67,15 +68,15 @@ export const CLASSIFICATIONS = [
 ] as const;
 
 export const CATEGORIES = [
-  { id: 'all', name: 'Tất Cả Danh Mục', count: 40, icon: 'LayoutGrid', itemType: 'all' },
+  { id: 'all', name: 'Tất Cả Danh Mục', count: 43, icon: 'LayoutGrid', itemType: 'all' },
   // Nhóm Sản Phẩm Chính Hãng
-  { id: 'cameras-360', name: 'Camera 360 & Camera Hành Trình', count: 7, icon: 'ShieldCheck', itemType: 'product' },
-  { id: 'screens-displays', name: 'Màn Hình Android & Android Box', count: 6, icon: 'Tv', itemType: 'product' },
+  { id: 'cameras-360', name: 'Camera 360 & Camera Hành Trình', count: 8, icon: 'ShieldCheck', itemType: 'product' },
+  { id: 'screens-displays', name: 'Màn Hình Android & Android Box', count: 7, icon: 'Tv', itemType: 'product' },
   { id: 'safety-sensors', name: 'Cảm Biến Áp Suất Lốp & An Toàn', count: 2, icon: 'ShieldAlert', itemType: 'product' },
   { id: 'ambient-lights', name: 'Đèn Bi LED & LED Nội Thất', count: 8, icon: 'Sparkles', itemType: 'product' },
   { id: 'floor-mats', name: 'Thảm Sàn Đúc Khuôn TPE 3D', count: 2, icon: 'Layers', itemType: 'product' },
   // Nhóm Dịch Vụ Độ Xe Chính Hãng
-  { id: 'car-audio', name: 'Độ Âm Thanh DSP & Loa Sub Gầm', count: 2, icon: 'Volume2', itemType: 'service' },
+  { id: 'car-audio', name: 'Độ Âm Thanh DSP & Loa Sub Gầm', count: 3, icon: 'Volume2', itemType: 'service' },
   { id: 'seat-interior', name: 'Bọc Ghế Da Nappa & Ghế Chỉnh Điện', count: 3, icon: 'Armchair', itemType: 'service' },
   { id: 'electric-automation', name: 'Cửa Hít & Cốp Điện Tự Động', count: 6, icon: 'Sliders', itemType: 'service' },
   { id: 'heat-soundproofing', name: 'Dán Phim Cách Nhiệt & Chống Ồn SIP', count: 1, icon: 'Shield', itemType: 'service' },
@@ -98,16 +99,20 @@ export const PRODUCTS: Product[] = [
     reviewCount: 186,
     primaryImage: "/images/camera_70mai_t400.jpg",
     secondaryImage: "/images/camera_70mai_t400_poster.jpg",
-    description: "Camera hành trình 70mai T400 thế hệ mới ghi hình 3 kênh đồng thời (Trước - Trong khoang lái - Sau xe). Tích hợp mắt hồng ngoại IR quay đêm rõ nét, công nghệ siêu tụ điện an toàn tuyệt đối và điều khiển giọng nói tiện lợi.",
+    galleryImages: [
+      "/images/camera_70mai_t400.jpg",
+      "/images/camera_70mai_t400_poster.jpg"
+    ],
+    description: "Bộ Camera Hành Trình 70mai T400 SET ghi hình 3 kênh toàn diện: Trước 1440P QHD (góc rộng 145°) - Sau 1080P (góc 130°) - Trong xe 1080P (góc 130°). Tích hợp cảm biến Sony STARVIS siêu nét ngày đêm, công nghệ kết nối Wifi 6 truyền tải siêu tốc, giám sát đỗ xe 24H, GPS hiển thị tốc độ tọa độ và điều khiển giọng nói rảnh tay an toàn.",
     features: [
-      "Ghi hình 3 kênh đồng thời: Camera trước, camera cabin và camera sau",
-      "Công nghệ cân bằng sáng HDR sắc nét bất kể ngày đêm",
-      "Đèn hồng ngoại IR Lights soi sáng toàn diện trong khoang xe ban đêm",
-      "Giám sát đỗ xe thông minh 24/7 phát hiện va chạm tự động",
-      "Tích hợp GPS hiển thị tốc độ, tọa độ hành trình chính xác",
-      "Trang bị Siêu Tụ Điện (Super Capacitor) chịu nhiệt độ cao, bền bỉ",
-      "Kết nối Wifi & App 70mai trích xuất video trực tiếp siêu tốc",
-      "Hỗ trợ ra lệnh và điều khiển bằng giọng nói rảnh tay"
+      "Ghi hình 3 kênh toàn diện: Cam trước 1440P QHD (góc 145°), Cam sau 1080P (góc 130°) & Cam cabin trong xe 1080P (góc 130°)",
+      "Trang bị Cảm Biến Sony STARVIS: Tối ưu ánh sáng, ghi hình rõ nét chi tiết bất kể ngày đêm",
+      "Kết nối Wifi 6 thế hệ mới: Xem video trực tiếp, tải video hành trình siêu tốc qua App 70mai (iOS & Android)",
+      "Giám sát đỗ xe thông minh 24H: Tự động kích hoạt ghi hình khẩn cấp khi phát hiện rung chấn va chạm (hỗ trợ bộ kit nguồn)",
+      "Hệ thống cảnh báo an toàn ADAS: Cảnh báo lệch làn đường và cảnh báo nguy cơ va chạm phía trước trực quan",
+      "Định vị GPS tích hợp: Hiển thị tốc độ xe chạy và tọa độ hành trình chính xác trên từng khung hình",
+      "Điều khiển bằng giọng nói rảnh tay: Ra lệnh chụp ảnh, quay video khẩn cấp mà không cần rời tay khỏi vô lăng",
+      "Ghi hình vòng lặp tự động ghi đè, hoạt động bền bỉ trong mọi điều kiện thời tiết khắc nghiệt"
     ],
     vehicleTypes: [
       "sedan",
@@ -383,6 +388,55 @@ export const PRODUCTS: Product[] = [
     ],
     colors: [
       {"name":"Xám Đen Không Gian (Space Gray)","hex":"#334155"}
+    ],
+    warrantyMonths: 18,
+    inStock: true,
+    installationTimeHours: 1
+  },
+  {
+    id: "prod-55",
+    itemType: "product",
+    name: "Camera Hành Trình 70mai Dash Cam A210 HDR (Ghi Hình 1080P Full HD, Góc Rộng 130°, Màn IPS 2.0\" & Bản Quốc Tế)",
+    category: "cameras-360",
+    categoryName: "Camera Hành Trình 70mai A210",
+    price: 1590000,
+    originalPrice: 1950000,
+    isBestSeller: true,
+    isNew: true,
+    isSale: true,
+    rating: 4.9,
+    reviewCount: 168,
+    primaryImage: "/images/camera_70mai_a210_official.jpg",
+    secondaryImage: a210DeviceImg2,
+    galleryImages: [
+      "/images/camera_70mai_a210_official.jpg",
+      a210DeviceImg2
+    ],
+    description: "Camera hành trình 70mai Dash Cam A210 HDR thế hệ mới - Phiên bản Quốc tế (Global Version) chính hãng. Thiết kế siêu nhỏ gọn tinh tế, trang bị cảm biến ảnh ghi hình 1080P Full HD sắc nét kết hợp công nghệ xử lý hình ảnh độc quyền MaiColor Vivid+ và Night Owl Vision giúp cân bằng ánh sáng hoàn hảo cả ngày lẫn đêm. Màn hình IPS 2.0 inch sắc nét, góc quay rộng 130° bao quát 3 làn đường, hỗ trợ kết nối ghi hình kép 2 kênh Trước - Sau, giám sát đỗ xe 24H thông minh, điều khiển bằng giọng nói và kết nối Wi-Fi quản lý nhanh chóng trên App 70mai.",
+    features: [
+      "Độ phân giải 1080P Full HD kết hợp công nghệ HDR: Tái tạo chi tiết sắc nét, nhận diện biển số rõ ràng",
+      "Công nghệ xử lý hình ảnh MaiColor Vivid+ & Night Owl Vision: Màu sắc chân thực và tối ưu độ sáng ban đêm",
+      "Màn hình hiển thị IPS 2.0 inch: Xem lại hành trình, kiểm tra góc quay và cài đặt dễ dàng",
+      "Góc quay rộng 130° FOV khẩu độ F2.0: Bao quát toàn cảnh 3 làn đường, giảm thiểu tối đa điểm mù",
+      "Hỗ trợ ghi hình 2 kênh Trước & Sau (Dual-Channel): Ghi lại toàn diện góc nhìn trước và sau xe",
+      "Giám sát đỗ xe thông minh 24H (Parking Surveillance): Cảm biến G-Sensor kích hoạt ghi hình khi có va chạm",
+      "Điều khiển bằng giọng nói tiện lợi: Ra lệnh chụp ảnh, ghi video khẩn cấp rảnh tay an toàn khi lái xe",
+      "Kết nối Wi-Fi & ứng dụng 70mai: Xem trực tiếp video, tải về điện thoại siêu nhanh mà không tốn dung lượng 4G",
+      "Ghi hình vòng lặp liên tục (Loop Recording): Tự động ghi đè video cũ khi thẻ nhớ đầy, không gián đoạn",
+      "Thiết kế nhỏ gọn ẩn giấu thẩm mỹ: Lắp đặt cắm giắc Zin và giấu dây gọn gàng, không che khuất tầm nhìn"
+    ],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Nhựa Polycarbonate Chịu Nhiệt Cao Cấp",
+      "Ống Kính Thủy Tinh Quang Học Đa Tầng F2.0"
+    ],
+    colors: [
+      {"name":"Đen Nhám Classic (Matte Black)","hex":"#1E293B"}
     ],
     warrantyMonths: 18,
     inStock: true,
@@ -2181,6 +2235,60 @@ export const PRODUCTS: Product[] = [
     installationTimeHours: 1.5
   },
   {
+    id: "prod-56",
+    itemType: "product",
+    name: "Màn Hình Android Ô Tô TexPad TX8 Limited (Phiên Bản Giới Hạn, Độ Phân Giải 1920x720 Siêu Nét, Cắm SIM 5G, Vietmap S1 Bản Quyền & Giọng Nói AI Kiki)",
+    category: "screens-displays",
+    categoryName: "Màn Hình Android TexPad TX8 Limited",
+    price: 9500000,
+    originalPrice: 12500000,
+    isSale: true,
+    isBestSeller: false,
+    isNew: true,
+    rating: 4.9,
+    reviewCount: 182,
+    primaryImage: "/images/texpad_tx8_user_upload.jpg",
+    secondaryImage: "/images/texpad_tx8_resolution_compare.jpg",
+    galleryImages: [
+      "/images/texpad_tx8_user_upload.jpg",
+      "/images/texpad_tx8_resolution_compare.jpg",
+      "/images/texpad_tx8_speed_map_vietmap.jpg",
+      "/images/texpad_tx8_voice_kiki.jpg",
+      "/images/texpad_tx8_sim_5g.jpg",
+      "/images/texpad_tx8_entertainment_authentic.jpg"
+    ],
+    description: "Màn hình Android ô tô TexPad TX8 Limited - Phiên Bản Giới Hạn đỉnh cao dành cho ô tô. Sở hữu màn hình tràn viền sang trọng với độ phân giải siêu nét 1920 x 720 px (vượt trội hoàn toàn so với thế hệ cũ 1280 x 720 px), hiển thị sắc nét từng điểm ảnh. Trang bị khe cắm SIM 5G tốc độ cực cao 'kẻ hủy diệt mạng WiFi', tích hợp sẵn bản đồ dẫn đường Vietmap S1 bản quyền cảnh báo tốc độ & phạt nguội bằng giọng nói tiếng Việt chuẩn xác. Hệ thống trợ lý giọng nói AI Kiki thông minh phản hồi tức thì qua phím bấm vô lăng. Cắm giắc Zin 100% theo xe kèm Canbus giải mã chính xác giữ trọn tính năng nguyên bản của xe.",
+    features: [
+      "Độ phân giải siêu sắc nét 1920 x 720 px: Nâng cấp vượt trội so với chuẩn cũ 1280 x 720 px, màn hình IPS góc rộng, màu sắc sống động và chống chói hiệu quả",
+      "Thiết kế tràn viền thời thượng: Màn hình dài sang trọng, nâng tầm không gian nội thất taplo như các dòng xe hạng sang",
+      "Bản đồ Vietmap S1 bản quyền tích hợp cảnh báo tốc độ giới hạn, cảnh báo biển báo giao thông và camera phạt nguội",
+      "Cắm SIM 5G / 4G tốc độ cao: 'Kẻ hủy diệt mạng WiFi' - Giữ kết nối Internet liên tục mọi lúc mọi nơi mà không cần bộ phát phụ",
+      "Hệ thống ra lệnh giọng nói AI Kiki thông minh: Trí tuệ nhân tạo nhận diện giọng nói 3 miền Bắc - Trung - Nam cực chuẩn, kích hoạt ngay trên vô lăng",
+      "Kho ứng dụng giải trí bất tận: YouTube chặn quảng cáo, Zing MP3, Spotify, xem bóng đá thể thao và truyền hình trực tiếp VTV Go",
+      "Kết nối Apple CarPlay & Android Auto không dây siêu mượt mà",
+      "Bộ Canbus giải mã thông minh đồng bộ hiển thị điều hòa, thông tin mở cửa, cảm biến lùi theo xe",
+      "Thi công cắm giắc Zin 100% theo xe, giữ nguyên bản hệ thống điện và không ảnh hưởng bảo hành hãng",
+      "Bảo hành chính hãng 24 tháng (lỗi 1 đổi 1 trong 12 tháng đầu) tại xưởng Hieu N Auto"
+    ],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Kính Cường Lực Tràn Viền IPS 2.5D Chống Trầy Xước & Chống Chói",
+      "Vỏ Hợp Kim Nhôm Tản Nhiệt Cao Cấp Bền Bỉ",
+      "Dây Giắc & Hộp Canbus Giải Mã Zin 100% Theo Hãng Xe"
+    ],
+    colors: [
+      {"name":"Đen Viền Titan Kim Loại Sang Trọng","hex":"#1E293B"}
+    ],
+    warrantyMonths: 24,
+    inStock: true,
+    installationTimeHours: 1.5
+  },
+  {
     id: "prod-51",
     itemType: "product",
     name: "Màn Hình Đôi Liền Khối Setcar Vision Pro 24.6 Inch Dành Cho Limo Green (Chip Unisoc T7870, Tích Hợp Camera 360 & Cắm Giắc Zin 100%)",
@@ -2320,6 +2428,53 @@ export const PRODUCTS: Product[] = [
     warrantyMonths: 24,
     inStock: true,
     installationTimeHours: 0.75
+  },
+  {
+    id: "prod-57",
+    itemType: "product",
+    name: "Loa Sub Điện Ô Tô VINSUB VS8-PRO (Kích Thước 8 Inch - Vỏ Nhôm Nguyên Khối, Công Suất Mạnh Mẽ)",
+    category: "car-audio",
+    categoryName: "Loa Sub Điện VINSUB VS8-PRO",
+    price: 3950000,
+    originalPrice: 4800000,
+    isSale: true,
+    isBestSeller: true,
+    isNew: true,
+    rating: 5.0,
+    reviewCount: 96,
+    primaryImage: "/images/vinsub_vs8_pro_poster.jpg",
+    secondaryImage: "/images/vinsub_vs8_pro_features.webp",
+    galleryImages: [
+      "/images/vinsub_vs8_pro_poster.jpg",
+      "/images/vinsub_vs8_pro_features.webp"
+    ],
+    description: "Loa Sub Điện Ô Tô VINSUB VS8-PRO chính hãng MASTER TUNE & VINSUB - giải pháp nâng cấp dải âm trầm (Bass) vượt trội cho mọi dòng xe ô tô. Thiết kế 8 inch nhỏ gọn - siêu mỏng đặt vừa vặn dưới gầm ghế lái/ghế phụ hoặc khoang hành lý mà không chiếm diện tích, phù hợp cả xe gầm ghế thấp hoặc ghế chỉnh điện. Thân vỏ đúc bằng hợp kim nhôm cao cấp chống rung hiệu quả, tản nhiệt tốt, độ bền vượt trội. Tích hợp sẵn amply Class D hiệu suất cao, dải bass đánh sâu - lực - chắc, bổ sung hoàn hảo cho loa zin, mang đến trải nghiệm âm nhạc sống động, 'đã phê'. Cắm giắc an toàn 100%, bảo hành chính hãng 24 tháng.",
+    features: [
+      "Thiết kế nhỏ gọn – siêu mỏng (8 Inch): Dễ dàng lắp dưới ghế lái/phụ hoặc khoang hành lý mà không chiếm nhiều không gian, phù hợp xe gầm ghế thấp hoặc ghế chỉnh điện",
+      "Tích hợp Ampli Class D hiệu suất cao: Tích hợp sẵn bo mạch amply Class D, chỉ cần nối nguồn và tín hiệu RCA hoặc High-level input từ đầu zin là sử dụng ngay",
+      "Bass sâu – lực – chắc: Tối ưu dải trầm uy lực, bổ sung hoàn hảo cho dàn loa zin nguyên bản của xe, mang đến trải nghiệm âm nhạc sống động, 'đã phê'",
+      "Vỏ nhôm nguyên khối cao cấp: Chất liệu hợp kim nhôm đúc nguyên khối, tản nhiệt cực tốt, chống rung hiệu quả, độ bền vượt trội theo thời gian",
+      "Cụm núm điều khiển Bass Boost & Phase: Tinh chỉnh tần số cắt, âm lượng sub rời và đảo pha âm thanh linh hoạt theo từng thể loại nhạc",
+      "Lắp đặt an toàn chuẩn Zin 100%: Dây nguồn chịu nhiệt kèm cầu chì an toàn riêng biệt, không cắt trích dây Zin của xe, giữ trọn bảo hành hãng",
+      "Bảo hành chính hãng 24 tháng tại hệ thống xưởng Hieu N Auto"
+    ],
+    vehicleTypes: [
+      "sedan",
+      "suv",
+      "mpv",
+      "luxury"
+    ],
+    materials: [
+      "Hợp Kim Nhôm Đúc Nguyên Khối Chống Rung Chấn",
+      "Màng Loa Composite Sợi Thủy Tinh Siêu Bền",
+      "Lưới Thép Bảo Vệ Sơn Tĩnh Điện Chống Rỉ"
+    ],
+    colors: [
+      {"name":"Đen Kim Loại Nguyên Khối (Solid Black)","hex":"#1E293B"}
+    ],
+    warrantyMonths: 24,
+    inStock: true,
+    installationTimeHours: 1
   }
 ];
 
