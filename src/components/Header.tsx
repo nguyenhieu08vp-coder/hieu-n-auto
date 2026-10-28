@@ -22,7 +22,7 @@ import {
   Armchair
 } from 'lucide-react';
 import { PageId } from '../types';
-import { COMPANY_INFO, FORMAT_CURRENCY } from '../data/mockData';
+import { COMPANY_INFO, FORMAT_CURRENCY, PRODUCTS } from '../data/mockData';
 import { STORE_CATEGORY_GROUPS } from '../data/storeCategories';
 
 interface HeaderProps {
@@ -247,7 +247,7 @@ export const Header: React.FC<HeaderProps> = ({
                               }}
                               className="text-xs text-emerald-400 hover:text-emerald-300 font-semibold"
                             >
-                              Xem tất cả 40 SP →
+                              Xem tất cả {PRODUCTS.length} SP →
                             </button>
                           </div>
                           <div className="grid grid-cols-2 gap-1.5">

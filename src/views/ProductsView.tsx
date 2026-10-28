@@ -206,6 +206,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
       mirror: true,
       'battery-shield': true,
       'interior-seat': true,
+      'electric-tailgate': true,
       'safety-utility': true,
       other: true,
     };
@@ -423,6 +424,8 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
         return <Cpu className="w-4 h-4 text-emerald-400" />;
       case 'interior-seat':
         return <Armchair className="w-4 h-4 text-indigo-400" />;
+      case 'electric-tailgate':
+        return <Sliders className="w-4 h-4 text-amber-400" />;
       case 'safety-utility':
         return <ShieldCheck className="w-4 h-4 text-teal-400" />;
       default:
@@ -626,14 +629,24 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
     return [...standard, ...customInSeat];
   }, [filteredProducts, interiorSeatOrderedIds, interiorSeatProductIds]);
 
-  // 9. Nhóm Tiện Ích & An Toàn Xe (Gộp: Cảm Biến An Toàn, Cốp Điện & Bệ Bước, Bảo Vệ & Chăm Sóc Xe):
-  // prod-17, prod-20, prod-11, prod-27, prod-4, prod-19
-  const safetyUtilityProductIds = useMemo(() => new Set([
-    'prod-17', 'prod-20', 'prod-11', 'prod-27', 'prod-4', 'prod-19'
-  ]), []);
+  // 10. Nhóm Cốp Điện Tự Động & Đá Cốp (Tách riêng ngay sau Nội Thất & Ghế Xe): prod-11 (Cốp điện ICAR VF3), prod-27 (Cốp điện EUD 91 tích hợp đá cốp)
+  const electricTailgateOrderedIds = useMemo(() => ['prod-11', 'prod-27'], []);
+  const electricTailgateProductIds = useMemo(() => new Set(electricTailgateOrderedIds), [electricTailgateOrderedIds]);
+  const electricTailgateProducts = useMemo(() => {
+    const map = new Map(filteredProducts.map((p) => [p.id, p]));
+    const standard = electricTailgateOrderedIds.map((id) => map.get(id)).filter((p): p is Product => Boolean(p));
+    const customInTailgate = filteredProducts.filter((p) => (p.category === 'electric-tailgate' || p.category === 'electric-automation') && !electricTailgateProductIds.has(p.id) && !mirrorProductIds.has(p.id));
+    return [...standard, ...customInTailgate];
+  }, [filteredProducts, electricTailgateOrderedIds, electricTailgateProductIds, mirrorProductIds]);
+
+  // 11. Nhóm Tiện Ích & An Toàn Xe (Cảm Biến Áp Suất Lốp TPMS, Cảm Biến Đỗ Xe, Phim 3M & Phay Lazang CNC):
+  // prod-17, prod-20, prod-4, prod-19
+  const safetyUtilityOrderedIds = useMemo(() => ['prod-17', 'prod-20', 'prod-4', 'prod-19'], []);
+  const safetyUtilityProductIds = useMemo(() => new Set(safetyUtilityOrderedIds), [safetyUtilityOrderedIds]);
   const safetyUtilityProducts = useMemo(() => {
-    return filteredProducts.filter((p) => safetyUtilityProductIds.has(p.id));
-  }, [filteredProducts, safetyUtilityProductIds]);
+    const map = new Map(filteredProducts.map((p) => [p.id, p]));
+    return safetyUtilityOrderedIds.map((id) => map.get(id)).filter((p): p is Product => Boolean(p));
+  }, [filteredProducts, safetyUtilityOrderedIds]);
 
   // 8. Nhóm Bảo Vệ Pin & Giáp Gầm Xe Điện (Vị trí ngay sau Gập Gương Điện): prod-9, prod-45, prod-46
   const batteryShieldProductIds = useMemo(() => new Set(['prod-9', 'prod-45', 'prod-46']), []);
@@ -651,6 +664,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
       ...displayProductIds,
       ...mirrorProductIds,
       ...interiorSeatProductIds,
+      ...electricTailgateProductIds,
       ...safetyUtilityProductIds,
       ...batteryShieldProductIds
     ]);
@@ -664,6 +678,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
     displayProductIds,
     mirrorProductIds,
     interiorSeatProductIds,
+    electricTailgateProductIds,
     safetyUtilityProductIds,
     batteryShieldProductIds
   ]);
@@ -1709,7 +1724,105 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                   </div>
                 )}
 
-                {/* 🛡️ 9. TIỆN ÍCH & AN TOÀN XE */}
+                {/* ⚡ 10. CỐP ĐIỆN TỰ ĐỘNG & ĐÁ CỐP (TÁCH RIÊNG NGAY SAU NỘI THẤT VÀ GHẾ XE) */}
+                {electricTailgateProducts.length > 0 && (
+                  <div className="rounded-2xl border border-amber-500/30 bg-gradient-to-b from-amber-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
+                    <div 
+                      onClick={() => toggleSectionCollapse('electric-tailgate')}
+                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-amber-500/20 cursor-pointer select-none"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-400/40 text-amber-400 flex items-center justify-center flex-shrink-0 shadow-lg shadow-amber-500/10">
+                          <Sliders className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h2 className="text-sm sm:text-base font-extrabold text-white tracking-tight">
+                              Cốp Điện Tự Động &amp; Đá Cốp
+                            </h2>
+                            <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 text-[11px] font-extrabold">
+                              {electricTailgateProducts.length} Sản phẩm
+                            </span>
+                            {collapsedSections['electric-tailgate'] && (
+                              <span className="text-[11px] text-slate-400 font-medium">
+                                (Đã thu gọn)
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-[11px] text-slate-400 mt-0.5">
+                            Cốp điện thông minh ICAR ELLIGATE VF3 &amp; Cốp điện lắp Zin MCD 91 tích hợp cảm biến đá chân rảnh tay (VF3, VF5, VF6, VF7, VF8, LIMO, MPV7)
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-2 self-start sm:self-center shrink-0">
+                        <button
+                          type="button"
+                          id="add-product-tailgate-btn"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setNewProdCategory('electric-tailgate');
+                            setNewProdCategoryName('Cốp Điện Tự Động');
+                            setIsAddModalOpen(true);
+                          }}
+                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-amber-500/50 bg-amber-500/15 hover:bg-amber-500/25 text-amber-200 hover:text-white text-xs font-semibold transition-all cursor-pointer shadow-sm active:scale-95"
+                          title="Tạo thêm mục sản phẩm mới cho danh mục Cốp Điện Tự Động & Đá Cốp"
+                        >
+                          <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
+                          <span className="text-[11px] font-bold">Tạo mục sản phẩm</span>
+                        </button>
+
+                        <button
+                          type="button"
+                          id="toggle-collapse-electric-tailgate-btn"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleSectionCollapse('electric-tailgate');
+                          }}
+                          className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-amber-500/40 bg-slate-900/90 hover:bg-slate-800 hover:border-amber-400 text-amber-200 hover:text-white text-xs font-semibold transition-all cursor-pointer shadow-sm active:scale-95 shrink-0"
+                          title={collapsedSections['electric-tailgate'] ? 'Mở rộng sản phẩm' : 'Thu gọn sản phẩm'}
+                        >
+                          <span className="text-[11px] font-medium text-slate-300">
+                            {collapsedSections['electric-tailgate'] ? 'Mở rộng' : 'Thu gọn'}
+                          </span>
+                          <ChevronDown
+                            className={`w-4 h-4 text-white transition-transform duration-300 ${
+                              collapsedSections['electric-tailgate'] ? '-rotate-90' : 'rotate-0'
+                            }`}
+                          />
+                        </button>
+                      </div>
+                    </div>
+
+                    {!collapsedSections['electric-tailgate'] && (
+                      viewMode === 'list' ? (
+                        <div className="space-y-3.5">
+                          {electricTailgateProducts.map((product) => (
+                            <ProductListItem
+                              key={product.id}
+                              product={product}
+                              onAddToCart={onAddToCart}
+                              onQuickView={onQuickView}
+                            />
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3.5 sm:gap-4">
+                          {electricTailgateProducts.map((product) => (
+                            <ProductCompactCard
+                              key={product.id}
+                              product={product}
+                              onAddToCart={onAddToCart}
+                              onQuickView={onQuickView}
+                            />
+                          ))}
+                        </div>
+                      )
+                    )}
+                  </div>
+                )}
+
+                {/* 🛡️ 11. TIỆN ÍCH & AN TOÀN XE */}
                 {safetyUtilityProducts.length > 0 && (
                   <div className="rounded-2xl border border-teal-500/30 bg-gradient-to-b from-teal-950/40 via-slate-900/90 to-slate-900/90 p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4">
                     <div 
@@ -1735,7 +1848,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                             )}
                           </div>
                           <p className="text-[11px] text-slate-400 mt-0.5">
-                            Cảm biến áp suất lốp &amp; đỗ xe ICAR, Cốp điện tự động VF3, Bệ bước chân điện thò thụt, Phim cách nhiệt 3M Crystalline &amp; Phay lazang CNC
+                            Cảm biến áp suất lốp TPMS &amp; cảm biến đỗ xe ICAR Ellisafe/Ellisen, Dán phim cách nhiệt 3M Crystalline chính hãng &amp; Phay phục hồi lazang mâm CNC
                           </p>
                         </div>
                       </div>
@@ -1866,6 +1979,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                         <option value="screens-displays">🖥️ Màn Hình &amp; Android Box</option>
                         <option value="electric-automation">🪞 Gương Gập Điện Theo Xe</option>
                         <option value="seat-interior">💺 Ghế Da &amp; Nội Thất Xe</option>
+                        <option value="electric-tailgate">⚡ Cốp Điện Tự Động &amp; Đá Cốp</option>
                         <option value="safety-sensors">🛡️ Tiện Ích &amp; An Toàn Xe</option>
                       </select>
                     </div>

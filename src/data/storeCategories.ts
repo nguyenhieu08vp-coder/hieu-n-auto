@@ -14,7 +14,7 @@ export const STORE_CATEGORY_GROUPS: StoreCategoryItem[] = [
     id: 'all', 
     name: 'Tất Cả Danh Mục', 
     shortName: 'Tất Cả', 
-    count: 56, 
+    count: 55, 
     icon: 'LayoutGrid', 
     productIds: [],
     color: 'text-emerald-400',
@@ -111,12 +111,22 @@ export const STORE_CATEGORY_GROUPS: StoreCategoryItem[] = [
     bgColor: 'bg-rose-500/10 border-rose-500/30'
   },
   { 
+    id: 'electric-tailgate', 
+    name: 'Cốp Điện Tự Động & Đá Cốp', 
+    shortName: 'Cốp Điện Tự Động', 
+    count: 2, 
+    icon: 'Sliders', 
+    productIds: ['prod-11', 'prod-27'],
+    color: 'text-amber-400',
+    bgColor: 'bg-amber-500/10 border-amber-500/30'
+  },
+  { 
     id: 'safety-utility', 
     name: 'Tiện Ích & An Toàn Xe', 
     shortName: 'Tiện Ích & An Toàn', 
-    count: 6, 
+    count: 4, 
     icon: 'ShieldCheck', 
-    productIds: ['prod-17', 'prod-20', 'prod-11', 'prod-27', 'prod-4', 'prod-19'],
+    productIds: ['prod-17', 'prod-20', 'prod-4', 'prod-19'],
     color: 'text-emerald-400',
     bgColor: 'bg-emerald-500/10 border-emerald-500/30'
   },

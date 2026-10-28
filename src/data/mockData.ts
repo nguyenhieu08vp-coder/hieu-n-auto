@@ -42,8 +42,8 @@ export const CLASSIFICATIONS = [
     id: 'all', 
     name: 'Tất Cả Hạng Mục', 
     shortName: 'Tất Cả',
-    count: 34, 
-    badge: '34 Mục',
+    count: 55, 
+    badge: '55 Mục',
     icon: 'LayoutGrid',
     description: 'Trọn bộ hệ sinh thái sản phẩm phụ kiện cao cấp & dịch vụ độ xe chính hãng tại Hieu N Auto'
   },
@@ -51,8 +51,8 @@ export const CLASSIFICATIONS = [
     id: 'product', 
     name: 'Sản Phẩm Chính Hãng', 
     shortName: 'Sản Phẩm',
-    count: 23, 
-    badge: '23 Sản phẩm',
+    count: 39, 
+    badge: '39 Sản phẩm',
     icon: 'PackageCheck',
     description: 'Phụ kiện công nghệ cao, camera 360, màn hình OLED, đèn LED, thảm TPE đúc 3D, Android Box chính hãng'
   },
@@ -60,24 +60,24 @@ export const CLASSIFICATIONS = [
     id: 'service', 
     name: 'Dịch Vụ Độ Xe Chính Hãng', 
     shortName: 'Dịch Vụ Độ Xe',
-    count: 11, 
-    badge: '11 Dịch vụ',
+    count: 16, 
+    badge: '16 Dịch vụ',
     icon: 'Wrench',
     description: 'Các gói thi công chuyên sâu chuẩn Zin: Cốp điện, Cửa hít, Cách âm SIP, Bọc da Nappa, Phay Lazang, Độ âm thanh DSP...'
   },
 ] as const;
 
 export const CATEGORIES = [
-  { id: 'all', name: 'Tất Cả Danh Mục', count: 43, icon: 'LayoutGrid', itemType: 'all' },
+  { id: 'all', name: 'Tất Cả Danh Mục', count: 55, icon: 'LayoutGrid', itemType: 'all' },
   // Nhóm Sản Phẩm Chính Hãng
-  { id: 'cameras-360', name: 'Camera 360 & Camera Hành Trình', count: 8, icon: 'ShieldCheck', itemType: 'product' },
-  { id: 'screens-displays', name: 'Màn Hình Android & Android Box', count: 7, icon: 'Tv', itemType: 'product' },
+  { id: 'cameras-360', name: 'Camera 360 & Camera Hành Trình', count: 9, icon: 'ShieldCheck', itemType: 'product' },
+  { id: 'screens-displays', name: 'Màn Hình Android & Android Box', count: 9, icon: 'Tv', itemType: 'product' },
   { id: 'safety-sensors', name: 'Cảm Biến Áp Suất Lốp & An Toàn', count: 2, icon: 'ShieldAlert', itemType: 'product' },
-  { id: 'ambient-lights', name: 'Đèn Bi LED & LED Nội Thất', count: 8, icon: 'Sparkles', itemType: 'product' },
+  { id: 'ambient-lights', name: 'Đèn Bi LED & LED Nội Thất', count: 11, icon: 'Sparkles', itemType: 'product' },
   { id: 'floor-mats', name: 'Thảm Sàn Đúc Khuôn TPE 3D', count: 2, icon: 'Layers', itemType: 'product' },
   // Nhóm Dịch Vụ Độ Xe Chính Hãng
-  { id: 'car-audio', name: 'Độ Âm Thanh DSP & Loa Sub Gầm', count: 3, icon: 'Volume2', itemType: 'service' },
-  { id: 'seat-interior', name: 'Bọc Ghế Da Nappa & Ghế Chỉnh Điện', count: 3, icon: 'Armchair', itemType: 'service' },
+  { id: 'car-audio', name: 'Độ Âm Thanh DSP & Loa Sub Gầm', count: 7, icon: 'Volume2', itemType: 'service' },
+  { id: 'seat-interior', name: 'Bọc Ghế Da Nappa & Ghế Chỉnh Điện', count: 4, icon: 'Armchair', itemType: 'service' },
   { id: 'electric-automation', name: 'Cửa Hít & Cốp Điện Tự Động', count: 6, icon: 'Sliders', itemType: 'service' },
   { id: 'heat-soundproofing', name: 'Dán Phim Cách Nhiệt & Chống Ồn SIP', count: 1, icon: 'Shield', itemType: 'service' },
   { id: 'wheels-exterior', name: 'Phay Mâm CNC & Giáp Bảo Vệ Pin', count: 4, icon: 'Disc', itemType: 'service' },
@@ -1965,42 +1965,54 @@ export const PRODUCTS: Product[] = [
   {
     id: "prod-27",
     itemType: "service",
-    name: "Bệ Bước Chân Điện Tự Động Thò Thụt Thông Minh Chống Nước IP68 (Chịu Tải 300kg & Tích Hợp Đèn LED)",
+    name: "Cốp Điện Lắp Zin MCD 91 Tích Hợp Cảm Biến Đá Cốp (Thanh Ty Inox 304, Chống Kẹt & Bảo Hành 3 Năm)",
     category: "electric-automation",
-    categoryName: "Bệ Bước Chân Điện Tự Động",
-    price: 16500000,
-    originalPrice: 19500000,
-    isBestSeller: false,
+    categoryName: "Cốp Điện Tự Động MCD 91",
+    price: 8900000,
+    originalPrice: 10900000,
+    isBestSeller: true,
+    isNew: true,
     isSale: true,
-    rating: 4.8,
-    reviewCount: 128,
-    primaryImage: electricSideStepImg,
-    secondaryImage: "/images/cop_dien_icar_vf3_poster.jpg",
-    description: "Bệ bước chân điện tự động thông minh dành riêng cho các dòng xe gầm cao SUV/MPV (VinFast VF8, VF9, Carnival, Everest, SantaFe, Fortuner, Land Cruiser...). Tự động mở ra khi mở cửa xe và gập giấu gọn sát lườn gầm khi đóng cửa, tích hợp dải LED soi bước chân sang trọng trong đêm, chịu tải trọng ấn tượng lên đến 300kg mỗi bên.",
+    rating: 5.0,
+    reviewCount: 172,
+    primaryImage: "/images/cop_dien_eud91_poster.jpg",
+    secondaryImage: "/images/cop_dien_eud91_features.jpg",
+    galleryImages: [
+      "/images/cop_dien_eud91_poster.jpg",
+      "/images/cop_dien_eud91_features.jpg"
+    ],
+    description: "Bộ cốp điện lắp Zin chính hãng MCD 91 (EUD 91) tích hợp công nghệ cảm biến đá cốp thông minh thế hệ mới dành riêng cho các dòng xe điện VinFast (VF3, VF5, VF6, VF7, VF8, Limo Green, MPV7). Trang bị thanh ty thủy lực Inox 304 siêu bền bỉ, tính năng chống kẹt thông minh an toàn tuyệt đối, độ ồn tối đa dưới 40 dB siêu êm ái, công nghệ độ nhạy X10, sơn tĩnh điện 2 lớp chống ăn mòn và hỗ trợ chức năng đá chân đóng/mở cốp rảnh tay tiện lợi cùng chính sách bảo hành chính hãng lên tới 3 năm (36 tháng).",
     features: [
-      "Động cơ kép truyền động đồng tốc êm ái, đóng mở chỉ trong 1.5 giây",
-      "Cảm biến an toàn tự động dừng khi gặp vật cản, chống kẹt chân tối đa",
-      "Mặt bệ hợp kim nhôm đúc nguyên khối gia cố vân cao su chống trượt cao cấp",
-      "Chịu tải trọng thử nghiệm lên tới 300kg, an toàn cho cả người lớn tuổi và trẻ nhỏ",
-      "Tích hợp dải đèn LED soi sáng mặt đường khi mở cửa ban đêm",
-      "Chuẩn chống nước và bùn đất ngập gầm xe IP68, bảo hành 2 năm đổi mới"
+      "Thương hiệu chính hãng MCD 91 (EUD 91) - Cốp Điện Lắp Zin Chuẩn Phom",
+      "Sử dụng tương thích chuẩn từng dòng xe: VinFast VF3, VF5, VF6, VF7, VF8, LIMO, MPV7",
+      "Tích hợp Cảm Biến Đá Cốp thế hệ mới: Chức năng 'Đá chân đóng và mở cốp' rảnh tay siêu nhạy X10",
+      "Trang bị Thanh ty Inox 304 cao cấp: Kháng rỉ sét, chịu lực nén cao, bền bỉ theo thời gian",
+      "Công nghệ chống kẹt thông minh (Anti-Pinch): Tự động đảo chiều khi gặp vật cản, bảo vệ an toàn tối đa",
+      "Vận hành êm ái vượt trội: Độ ồn tối đa kiểm soát dưới 40 dB, đóng mở mượt mà không gây rung giật",
+      "Thân vỏ phủ sơn tĩnh điện 2 lớp: Chống trầy xước, chống bám bụi và kháng hóa chất môi trường",
+      "Đa dạng hình thức điều khiển: Nút bấm vị trí lái, nút bấm trên cốp sau, chìa khóa Smartkey và cảm biến đá chân",
+      "Lắp đặt cắm giắc Zin 100% Plug & Play, tuyệt đối không cắt trích dây điện, giữ trọn bảo hành xe",
+      "Chính sách bảo hành điện tử chính hãng MCD 91 3 NĂM (36 tháng) 1 đổi 1 tại Hieu N Auto"
     ],
     vehicleTypes: [
       "suv",
       "mpv",
+      "sedan",
       "luxury"
     ],
     materials: [
-      "Hợp Kim Nhôm Đúc Hàng Không Siêu Nhẹ",
-      "Mô-tơ Điện Kháng Nước IP68",
-      "Cao Su Chống Trượt Cao Cấp"
+      "Thanh Ty Thủy Lực Inox 304",
+      "Vỏ Thép Sơn Tĩnh Điện 2 Lớp",
+      "Mô Tơ Điện Siêu Êm Dưới 40dB",
+      "Mắt Cảm Biến Đá Cốp Nhạy X10"
     ],
     colors: [
-      {"name":"Đen Nhôm Anodized Thể Thao","hex":"#0F172A"}
+      {"name":"Bộ Cốp Điện Lắp Zin MCD 91 Kèm Cảm Biến Đá Cốp","hex":"#DC2626"},
+      {"name":"Bộ Cốp Điện MCD 91 Tiêu Chuẩn","hex":"#0F172A"}
     ],
-    warrantyMonths: 24,
+    warrantyMonths: 36,
     inStock: true,
-    installationTimeHours: 3
+    installationTimeHours: 2
   },
   {
     id: "prod-29",
