@@ -219,7 +219,7 @@ export const PRODUCTS: Product[] = [
     name: "Camera 360 Độ MCD 91 Xe VinFast (24 Góc Nhìn Siêu Nét, Cảm Ứng Màn Zin, Tích Hợp Phím Vô Lăng & Cắm Giắc Zin 100%)",
     category: "cameras-360",
     categoryName: "Camera 360 MCD 91",
-    price: 13500000,
+    price: 12500000,
     originalPrice: 15900000,
     isSale: true,
     isNew: true,
