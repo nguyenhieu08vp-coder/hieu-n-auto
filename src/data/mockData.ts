@@ -42,8 +42,8 @@ export const CLASSIFICATIONS = [
     id: 'all', 
     name: 'Tất Cả Hạng Mục', 
     shortName: 'Tất Cả',
-    count: 55, 
-    badge: '55 Mục',
+    count: 56, 
+    badge: '56 Mục',
     icon: 'LayoutGrid',
     description: 'Trọn bộ hệ sinh thái sản phẩm phụ kiện cao cấp & dịch vụ độ xe chính hãng tại Hieu N Auto'
   },
@@ -60,15 +60,15 @@ export const CLASSIFICATIONS = [
     id: 'service', 
     name: 'Dịch Vụ Độ Xe Chính Hãng', 
     shortName: 'Dịch Vụ Độ Xe',
-    count: 16, 
-    badge: '16 Dịch vụ',
+    count: 17, 
+    badge: '17 Dịch vụ',
     icon: 'Wrench',
     description: 'Các gói thi công chuyên sâu chuẩn Zin: Cốp điện, Cửa hít, Cách âm SIP, Bọc da Nappa, Phay Lazang, Độ âm thanh DSP...'
   },
 ] as const;
 
 export const CATEGORIES = [
-  { id: 'all', name: 'Tất Cả Danh Mục', count: 55, icon: 'LayoutGrid', itemType: 'all' },
+  { id: 'all', name: 'Tất Cả Danh Mục', count: 56, icon: 'LayoutGrid', itemType: 'all' },
   // Nhóm Sản Phẩm Chính Hãng
   { id: 'cameras-360', name: 'Camera 360 & Camera Hành Trình', count: 9, icon: 'ShieldCheck', itemType: 'product' },
   { id: 'screens-displays', name: 'Màn Hình Android & Android Box', count: 9, icon: 'Tv', itemType: 'product' },
@@ -78,7 +78,7 @@ export const CATEGORIES = [
   // Nhóm Dịch Vụ Độ Xe Chính Hãng
   { id: 'car-audio', name: 'Độ Âm Thanh DSP & Loa Sub Gầm', count: 7, icon: 'Volume2', itemType: 'service' },
   { id: 'seat-interior', name: 'Bọc Ghế Da Nappa & Ghế Chỉnh Điện', count: 4, icon: 'Armchair', itemType: 'service' },
-  { id: 'electric-automation', name: 'Cửa Hít & Cốp Điện Tự Động', count: 6, icon: 'Sliders', itemType: 'service' },
+  { id: 'electric-automation', name: 'Cửa Hít & Cốp Điện Tự Động', count: 7, icon: 'Sliders', itemType: 'service' },
   { id: 'heat-soundproofing', name: 'Dán Phim Cách Nhiệt & Chống Ồn SIP', count: 1, icon: 'Shield', itemType: 'service' },
   { id: 'wheels-exterior', name: 'Phay Mâm CNC & Giáp Bảo Vệ Pin', count: 4, icon: 'Disc', itemType: 'service' },
 ];
@@ -2487,6 +2487,57 @@ export const PRODUCTS: Product[] = [
     warrantyMonths: 24,
     inStock: true,
     installationTimeHours: 1
+  },
+  {
+    id: "prod-58",
+    itemType: "service",
+    name: "Cốp Điện VinFast Limo Green Dsmart® Tự Động (Tặng Kèm Bộ Cảm Biến Đá Cốp, Ty Đôi Thủy Lực & Cắm Giắc Zin 100%)",
+    category: "electric-automation",
+    categoryName: "Cốp Điện Dsmart® Limo Green",
+    price: 8800000,
+    originalPrice: 10500000,
+    isBestSeller: true,
+    isNew: true,
+    isSale: true,
+    rating: 5.0,
+    reviewCount: 164,
+    primaryImage: "/images/cop_dien_dsmart_limo_poster.png",
+    secondaryImage: "/images/cop_dien_dsmart_limo_unboxing.jpg",
+    galleryImages: [
+      "/images/cop_dien_dsmart_limo_poster.png",
+      "/images/cop_dien_dsmart_limo_unboxing.jpg"
+    ],
+    description: "Bộ cốp điện tự động thông minh Dsmart® chuyên biệt dành riêng cho dòng xe điện VinFast Limo Green (MPV7) - 'Tiện ích trong từng thao tác'. Sản phẩm cao cấp trang bị ty đẩy đôi thủy lực hợp kim siêu bền bỉ, ngàm khóa hít mềm chống kẹt êm ái, điều khiển đa phương thức từ xa qua Smartkey và nút bấm trong cabin. Đặc biệt, chương trình ưu đãi độc quyền TẶNG KÈM trọn bộ module cảm biến đá cốp rảnh tay (mở cốp tiện lợi bằng cử chỉ chân). Lắp đặt pát zin 100%, cắm giắc chuyên biệt theo xe không cắt trích dây, an toàn điện tuyệt đối.",
+    features: [
+      "Thương hiệu chính hãng Dsmart® - Slogan: 'Tiện ích trong từng thao tác'",
+      "Thiết kế chuẩn phom Zin 100% chuyên biệt cho xe điện VinFast Limo Green / MPV7",
+      "Ưu đãi đặc biệt: TẶNG KÈM trọn bộ Cảm biến đá cốp thông minh mở rảnh tay bằng cử chỉ chân",
+      "Hệ thống ty đẩy đôi hợp kim cường lực: Chịu tải cao, chống nước ngập và vận hành đóng mở êm ái",
+      "Cụm ngàm khóa hít mềm (Soft-Close Latch): Hút cốp nhẹ nhàng êm ái, không gây tiếng ồn va đập",
+      "Tính năng chống kẹt thông minh (Anti-Pinch): Tự động dừng và đảo chiều khi gặp vật cản, an toàn tuyệt đối",
+      "Hộp ECU điều khiển thông minh mã 24-VF Limo ZC2350T đồng bộ mượt mà hệ thống điện xe",
+      "Điều khiển 4 trong 1 linh hoạt: Nút bấm vị trí lái táp lô, nút bấm tay mở cốp, nút bấm đóng cốp và chìa khóa Smartkey",
+      "Lắp đặt cắm giắc Zin 100% Plug & Play, pát bắt chuẩn theo lỗ ốc sườn xe không khoan cắt, giữ trọn bảo hành hãng",
+      "Chính sách bảo hành điện tử chính hãng Dsmart® 24 tháng (2 năm) 1 đổi 1 tại xưởng Hieu N Auto"
+    ],
+    vehicleTypes: [
+      "mpv",
+      "suv",
+      "sedan"
+    ],
+    materials: [
+      "Ty Đôi Hợp Kim Sơn Tĩnh Điện Dsmart",
+      "Ngàm Khóa Hít Êm Ái Chống Kẹt",
+      "Hộp Điều Khiển ECU Dsmart ZC2350T",
+      "Bộ Giắc Cắm Zin Bọc Chịu Nhiệt"
+    ],
+    colors: [
+      {"name":"Bộ Cốp Điện Dsmart Limo Green + Tặng Kèm Đá Cốp","hex":"#DC2626"},
+      {"name":"Bộ Cốp Điện Dsmart Tiêu Chuẩn Chuẩn Zin","hex":"#0F172A"}
+    ],
+    warrantyMonths: 24,
+    inStock: true,
+    installationTimeHours: 2
   }
 ];
 

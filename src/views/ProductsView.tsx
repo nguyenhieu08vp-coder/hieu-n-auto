@@ -629,8 +629,8 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
     return [...standard, ...customInSeat];
   }, [filteredProducts, interiorSeatOrderedIds, interiorSeatProductIds]);
 
-  // 10. Nhóm Cốp Điện Tự Động & Đá Cốp (Tách riêng ngay sau Nội Thất & Ghế Xe): prod-11 (Cốp điện ICAR VF3), prod-27 (Cốp điện EUD 91 tích hợp đá cốp)
-  const electricTailgateOrderedIds = useMemo(() => ['prod-11', 'prod-27'], []);
+  // 10. Nhóm Cốp Điện Tự Động & Đá Cốp (Tách riêng ngay sau Nội Thất & Ghế Xe): prod-27 (Cốp điện MCD 91), prod-58 (Cốp điện Dsmart VinFast Limo Green), prod-11 (Cốp điện ICAR VF3)
+  const electricTailgateOrderedIds = useMemo(() => ['prod-27', 'prod-58', 'prod-11'], []);
   const electricTailgateProductIds = useMemo(() => new Set(electricTailgateOrderedIds), [electricTailgateOrderedIds]);
   const electricTailgateProducts = useMemo(() => {
     const map = new Map(filteredProducts.map((p) => [p.id, p]));
@@ -1750,7 +1750,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                             )}
                           </div>
                           <p className="text-[11px] text-slate-400 mt-0.5">
-                            Cốp điện thông minh ICAR ELLIGATE VF3 &amp; Cốp điện lắp Zin MCD 91 tích hợp cảm biến đá chân rảnh tay (VF3, VF5, VF6, VF7, VF8, LIMO, MPV7)
+                            Cốp điện VinFast Limo Green Dsmart® tặng kèm đá cốp, Cốp điện ICAR ELLIGATE VF3 &amp; Cốp điện lắp Zin MCD 91 tích hợp cảm biến đá chân rảnh tay
                           </p>
                         </div>
                       </div>
